@@ -30,9 +30,8 @@ const About = () => {
 
         {/* Version number */}
         <footer className="mt-auto text-sm">
-          <p className="flex gap-1">
-            <CogIcon className="h-5 w-5 text-inherit" />v
-            {env.NEXT_PUBLIC_VERSION}
+          <p className="flex items-center gap-1">
+            <CogIcon className="h-5 w-5" />v{env.NEXT_PUBLIC_VERSION}
           </p>
         </footer>
       </div>
