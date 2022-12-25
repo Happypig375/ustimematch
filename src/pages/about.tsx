@@ -6,7 +6,7 @@ import { env } from "../env/client.mjs";
 const About = () => {
   return (
     <Header>
-      <div className="flex flex-col gap-8 overflow-auto py-4 px-6 sm:py-8 sm:px-10">
+      <div className="flex w-full flex-col gap-8 overflow-auto py-4 px-6 sm:py-8 sm:px-10">
         <Paragraph>
           <Paragraph.Title>Features</Paragraph.Title>
           <Paragraph.Body>

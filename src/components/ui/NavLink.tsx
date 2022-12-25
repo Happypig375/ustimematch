@@ -20,7 +20,7 @@ const Header = ({ children, href, inMenu = false, external }: Props) => {
         "flex items-center gap-1 text-gray-600",
         inMenu
           ? "w-full px-4 py-2 text-gray-900"
-          : "underline decoration-transparent decoration-auto underline-offset-4 transition-[text-decoration] hover:text-brand hover:decoration-brand",
+          : "underline decoration-transparent decoration-[1.5px] underline-offset-4 transition-[text-decoration] hover:text-brand hover:decoration-brand",
       )}
       target={external ? "_blank" : undefined}
     >
