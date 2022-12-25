@@ -9,6 +9,8 @@ module.exports = {
       colors: {
         brand: "#003366",
         bg: {
+          "light-500": "#dcdcdc",
+          "light-400": "#efefef",
           "light-300": "#f7f9fa",
           "light-200": "#fafafa",
           "light-100": "#ffffff",

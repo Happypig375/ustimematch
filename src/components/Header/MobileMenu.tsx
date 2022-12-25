@@ -1,8 +1,10 @@
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import Button from "@ui/Button";
 import NavLink from "@ui/NavLink";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import React from "react";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
@@ -10,13 +12,9 @@ const MobileMenu = () => {
   return (
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger asChild>
-        {/* Unable to use IconButton component (forwardRef problem) */}
-        <button
-          aria-label="Open navigation menu"
-          className="rounded-md border border-gray-200 p-2 hover:border-gray-300 focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-blue-400 sm:hidden"
-        >
+        <Button icon aria-label="Open navigation menu">
           <EllipsisHorizontalIcon className="h-5 w-5" />
-        </button>
+        </Button>
       </DropdownMenu.Trigger>
 
       <AnimatePresence>

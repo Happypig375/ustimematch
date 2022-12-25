@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import React from "react";
 import Spinner from "./Spinner";
 
 interface Props
@@ -6,29 +7,46 @@ interface Props
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
+  icon?: boolean;
   loading?: boolean;
   fullWidth?: boolean;
 }
 
-const Button = ({
-  children,
-  disabled = false,
-  loading = false,
-  fullWidth = false,
-  ...props
-}: Props) => {
-  return (
+/**
+ * Button component
+ * @param   {boolean} icon
+ * @param   {boolean} loading   Whether button is loading (should be used in with disabled)
+ * @param   {boolean} disabled
+ * @param   {boolean} fullWidth
+ */
+const Button = React.forwardRef<HTMLButtonElement, Props>(
+  (
+    {
+      children,
+      className,
+      icon = false,
+      loading = false,
+      disabled = false,
+      fullWidth = false,
+      ...props
+    },
+    ref,
+  ) => (
     <button
+      ref={ref}
       {...props}
       disabled={disabled}
       className={clsx(
-        "bg-bg-light-3 disabled:bg-bg-light whitespace-nowrap rounded-md border border-gray-200 py-1 px-5 text-gray-600 transition-all enabled:hover:border-gray-300 enabled:hover:text-gray-900",
-        fullWidth && "w-full",
+        "rounded-md border border-gray-200 bg-bg-light-100 text-gray-600 transition-all focus:ring-1 focus:ring-blue-200 focus:ring-offset-1 focus:ring-offset-blue-400 active:bg-bg-light-200 enabled:hover:border-gray-300 enabled:hover:text-gray-900 disabled:cursor-not-allowed disabled:bg-bg-light-400",
+        fullWidth && "flex w-full items-center justify-center",
+        icon ? "p-2" : "py-1 px-4",
+        className,
       )}
     >
       {loading ? <Spinner /> : children}
     </button>
-  );
-};
+  ),
+);
+Button.displayName = "Button";
 
 export default Button;

@@ -11,7 +11,7 @@ const Header = ({
     <div className="mx-auto flex h-full max-w-screen-2xl flex-col gap-3 px-4 py-3 sm:gap-4 sm:py-4">
       <div className="flex items-center justify-between gap-8 px-2">
         {/* Header text */}
-        <Link href="/" className="flex h-8 items-center gap-3">
+        <Link href="/" className="flex h-8 items-center gap-3 text-brand">
           <h1 className="text-lg font-medium sm:text-xl">HKUST</h1>
           <Separator.Root
             decorative

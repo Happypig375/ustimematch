@@ -1,10 +1,13 @@
 import { type NextPage } from "next";
+import Explorer from "../components/Explorer";
 import Header from "../components/Header";
 
 const Home: NextPage = () => {
   return (
     <>
-      <Header></Header>
+      <Header>
+        <Explorer />
+      </Header>
     </>
   );
 };

@@ -17,3 +17,8 @@ body,
 *:hover {
   outline: none;
 }
+
+/* Remove webkit button tap hightlight */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
