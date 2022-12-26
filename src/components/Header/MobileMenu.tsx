@@ -20,7 +20,14 @@ const MobileMenu = () => {
       <AnimatePresence>
         {open && (
           <DropdownMenu.Portal forceMount>
-            <DropdownMenu.Content forceMount asChild align="end" sideOffset={4}>
+            <DropdownMenu.Content
+              forceMount
+              asChild
+              align="end"
+              sideOffset={4}
+              // Prevents focusing on the trigger when closing
+              onCloseAutoFocus={(e) => e.preventDefault()}
+            >
               <motion.div
                 initial={{ scale: 0.4, opacity: 0 }}
                 animate={{
@@ -33,7 +40,7 @@ const MobileMenu = () => {
                   opacity: 0,
                   transition: { type: "spring", duration: 0.2 },
                 }}
-                className="w-52 origin-top-right rounded-md border border-gray-200 bg-bg-light-100 shadow-lg"
+                className="w-48 origin-top-right rounded-md border border-gray-200 bg-bg-light-100 shadow-lg"
               >
                 <DropdownMenu.Item asChild>
                   <NavLink inMenu href="/about">

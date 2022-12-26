@@ -37,7 +37,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       {...props}
       disabled={disabled}
       className={clsx(
-        "rounded-md border border-gray-200 bg-bg-light-100 text-gray-600 transition-all active:bg-bg-light-200 enabled:hover:border-gray-300 enabled:hover:text-gray-900 disabled:cursor-not-allowed disabled:bg-bg-light-400",
+        "whitespace-nowrap rounded-md border border-gray-200 bg-bg-light-100 text-gray-600 transition-all active:bg-bg-light-200 enabled:hover:border-gray-300 enabled:hover:text-gray-900 disabled:cursor-not-allowed disabled:bg-bg-light-400",
         fullWidth && "flex w-full items-center justify-center",
         icon ? "p-2" : "py-1 px-4",
         className,
