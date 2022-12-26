@@ -11,14 +11,13 @@ body,
   height: 100%;
 }
 
-/* Remove default outline */
-*,
-*:focus,
-*:hover {
-  outline: none;
+/* Replace default focus outline */
+a,
+button {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-400;
 }
 
-/* Remove webkit button tap hightlight */
-button {
+/* Remove default webkit tap hightlight */
+* {
   -webkit-tap-highlight-color: transparent;
 }

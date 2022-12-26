@@ -35,23 +35,19 @@ const MobileMenu = () => {
                 }}
                 className="w-52 origin-top-right rounded-md border border-gray-200 bg-bg-light-100 shadow-lg"
               >
-                <DropdownMenu.Item className="rounded-tl-md rounded-tr-md hover:bg-bg-light-200">
+                <DropdownMenu.Item asChild>
                   <NavLink inMenu href="/about">
                     About
                   </NavLink>
                 </DropdownMenu.Item>
 
-                <DropdownMenu.Separator className="h-[1px] w-full bg-gray-200" />
-
-                <DropdownMenu.Item className="hover:bg-bg-light-200">
+                <DropdownMenu.Item asChild>
                   <NavLink inMenu href="/tutorial">
                     Tutorial
                   </NavLink>
                 </DropdownMenu.Item>
 
-                <DropdownMenu.Separator className="h-[1px] w-full bg-gray-200" />
-
-                <DropdownMenu.Item className="rounded-bl-md rounded-br-md hover:bg-bg-light-200">
+                <DropdownMenu.Item asChild>
                   <NavLink inMenu external href="https://admlu65.ust.hk">
                     Timetable Planner
                   </NavLink>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
+import React from "react";
 
 interface Props
   extends DetailedHTMLProps<
@@ -12,14 +13,16 @@ interface Props
   external?: boolean;
 }
 
-const Header = ({ children, href, inMenu = false, external }: Props) => {
-  return (
+const NavLink = React.forwardRef<HTMLAnchorElement, Props>(
+  ({ children, href, inMenu = false, external, ...props }, ref) => (
     <Link
+      {...props}
+      ref={ref}
       href={{ pathname: href }}
       className={clsx(
         "flex items-center gap-1 text-gray-600",
         inMenu
-          ? "w-full px-4 py-2 text-gray-900"
+          ? "w-full border-b border-gray-200 px-4 py-2 first:rounded-tl-md first:rounded-tr-md last:rounded-bl-md last:rounded-br-md last:border-b-0 hover:bg-bg-light-200 hover:text-gray-900 hover:ring-0 hover:ring-offset-0"
           : "underline decoration-transparent decoration-[1.5px] underline-offset-4 transition-[text-decoration] hover:text-brand hover:decoration-brand",
       )}
       target={external ? "_blank" : undefined}
@@ -27,7 +30,8 @@ const Header = ({ children, href, inMenu = false, external }: Props) => {
       {children}
       {external && <ArrowTopRightOnSquareIcon className="h-4 w-4" />}
     </Link>
-  );
-};
+  ),
+);
+NavLink.displayName = "NavLink";
 
-export default Header;
+export default NavLink;
