@@ -1,15 +1,15 @@
 const Paragraph = ({ children }: React.HTMLAttributes<HTMLDivElement>) => {
-  return <div className="flex w-full flex-col gap-2 text-left">{children}</div>;
+  return <div className="flex flex-col gap-2 text-left">{children}</div>;
 };
 
 // eslint-disable-next-line react/display-name
 Paragraph.Title = ({ children }: React.HTMLAttributes<HTMLHeadingElement>) => (
-  <h1 className="text-2xl font-black">{children}</h1>
+  <h1 className="text-xl font-bold sm:text-2xl">{children}</h1>
 );
 
 // eslint-disable-next-line react/display-name
 Paragraph.Body = ({ children }: React.HTMLAttributes<HTMLParagraphElement>) => (
-  <p className="text-sm sm:text-base">{children}</p>
+  <p className="text-xs sm:text-sm">{children}</p>
 );
 
 export default Paragraph;

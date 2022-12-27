@@ -1,12 +1,13 @@
 import Header from "../components/Header";
 import * as Separator from "@radix-ui/react-separator";
+import { type NextPage } from "next";
 
-const NotFound = () => {
+const NotFound: NextPage = () => {
   return (
     <Header>
       <div className="flex w-full items-center justify-center">
         <div className="flex h-8 items-center gap-3">
-          <span className="text-xl font-black">404</span>
+          <span className="text-xl font-bold">404</span>
           <Separator.Root
             decorative
             orientation="vertical"

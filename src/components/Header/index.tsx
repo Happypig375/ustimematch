@@ -35,7 +35,7 @@ const Header = ({
       </div>
 
       {/* Main content */}
-      <div className="flex flex-grow overflow-auto rounded-md border border-gray-200 bg-bg-light-200">
+      <div className="flex flex-grow overflow-auto rounded-md border border-border-gray-100 bg-bg-light-200">
         {children}
       </div>
     </div>

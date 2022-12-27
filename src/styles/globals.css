@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,13 +8,13 @@
 html,
 body,
 #__next {
-  height: 100%;
+  @apply h-full text-text-black-200;
 }
 
 /* Replace default focus outline */
 a,
 button {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-400;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-400;
 }
 
 /* Remove default webkit tap hightlight */

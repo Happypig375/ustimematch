@@ -1,16 +1,17 @@
 import { env } from "../env/server.mjs";
-import { BanknotesIcon } from "@heroicons/react/20/solid";
+import { BanknotesIcon } from "@heroicons/react/24/outline";
 import Button from "@ui/Button";
 import Header from "../components/Header";
+import { type NextPage } from "next";
 
-export function getStaticProps() {
+export const getStaticProps = () => {
   return {
     props: {},
     notFound: env.NODE_ENV === "production",
   };
-}
+};
 
-const Test = () => {
+const Test: NextPage = () => {
   return (
     <Header>
       <div className="w-full p-4">

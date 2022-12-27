@@ -15,6 +15,14 @@ module.exports = {
           "light-200": "#fafafa",
           "light-100": "#ffffff",
         },
+        text: {
+          "black-200": "#161616",
+          "black-100": "#484848",
+        },
+        border: {
+          "gray-200": "#d4d4d4",
+          "gray-100": "#e4e4e4",
+        },
       },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],

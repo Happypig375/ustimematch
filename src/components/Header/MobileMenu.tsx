@@ -1,10 +1,36 @@
-import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
+import {
+  CalendarDaysIcon,
+  EllipsisHorizontalIcon,
+  QuestionMarkCircleIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/24/outline";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Button from "@ui/Button";
 import NavLink from "@ui/NavLink";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useState } from "react";
 import React from "react";
+
+const menuVariants: Variants = {
+  open: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      bounce: 0.2,
+      duration: 0.4,
+    },
+  },
+  close: {
+    scale: 0,
+    opacity: 0,
+    transition: {
+      type: "spring",
+      bounce: 0.2,
+      duration: 0.4,
+    },
+  },
+};
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
@@ -21,41 +47,47 @@ const MobileMenu = () => {
         {open && (
           <DropdownMenu.Portal forceMount>
             <DropdownMenu.Content
-              forceMount
               asChild
+              forceMount
               align="end"
               sideOffset={4}
               // Prevents focusing on the trigger when closing
               onCloseAutoFocus={(e) => e.preventDefault()}
             >
               <motion.div
-                initial={{ scale: 0.4, opacity: 0 }}
-                animate={{
-                  scale: 1,
-                  opacity: 1,
-                  transition: { type: "spring", duration: 0.4 },
-                }}
-                exit={{
-                  scale: 0.4,
-                  opacity: 0,
-                  transition: { type: "spring", duration: 0.2 },
-                }}
-                className="w-48 origin-top-right rounded-md border border-gray-200 bg-bg-light-100 shadow-lg"
+                exit="close"
+                animate="open"
+                initial="close"
+                variants={menuVariants}
+                className="origin-[var(--radix-dropdown-menu-content-transform-origin)] rounded-md border border-border-gray-100 bg-bg-light-100 shadow-lg"
               >
                 <DropdownMenu.Item asChild>
-                  <NavLink inMenu href="/about">
+                  <NavLink
+                    inMenu
+                    href="/about"
+                    icon={<InformationCircleIcon className="h-4 w-4" />}
+                  >
                     About
                   </NavLink>
                 </DropdownMenu.Item>
 
                 <DropdownMenu.Item asChild>
-                  <NavLink inMenu href="/tutorial">
+                  <NavLink
+                    inMenu
+                    href="/tutorial"
+                    icon={<QuestionMarkCircleIcon className="h-4 w-4" />}
+                  >
                     Tutorial
                   </NavLink>
                 </DropdownMenu.Item>
 
                 <DropdownMenu.Item asChild>
-                  <NavLink inMenu external href="https://admlu65.ust.hk">
+                  <NavLink
+                    inMenu
+                    external
+                    href="https://admlu65.ust.hk"
+                    icon={<CalendarDaysIcon className="h-4 w-4" />}
+                  >
                     Timetable Planner
                   </NavLink>
                 </DropdownMenu.Item>

@@ -10,6 +10,8 @@ interface Props
   icon?: boolean;
   loading?: boolean;
   fullWidth?: boolean;
+  fullHeight?: boolean;
+  matchIconPadding?: boolean;
 }
 
 /**
@@ -18,6 +20,8 @@ interface Props
  * @param   {boolean} loading   Whether button is loading (should be used in with disabled)
  * @param   {boolean} disabled
  * @param   {boolean} fullWidth
+ * @param   {boolean} fullHeight
+ * @param   {boolean} matchIconPadding
  */
 const Button = React.forwardRef<HTMLButtonElement, Props>(
   (
@@ -28,6 +32,8 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       loading = false,
       disabled = false,
       fullWidth = false,
+      fullHeight = false,
+      matchIconPadding = false,
       ...props
     },
     ref,
@@ -37,9 +43,10 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       {...props}
       disabled={disabled}
       className={clsx(
-        "whitespace-nowrap rounded-md border border-gray-200 bg-bg-light-100 text-gray-600 transition-all active:bg-bg-light-200 enabled:hover:border-gray-300 enabled:hover:text-gray-900 disabled:cursor-not-allowed disabled:bg-bg-light-400",
-        fullWidth && "flex w-full items-center justify-center",
-        icon ? "p-2" : "py-1 px-4",
+        "flex items-center justify-center gap-2 rounded-md border border-border-gray-100 bg-bg-light-100 text-text-black-100 transition-all active:bg-bg-light-200 enabled:hover:border-border-gray-200 enabled:hover:text-text-black-200 disabled:cursor-not-allowed disabled:bg-bg-light-400",
+        fullWidth && "w-full",
+        fullHeight && "h-full",
+        icon ? "p-2" : matchIconPadding ? "px-4 py-2" : "py-1 px-4",
         className,
       )}
     >
