@@ -5,11 +5,11 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/24/outline";
 import Button from "@ui/Button";
-import { useBoundStore } from "../../store";
+import { useStore } from "../../store";
 import ColorChip from "./ColorChip";
 
 const PersonalTimetable = () => {
-  const personalTimetable = useBoundStore.use.personalTimetable();
+  const personalTimetable = useStore.use.personalTimetable();
 
   return (
     <div className="border-t border-border-gray-100 py-2 px-4">

@@ -8,11 +8,11 @@ import {
   ClockIcon as OutlineClockIcon,
 } from "@heroicons/react/24/outline";
 import { ClockIcon as SolidClockIcon } from "@heroicons/react/24/solid";
-import { useBoundStore } from "../../store";
+import { useStore } from "../../store";
 
 const WeekView = () => {
-  const showExplorer = useBoundStore.use.showExplorer();
-  const toggleShowExplorer = useBoundStore.use.toggleShowExplorer();
+  const showExplorer = useStore.use.showExplorer();
+  const toggleShowExplorer = useStore.use.toggleShowExplorer();
 
   return (
     <div className="flex h-full min-w-full flex-grow flex-col sm:min-w-[unset]">
@@ -26,6 +26,17 @@ const WeekView = () => {
         </Button>
 
         <div className="flex gap-4 overflow-x-auto">
+          <Button
+            icon
+            title="Refresh"
+            // className="!p-2"
+            // onClick={refresh}
+            // loading={loading}
+            // disabled={loading}
+          >
+            <ArrowPathIcon className="h-5 w-5" />
+          </Button>
+
           <Button
             icon
             title="Toggle Weekend"
@@ -42,17 +53,6 @@ const WeekView = () => {
           >
             <OutlineClockIcon className="h-5 w-5" />
             <SolidClockIcon className="h-5 w-5" />
-          </Button>
-
-          <Button
-            icon
-            title="Refresh"
-            // className="!p-2"
-            // onClick={refresh}
-            // loading={loading}
-            // disabled={loading}
-          >
-            <ArrowPathIcon className="h-5 w-5" />
           </Button>
         </div>
       </div>

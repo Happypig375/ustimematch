@@ -5,7 +5,7 @@ import { createSelectors } from "./createSelectors";
 import { type SettingsSlice, createSettingsSlice } from "./settings";
 import { type TimetablesSlice, createTimetableSlice } from "./timetables";
 
-const useBoundStoreBase = create<SettingsSlice & TimetablesSlice>()(
+const useStoreBase = create<SettingsSlice & TimetablesSlice>()(
   persist(
     immer(
       devtools((...a) => ({
@@ -17,4 +17,4 @@ const useBoundStoreBase = create<SettingsSlice & TimetablesSlice>()(
   ),
 );
 
-export const useBoundStore = createSelectors(useBoundStoreBase);
+export const useStore = createSelectors(useStoreBase);

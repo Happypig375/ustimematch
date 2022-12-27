@@ -1,9 +1,9 @@
 import Button from "@ui/Button";
-import { useBoundStore } from "../../store";
+import { useStore } from "../../store";
 import {
   ShareIcon,
   FolderPlusIcon,
-  ArrowDownTrayIcon,
+  SquaresPlusIcon,
 } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import PersonalTimetable from "./PersonalTimetable";
@@ -30,7 +30,7 @@ const explorerVariants: Variants = {
 };
 
 const Explorer = () => {
-  const showExplorer = useBoundStore.use.showExplorer();
+  const showExplorer = useStore.use.showExplorer();
 
   return (
     <AnimatePresence initial={false}>
@@ -50,7 +50,7 @@ const Explorer = () => {
               title="Import"
               // onClick={toggleShowImportModal}
             >
-              <ArrowDownTrayIcon className="h-5 w-5" />
+              <SquaresPlusIcon className="h-5 w-5" />
               Import
             </Button>
             <Button

@@ -38,7 +38,7 @@ const MobileMenu = () => {
   return (
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger asChild>
-        <Button icon aria-label="Open navigation menu" className="sm:hidden">
+        <Button icon className="sm:hidden" aria-label="Open navigation menu">
           <EllipsisHorizontalIcon className="h-5 w-5" />
         </Button>
       </DropdownMenu.Trigger>

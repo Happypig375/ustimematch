@@ -31,7 +31,7 @@ const About: NextPage = () => {
           </Paragraph>
 
           {/* Version number */}
-          <footer className="flex items-center gap-1 text-sm">
+          <footer className="flex items-center gap-1 text-sm font-medium tracking-wide">
             <CogIcon className="h-5 w-5" />v{env.NEXT_PUBLIC_VERSION}
           </footer>
         </div>

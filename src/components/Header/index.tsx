@@ -8,7 +8,7 @@ const Header = ({
   children,
 }: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>) => {
   return (
-    <div className="mx-auto flex h-full max-w-screen-2xl flex-col gap-3 px-4 py-3 sm:gap-4 sm:py-4">
+    <div className="mx-auto flex h-full max-w-screen-2xl flex-col gap-2 px-4 py-2 sm:gap-4 sm:py-4">
       <div className="flex items-center justify-between gap-8 px-2">
         {/* Header text */}
         <Link href="/" className="flex h-8 items-center gap-3 text-brand">
@@ -16,7 +16,7 @@ const Header = ({
           <Separator.Root
             decorative
             orientation="vertical"
-            className="h-full w-[0.1rem] bg-brand"
+            className="h-full w-[1.5px] bg-brand"
           />
           <h1 className="text-base sm:text-lg">Timematch</h1>
         </Link>
