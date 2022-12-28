@@ -1,42 +1,15 @@
 import { type StateCreator } from "zustand";
-import { type SettingsSlice } from "./settings";
-
-interface Lesson {
-  name: string;
-  location: string;
-  description: string;
-  begin: string;
-  end: string;
-}
-
-// from monday (0) to sunday (6)
-type Lessons = [
-  Lesson[],
-  Lesson[],
-  Lesson[],
-  Lesson[],
-  Lesson[],
-  Lesson[],
-  Lesson[],
-];
-
-export interface Timetable {
-  [key: string]: string | boolean | Lessons | null;
-  url: string;
-  name: string;
-  color: string;
-  visible: boolean;
-  lessons: Lessons;
-  folder: string | null;
-}
+import { type Timetable } from "../types/timetable";
+import { type StatesSlice } from "./states";
 
 export interface TimetablesSlice {
   timetables: Timetable[];
   personalTimetable: Timetable | null;
+  setPersonalTimetable: (timetable: Timetable) => void;
 }
 
 export const createTimetableSlice: StateCreator<
-  SettingsSlice & TimetablesSlice,
+  StatesSlice & TimetablesSlice,
   [
     ["zustand/persist", unknown],
     ["zustand/immer", never],
@@ -47,4 +20,8 @@ export const createTimetableSlice: StateCreator<
 > = (set) => ({
   personalTimetable: null,
   timetables: [],
+  setPersonalTimetable: (timetable) =>
+    set((state) => {
+      state.personalTimetable = timetable;
+    }),
 });

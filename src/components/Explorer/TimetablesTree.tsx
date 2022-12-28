@@ -5,6 +5,14 @@ import {
   type TreeItemComponentProps,
   type TreeItems,
 } from "dnd-kit-sortable-tree";
+import {
+  ArrowsUpDownIcon,
+  Bars2Icon,
+  Bars3Icon,
+  ChevronUpDownIcon,
+} from "@heroicons/react/24/outline";
+import TreeTimetableItem from "@ui/TreeTimetableItem";
+import { useStore } from "../../store";
 
 type MinimalTreeItemData = {
   value: string;
@@ -55,6 +63,41 @@ const initialViableMinimalData: TreeItems<MinimalTreeItemData> = [
       },
     ],
   },
+  {
+    id: "Timetable 7",
+    value: "Timetable 7",
+    canHaveChildren: false,
+  },
+  {
+    id: "Timetable 8",
+    value: "Timetable 8",
+    canHaveChildren: false,
+  },
+  {
+    id: "Timetable 9",
+    value: "Timetable 9",
+    canHaveChildren: false,
+  },
+  {
+    id: "Timetable 10",
+    value: "Timetable 10",
+    canHaveChildren: false,
+  },
+  {
+    id: "Timetable 11",
+    value: "Timetable 12",
+    canHaveChildren: false,
+  },
+  {
+    id: "Timetable 13",
+    value: "Timetable 13",
+    canHaveChildren: false,
+  },
+  {
+    id: "Timetable 14",
+    value: "Timetable 14",
+    canHaveChildren: false,
+  },
 ];
 
 const MinimalTreeItemComponent = forwardRef<
@@ -62,15 +105,11 @@ const MinimalTreeItemComponent = forwardRef<
   TreeItemComponentProps<MinimalTreeItemData>
 >((props, ref) => {
   return (
-    // https://github.com/clauderic/dnd-kit/issues/435
-    <SimpleTreeItemWrapper
-      {...props}
-      ref={ref}
-      className="touch-none"
-      showDragHandle={false}
-    >
-      <div>{props.item.value}</div>
-    </SimpleTreeItemWrapper>
+    <TreeTimetableItem {...props} ref={ref} manualDrag showDragHandle={false}>
+      <div className="flex items-center gap-2">
+        <div>{props.item.value}</div>
+      </div>
+    </TreeTimetableItem>
   );
 });
 MinimalTreeItemComponent.displayName = "MinimalTreeItemComponent";
@@ -78,21 +117,25 @@ MinimalTreeItemComponent.displayName = "MinimalTreeItemComponent";
 const TimetablesTree = () => {
   const [items, setItems] = useState(initialViableMinimalData);
 
+  const explorerReorderMode = useStore.use.explorerReorderMode();
+
   return (
     <div className="h-full overflow-y-auto">
       <SortableTree
+        disableSorting={!explorerReorderMode}
+        // pointerSensorOptions={{ activationConstraint: {} }}
         items={items}
         onItemsChanged={(items) => {
-          for (let i = 0; i < items.length; i++) {
-            if (
-              !items[i].canHaveChildren ||
-              typeof items[i].children === "undefined"
-            )
-              continue;
-            for (let j = 0; j < items[i].children.length; j++) {
-              if (items[i].children[j].canHaveChildren) return;
-            }
-          }
+          // for (let i = 0; i < items.length; i++) {
+          //   if (
+          //     !items[i].canHaveChildren ||
+          //     typeof items[i].children === "undefined"
+          //   )
+          //     continue;
+          //   for (let j = 0; j < items[i].children.length; j++) {
+          //     if (items[i].children[j].canHaveChildren) return;
+          //   }
+          // }
 
           setItems(items);
         }}

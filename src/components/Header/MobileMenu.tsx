@@ -7,30 +7,10 @@ import {
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Button from "@ui/Button";
 import NavLink from "@ui/NavLink";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import React from "react";
-
-const menuVariants: Variants = {
-  open: {
-    scale: 1,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0.2,
-      duration: 0.4,
-    },
-  },
-  close: {
-    scale: 0,
-    opacity: 0,
-    transition: {
-      type: "spring",
-      bounce: 0.2,
-      duration: 0.4,
-    },
-  },
-};
+import { menuVariants } from "@ui/variants";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
