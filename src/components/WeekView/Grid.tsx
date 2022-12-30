@@ -1,5 +1,7 @@
+import clsx from "clsx";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useStore } from "@store/index";
+import { useDate } from "@hooks/useCurrentTime";
 import { WeekViewContext, WeekViewProvider } from "./Context";
 import CalendarEvent from "./Event";
 import Period from "./Period";
@@ -69,6 +71,8 @@ const Grid = () => {
     handleResize();
   }, [showWeekend, handleResize]);
 
+  const { date } = useDate();
+
   return (
     <div
       ref={ref}
@@ -84,7 +88,12 @@ const Grid = () => {
       {weekdays.map((v, i) => (
         <span
           key={i}
-          className="flex items-center justify-center border-b-[0.5px] border-gray-300 p-2 leading-none text-gray-600"
+          className={clsx(
+            "flex items-center justify-center border-b-[0.5px] border-gray-300 p-2 leading-none text-gray-600",
+            date.getDay() === i + 1
+              ? "text-text-black-100"
+              : "text-text-black-100/50",
+          )}
           style={{ gridRowStart: 1, gridColumnStart: i + 2 }}
         >
           {v}
@@ -198,7 +207,7 @@ const Grid = () => {
       </>
     )} */}
 
-      <Timeline gridHour={displayedHours} minuteHeight={minuteHeight} />
+      <Timeline minuteHeight={minuteHeight} />
 
       {/* {loading && (
       <div className="col-[2/-1] row-[2/-1] flex items-center justify-center">
