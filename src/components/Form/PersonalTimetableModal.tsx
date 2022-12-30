@@ -1,52 +1,228 @@
-import {
-  ArrowDownTrayIcon,
-  UserPlusIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
 import { DialogClose } from "@radix-ui/react-dialog";
 import Button from "@ui/Button";
 import {
   Modal,
   ModalContent,
   ModalControl,
-  ModalDescription,
   ModalTitle,
   ModalTrigger,
 } from "@ui/Modal";
-import { useState } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
+import type { Timetable } from "../../types/timetable";
+import Input from "@ui/Input";
+import { ColorInput } from "./ColorInput";
+import { trpc } from "../../utils/trpc";
+import {
+  Alert,
+  AlertAction,
+  AlertCancel,
+  AlertContent,
+  AlertDescription,
+  AlertTitle,
+  AlertTrigger,
+} from "@ui/Alert";
+import {
+  IconDownload,
+  IconEdit,
+  IconTrash,
+  IconUserPlus,
+  IconX,
+} from "@tabler/icons";
 
-const ImportPersonalModal = () => {
+interface Props {
+  timetable?: Timetable;
+  onAdd: (timetable: Timetable) => void;
+  onDelete?: () => void;
+}
+
+export type PersonalTimetableForm = Omit<
+  Timetable,
+  "lessons" | "modifications"
+>;
+
+/**
+ * Default import university is now HKUST, support for other universities will be added later
+ */
+const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
   const [open, setOpen] = useState(false);
 
+  const defaultValues = useMemo<PersonalTimetableForm>(
+    () => ({
+      university: "HKUST",
+      name: timetable?.name || "",
+      plannerURL: timetable?.plannerURL || "",
+      color:
+        timetable?.color ||
+        // https://stackoverflow.com/questions/5092808/how-do-i-randomly-generate-html-hex-color-codes-using-javascript
+        // Consider using hsl then convert to hex to generate more pelasing colors
+        "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0"),
+    }),
+    [timetable],
+  );
+
+  const {
+    reset,
+    control,
+    register,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PersonalTimetableForm>({
+    defaultValues,
+  });
+
+  // Reset form when modal is opened
+  useEffect(() => {
+    if (open) reset(defaultValues);
+  }, [open, reset, defaultValues]);
+
+  // Handle form submission
+  const plannerURL = useWatch({ control, name: "plannerURL" });
+
+  const { error, isFetching, refetch } = trpc.ical.getUSTLessons.useQuery(
+    { plannerURL: getValues("plannerURL") },
+    {
+      retry: false,
+      enabled: false,
+      onSuccess: ({ lessons }) => {
+        onAdd({
+          lessons,
+          plannerURL,
+          name: getValues("name"),
+          color: getValues("color"),
+          university: getValues("university"),
+        });
+        setOpen(false);
+      },
+    },
+  );
+
+  const onSubmit: SubmitHandler<PersonalTimetableForm> = () => {
+    refetch();
+  };
+
+  // Delete alert
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const controlledSetOpen: Dispatch<SetStateAction<boolean>> = (v) =>
+    !isFetching && setOpen(v);
+
   return (
-    <Modal open={open} onOpenChange={setOpen}>
+    <Modal open={open} onOpenChange={controlledSetOpen}>
       <ModalTrigger asChild>
-        <Button fullWidth>
-          <UserPlusIcon className="h-5 w-5" />
-          Personal Timetable
-        </Button>
+        {timetable ? (
+          <Button icon title="Edit personal timetable">
+            <IconEdit stroke={1.75} className="h-5 w-5" />
+          </Button>
+        ) : (
+          <Button fullWidth title="Add personal timetable">
+            <IconUserPlus stroke={1.75} className="h-5 w-5" />
+            Personal Timetable
+          </Button>
+        )}
       </ModalTrigger>
 
-      <ModalContent open={open} onOpenChange={setOpen}>
-        <ModalTitle>Import Personal Timetable</ModalTitle>
-        <ModalDescription>Description</ModalDescription>
+      <ModalContent open={open} onOpenChange={controlledSetOpen}>
+        <ModalTitle>
+          {timetable ? "Edit" : "Import"} Personal Timetable
+        </ModalTitle>
 
-        <div>Real Content</div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mt-4 mb-8 flex flex-col gap-2">
+            <Input
+              type="text"
+              label="Name"
+              labelId="name"
+              disabled={isFetching}
+              error={errors.name?.message}
+              {...register("name", {
+                required: "Please enter a name",
+                maxLength: { value: 40, message: "Your name is too long" },
+              })}
+            />
+            <Input
+              type="text"
+              labelId="planner-url"
+              label="Timetable Planner URL"
+              disabled={isFetching}
+              error={errors.plannerURL?.message}
+              {...register("plannerURL", {
+                required: "Please enter an URL",
+                pattern: {
+                  value:
+                    /^https:\/\/admlu65\.ust\.hk\/planner\/export\/.+\.ics$/,
+                  message: "Please enter a correct URL",
+                },
+              })}
+            />
+            <ColorInput name="color" control={control} disabled={isFetching} />
+          </div>
 
-        <ModalControl>
-          <DialogClose asChild>
-            <Button fullWidth>
-              <XMarkIcon className="h-5 w-5" />
-              Cancel
-            </Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button fullWidth>
-              <ArrowDownTrayIcon className="h-5 w-5" />
+          <ModalControl>
+            {timetable && (
+              <Alert open={openAlert} onOpenChange={setOpenAlert}>
+                <AlertTrigger asChild>
+                  <Button
+                    icon
+                    type="button"
+                    error
+                    onClick={() => setOpenAlert(true)}
+                    disabled={isFetching}
+                  >
+                    <IconTrash stroke={1.75} className="h-5 w-5" />
+                  </Button>
+                </AlertTrigger>
+
+                <AlertContent open={openAlert} onOpenChange={setOpenAlert}>
+                  <div className="flex flex-col gap-4">
+                    <AlertTitle>Are you sure?</AlertTitle>
+
+                    <AlertDescription>
+                      You are deleteing your personal timetable, this action
+                      cannot be undone.
+                    </AlertDescription>
+
+                    <div className="flex gap-2">
+                      <AlertCancel asChild>
+                        <Button fullWidth>Cancel</Button>
+                      </AlertCancel>
+
+                      <AlertAction asChild>
+                        <Button error fullWidth onClick={onDelete}>
+                          Delete
+                        </Button>
+                      </AlertAction>
+                    </div>
+                  </div>
+                </AlertContent>
+              </Alert>
+            )}
+
+            <DialogClose asChild>
+              <Button fullWidth type="button" disabled={isFetching}>
+                <IconX stroke={1.75} className="h-5 w-5" />
+                Cancel
+              </Button>
+            </DialogClose>
+
+            <Button
+              fullWidth
+              type="submit"
+              loading={isFetching}
+              disabled={isFetching}
+            >
+              <IconDownload stroke={1.75} className="h-5 w-5" />
               Save
             </Button>
-          </DialogClose>
-        </ModalControl>
+          </ModalControl>
+        </form>
       </ModalContent>
     </Modal>
   );

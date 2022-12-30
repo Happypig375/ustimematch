@@ -2,16 +2,20 @@ import clsx from "clsx";
 import { forwardRef } from "react";
 import type { TreeItemComponentProps } from "dnd-kit-sortable-tree";
 import { type TreeItemComponentType } from "../../types/tree";
-import {
-  Bars3Icon,
-  ChevronUpDownIcon,
-  FolderIcon,
-  FolderOpenIcon,
-} from "@heroicons/react/24/outline";
 import Button from "./Button";
+import {
+  IconChevronDown,
+  IconChevronUp,
+  IconEye,
+  IconEyeOff,
+  IconFolder,
+  IconGripVertical,
+} from "@tabler/icons";
 
+/* eslint-disable-next-line @typescript-eslint/ban-types */
 const TreeTimetableItem: TreeItemComponentType<{}, HTMLDivElement> = forwardRef<
   HTMLDivElement,
+  /* eslint-disable-next-line @typescript-eslint/ban-types */
   React.PropsWithChildren<TreeItemComponentProps<{}>>
 >((props, ref) => {
   const {
@@ -47,7 +51,7 @@ const TreeTimetableItem: TreeItemComponentType<{}, HTMLDivElement> = forwardRef<
       ref={wrapperRef}
       {...rest}
       className={clsx(
-        "list-none",
+        "list-none !transition-none",
         (clone || ghost) &&
           "rounded-md border border-border-gray-100 bg-bg-light-100",
         clone && "opacity-40 shadow-tree-item",
@@ -74,21 +78,42 @@ const TreeTimetableItem: TreeItemComponentType<{}, HTMLDivElement> = forwardRef<
         {!clone &&
           !!childCount &&
           (collapsed ? (
-            <FolderIcon className="h-5 w-5" />
+            <IconFolder stroke={1.75} className="h-5 w-5" />
           ) : (
-            <FolderOpenIcon className="h-5 w-5" />
+            <IconFolder stroke={1.75} className="h-5 w-5" />
           ))}
 
         {props.children}
-        {!disableSorting && (
+
+        {/* Spacer */}
+        <div className="flex-grow" />
+
+        <Button icon plain>
+          <IconEye stroke={1.75} className="h-5 w-5" />
+          {/* <IconEyeOff stroke={1.5} className="h-5 w-5" /> */}
+          {/* <TbEye /> */}
+          {/* <TbEyeOff /> */}
+        </Button>
+
+        {!clone && !!childCount && (
+          <Button icon plain onClick={onCollapse}>
+            {collapsed ? (
+              <IconChevronDown stroke={1.75} className="h-5 w-5" />
+            ) : (
+              <IconChevronUp stroke={1.75} className="h-5 w-5" />
+            )}
+          </Button>
+        )}
+
+        {!disableSorting && showDragHandle && (
           // Only draggable from handle (prevent mobile scrolling issue)
-          <div
+
+          <IconGripVertical
             {...props.handleProps}
-            className="ml-auto cursor-move touch-none"
+            stroke={1.75}
+            className="h-4 w-4 cursor-move touch-none"
             onClick={(e) => e.stopPropagation()}
-          >
-            <Bars3Icon className="h-4 w-4" />
-          </div>
+          />
         )}
       </div>
     </li>

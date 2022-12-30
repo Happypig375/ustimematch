@@ -1,11 +1,12 @@
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-
 import { trpc } from "../utils/trpc";
-
-import "../styles/globals.css";
 import Head from "next/head";
+import { Inter } from "@next/font/google";
+import "../styles/globals.css";
+
+const inter = Inter();
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -21,7 +22,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           content="HKUST Timetable utilities, share and store timetables, search for common time slots, and more to come!"
         />
       </Head>
-      <Component {...pageProps} />
+      <main className={inter.className}>
+        <Component {...pageProps} />
+      </main>
     </SessionProvider>
   );
 };

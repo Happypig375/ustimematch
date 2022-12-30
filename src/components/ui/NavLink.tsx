@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import React from "react";
+import { IconExternalLink } from "@tabler/icons";
 
 interface Props
   extends DetailedHTMLProps<
@@ -35,9 +35,7 @@ const NavLink = React.forwardRef<HTMLAnchorElement, Props>(
       {icon}
       <div className={clsx("flex items-center", external && "gap-1")}>
         {children}
-        {external && (
-          <ArrowTopRightOnSquareIcon className="h-[0.9rem] w-[0.9rem]" />
-        )}
+        {external && <IconExternalLink stroke={1.75} className="h-4 w-4" />}
       </div>
     </Link>
   ),

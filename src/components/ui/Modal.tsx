@@ -33,22 +33,12 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
         onOpenChange(false);
     };
 
-    const Content = () => (
-      <div
-        className="flex flex-col gap-4"
-        // Prevent drag unless on drag handler
-        onPointerDownCapture={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
-    );
-
     return (
       <AnimatePresence>
         {open && (
           <DialogPrimitive.Portal forceMount>
             <MotionDialogOverlay
-              className="fixed inset-0 bg-zinc-200/60"
+              className="fixed inset-0 bg-zinc-200/40"
               exit="close"
               animate="open"
               initial="close"
@@ -71,8 +61,9 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               animate="open"
               initial="close"
               variants={matchDesktop ? modalVariants : drawerVariants}
+              // onOpenAutoFocus={(e) => e.preventDefault()}
               className={clsx(
-                "fixed bg-bg-light-100 shadow-xl",
+                "fixed overflow-auto bg-bg-light-100 shadow-xl",
                 // Mobile drawer styles
                 "inset-x-0 bottom-0 rounded-t-xl",
                 // Desktop modal styles
@@ -89,9 +80,9 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               {matchDesktop ? (
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="w-[clamp(500px,50%,600px)] rounded-xl bg-bg-light-100 p-6 shadow-xl"
+                  className="max-h-[80vh] w-[clamp(475px,50%,525px)] overflow-auto rounded-xl bg-bg-light-100 p-6 shadow-xl"
                 >
-                  <Content />
+                  {children}
                 </div>
               ) : (
                 <>
@@ -100,8 +91,12 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                     <div className="mx-auto h-[6px] w-14 rounded-full bg-gray-100" />
                   </div>
 
-                  <div className="px-6 pb-6">
-                    <Content />
+                  {/* Prevent drag unless on drag handler */}
+                  <div
+                    onPointerDownCapture={(e) => e.stopPropagation()}
+                    className="max-h-[80vh] overflow-auto px-6 pb-6"
+                  >
+                    {children}
                   </div>
                 </>
               )}

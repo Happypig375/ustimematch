@@ -1,10 +1,10 @@
 import { router } from "../trpc";
 import { authRouter } from "./auth";
-import { exampleRouter } from "./example";
+import { icalRouter } from "./ical";
 
 export const appRouter = router({
-  example: exampleRouter,
   auth: authRouter,
+  ical: icalRouter,
 });
 
 // export type definition of API

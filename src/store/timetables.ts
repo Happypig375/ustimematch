@@ -1,11 +1,13 @@
 import { type StateCreator } from "zustand";
-import { type Timetable } from "../types/timetable";
+import { type TimetableConfig, type Timetable } from "../types/timetable";
 import { type StatesSlice } from "./states";
 
 export interface TimetablesSlice {
   timetables: Timetable[];
   personalTimetable: Timetable | null;
-  setPersonalTimetable: (timetable: Timetable) => void;
+  setPersonalTimetable: (timetable: Timetable | null) => void;
+  personalTimetableConfig: TimetableConfig;
+  togglePersonalTimetableVisible: () => void;
 }
 
 export const createTimetableSlice: StateCreator<
@@ -18,10 +20,18 @@ export const createTimetableSlice: StateCreator<
   [],
   TimetablesSlice
 > = (set) => ({
-  personalTimetable: null,
   timetables: [],
+  personalTimetable: null,
   setPersonalTimetable: (timetable) =>
     set((state) => {
       state.personalTimetable = timetable;
+    }),
+  personalTimetableConfig: {
+    visible: true,
+  },
+  togglePersonalTimetableVisible: () =>
+    set((state) => {
+      state.personalTimetableConfig.visible =
+        !state.personalTimetableConfig.visible;
     }),
 });

@@ -1,9 +1,3 @@
-import {
-  CalendarDaysIcon,
-  EllipsisHorizontalIcon,
-  QuestionMarkCircleIcon,
-  InformationCircleIcon,
-} from "@heroicons/react/24/outline";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Button from "@ui/Button";
 import NavLink from "@ui/NavLink";
@@ -11,6 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import React from "react";
 import { menuVariants } from "@ui/variants";
+import {
+  IconCalendarTime,
+  IconDots,
+  IconInfoCircle,
+  IconQuestionCircle,
+} from "@tabler/icons";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
@@ -19,7 +19,7 @@ const MobileMenu = () => {
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger asChild>
         <Button icon className="sm:hidden" aria-label="Open navigation menu">
-          <EllipsisHorizontalIcon className="h-5 w-5" />
+          <IconDots stroke={1.75} className="h-5 w-5" />
         </Button>
       </DropdownMenu.Trigger>
 
@@ -45,7 +45,7 @@ const MobileMenu = () => {
                   <NavLink
                     inMenu
                     href="/about"
-                    icon={<InformationCircleIcon className="h-4 w-4" />}
+                    icon={<IconInfoCircle stroke={1.75} className="h-4 w-4" />}
                   >
                     About
                   </NavLink>
@@ -55,7 +55,9 @@ const MobileMenu = () => {
                   <NavLink
                     inMenu
                     href="/tutorial"
-                    icon={<QuestionMarkCircleIcon className="h-4 w-4" />}
+                    icon={
+                      <IconQuestionCircle stroke={1.75} className="h-4 w-4" />
+                    }
                   >
                     Tutorial
                   </NavLink>
@@ -66,7 +68,9 @@ const MobileMenu = () => {
                     inMenu
                     external
                     href="https://admlu65.ust.hk"
-                    icon={<CalendarDaysIcon className="h-4 w-4" />}
+                    icon={
+                      <IconCalendarTime stroke={1.75} className="h-4 w-4" />
+                    }
                   >
                     Timetable Planner
                   </NavLink>

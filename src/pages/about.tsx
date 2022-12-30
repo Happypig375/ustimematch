@@ -1,8 +1,8 @@
-import { CogIcon } from "@heroicons/react/24/outline";
 import Paragraph from "@ui/Paragraph";
 import Header from "../components/Header";
 import { env } from "../env/client.mjs";
 import { type NextPage } from "next";
+import { IconSettings } from "@tabler/icons";
 
 const About: NextPage = () => {
   return (
@@ -32,7 +32,8 @@ const About: NextPage = () => {
 
           {/* Version number */}
           <footer className="flex items-center gap-1 text-sm font-medium tracking-wide">
-            <CogIcon className="h-5 w-5" />v{env.NEXT_PUBLIC_VERSION}
+            <IconSettings stroke={1.75} className="h-5 w-5" />v
+            {env.NEXT_PUBLIC_VERSION}
           </footer>
         </div>
       </div>

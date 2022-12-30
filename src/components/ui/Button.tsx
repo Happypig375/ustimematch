@@ -7,7 +7,9 @@ interface Props
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
+  plain?: boolean;
   icon?: boolean;
+  error?: boolean;
   toggle?: boolean;
   loading?: boolean;
   fullWidth?: boolean;
@@ -15,17 +17,18 @@ interface Props
 
 /**
  * Button component
- * @param   {boolean} icon
+ * @param   {boolean} plain     Remove border and background
  * @param   {boolean} toggle    Control the style of toggle button
  * @param   {boolean} loading   Whether button is loading (should be used with disabled)
- * @param   {boolean} fullWidth
  */
 const Button = React.forwardRef<HTMLButtonElement, Props>(
   (
     {
       children,
       className,
+      plain = false,
       icon = false,
+      error = false,
       toggle = false,
       loading = false,
       disabled = false,
@@ -39,10 +42,14 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       {...props}
       disabled={disabled}
       className={clsx(
-        "flex h-10 items-center justify-center gap-2 rounded-md border border-border-gray-100 bg-bg-light-100 text-text-black-100 transition-all active:bg-bg-light-200 enabled:hover:border-border-gray-200 enabled:hover:text-text-black-200 disabled:cursor-not-allowed disabled:bg-bg-light-400",
+        "flex h-10 items-center justify-center gap-2 rounded-md border border-border-gray-100 bg-bg-light-100 text-text-black-100 transition-all active:bg-bg-light-200 enabled:hover:border-border-gray-200 enabled:hover:text-text-black-200 disabled:cursor-not-allowed disabled:bg-bg-light-300",
         fullWidth && "w-full",
         icon ? "w-10 flex-shrink-0" : "px-4",
         toggle && "bg-bg-light-400 active:bg-bg-light-400",
+        error &&
+          "text-red-600 focus-visible:ring-red-200/80 focus-visible:ring-offset-red-400 enabled:hover:text-red-700",
+        plain &&
+          "h-auto w-auto border-none bg-transparent opacity-80 enabled:hover:opacity-100",
         className,
       )}
     >

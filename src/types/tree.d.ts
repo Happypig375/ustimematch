@@ -1,7 +1,8 @@
 // https://github.com/Shaddix/dnd-kit-sortable-tree/blob/master/src/types.ts
 // Copied into local directory beaucase the package doesn't export the required type: TreeItemComponentType
+/* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-explicit-any */
 import type { MutableRefObject, RefAttributes } from "react";
-import { UniqueIdentifier } from "@dnd-kit/core";
+import { type UniqueIdentifier } from "@dnd-kit/core";
 
 export type TreeItem<T> = {
   children?: TreeItem<T>[];

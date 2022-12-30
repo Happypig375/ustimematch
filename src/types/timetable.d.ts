@@ -21,25 +21,34 @@ type Lessons = [
   Lesson[],
 ];
 
+export type University =
+  | "HKUST"
+  | "HKU"
+  | "CUHK"
+  | "POLYU"
+  | "CITYU"
+  | "HKBU"
+  | "EDUHK"
+  | "HKMU";
+
+interface Remark {
+  index: number;
+  value: string;
+}
+
 interface Modifications {
-  additional: Lessons;
-  remarks: string;
+  add: Lessons;
+  // Indexs of lessons to hide (ignoring add)
+  hide: number[];
+  remarks: Remark[];
 }
 
 interface BaseTimetable {
   name: string;
   color: string;
   lessons: Lessons;
-  modifications: Modifications;
-  university:
-    | "HKUST"
-    | "HKU"
-    | "CUHK"
-    | "POLYU"
-    | "CITYU"
-    | "HKBU"
-    | "EDUHK"
-    | "HKMU";
+  modifications?: Modifications;
+  university: University;
 }
 
 interface HKUSTTimetable extends BaseTimetable {
@@ -49,3 +58,7 @@ interface HKUSTTimetable extends BaseTimetable {
 
 // Can be constructed as union for additional universities
 export type Timetable = HKUSTTimetable;
+
+interface TimetableConfig {
+  visible: boolean;
+}

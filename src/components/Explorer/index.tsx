@@ -1,19 +1,13 @@
 import Button from "@ui/Button";
 import { useStore } from "../../store";
-import {
-  ShareIcon,
-  FolderPlusIcon,
-  SquaresPlusIcon,
-  ArrowsUpDownIcon,
-} from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import PersonalTimetable from "./PersonalTimetable";
 import TimetablesTree from "./TimetablesTree";
 import { explorerVariants } from "@ui/variants";
+import { IconFolderPlus, IconPlus, IconSwitchVertical } from "@tabler/icons";
 
 const Explorer = () => {
   const showExplorer = useStore.use.showExplorer();
-  const personalTimetable = useStore.use.personalTimetable();
   const explorerReorderMode = useStore.use.explorerReorderMode();
   const toggleExplorerReorderMode = useStore.use.toggleExplorerReorderMode();
 
@@ -34,7 +28,7 @@ const Explorer = () => {
               title="Import"
               // onClick={toggleShowImportModal}
             >
-              <SquaresPlusIcon className="h-5 w-5" />
+              <IconPlus stroke={1.75} className="h-5 w-5" />
               Import
             </Button>
             <Button
@@ -42,7 +36,7 @@ const Explorer = () => {
               icon
               // onClick={toggleAddFolderModal}
             >
-              <FolderPlusIcon className="h-5 w-5" />
+              <IconFolderPlus stroke={1.75} className="h-5 w-5" />
             </Button>
 
             <Button
@@ -51,13 +45,13 @@ const Explorer = () => {
               toggle={explorerReorderMode}
               onClick={toggleExplorerReorderMode}
             >
-              <ArrowsUpDownIcon className="h-5 w-5" />
+              <IconSwitchVertical stroke={1.75} className="h-5 w-5" />
             </Button>
           </div>
 
           <TimetablesTree />
 
-          <PersonalTimetable timetable={personalTimetable} />
+          <PersonalTimetable />
         </motion.div>
       )}
     </AnimatePresence>
