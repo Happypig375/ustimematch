@@ -1,6 +1,6 @@
-import Header from "../components/Header";
 import * as Separator from "@radix-ui/react-separator";
 import { type NextPage } from "next";
+import Header from "@components/Header";
 
 const NotFound: NextPage = () => {
   return (

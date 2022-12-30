@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
 import ICAL from "ical.js";
+import { z } from "zod";
 import { type Lessons } from "../../../types/timetable";
+import { router, publicProcedure } from "../trpc";
 
 export const icalRouter = router({
   getUSTLessons: publicProcedure
@@ -17,6 +17,7 @@ export const icalRouter = router({
       const icalBlob = await fetch(plannerURL);
       const ical = await icalBlob.text();
 
+      // TODO: Add error descriptions (parsing error, fetching error)
       const jcal = ICAL.parse(ical);
       const comp = new ICAL.Component(jcal);
       const vevents = comp.getAllSubcomponents("vevent");

@@ -1,18 +1,23 @@
-import Button from "@ui/Button";
-import { useStore } from "../../store";
-import { motion } from "framer-motion";
-import { chevronVariants } from "@ui/variants";
 import {
   IconChevronRight,
   IconClock,
   IconColumns,
+  IconColumnsOff,
   IconRefresh,
   IconShare,
 } from "@tabler/icons";
+import { motion } from "framer-motion";
+import Button from "@ui/Button";
+import { chevronVariants } from "@ui/variants";
+import { useStore } from "@store/index";
+import { WeekViewContext, WeekViewProvider } from "./Context";
+import Grid from "./Grid";
 
 const WeekView = () => {
   const showExplorer = useStore.use.showExplorer();
   const toggleShowExplorer = useStore.use.toggleShowExplorer();
+  const showWeekend = useStore.use.showWeekend();
+  const toggleShowWeekend = useStore.use.toggleShowWeekend();
 
   return (
     <div className="flex h-full min-w-full flex-grow flex-col sm:min-w-[unset]">
@@ -28,13 +33,12 @@ const WeekView = () => {
         </Button>
 
         <div className="flex gap-4 overflow-x-auto">
-          <Button
-            icon
-            title="Toggle Weekend"
-            // onClick={toggleShowWeekend}
-          >
-            <IconColumns stroke={1.75} className="h-5 w-5" />
-            {/* <IconColumnsOff stroke={1.75} className="h-5 w-5" /> */}
+          <Button icon title="Toggle Weekend" onClick={toggleShowWeekend}>
+            {showWeekend ? (
+              <IconColumns stroke={1.75} className="h-5 w-5" />
+            ) : (
+              <IconColumnsOff stroke={1.75} className="h-5 w-5" />
+            )}
           </Button>
 
           <Button
@@ -62,9 +66,10 @@ const WeekView = () => {
         </div>
       </div>
 
-      {/* <CalendarGrid /> */}
-
-      {/* <ShareExportModal open={showShareModal} close={toggleShareModal} /> */}
+      {/* TODO: Using react-window to render grid */}
+      <WeekViewProvider>
+        <Grid />
+      </WeekViewProvider>
     </div>
   );
 };

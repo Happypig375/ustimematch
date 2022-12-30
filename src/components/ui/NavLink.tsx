@@ -1,8 +1,8 @@
+import { IconExternalLink } from "@tabler/icons";
+import clsx from "clsx";
 import Link from "next/link";
 import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
-import clsx from "clsx";
 import React from "react";
-import { IconExternalLink } from "@tabler/icons";
 
 interface Props
   extends DetailedHTMLProps<

@@ -1,9 +1,9 @@
-import { HexColorInput, HexColorPicker } from "react-colorful";
-import { useController, type UseControllerProps } from "react-hook-form";
-import { type PersonalTimetableForm } from "./PersonalTimetableModal";
 import * as Label from "@radix-ui/react-label";
 import clsx from "clsx";
-import { borderColor, textColor } from "../../utils/shade";
+import { HexColorInput, HexColorPicker } from "react-colorful";
+import { useController, type UseControllerProps } from "react-hook-form";
+import { borderColor, textColor } from "@utils/shade";
+import { type PersonalTimetableForm } from "./PersonalTimetableModal";
 
 interface ColorInputProps
   extends UseControllerProps<PersonalTimetableForm, "color"> {

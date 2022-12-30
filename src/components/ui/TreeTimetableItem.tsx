@@ -1,8 +1,3 @@
-import clsx from "clsx";
-import { forwardRef } from "react";
-import type { TreeItemComponentProps } from "dnd-kit-sortable-tree";
-import { type TreeItemComponentType } from "../../types/tree";
-import Button from "./Button";
 import {
   IconChevronDown,
   IconChevronUp,
@@ -11,6 +6,11 @@ import {
   IconFolder,
   IconGripVertical,
 } from "@tabler/icons";
+import clsx from "clsx";
+import type { TreeItemComponentProps } from "dnd-kit-sortable-tree";
+import { forwardRef } from "react";
+import { type TreeItemComponentType } from "../../types/tree";
+import Button from "./Button";
 
 /* eslint-disable-next-line @typescript-eslint/ban-types */
 const TreeTimetableItem: TreeItemComponentType<{}, HTMLDivElement> = forwardRef<

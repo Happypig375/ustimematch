@@ -1,14 +1,14 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import clsx from "clsx";
+import { motion, type PanInfo, AnimatePresence } from "framer-motion";
+import { type DetailedHTMLProps, forwardRef, type HTMLAttributes } from "react";
 import {
   drawerVariants,
   modalVariants,
   drawerOverlayVariants,
   modalOverlayVariants,
 } from "@ui/variants";
-import clsx from "clsx";
-import { motion, type PanInfo, AnimatePresence } from "framer-motion";
-import { type DetailedHTMLProps, forwardRef, type HTMLAttributes } from "react";
-import useMediaQuery from "../../hooks/useMediaQuery";
+import useMediaQuery from "@hooks/useMediaQuery";
 
 const MotionDialogContent = motion(DialogPrimitive.Content);
 const MotionDialogOverlay = motion(DialogPrimitive.Overlay);

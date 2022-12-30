@@ -1,8 +1,8 @@
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
-import { modalVariants, modalOverlayVariants } from "@ui/variants";
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { forwardRef } from "react";
+import { modalVariants, modalOverlayVariants } from "@ui/variants";
 
 const MotionAlertOverlay = motion(AlertDialogPrimitive.Overlay);
 const MotionAlertContent = motion(AlertDialogPrimitive.Content);

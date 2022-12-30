@@ -1,6 +1,3 @@
-import Paragraph from "@ui/Paragraph";
-import Header from "../components/Header";
-import Button from "@ui/Button";
 import {
   ArrowPathIcon,
   Bars2Icon,
@@ -12,6 +9,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { ClockIcon as SolidClockIcon } from "@heroicons/react/24/solid";
 import { type NextPage } from "next";
+import Header from "@components/Header";
+import Button from "@ui/Button";
+import Paragraph from "@ui/Paragraph";
 
 const Tutorial: NextPage = () => {
   return (

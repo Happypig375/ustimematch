@@ -1,5 +1,4 @@
 // https://docs.pmnd.rs/zustand/guides/auto-generating-selectors
-
 import type { StoreApi, UseBoundStore } from "zustand";
 
 type WithSelectors<S> = S extends { getState: () => infer T }

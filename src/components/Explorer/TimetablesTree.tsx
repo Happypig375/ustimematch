@@ -1,11 +1,11 @@
-import { useState, forwardRef } from "react";
 import {
   SortableTree,
   type TreeItemComponentProps,
   type TreeItems,
 } from "dnd-kit-sortable-tree";
+import { useState, forwardRef } from "react";
 import TreeTimetableItem from "@ui/TreeTimetableItem";
-import { useStore } from "../../store";
+import { useStore } from "@store/index";
 
 type MinimalTreeItemData = {
   value: string;

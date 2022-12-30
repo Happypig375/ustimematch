@@ -1,7 +1,7 @@
-import NavLink from "@ui/NavLink";
+import * as Separator from "@radix-ui/react-separator";
 import Link from "next/link";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
-import * as Separator from "@radix-ui/react-separator";
+import NavLink from "@ui/NavLink";
 import MobileMenu from "./MobileMenu";
 
 const Header = ({

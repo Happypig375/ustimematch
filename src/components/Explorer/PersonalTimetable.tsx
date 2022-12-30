@@ -1,8 +1,8 @@
-import Button from "@ui/Button";
-import ColorChip from "./ColorChip";
-import PersonalTimetableModal from "../Form/PersonalTimetableModal";
-import { useStore } from "../../store";
 import { IconEye, IconEyeOff } from "@tabler/icons";
+import PersonalTimetableModal from "@components/Form/PersonalTimetableModal";
+import Button from "@ui/Button";
+import { useStore } from "@store/index";
+import ColorChip from "./ColorChip";
 
 const PersonalTimetable = () => {
   const personalTimetable = useStore.use.personalTimetable();
@@ -37,9 +37,9 @@ const PersonalTimetable = () => {
               </Button>
 
               <PersonalTimetableModal
-                onAdd={(timetable) => setPersonalTimetable(timetable)}
                 timetable={personalTimetable}
                 onDelete={() => setPersonalTimetable(null)}
+                onAdd={(timetable) => setPersonalTimetable(timetable)}
               />
             </div>
           </div>

@@ -1,16 +1,16 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import Button from "@ui/Button";
-import NavLink from "@ui/NavLink";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-import React from "react";
-import { menuVariants } from "@ui/variants";
 import {
   IconCalendarTime,
   IconDots,
   IconInfoCircle,
   IconQuestionCircle,
 } from "@tabler/icons";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import React from "react";
+import Button from "@ui/Button";
+import NavLink from "@ui/NavLink";
+import { menuVariants } from "@ui/variants";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);

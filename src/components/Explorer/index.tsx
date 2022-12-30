@@ -1,10 +1,10 @@
-import Button from "@ui/Button";
-import { useStore } from "../../store";
+import { IconFolderPlus, IconPlus, IconSwitchVertical } from "@tabler/icons";
 import { AnimatePresence, motion } from "framer-motion";
+import Button from "@ui/Button";
+import { explorerVariants } from "@ui/variants";
+import { useStore } from "@store/index";
 import PersonalTimetable from "./PersonalTimetable";
 import TimetablesTree from "./TimetablesTree";
-import { explorerVariants } from "@ui/variants";
-import { IconFolderPlus, IconPlus, IconSwitchVertical } from "@tabler/icons";
 
 const Explorer = () => {
   const showExplorer = useStore.use.showExplorer();
@@ -19,7 +19,7 @@ const Explorer = () => {
           animate="open"
           initial="close"
           variants={explorerVariants}
-          className="flex h-full w-[clamp(256px,20%,512px)] flex-col border-r border-border-gray-100"
+          className="flex h-full w-[clamp(256px,20%,512px)] flex-shrink-0 flex-col border-r border-border-gray-100"
         >
           {/* Buttons */}
           <div className="flex gap-2 border-b border-border-gray-100 px-4 py-2">

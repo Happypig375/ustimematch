@@ -1,8 +1,8 @@
-import Paragraph from "@ui/Paragraph";
-import Header from "../components/Header";
-import { env } from "../env/client.mjs";
-import { type NextPage } from "next";
 import { IconSettings } from "@tabler/icons";
+import { type NextPage } from "next";
+import Header from "@components/Header";
+import Paragraph from "@ui/Paragraph";
+import { env } from "../env/client.mjs";
 
 const About: NextPage = () => {
   return (

@@ -1,12 +1,11 @@
 import { DialogClose } from "@radix-ui/react-dialog";
-import Button from "@ui/Button";
 import {
-  Modal,
-  ModalContent,
-  ModalControl,
-  ModalTitle,
-  ModalTrigger,
-} from "@ui/Modal";
+  IconDownload,
+  IconEdit,
+  IconTrash,
+  IconUserPlus,
+  IconX,
+} from "@tabler/icons";
 import {
   type Dispatch,
   type SetStateAction,
@@ -15,10 +14,7 @@ import {
   useState,
 } from "react";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
-import type { Timetable } from "../../types/timetable";
-import Input from "@ui/Input";
-import { ColorInput } from "./ColorInput";
-import { trpc } from "../../utils/trpc";
+import { toast } from "react-hot-toast";
 import {
   Alert,
   AlertAction,
@@ -28,13 +24,18 @@ import {
   AlertTitle,
   AlertTrigger,
 } from "@ui/Alert";
+import Button from "@ui/Button";
+import Input from "@ui/Input";
 import {
-  IconDownload,
-  IconEdit,
-  IconTrash,
-  IconUserPlus,
-  IconX,
-} from "@tabler/icons";
+  Modal,
+  ModalContent,
+  ModalControl,
+  ModalTitle,
+  ModalTrigger,
+} from "@ui/Modal";
+import { trpc } from "@utils/trpc";
+import type { Timetable } from "../../types/timetable";
+import { ColorInput } from "./ColorInput";
 
 interface Props {
   timetable?: Timetable;
@@ -87,11 +88,12 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
   const plannerURL = useWatch({ control, name: "plannerURL" });
 
   const { error, isFetching, refetch } = trpc.ical.getUSTLessons.useQuery(
-    { plannerURL: getValues("plannerURL") },
+    { plannerURL },
     {
       retry: false,
       enabled: false,
       onSuccess: ({ lessons }) => {
+        // Known issue: Using setState will cause animation to fail
         onAdd({
           lessons,
           plannerURL,
@@ -99,7 +101,12 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
           color: getValues("color"),
           university: getValues("university"),
         });
+
         setOpen(false);
+      },
+      onError: (err) => {
+        console.error(err);
+        toast.error("Failed to import timetable, please check your URL.");
       },
     },
   );
@@ -194,6 +201,7 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
                         <Button fullWidth>Cancel</Button>
                       </AlertCancel>
 
+                      {/* Known issue: This will close two modals at the same time and cause animation to fail */}
                       <AlertAction asChild>
                         <Button error fullWidth onClick={onDelete}>
                           Delete
