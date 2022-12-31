@@ -4,12 +4,10 @@ export const hour = (time: string): number =>
 export const min = (time: string): number =>
   parseInt(time.split(":")[1] as string);
 
-// convert 24 hour to 12 hour time
+// convert 24 hour to 12 hour time (e.g. 8:00 am)
 export const parseTime = (time: string) => {
   const h = hour(time);
   const m = time.split(":")[1];
 
-  return `${h % 12 || 12}:${m ? m.toString().padStart(2, "0") : 0} ${
-    h < 12 ? "am" : "pm"
-  }`;
+  return `${h % 12 || 12}:${m} ${h < 12 ? "am" : "pm"}`;
 };

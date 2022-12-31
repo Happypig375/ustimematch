@@ -1,15 +1,12 @@
 import { useContext } from "react";
-import { useDate } from "@hooks/useCurrentTime";
+import useDate from "@hooks/useDate";
 import { WeekViewContext } from "./Context";
 
-type Props = {
-  minuteHeight: number;
-};
-
-const Timeline = ({ minuteHeight }: Props) => {
+const Timeline = () => {
   const { date } = useDate();
 
-  const { showWeekend, displayedHours } = useContext(WeekViewContext);
+  const { showWeekend, displayedHours, minuteHeight } =
+    useContext(WeekViewContext);
 
   const weekday = (date.getDay() + 6) % 7;
 
@@ -24,32 +21,26 @@ const Timeline = ({ minuteHeight }: Props) => {
     (displayedHours[displayedHours.length - 1] as number) < date.getHours() ||
     (!showWeekend && weekday > 4);
 
-  return (
-    <>
-      {!overflow && (
-        <div
-          className={`${
-            // prevent initial flash
-            minuteHeight ? "visible" : "hidden"
-          } pointer-events-none relative z-[5] -ml-[3px] overflow-y-hidden md:-ml-[4px]`}
-          style={{
-            gridColumnStart,
-            gridRow: "2/-1",
-          }}
-        >
-          <div
-            style={{ top: minSinceBegin * minuteHeight }}
-            className="bg-brand absolute -mt-[1.25px] h-[2.5px] w-full rounded-full md:-mt-[1.5px] md:h-[3px]"
-          />
+  // check minuteHeight for preventing initial flash
+  return !overflow && minuteHeight ? (
+    <div
+      className="pointer-events-none relative z-[5] -ml-[3px] overflow-y-hidden sm:-ml-[4px]"
+      style={{
+        gridColumnStart,
+        gridRow: "2/-1",
+      }}
+    >
+      <div
+        style={{ top: minSinceBegin * minuteHeight }}
+        className="bg-brand absolute -mt-[1.25px] h-[2.5px] w-full rounded-full sm:-mt-[1.5px] sm:h-[3px]"
+      />
 
-          <div
-            style={{ top: minSinceBegin * minuteHeight }}
-            className="bg-brand absolute -mt-[3px] h-[6px] w-[6px] rounded-full md:-mt-[4px] md:h-[8px] md:w-[8px]"
-          />
-        </div>
-      )}
-    </>
-  );
+      <div
+        style={{ top: minSinceBegin * minuteHeight }}
+        className="bg-brand absolute -mt-[3px] h-[6px] w-[6px] rounded-full sm:-mt-[4px] sm:h-[8px] sm:w-[8px]"
+      />
+    </div>
+  ) : null;
 };
 
 export default Timeline;

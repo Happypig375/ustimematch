@@ -29,7 +29,7 @@ export const explorerVariants: Variants = {
     transition: {
       type: "spring",
       bounce: 0,
-      duration: 0.4,
+      duration: 2,
     },
   },
   close: {
@@ -38,7 +38,7 @@ export const explorerVariants: Variants = {
     transition: {
       type: "spring",
       bounce: 0,
-      duration: 0.4,
+      duration: 2,
     },
   },
 };

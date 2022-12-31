@@ -13,7 +13,6 @@ type Props = {
   marginLeft?: number;
   children?: React.ReactNode;
   onClick?: () => void;
-  minuteHeight: number;
 };
 
 // const HOVER_MARGIN = 12;
@@ -26,9 +25,8 @@ const GridPeriod = ({
   marginLeft,
   children,
   onClick,
-  minuteHeight,
 }: Props) => {
-  const { showWeekend, displayedHours, minPerRow } =
+  const { showWeekend, displayedHours, minPerRow, minuteHeight } =
     useContext(WeekViewContext);
 
   // if period reach last row
@@ -73,7 +71,8 @@ const GridPeriod = ({
       : displayedHours.length * 2 + 2;
 
   // hover effect
-  const matchDesktop = useMediaQuery("(pointer: fine)");
+  const matchTouch = useMediaQuery("(pointer: fine)");
+  const matchDesktop = useMediaQuery("(min-width: 640px)");
 
   const HOVER_MARGIN = (minPerRow * minuteHeight) / (matchDesktop ? 1.5 : 1.25);
 
@@ -112,7 +111,8 @@ const GridPeriod = ({
             type: "spring",
             duration: 0.3,
             bounce: 0,
-            delay: matchDesktop ? 0 : 2,
+            // Delay hover exit for better viewing on mobile devices
+            delay: matchTouch ? 0 : 2,
           },
         },
       }}

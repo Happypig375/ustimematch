@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import Button from "@ui/Button";
 import { chevronVariants } from "@ui/variants";
 import { useStore } from "@store/index";
-import { WeekViewContext, WeekViewProvider } from "./Context";
+import { WeekViewProvider } from "./Context";
 import Grid from "./Grid";
 
 const WeekView = () => {
@@ -66,7 +66,6 @@ const WeekView = () => {
         </div>
       </div>
 
-      {/* TODO: Using react-window to render grid */}
       <WeekViewProvider>
         <Grid />
       </WeekViewProvider>

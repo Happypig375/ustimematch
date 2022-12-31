@@ -27,6 +27,10 @@ export const icalRouter = router({
       for (let i = 0; i < vevents.length; i++) {
         const event = new ICAL.Event(vevents[i]);
 
+        // https://kewisch.github.io/ical.js/api/ICAL.Time.html#adjust
+        // Timetable Planner minute percision is xx:00 or xx:30, but lessons actually ends on xx:50 and xx:20
+        event.endDate.adjust(0, 0, -10, 0);
+
         // https://kewisch.github.io/ical.js/api/ICAL.Time.html#.weekDay
         // dayOfWeek(2): Change start to Monday (1-indexed)
         // - 1: Change to 0-indexed
@@ -34,9 +38,15 @@ export const icalRouter = router({
           name: event.summary,
           venue: event.location,
           description: event.description,
-          begin: event.startDate.hour + ":" + event.startDate.minute,
-          // Timetable Planner minute percision is xx:00 or xx:30, but lessons actually ends on xx:50 and xx:20
-          end: event.endDate.hour + ":" + (event.endDate.minute - 10),
+          // Ensuring date is in HH:MM format
+          begin:
+            event.startDate.hour.toString().padStart(2, "0") +
+            ":" +
+            event.startDate.minute.toString().padStart(2, "0"),
+          end:
+            event.endDate.hour.toString().padStart(2, "0") +
+            ":" +
+            event.endDate.minute.toString().padStart(2, "0"),
         });
       }
 

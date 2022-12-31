@@ -13,7 +13,6 @@ type Props = {
 
   // timetableName: string;
 
-  minuteHeight: number;
   // openModal: (name: string, lsn: Lesson) => void;
 };
 
@@ -21,10 +20,9 @@ const CalendarEvent = ({
   weekday,
   lesson: { begin, end, description, venue, name },
   color,
-  // timetableName,
-  // openModal,
-  minuteHeight,
-}: Props) => {
+}: // timetableName,
+// openModal,
+Props) => {
   const {
     showWeekend,
     cols,
@@ -34,6 +32,7 @@ const CalendarEvent = ({
     weekdays,
     personalTimetable,
     personalTimetableConfig,
+    minuteHeight,
   } = useContext(WeekViewContext);
 
   // const toggleShowDetailsModal = () =>
@@ -76,17 +75,16 @@ const CalendarEvent = ({
       weekday={weekday}
       // onClick={toggleShowDetailsModal}
       marginLeft={0}
-      minuteHeight={minuteHeight}
     >
       <div
         style={{ color: textColor(color) }}
-        className="flex flex-col gap-[0.1rem] p-1 text-[0.675rem] !leading-tight md:p-2 md:text-sm md:font-semibold"
+        className="flex flex-col gap-[0.1rem] p-1 !leading-tight sm:p-2 text-[clamp(0.675rem,1.5vw,0.875rem)] sm:font-semibold"
       >
         <div className="flex flex-wrap justify-between gap-x-1 gap-y-[0.1rem]">
           <span>{lessonName}</span>
           <span>{section}</span>
         </div>
-        <span className="text-[0.6rem] font-light md:text-xs">{`${parseTime(
+        <span className="font-light text-[clamp(0.6rem,1vw,0.75rem)]">{`${parseTime(
           begin,
         )} - ${parseTime(end)}`}</span>
       </div>

@@ -1,8 +1,7 @@
 import clsx from "clsx";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { useStore } from "@store/index";
-import { useDate } from "@hooks/useCurrentTime";
-import { WeekViewContext, WeekViewProvider } from "./Context";
+import Border from "./Border";
+import { WeekViewContext } from "./Context";
 import CalendarEvent from "./Event";
 import Period from "./Period";
 import Timeline from "./Timeline";
@@ -18,6 +17,8 @@ const Grid = () => {
     weekdays,
     personalTimetable,
     personalTimetableConfig,
+    setMinuteHeight,
+    minuteHeight,
   } = useContext(WeekViewContext);
 
   /* ---------- Fetch timematch when calendars change or when toggled --------- */
@@ -41,8 +42,6 @@ const Grid = () => {
   // };
 
   /* ----------------------- Calculate height per minute ---------------------- */
-  const [minuteHeight, setMinuteHeight] = useState(0);
-
   const ref = useRef<HTMLDivElement>(null);
 
   const handleResize = useCallback(() => {
@@ -52,7 +51,7 @@ const Grid = () => {
 
     if (!firstRow) return;
     setMinuteHeight(firstRow / minPerRow);
-  }, [cols, minPerRow]);
+  }, [cols, minPerRow, setMinuteHeight]);
 
   useEffect(() => {
     // handleResize();
@@ -71,13 +70,10 @@ const Grid = () => {
     handleResize();
   }, [showWeekend, handleResize]);
 
-  const { date } = useDate();
-
   return (
     <div
       ref={ref}
       className="grid h-full overflow-y-auto"
-      // className="overfloy-y-auto grid h-full min-h-[480px] overflow-x-hidden"
       style={{
         // add ability of pinch to grow / shrink
         gridTemplateRows: `auto repeat(${rows}, minmax(16px,1fr))`,
@@ -89,10 +85,8 @@ const Grid = () => {
         <span
           key={i}
           className={clsx(
-            "flex items-center justify-center border-b-[0.5px] border-gray-300 p-2 leading-none text-gray-600",
-            date.getDay() === i + 1
-              ? "text-text-black-100"
-              : "text-text-black-100/50",
+            "flex items-center justify-center border-b-[0.5px] border-gray-300 p-2 leading-none",
+            new Date().getDay() === i + 1 ? "text-brand" : "text-gray-400",
           )}
           style={{ gridRowStart: 1, gridColumnStart: i + 2 }}
         >
@@ -105,7 +99,7 @@ const Grid = () => {
         <div
           key={i}
           style={{ gridRowStart: i + 1, gridColumnStart: 1 }}
-          className="relative pl-[4em] text-xs md:pl-[5em]"
+          className="relative pl-[4em] text-xs sm:pl-[5em]"
         >
           {(i + 1) % 2 === 0 && (
             <span className="absolute -translate-x-full -translate-y-1/2 whitespace-nowrap pr-2 text-gray-600">
@@ -115,33 +109,7 @@ const Grid = () => {
         </div>
       ))}
 
-      {/* ------------------------------- Grid border ------------------------------ */}
-      {Array.from(Array(rows * cols), (_, i) => (
-        <div
-          key={i}
-          className={`border-[0.5px] border-gray-300 ${
-            // no border left if cell at leftmost
-            i % cols === 0 ? "border-l-0" : ""
-            // no border right if cell at rightmost
-          } ${(i + 1) % cols === 0 ? "border-r-0" : ""} ${
-            // no border bottom if cell at bottommost
-            i > cols * rows - cols - 1 ? "border-b-0" : ""
-          } ${
-            // even border lighter
-            Math.floor(i / cols) % 2
-              ? "border-t-gray-300/50"
-              : "border-b-gray-300/50"
-          } ${
-            ["Sat", "Sun"].includes(weekdays[i % cols] as string)
-              ? "bg-gray-200/40"
-              : ""
-          }`}
-          style={{
-            gridRowStart: Math.floor(i / cols) + 2,
-            gridColumnStart: (i % cols) + 2,
-          }}
-        />
-      ))}
+      <Border />
 
       {/* --------------------------- Personal timetable --------------------------- */}
       {personalTimetableConfig.visible &&
@@ -152,7 +120,6 @@ const Grid = () => {
               weekday={i}
               color={personalTimetable.color}
               lesson={lessons}
-              minuteHeight={minuteHeight}
             />
           )),
         )}
@@ -174,7 +141,7 @@ const Grid = () => {
                 end={period.end}
                 begin={period.begin}
               >
-                <p className="px-1 py-[2px] text-[0.675rem] leading-tight text-[#004400] md:px-2 md:py-[6px] md:text-[0.775rem] md:font-medium">
+                <p className="px-1 py-[2px] text-[0.675rem] leading-tight text-[#004400] sm:px-2 sm:py-[6px] sm:text-[0.775rem] sm:font-medium">
                   {parseTime(period.begin)} - {parseTime(period.end)}
                 </p>
               </GridPeriod>
@@ -207,7 +174,7 @@ const Grid = () => {
       </>
     )} */}
 
-      <Timeline minuteHeight={minuteHeight} />
+      <Timeline />
 
       {/* {loading && (
       <div className="col-[2/-1] row-[2/-1] flex items-center justify-center">

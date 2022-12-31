@@ -1,4 +1,10 @@
-import { createContext, useMemo } from "react";
+import {
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useMemo,
+  useState,
+} from "react";
 import { useStore } from "@store/index";
 import { type Timetable, type TimetableConfig } from "../../types/timetable";
 
@@ -6,6 +12,8 @@ interface IWeekViewContext {
   rows: number;
   cols: number;
   minPerRow: number;
+  minuteHeight: number;
+  setMinuteHeight: Dispatch<SetStateAction<number>>;
   showWeekend: boolean;
   weekdays: string[];
   displayedHours: number[];
@@ -28,6 +36,9 @@ const initialContext: IWeekViewContext = {
   // Number of rows
   rows: HOURS.length * (60 / MIN_PER_ROW),
   cols: 7,
+  minuteHeight: 0,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setMinuteHeight: () => {},
   showWeekend: true,
   weekdays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   // Convert row index to 12 hour time (8 am)
@@ -54,12 +65,16 @@ export const WeekViewProvider = ({ children }: Props) => {
     [showWeekend],
   );
 
+  const [minuteHeight, setMinuteHeight] = useState(0);
+
   return (
     <WeekViewContext.Provider
       value={{
         ...initialContext,
         showWeekend,
         weekdays,
+        minuteHeight,
+        setMinuteHeight,
         cols: weekdays.length,
         personalTimetable,
         personalTimetableConfig,
