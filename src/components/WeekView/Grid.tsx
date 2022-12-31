@@ -54,7 +54,6 @@ const Grid = () => {
     if (!weekdayRect || !timeRect) return;
 
     setMinuteHeight(timeRect.height / minPerRow);
-    console.log(timeRect.height / minPerRow);
     setColumnWidth(weekdayRect.width);
   }, [minPerRow, setMinuteHeight, setColumnWidth]);
 
@@ -91,9 +90,9 @@ const Grid = () => {
           // For measuring width of columns (second column)
           ref={i === 0 ? weekdayRef : undefined}
           className={clsx(
-            "flex items-center justify-center p-2 leading-none select-none",
+            "flex select-none items-center justify-center p-2 leading-none",
             new Date().getDay() === i + 1
-              ? "text-brand font-medium"
+              ? "font-medium text-brand"
               : "text-text-black-100/80",
           )}
           style={{ gridRowStart: 1, gridColumnStart: i + 2 }}
@@ -109,7 +108,7 @@ const Grid = () => {
           // For measuring height of rows (second row)
           ref={i === 1 ? timeRef : undefined}
           style={{ gridRowStart: i + 1, gridColumnStart: 1 }}
-          className="relative pl-[4em] text-xs sm:pl-[5em] select-none"
+          className="relative select-none pl-[4em] text-xs sm:pl-[5em]"
         >
           {(i + 1) % 2 === 0 && (
             <div className="absolute -translate-x-full -translate-y-1/2 whitespace-nowrap pr-2 text-gray-600">

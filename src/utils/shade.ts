@@ -63,6 +63,12 @@ export const textColor = (hex: string) => {
   );
 };
 
+export const secondaryTextColor = (hex: string) => {
+  return (
+    (getContrast(hex) === "black" ? lighten(hex, -50) : lighten(hex, 75)) + "cc"
+  );
+};
+
 export const borderColor = (hex: string) => {
   return lighten(hex, -40) + "20";
 };

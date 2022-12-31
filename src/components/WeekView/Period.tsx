@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useContext, useRef, useState } from "react";
+import { motion, Transition } from "framer-motion";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
 import useMediaQuery from "@hooks/useMediaQuery";
 import { hour, min } from "@utils/time";
 import { WeekViewContext } from "./Context";
@@ -15,7 +15,21 @@ type Props = {
   onClick?: () => void;
 };
 
-// const HOVER_MARGIN = 12;
+interface IHoverContext {
+  hover: boolean;
+  matchTouch: boolean;
+  matchDesktop: boolean;
+  idleTransition: Transition;
+  hoverTransition: Transition;
+}
+
+export const HoverContext = createContext<IHoverContext>({
+  hover: false,
+  matchTouch: false,
+  matchDesktop: false,
+  idleTransition: {},
+  hoverTransition: {},
+});
 
 const GridPeriod = ({
   weekday,
@@ -70,7 +84,7 @@ const GridPeriod = ({
       ? rowEnd
       : displayedHours.length * 2 + 2;
 
-  // hover effect
+  // Hover effect
   const matchTouch = useMediaQuery("(pointer: fine)");
   const matchDesktop = useMediaQuery("(min-width: 640px)");
 
@@ -80,6 +94,27 @@ const GridPeriod = ({
 
   const onHoverStart = () => setHover(true);
   const onHoverEnd = () => setHover(false);
+
+  const hoverTransition = useMemo(
+    () => ({
+      type: "spring",
+      duration: 0.3,
+      bounce: 0,
+      delay: 0.3,
+    }),
+    [],
+  );
+
+  const idleTransition = useMemo(
+    () => ({
+      type: "spring",
+      duration: 0.3,
+      bounce: 0,
+      // Delay hover exit for better viewing on mobile devices
+      delay: matchTouch ? 0 : 2,
+    }),
+    [matchTouch],
+  );
 
   return minuteHeight && !(!showWeekend && weekday > 4) ? (
     <motion.div
@@ -92,12 +127,7 @@ const GridPeriod = ({
             minuteHeight * periodMin + (!isBottom() ? HOVER_MARGIN * 2 : 0),
           backgroundColor: color + "ee",
           marginTop: -HOVER_MARGIN + minuteHeight * minPrefix,
-          transition: {
-            type: "spring",
-            duration: 0.3,
-            bounce: 0,
-            delay: 0.3,
-          },
+          transition: hoverTransition,
         },
         idle: {
           zIndex: 0,
@@ -106,13 +136,7 @@ const GridPeriod = ({
           height: minuteHeight * periodMin,
           backgroundColor: color + "cc",
           marginTop: minuteHeight * minPrefix,
-          transition: {
-            type: "spring",
-            duration: 0.3,
-            bounce: 0,
-            // Delay hover exit for better viewing on mobile devices
-            delay: matchTouch ? 0 : 1,
-          },
+          transition: idleTransition,
         },
       }}
       initial={false}
@@ -128,46 +152,19 @@ const GridPeriod = ({
       }}
       onClick={onClick}
     >
-      {children}
+      <HoverContext.Provider
+        value={{
+          hover,
+          matchTouch,
+          matchDesktop,
+          hoverTransition,
+          idleTransition,
+        }}
+      >
+        {children}
+      </HoverContext.Provider>
     </motion.div>
   ) : null;
-
-  // return !(!showWeekend && weekday > 4) ? (
-  //   <motion.div
-  //     whileHover={{}}
-  //     animate={{ marginTop: hover && !isBottom() ? -HOVER_MARGIN : 0 }}
-  //     transition={{ type: "spring", duration: 0.2, bounce: 0 }}
-  //     className="select-none"
-  //     style={{
-  //       gridColumnStart,
-  //       gridRowStart,
-  //       gridRowEnd,
-  //     }}
-  //   >
-  //     <motion.div
-  //       onHoverStart={toggleHover}
-  //       onHoverEnd={toggleHover}
-  //       whileHover={{
-  //         marginLeft: "-17.5%",
-  //         marginRight: "-17.5%",
-  //         height:
-  //           minuteHeight * periodMin + (!isBottom() ? HOVER_MARGIN * 2 : 0),
-  //         zIndex: 10,
-  //         backgroundColor: color + "ee",
-  //       }}
-  //       transition={{ type: "spring", duration: 0.2, bounce: 0 }}
-  //       className="relative cursor-pointer overflow-hidden"
-  //       style={{
-  //         marginTop: minuteHeight * minPrefix,
-  //         height: minuteHeight * periodMin,
-  //         backgroundColor: color + "cc",
-  //       }}
-  //       onClick={onClick}
-  //     >
-  //       {children}
-  //     </motion.div>
-  //   </motion.div>
-  // ) : null;
 };
 
 export default GridPeriod;

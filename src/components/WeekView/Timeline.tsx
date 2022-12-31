@@ -32,12 +32,12 @@ const Timeline = () => {
     >
       <div
         style={{ top: minSinceBegin * minuteHeight }}
-        className="bg-brand absolute -mt-[1.25px] h-[2.5px] w-full rounded-full sm:-mt-[1.5px] sm:h-[3px]"
+        className="absolute -mt-[1.25px] h-[2.5px] w-full rounded-full bg-brand sm:-mt-[1.5px] sm:h-[3px]"
       />
 
       <div
         style={{ top: minSinceBegin * minuteHeight }}
-        className="bg-brand absolute -mt-[3px] h-[6px] w-[6px] rounded-full sm:-mt-[4px] sm:h-[8px] sm:w-[8px]"
+        className="absolute -mt-[3px] h-[6px] w-[6px] rounded-full bg-brand sm:-mt-[4px] sm:h-[8px] sm:w-[8px]"
       />
     </div>
   ) : null;

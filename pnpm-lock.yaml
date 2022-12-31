@@ -40,7 +40,7 @@ specifiers:
   nodemailer: ^6.8.0
   postcss: ^8.4.14
   prettier: ^2.7.1
-  prettier-plugin-tailwindcss: ^0.1.13
+  prettier-plugin-tailwindcss: ^0.2.1
   prisma: ^4.5.0
   react: 18.2.0
   react-colorful: ^5.6.1
@@ -104,7 +104,7 @@ devDependencies:
   eslint-plugin-unused-imports: 2.0.0_juver2u3xbiwnjfu6d55vmnoem
   postcss: 8.4.20
   prettier: 2.8.1
-  prettier-plugin-tailwindcss: 0.1.13_prettier@2.8.1
+  prettier-plugin-tailwindcss: 0.2.1_prettier@2.8.1
   prisma: 4.8.0
   react-json-view: 1.21.3_ib3m5ricvtkl2cll7qpr2f6lvq
   tailwindcss: 3.2.4_postcss@8.4.20
@@ -4445,10 +4445,10 @@ packages:
     engines: { node: ">= 0.8.0" }
     dev: true
 
-  /prettier-plugin-tailwindcss/0.1.13_prettier@2.8.1:
+  /prettier-plugin-tailwindcss/0.2.1_prettier@2.8.1:
     resolution:
       {
-        integrity: sha512-/EKQURUrxLu66CMUg4+1LwGdxnz8of7IDvrSLqEtDqhLH61SAlNNUSr90UTvZaemujgl3OH/VHg+fyGltrNixw==,
+        integrity: sha512-aIO8IguumORyRsmT+E7JfJ3A9FEoyhqZR7Au7TBOege3VZkgMvHJMkufeYp4zjnDK2iq4ktkvGMNOQR9T8lisQ==,
       }
     engines: { node: ">=12.17.0" }
     peerDependencies:
