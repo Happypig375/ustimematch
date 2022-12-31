@@ -78,13 +78,13 @@ Props) => {
     >
       <div
         style={{ color: textColor(color) }}
-        className="flex flex-col gap-[0.1rem] p-1 !leading-tight sm:p-2 text-[clamp(0.675rem,1.5vw,0.875rem)] sm:font-semibold"
+        className="flex flex-col gap-1 p-1 sm:p-[6px] leading-tight"
       >
-        <div className="flex flex-wrap justify-between gap-x-1 gap-y-[0.1rem]">
+        <div className="flex flex-wrap justify-between gap-x-1 text-[clamp(0.675rem,1.5vw,0.875rem)] font-medium">
           <span>{lessonName}</span>
           <span>{section}</span>
         </div>
-        <span className="font-light text-[clamp(0.6rem,1vw,0.75rem)]">{`${parseTime(
+        <span className="text-[clamp(0.6rem,1vw,0.75rem)] font-light">{`${parseTime(
           begin,
         )} - ${parseTime(end)}`}</span>
       </div>

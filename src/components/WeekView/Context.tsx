@@ -13,6 +13,8 @@ interface IWeekViewContext {
   cols: number;
   minPerRow: number;
   minuteHeight: number;
+  columnWidth: number;
+  setColumnWidth: Dispatch<SetStateAction<number>>;
   setMinuteHeight: Dispatch<SetStateAction<number>>;
   showWeekend: boolean;
   weekdays: string[];
@@ -39,6 +41,9 @@ const initialContext: IWeekViewContext = {
   minuteHeight: 0,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setMinuteHeight: () => {},
+  columnWidth: 0,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setColumnWidth: () => {},
   showWeekend: true,
   weekdays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   // Convert row index to 12 hour time (8 am)
@@ -66,6 +71,7 @@ export const WeekViewProvider = ({ children }: Props) => {
   );
 
   const [minuteHeight, setMinuteHeight] = useState(0);
+  const [columnWidth, setColumnWidth] = useState(0);
 
   return (
     <WeekViewContext.Provider
@@ -75,6 +81,8 @@ export const WeekViewProvider = ({ children }: Props) => {
         weekdays,
         minuteHeight,
         setMinuteHeight,
+        columnWidth,
+        setColumnWidth,
         cols: weekdays.length,
         personalTimetable,
         personalTimetableConfig,

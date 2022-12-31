@@ -155,7 +155,7 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
               })}
             />
             <Input
-              type="text"
+              type="url"
               labelId="planner-url"
               label="Timetable Planner URL"
               disabled={isFetching}

@@ -108,12 +108,15 @@ const TreeTimetableItem: TreeItemComponentType<{}, HTMLDivElement> = forwardRef<
         {!disableSorting && showDragHandle && (
           // Only draggable from handle (prevent mobile scrolling issue)
 
-          <IconGripVertical
+          <Button
+            icon
+            plain
             {...props.handleProps}
-            stroke={1.75}
-            className="h-4 w-4 cursor-move touch-none"
+            className="cursor-move touch-none"
             onClick={(e) => e.stopPropagation()}
-          />
+          >
+            <IconGripVertical stroke={1.75} className="h-4 w-4" />
+          </Button>
         )}
       </div>
     </li>

@@ -19,6 +19,7 @@ const Grid = () => {
     personalTimetableConfig,
     setMinuteHeight,
     minuteHeight,
+    setColumnWidth,
   } = useContext(WeekViewContext);
 
   /* ---------- Fetch timematch when calendars change or when toggled --------- */
@@ -42,22 +43,26 @@ const Grid = () => {
   // };
 
   /* ----------------------- Calculate height per minute ---------------------- */
-  const ref = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const timeRef = useRef<HTMLDivElement>(null);
+  const weekdayRef = useRef<HTMLDivElement>(null);
 
   const handleResize = useCallback(() => {
-    const firstRow = ref.current?.children
-      .item(cols + 1)
-      ?.getBoundingClientRect().height;
+    const weekdayRect = weekdayRef.current?.getBoundingClientRect();
+    const timeRect = timeRef.current?.getBoundingClientRect();
 
-    if (!firstRow) return;
-    setMinuteHeight(firstRow / minPerRow);
-  }, [cols, minPerRow, setMinuteHeight]);
+    if (!weekdayRect || !timeRect) return;
+
+    setMinuteHeight(timeRect.height / minPerRow);
+    console.log(timeRect.height / minPerRow);
+    setColumnWidth(weekdayRect.width);
+  }, [minPerRow, setMinuteHeight, setColumnWidth]);
 
   useEffect(() => {
     // handleResize();
     // window.addEventListener("resize", handleResize);
     // return () => window.removeEventListener("resize", handleResize);
-    const refClone = ref.current;
+    const refClone = gridRef.current;
     if (!refClone) return;
 
     const ro = new ResizeObserver(handleResize);
@@ -72,39 +77,44 @@ const Grid = () => {
 
   return (
     <div
-      ref={ref}
+      ref={gridRef}
       className="grid h-full overflow-y-auto"
       style={{
-        // add ability of pinch to grow / shrink
         gridTemplateRows: `auto repeat(${rows}, minmax(16px,1fr))`,
         gridTemplateColumns: `auto repeat(${cols}, minmax(0,1fr))`,
       }}
     >
-      {/* ---------------------------- First row weekday --------------------------- */}
+      {/* First row weekday */}
       {weekdays.map((v, i) => (
-        <span
+        <div
           key={i}
+          // For measuring width of columns (second column)
+          ref={i === 0 ? weekdayRef : undefined}
           className={clsx(
-            "flex items-center justify-center border-b-[0.5px] border-gray-300 p-2 leading-none",
-            new Date().getDay() === i + 1 ? "text-brand" : "text-gray-400",
+            "flex items-center justify-center p-2 leading-none select-none",
+            new Date().getDay() === i + 1
+              ? "text-brand font-medium"
+              : "text-text-black-100/80",
           )}
           style={{ gridRowStart: 1, gridColumnStart: i + 2 }}
         >
           {v}
-        </span>
+        </div>
       ))}
 
-      {/* ---------------------------- First column time --------------------------- */}
+      {/* First column time */}
       {Array.from(Array(rows + 1), (_, i) => (
         <div
           key={i}
+          // For measuring height of rows (second row)
+          ref={i === 1 ? timeRef : undefined}
           style={{ gridRowStart: i + 1, gridColumnStart: 1 }}
-          className="relative pl-[4em] text-xs sm:pl-[5em]"
+          className="relative pl-[4em] text-xs sm:pl-[5em] select-none"
         >
           {(i + 1) % 2 === 0 && (
-            <span className="absolute -translate-x-full -translate-y-1/2 whitespace-nowrap pr-2 text-gray-600">
+            <div className="absolute -translate-x-full -translate-y-1/2 whitespace-nowrap pr-2 text-gray-600">
               {rowTo12(i)}
-            </span>
+            </div>
           )}
         </div>
       ))}

@@ -83,7 +83,6 @@ const GridPeriod = ({
 
   return minuteHeight && !(!showWeekend && weekday > 4) ? (
     <motion.div
-      // whileHover="hover"
       variants={{
         hover: {
           zIndex: 10,
@@ -112,7 +111,7 @@ const GridPeriod = ({
             duration: 0.3,
             bounce: 0,
             // Delay hover exit for better viewing on mobile devices
-            delay: matchTouch ? 0 : 2,
+            delay: matchTouch ? 0 : 1,
           },
         },
       }}
