@@ -60,14 +60,15 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
             disabled={disabled}
             className={clsx(
               "flex-shrink-0",
-              "h-10 rounded-md border border-border-gray-100 px-2 transition-all hover:border-border-gray-200 disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:text-gray-500",
+              "h-10 rounded-md border border-border-gray-100 px-2 transition-all hover:border-border-gray-200",
+              "disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:opacity-50",
             )}
           />
 
           <ColorPreview className="h-full" color={field.value} />
         </div>
 
-        {/* Known issue: pointer device mouse up outside modal will cause modal to close */}
+        {/* BUG: pointer device mouse up outside modal will cause modal to close */}
         <HexColorPicker
           color={field.value}
           onChange={onChange}

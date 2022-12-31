@@ -34,7 +34,8 @@ const Input = forwardRef<HTMLInputElement, Props>(
           type={type}
           disabled={disabled}
           className={clsx(
-            "h-10 rounded-md border border-border-gray-100 px-2 transition-all hover:border-border-gray-200 disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:text-gray-500",
+            "h-10 rounded-md border border-border-gray-100 px-2 transition-all hover:border-border-gray-200",
+            "disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:opacity-50",
             error && "focus:ring-red-200/80 focus:ring-offset-red-400",
           )}
           {...props}

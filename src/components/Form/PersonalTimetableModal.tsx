@@ -6,6 +6,7 @@ import {
   IconUserPlus,
   IconX,
 } from "@tabler/icons";
+import clsx from "clsx";
 import {
   type Dispatch,
   type SetStateAction,
@@ -93,7 +94,6 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
       retry: false,
       enabled: false,
       onSuccess: ({ lessons }) => {
-        // Known issue: Using setState will cause animation to fail
         onAdd({
           lessons,
           plannerURL,
@@ -101,7 +101,6 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
           color: getValues("color"),
           university: getValues("university"),
         });
-
         setOpen(false);
       },
       onError: (err) => {
@@ -173,45 +172,54 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
           </div>
 
           <ModalControl>
-            {timetable && (
-              <Alert open={openAlert} onOpenChange={setOpenAlert}>
-                <AlertTrigger asChild>
-                  <Button
-                    icon
-                    type="button"
-                    error
-                    onClick={() => setOpenAlert(true)}
-                    disabled={isFetching}
-                  >
-                    <IconTrash stroke={1.75} className="h-5 w-5" />
-                  </Button>
-                </AlertTrigger>
+            <Alert open={openAlert} onOpenChange={setOpenAlert}>
+              <AlertTrigger asChild>
+                <Button
+                  icon
+                  type="button"
+                  error
+                  onClick={() => setOpenAlert(true)}
+                  disabled={isFetching}
+                  className={clsx(!timetable && "hidden")}
+                >
+                  <IconTrash stroke={1.75} className="h-5 w-5" />
+                </Button>
+              </AlertTrigger>
 
-                <AlertContent open={openAlert} onOpenChange={setOpenAlert}>
-                  <div className="flex flex-col gap-4">
-                    <AlertTitle>Are you sure?</AlertTitle>
+              <AlertContent open={openAlert} onOpenChange={setOpenAlert}>
+                <div className="flex flex-col gap-4">
+                  <AlertTitle>Are you sure?</AlertTitle>
 
-                    <AlertDescription>
-                      You are deleteing your personal timetable, this action
-                      cannot be undone.
-                    </AlertDescription>
+                  <AlertDescription>
+                    You are deleteing your personal timetable, this action
+                    cannot be undone.
+                  </AlertDescription>
 
-                    <div className="flex gap-2">
-                      <AlertCancel asChild>
-                        <Button fullWidth>Cancel</Button>
-                      </AlertCancel>
+                  <div className="flex gap-2">
+                    <AlertCancel asChild>
+                      <Button fullWidth>Cancel</Button>
+                    </AlertCancel>
 
-                      {/* Known issue: This will close two modals at the same time and cause animation to fail */}
-                      <AlertAction asChild>
-                        <Button error fullWidth onClick={onDelete}>
-                          Delete
-                        </Button>
-                      </AlertAction>
-                    </div>
+                    {/* BUG: Unmounting modal will cancel alert animation */}
+                    <AlertAction asChild>
+                      <Button
+                        error
+                        fullWidth
+                        onClick={() => {
+                          onDelete && onDelete();
+                          // FIX: Wait for alert modal animation (200ms comes from variants)
+                          setTimeout(() => {
+                            setOpen(false);
+                          }, 200);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </AlertAction>
                   </div>
-                </AlertContent>
-              </Alert>
-            )}
+                </div>
+              </AlertContent>
+            </Alert>
 
             <DialogClose asChild>
               <Button fullWidth type="button" disabled={isFetching}>
