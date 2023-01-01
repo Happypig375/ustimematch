@@ -20,7 +20,7 @@ const WeekView = () => {
   const toggleShowWeekend = useStore.use.toggleShowWeekend();
 
   return (
-    <div className="flex h-full min-w-full flex-grow flex-col sm:min-w-[unset]">
+    <div className="flex h-full min-w-full flex-grow snap-start flex-col sm:min-w-[unset]">
       <div className="flex items-center justify-between gap-4 border-b px-4 py-2">
         <Button icon title="Toggle Explorer" onClick={toggleShowExplorer}>
           <motion.div
