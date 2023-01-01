@@ -63,6 +63,27 @@ export const chevronVariants: Variants = {
   },
 };
 
+export const accordionVariants: Variants = {
+  open: {
+    opacity: 1,
+    height: "var(--radix-accordion-content-height)",
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.4,
+    },
+  },
+  close: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.4,
+    },
+  },
+};
+
 // Drawer drag (slide)
 export const drawerVariants: Variants = {
   open: {

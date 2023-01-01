@@ -40,7 +40,7 @@ const GridPeriod = ({
   children,
   onClick,
 }: Props) => {
-  const { showWeekend, displayedHours, minPerRow, minuteHeight } =
+  const { showWeekend, displayedHours, minPerRow, minuteHeight, openDetails } =
     useContext(WeekViewContext);
 
   // if period reach last row
@@ -85,7 +85,7 @@ const GridPeriod = ({
       : displayedHours.length * 2 + 2;
 
   // Hover effect
-  const matchTouch = useMediaQuery("(pointer: fine)");
+  const matchMouse = useMediaQuery("(pointer: fine)");
   const matchDesktop = useMediaQuery("(min-width: 640px)");
 
   const HOVER_MARGIN = (minPerRow * minuteHeight) / (matchDesktop ? 1.5 : 1.25);
@@ -111,9 +111,10 @@ const GridPeriod = ({
       duration: 0.3,
       bounce: 0,
       // Delay hover exit for better viewing on mobile devices
-      delay: matchTouch ? 0 : 2,
+      // BUG: mobile devices interrupt hover will not trigger exit
+      delay: openDetails || matchMouse ? 0 : 2,
     }),
-    [matchTouch],
+    [openDetails, matchMouse],
   );
 
   return minuteHeight && !(!showWeekend && weekday > 4) ? (
@@ -140,7 +141,7 @@ const GridPeriod = ({
         },
       }}
       initial={false}
-      animate={hover ? "hover" : "idle"}
+      animate={!openDetails && hover ? "hover" : "idle"}
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
       // Relative for absolute border hack (Event.tsx)
@@ -155,7 +156,7 @@ const GridPeriod = ({
       <HoverContext.Provider
         value={{
           hover,
-          matchTouch,
+          matchTouch: matchMouse,
           matchDesktop,
           hoverTransition,
           idleTransition,

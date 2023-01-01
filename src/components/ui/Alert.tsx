@@ -74,7 +74,7 @@ export const AlertDescription = forwardRef<
   AlertDialogPrimitive.AlertDialogDescriptionProps
 >(({ children, ...props }, ref) => (
   <AlertDialogPrimitive.Description
-    className="text-sm text-gray-600"
+    className="text-sm text-text-black-100"
     ref={ref}
     {...props}
   >

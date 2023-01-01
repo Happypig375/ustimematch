@@ -88,7 +88,7 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 <>
                   {/* Drag handler */}
                   <div className="my-4">
-                    <div className="mx-auto h-[6px] w-14 rounded-full bg-gray-100" />
+                    <div className="mx-auto h-[6px] w-14 rounded-full bg-zinc-100" />
                   </div>
 
                   {/* Prevent drag unless on drag handler */}

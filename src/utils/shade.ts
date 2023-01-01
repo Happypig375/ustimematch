@@ -58,15 +58,7 @@ const lighten = (color: string, percent: number) => {
 };
 
 export const textColor = (hex: string) => {
-  return (
-    (getContrast(hex) === "black" ? lighten(hex, -50) : lighten(hex, 75)) + "ee"
-  );
-};
-
-export const secondaryTextColor = (hex: string) => {
-  return (
-    (getContrast(hex) === "black" ? lighten(hex, -50) : lighten(hex, 75)) + "cc"
-  );
+  return getContrast(hex) === "black" ? lighten(hex, -50) : lighten(hex, 75);
 };
 
 export const borderColor = (hex: string) => {

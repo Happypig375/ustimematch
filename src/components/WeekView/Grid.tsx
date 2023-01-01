@@ -1,25 +1,28 @@
 import clsx from "clsx";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
+import { type Lesson, type Timetable } from "../../types/timetable";
 import Border from "./Border";
 import { WeekViewContext } from "./Context";
-import CalendarEvent from "./Event";
-import Period from "./Period";
+import DetailsModal from "./DetailsModal";
+import Event from "./Event";
 import Timeline from "./Timeline";
 
 const Grid = () => {
   const {
-    showWeekend,
-    cols,
-    displayedHours,
-    minPerRow,
-    rowTo12,
     rows,
+    cols,
+    minPerRow,
     weekdays,
+    showWeekend,
     personalTimetable,
     personalTimetableConfig,
     setMinuteHeight,
-    minuteHeight,
     setColumnWidth,
+    openDetails,
+    setOpenDetails,
+    setDetailsTimetable,
+    setdetailsLesson,
+    rowTo12,
   } = useContext(WeekViewContext);
 
   /* ---------- Fetch timematch when calendars change or when toggled --------- */
@@ -42,7 +45,16 @@ const Grid = () => {
   //   toggleDetailsModal();
   // };
 
-  /* ----------------------- Calculate height per minute ---------------------- */
+  const toggleOpenDetails = useCallback(
+    (timetable: Timetable, lesson: Lesson) => {
+      setDetailsTimetable(timetable);
+      setdetailsLesson(lesson);
+      setOpenDetails(!openDetails);
+    },
+    [setDetailsTimetable, setdetailsLesson, openDetails, setOpenDetails],
+  );
+
+  // Resize oberver for calculating height of a minute
   const gridRef = useRef<HTMLDivElement>(null);
   const timeRef = useRef<HTMLDivElement>(null);
   const weekdayRef = useRef<HTMLDivElement>(null);
@@ -58,21 +70,18 @@ const Grid = () => {
   }, [minPerRow, setMinuteHeight, setColumnWidth]);
 
   useEffect(() => {
-    // handleResize();
-    // window.addEventListener("resize", handleResize);
-    // return () => window.removeEventListener("resize", handleResize);
-    const refClone = gridRef.current;
-    if (!refClone) return;
+    const ref = gridRef.current;
+    if (!ref) return;
 
     const ro = new ResizeObserver(handleResize);
-    ro.observe(refClone);
+    ro.observe(ref);
 
-    return () => ro.unobserve(refClone);
+    return () => ro.unobserve(ref);
   }, [handleResize]);
 
   useEffect(() => {
     handleResize();
-  }, [showWeekend, handleResize]);
+  }, [handleResize, showWeekend]);
 
   return (
     <div
@@ -89,13 +98,13 @@ const Grid = () => {
           key={i}
           // For measuring width of columns (second column)
           ref={i === 0 ? weekdayRef : undefined}
+          style={{ gridRowStart: 1, gridColumnStart: i + 2 }}
           className={clsx(
             "flex select-none items-center justify-center p-2 leading-none",
-            new Date().getDay() === i + 1
+            new Date().getDay() === (i + 1) % 7
               ? "font-medium text-brand"
-              : "text-text-black-100/80",
+              : "text-text-black-100",
           )}
-          style={{ gridRowStart: 1, gridColumnStart: i + 2 }}
         >
           {v}
         </div>
@@ -111,7 +120,7 @@ const Grid = () => {
           className="relative select-none pl-[4em] text-xs sm:pl-[5em]"
         >
           {(i + 1) % 2 === 0 && (
-            <div className="absolute -translate-x-full -translate-y-1/2 whitespace-nowrap pr-2 text-gray-600">
+            <div className="absolute -translate-x-full -translate-y-1/2 whitespace-nowrap pr-2 text-text-black-100">
               {rowTo12(i)}
             </div>
           )}
@@ -120,85 +129,23 @@ const Grid = () => {
 
       <Border />
 
-      {/* --------------------------- Personal timetable --------------------------- */}
-      {personalTimetableConfig.visible &&
-        personalTimetable?.lessons.map((lessons, i) =>
-          lessons.map((lessons, j) => (
-            <CalendarEvent
+      {/* Personal timetable */}
+      {personalTimetableConfig?.visible &&
+        personalTimetable?.lessons.map((weekday, i) =>
+          weekday.map((lesson, j) => (
+            <Event
               key={`${i}${j}`}
               weekday={i}
+              lesson={lesson}
               color={personalTimetable.color}
-              lesson={lessons}
+              onClick={() => toggleOpenDetails(personalTimetable, lesson)}
             />
           )),
         )}
 
-      {/* -------------------------- Timematch or lessons -------------------------- */}
-      {/* {showTimematch ? (
-      <>
-        {!loading &&
-          timematch.map((week, i) =>
-            week.map((period, j) => (
-              <GridPeriod
-                key={`${i}${j}`}
-                color="#99ee99"
-                gridHour={HOUR}
-                minutePerRow={MIN_PER_ROW}
-                minuteHeight={minuteHeight}
-                weekday={i}
-                marginLeft={0}
-                end={period.end}
-                begin={period.begin}
-              >
-                <p className="px-1 py-[2px] text-[0.675rem] leading-tight text-[#004400] sm:px-2 sm:py-[6px] sm:text-[0.775rem] sm:font-medium">
-                  {parseTime(period.begin)} - {parseTime(period.end)}
-                </p>
-              </GridPeriod>
-            ))
-          )}
-      </>
-    ) : (
-      <>
-        {calendars.map((cal, i) => {
-          return (
-            cal.visible &&
-            cal.lessons.map((lsns, j) =>
-              lsns.map((lsn, k) => (
-                <CalendarEvent
-                  key={`${i}${j}${k}`}
-                  gridTime={HOUR}
-                  weekday={j}
-                  color={cal.color}
-                  lesson={lsn}
-                  calName={cal.name}
-                  minuteHeight={minuteHeight}
-                  minutePerRow={MIN_PER_ROW}
-                  openModal={showModal}
-                  calendars={calendars}
-                />
-              ))
-            )
-          );
-        })}
-      </>
-    )} */}
-
       <Timeline />
 
-      {/* {loading && (
-      <div className="col-[2/-1] row-[2/-1] flex items-center justify-center">
-        <Spinner className="h-8 w-8 text-gray-600" />
-      </div>
-    )}
-
-    {person && lesson && (
-      <DetailsModal
-        person={person}
-        lesson={lesson}
-        open={detailsModal}
-        close={toggleDetailsModal}
-      />
-    )} */}
+      <DetailsModal />
     </div>
   );
 };
