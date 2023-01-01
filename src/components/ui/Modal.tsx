@@ -38,7 +38,7 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
         {open && (
           <DialogPrimitive.Portal forceMount>
             <MotionDialogOverlay
-              className="fixed inset-0 bg-zinc-200/40"
+              className="fixed inset-0 z-50 bg-zinc-200/40"
               exit="close"
               animate="open"
               initial="close"
@@ -63,7 +63,7 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               variants={matchDesktop ? modalVariants : drawerVariants}
               // onOpenAutoFocus={(e) => e.preventDefault()}
               className={clsx(
-                "fixed overflow-auto bg-bg-light-100 shadow-xl",
+                "fixed z-50 overflow-auto bg-bg-light-100 shadow-xl",
                 // Mobile drawer styles
                 "inset-x-0 bottom-0 rounded-t-xl",
                 // Desktop modal styles

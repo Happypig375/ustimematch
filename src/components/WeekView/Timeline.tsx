@@ -24,7 +24,7 @@ const Timeline = () => {
   // check minuteHeight for preventing initial flash
   return !overflow && minuteHeight ? (
     <div
-      className="pointer-events-none relative z-[5] -ml-[3px] overflow-y-hidden sm:-ml-[4px]"
+      className="pointer-events-none relative -ml-[3px] overflow-y-hidden sm:-ml-[4px]"
       style={{
         gridColumnStart,
         gridRow: "2/-1",

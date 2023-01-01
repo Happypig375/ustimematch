@@ -112,6 +112,7 @@ const GridPeriod = ({
       bounce: 0,
       // Delay hover exit for better viewing on mobile devices
       // BUG: mobile devices interrupt hover will not trigger exit
+      // FIX: mobal uses higher z-index
       delay: openDetails || matchMouse ? 0 : 2,
     }),
     [openDetails, matchMouse],
