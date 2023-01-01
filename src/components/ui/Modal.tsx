@@ -27,7 +27,7 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
       info: PanInfo,
     ) => {
       if (
-        info.velocity.y > 1000 ||
+        info.velocity.y > 500 ||
         info.point.y > window.innerHeight - window.innerHeight / 10
       )
         onOpenChange(false);
