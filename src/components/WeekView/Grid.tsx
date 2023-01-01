@@ -137,7 +137,7 @@ const Grid = () => {
               key={`${i}${j}`}
               weekday={i}
               lesson={lesson}
-              color={personalTimetable.color}
+              color={personalTimetableConfig.color}
               onClick={() => toggleOpenDetails(personalTimetable, lesson)}
             />
           )),

@@ -1,19 +1,7 @@
 import { DialogClose } from "@radix-ui/react-dialog";
-import {
-  IconDownload,
-  IconEdit,
-  IconTrash,
-  IconUserPlus,
-  IconX,
-} from "@tabler/icons";
+import { IconDownload, IconTrash, IconX } from "@tabler/icons";
 import clsx from "clsx";
-import {
-  type Dispatch,
-  type SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import {
@@ -27,47 +15,50 @@ import {
 } from "@ui/Alert";
 import Button from "@ui/Button";
 import Input from "@ui/Input";
-import {
-  Modal,
-  ModalContent,
-  ModalControl,
-  ModalDescription,
-  ModalTitle,
-  ModalTrigger,
-} from "@ui/Modal";
+import { Modal, ModalContent, ModalControl, ModalTitle } from "@ui/Modal";
 import { trpc } from "@utils/trpc";
-import type { Timetable } from "../../types/timetable";
+import type { Timetable, TimetableConfig } from "../../types/timetable";
 import { ColorInput } from "./ColorInput";
 
 interface Props {
+  open: boolean;
+  setOpen: (open: boolean) => void;
   timetable?: Timetable;
-  onAdd: (timetable: Timetable) => void;
+  timetableConfig?: TimetableConfig;
+  onAdd: (timetable: Timetable, config: TimetableConfig) => void;
   onDelete?: () => void;
 }
 
-export type PersonalTimetableForm = Omit<
-  Timetable,
-  "lessons" | "modifications"
->;
+export interface PersonalTimetableForm
+  extends Omit<Timetable, "lessons" | "modifications"> {
+  color: string;
+}
 
 /**
  * Default import university is now HKUST, support for other universities will be added later
  */
-const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
-  const [open, setOpen] = useState(false);
-
+const ImportPersonalModal = ({
+  open,
+  setOpen,
+  timetable,
+  timetableConfig,
+  onAdd,
+  onDelete,
+}: Props) => {
   const defaultValues = useMemo<PersonalTimetableForm>(
     () => ({
       university: "HKUST",
       name: timetable?.name || "",
       plannerURL: timetable?.plannerURL || "",
       color:
-        timetable?.color ||
+        timetableConfig?.color ||
         // https://stackoverflow.com/questions/5092808/how-do-i-randomly-generate-html-hex-color-codes-using-javascript
         // Consider using hsl then convert to hex to generate more pelasing colors
         "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0"),
     }),
-    [timetable],
+    // open is included for randomizing color on open
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [timetable, timetableConfig, open],
   );
 
   const {
@@ -89,19 +80,24 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
   // Handle form submission
   const plannerURL = useWatch({ control, name: "plannerURL" });
 
-  const { error, isFetching, refetch } = trpc.ical.getUSTLessons.useQuery(
+  const { isFetching, refetch } = trpc.ical.getUSTLessons.useQuery(
     { plannerURL },
     {
       retry: false,
       enabled: false,
       onSuccess: ({ lessons }) => {
-        onAdd({
-          lessons,
-          plannerURL,
-          name: getValues("name"),
-          color: getValues("color"),
-          university: getValues("university"),
-        });
+        onAdd(
+          {
+            lessons,
+            plannerURL,
+            name: getValues("name"),
+            university: getValues("university"),
+          },
+          {
+            visible: timetableConfig?.visible || true,
+            color: getValues("color"),
+          },
+        );
         setOpen(false);
       },
       onError: (err) => {
@@ -118,24 +114,10 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
   // Delete alert
   const [openAlert, setOpenAlert] = useState(false);
 
-  const controlledSetOpen: Dispatch<SetStateAction<boolean>> = (v) =>
-    !isFetching && setOpen(v);
+  const controlledSetOpen: typeof setOpen = (v) => !isFetching && setOpen(v);
 
   return (
     <Modal open={open} onOpenChange={controlledSetOpen}>
-      <ModalTrigger asChild>
-        {timetable ? (
-          <Button icon title="Edit personal timetable">
-            <IconEdit stroke={1.75} className="h-5 w-5" />
-          </Button>
-        ) : (
-          <Button fullWidth title="Add personal timetable">
-            <IconUserPlus stroke={1.75} className="h-5 w-5" />
-            Personal Timetable
-          </Button>
-        )}
-      </ModalTrigger>
-
       <ModalContent open={open} onOpenChange={controlledSetOpen}>
         <ModalTitle>
           {timetable ? "Edit" : "Import"} Personal Timetable

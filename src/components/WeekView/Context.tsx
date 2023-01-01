@@ -33,7 +33,7 @@ interface IWeekViewContext {
   showWeekend: boolean;
 
   personalTimetable: Timetable | null;
-  personalTimetableConfig?: TimetableConfig;
+  personalTimetableConfig: TimetableConfig | null;
 
   minuteHeight: number;
   setMinuteHeight: Dispatch<SetStateAction<number>>;
@@ -66,7 +66,7 @@ const initialContext: IWeekViewContext = {
   showWeekend: false,
 
   personalTimetable: null,
-  personalTimetableConfig: undefined,
+  personalTimetableConfig: null,
 
   minuteHeight: 0,
   // eslint-disable-next-line @typescript-eslint/no-empty-function

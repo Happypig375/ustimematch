@@ -65,7 +65,10 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
             )}
           />
 
-          <ColorPreview className="h-full" color={field.value} />
+          <ColorPreview
+            className={clsx("h-full", disabled && "opacity-50")}
+            color={field.value}
+          />
         </div>
 
         {/* BUG: pointer device mouse up outside modal will cause modal to close */}
@@ -74,7 +77,7 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
           onChange={onChange}
           className={clsx(
             "!h-full flex-grow",
-            disabled && "pointer-events-none",
+            disabled && "pointer-events-none opacity-50",
           )}
         />
       </div>

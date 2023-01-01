@@ -2,7 +2,7 @@ interface Lesson {
   // Course title and section (e.g. COMP 1021 L01)
   name: string;
   venue: string;
-  // Additional information (e.g. instructors)
+  // Additional information (e.g. course title, instructors)
   description: string;
   // Time in 24-hour format
   begin: string;
@@ -32,6 +32,7 @@ export type University =
   | "HKMU";
 
 interface Remark {
+  // Indexs of lessons
   index: number;
   value: string;
 }
@@ -45,7 +46,6 @@ interface Modifications {
 
 interface BaseTimetable {
   name: string;
-  color: string;
   lessons: Lessons;
   modifications?: Modifications;
   university: University;
@@ -61,4 +61,5 @@ export type Timetable = HKUSTTimetable;
 
 interface TimetableConfig {
   visible: boolean;
+  color: string;
 }

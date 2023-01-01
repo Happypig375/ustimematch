@@ -1,68 +1,95 @@
-import { IconEye, IconEyeOff } from "@tabler/icons";
+import { IconEdit, IconEye, IconEyeOff, IconUserPlus } from "@tabler/icons";
 import clsx from "clsx";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import PersonalTimetableModal from "@components/Form/PersonalTimetableModal";
 import Button from "@ui/Button";
 import { useStore } from "@store/index";
-import { type Timetable } from "../../types/timetable";
+import { type TimetableConfig, type Timetable } from "../../types/timetable";
 import ColorChip from "./ColorChip";
 
 const PersonalTimetable = () => {
   const personalTimetable = useStore.use.personalTimetable();
-  const personalTimetableConfig = useStore.use.personalTimetableConfig();
-  const togglePersonalTimetableVisible =
-    useStore.use.togglePersonalTimetableVisible();
   const setPersonalTimetable = useStore.use.setPersonalTimetable();
+  const personalTimetableConfig = useStore.use.personalTimetableConfig();
+  const setPersonalTimetableConfig = useStore.use.setPersonalTimetableConfig();
+
+  const [open, setOpen] = useState(false);
 
   const onDelete = useCallback(() => {
     setPersonalTimetable(null);
-  }, [setPersonalTimetable]);
+    setPersonalTimetableConfig(null);
+  }, [setPersonalTimetable, setPersonalTimetableConfig]);
 
   const onAdd = useCallback(
-    (timetable: Timetable) => {
+    (timetable: Timetable, config: TimetableConfig) => {
       setPersonalTimetable(timetable);
+      setPersonalTimetableConfig(config);
     },
-    [setPersonalTimetable],
+    [setPersonalTimetable, setPersonalTimetableConfig],
   );
 
   // Here uses hidden to hide, otherwise animation would get cancelled if the component is unmounted
   // TODO: Find a better way to do this
   return (
     <div className="border-t border-border-gray-100">
-      <div className={clsx("flex gap-4", !personalTimetable && "hidden")}>
-        {personalTimetable && (
+      {personalTimetable && personalTimetableConfig ? (
+        <div className={clsx("flex gap-4", !personalTimetable && "hidden")}>
           <div className="flex flex-grow items-center gap-2 overflow-hidden pl-4">
-            <ColorChip color={personalTimetable.color} />
+            <ColorChip color={personalTimetableConfig.color} />
             <span title={personalTimetable.name} className="truncate">
               {personalTimetable.name}
             </span>
           </div>
-        )}
 
-        <div className="flex gap-2 py-2 pr-4">
-          <Button
-            icon
-            title="Toggle personal timetable visibility"
-            onClick={togglePersonalTimetableVisible}
-          >
-            {personalTimetableConfig.visible ? (
-              <IconEye stroke={1.75} className="h-5 w-5" />
-            ) : (
-              <IconEyeOff stroke={1.75} className="h-5 w-5" />
-            )}
-          </Button>
+          <div className="flex gap-2 py-2 pr-4">
+            <Button
+              icon
+              title="Toggle personal timetable visibility"
+              onClick={() =>
+                personalTimetableConfig &&
+                setPersonalTimetableConfig({
+                  ...personalTimetableConfig,
+                  visible: !personalTimetableConfig.visible,
+                })
+              }
+            >
+              {personalTimetableConfig?.visible ? (
+                <IconEye stroke={1.75} className="h-5 w-5" />
+              ) : (
+                <IconEyeOff stroke={1.75} className="h-5 w-5" />
+              )}
+            </Button>
 
-          <PersonalTimetableModal
-            onAdd={onAdd}
-            onDelete={onDelete}
-            timetable={personalTimetable ? personalTimetable : undefined}
-          />
+            <Button
+              icon
+              title="Edit personal timetable"
+              onClick={() => setOpen(true)}
+            >
+              <IconEdit stroke={1.75} className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={clsx("py-2 px-4", personalTimetable && "hidden")}>
+          <Button
+            fullWidth
+            title="Add personal timetable"
+            onClick={() => setOpen(true)}
+          >
+            <IconUserPlus stroke={1.75} className="h-5 w-5" />
+            Personal Timetable
+          </Button>
+        </div>
+      )}
 
-      <div className={clsx("py-2 px-4", personalTimetable && "hidden")}>
-        <PersonalTimetableModal onAdd={onAdd} />
-      </div>
+      <PersonalTimetableModal
+        open={open}
+        setOpen={setOpen}
+        onAdd={onAdd}
+        onDelete={onDelete}
+        timetable={personalTimetable || undefined}
+        timetableConfig={personalTimetableConfig || undefined}
+      />
     </div>
   );
 };
