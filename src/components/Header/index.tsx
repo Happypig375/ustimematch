@@ -1,6 +1,6 @@
 import * as Separator from "@radix-ui/react-separator";
 import Link from "next/link";
-import type { DetailedHTMLProps, HTMLAttributes } from "react";
+import { type DetailedHTMLProps, type HTMLAttributes } from "react";
 import NavLink from "@ui/NavLink";
 import MobileMenu from "./MobileMenu";
 
@@ -35,7 +35,7 @@ const Header = ({
       </div>
 
       {/* Main content */}
-      <div className="flex flex-grow snap-x snap-mandatory overflow-auto rounded-md border border-border-gray-100 bg-bg-light-200">
+      <div className="flex flex-grow overflow-auto rounded-md border border-border-gray-100 bg-bg-light-200">
         {children}
       </div>
     </div>
