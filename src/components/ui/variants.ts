@@ -1,28 +1,28 @@
 import { type Variants } from "framer-motion";
 
-// Mobile dropdown menu (fade)
+// Mobile dropdown menu
 export const menuVariants: Variants = {
   open: {
     scale: 1,
     opacity: 1,
     transition: {
       type: "spring",
-      bounce: 0.2,
-      duration: 0.4,
+      bounce: 0,
+      duration: 0.3,
     },
   },
   close: {
-    scale: 0,
+    scale: 0.3,
     opacity: 0,
     transition: {
       type: "spring",
-      bounce: 0.2,
-      duration: 0.4,
+      bounce: 0,
+      duration: 0.3,
     },
   },
 };
 
-// Explorer panel (slide)
+// Explorer panel
 export const explorerVariants: Variants = {
   open: {
     marginLeft: 0,
@@ -43,7 +43,7 @@ export const explorerVariants: Variants = {
   },
 };
 
-// Toggle explorer button icon (rotate)
+// Chevron icon
 export const chevronVariants: Variants = {
   open: {
     rotate: 0,
@@ -63,10 +63,11 @@ export const chevronVariants: Variants = {
   },
 };
 
+// Accordion
 export const accordionVariants: Variants = {
   open: {
-    opacity: 1,
     height: "var(--radix-accordion-content-height)",
+    opacity: 1,
     transition: {
       type: "spring",
       bounce: 0,
@@ -84,7 +85,7 @@ export const accordionVariants: Variants = {
   },
 };
 
-// Drawer drag (slide)
+// Drawer
 export const drawerVariants: Variants = {
   open: {
     y: 0,
@@ -104,10 +105,13 @@ export const drawerVariants: Variants = {
   },
 };
 
-// Drawer backdrop (fade)
+// Drawer backdrop
 export const drawerOverlayVariants: Variants = {
   open: {
     opacity: 1,
+    transitionEnd: {
+      overflow: "auto",
+    },
     transition: {
       type: "spring",
       bounce: 0,
@@ -116,6 +120,7 @@ export const drawerOverlayVariants: Variants = {
   },
   close: {
     opacity: 0,
+    overflow: "hidden",
     transition: {
       type: "spring",
       bounce: 0,
@@ -124,36 +129,36 @@ export const drawerOverlayVariants: Variants = {
   },
 };
 
-// Modal (fade)
+// Modal
 export const modalVariants: Variants = {
   open: {
     scale: 1,
     opacity: 1,
     transition: {
       type: "spring",
-      bounce: 0.2,
-      duration: 0.2,
+      bounce: 0,
+      duration: 0.3,
     },
   },
   close: {
-    scale: 0.96,
+    scale: 0.95,
     opacity: 0,
     transition: {
       type: "spring",
-      bounce: 0.2,
-      duration: 0.2,
+      bounce: 0,
+      duration: 0.3,
     },
   },
 };
 
-// Modal backdrop (fade)
+// Modal backdrop
 export const modalOverlayVariants: Variants = {
   open: {
     opacity: 1,
     transition: {
       type: "spring",
       bounce: 0,
-      duration: 0.2,
+      duration: 0.3,
     },
   },
   close: {
@@ -161,7 +166,7 @@ export const modalOverlayVariants: Variants = {
     transition: {
       type: "spring",
       bounce: 0,
-      duration: 0.2,
+      duration: 0.3,
     },
   },
 };

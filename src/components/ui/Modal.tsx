@@ -45,7 +45,9 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               variants={
                 matchDesktop ? modalOverlayVariants : drawerOverlayVariants
               }
-              className="fixed inset-0 z-50 grid place-items-end overflow-auto bg-bg-light-200/40 pt-8 sm:place-items-center sm:py-4"
+              // sm:overflow-auto: mobile implementation based on variants
+              // drawerOverlayVariants: fix for scroll bar showing when animating
+              className="fixed inset-0 z-50 grid place-items-end bg-bg-light-200/40 pt-8 sm:place-items-center sm:overflow-auto sm:py-4"
             >
               <MotionDialogContent
                 asChild
