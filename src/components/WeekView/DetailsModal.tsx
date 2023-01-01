@@ -1,3 +1,6 @@
+import { AccordionItem } from "@radix-ui/react-accordion";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { useContext, useState } from "react";
 import Accordion, { AccordionContent, AccordionTrigger } from "@ui/Accordion";
 import Button from "@ui/Button";
 import {
@@ -7,13 +10,10 @@ import {
   ModalDescription,
   ModalTitle,
 } from "@ui/Modal";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { parseUSTName } from "@utils/parseName";
 import { getPathAdvisorUrl } from "@utils/pathAdvisor";
 import { parseTime } from "@utils/time";
-import { useContext, useState } from "react";
 import { WeekViewContext } from "./Context";
-import { AccordionItem } from "@radix-ui/react-accordion";
 
 const DetailsModal = () => {
   const { openDetails, setOpenDetails, detailsTimetable, detailsLesson } =
@@ -38,17 +38,19 @@ const DetailsModal = () => {
 
         <ModalDescription>{detailsTimetable.name}</ModalDescription>
 
-        <div className="flex flex-col gap-2 leading-tight">
+        <div className="flex flex-col gap-2 leading-none">
           <div>
             {`${parseTime(detailsLesson.begin)}
              - ${parseTime(detailsLesson.end)}`}
           </div>
 
-          <div>{detailsLesson.venue || "TBA"}</div>
+          {detailsLesson.venue && <div>{detailsLesson.venue}</div>}
+        </div>
 
+        <ModalControl className="flex-col">
           <Accordion
-            type="single"
             collapsible
+            type="single"
             value={value}
             onValueChange={setValue}
           >
@@ -62,24 +64,24 @@ const DetailsModal = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-        </div>
 
-        <ModalControl>
-          {/* TODO: anchor tag? */}
-          {detailsTimetable.university === "HKUST" && detailsLesson.venue && (
-            <Button
-              fullWidth
-              onClick={() =>
-                window.open(getPathAdvisorUrl(detailsLesson.venue), "_blank")
-              }
-            >
-              Path Advisor
-            </Button>
-          )}
+          <div className="flex gap-2">
+            {/* TODO: anchor tag? */}
+            {detailsTimetable.university === "HKUST" && detailsLesson.venue && (
+              <Button
+                fullWidth
+                onClick={() =>
+                  window.open(getPathAdvisorUrl(detailsLesson.venue), "_blank")
+                }
+              >
+                Path Advisor
+              </Button>
+            )}
 
-          <DialogClose asChild>
-            <Button fullWidth>Close</Button>
-          </DialogClose>
+            <DialogClose asChild>
+              <Button fullWidth>Close</Button>
+            </DialogClose>
+          </div>
         </ModalControl>
       </ModalContent>
     </Modal>
