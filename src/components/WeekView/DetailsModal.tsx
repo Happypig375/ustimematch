@@ -38,7 +38,7 @@ const DetailsModal = () => {
 
         <ModalDescription>{detailsTimetable.name}</ModalDescription>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 leading-tight">
           <div>
             {`${parseTime(detailsLesson.begin)}
              - ${parseTime(detailsLesson.end)}`}
@@ -58,7 +58,7 @@ const DetailsModal = () => {
                 value={value}
                 className="whitespace-pre-wrap leading-relaxed"
               >
-                <p className="pt-2">{detailsLesson.description}</p>
+                <p className="pt-1">{detailsLesson.description}</p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
