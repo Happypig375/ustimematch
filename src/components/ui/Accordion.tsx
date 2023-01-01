@@ -26,7 +26,7 @@ export const AccordionTrigger = forwardRef<
       ref={ref}
       {...props}
       className={clsx(
-        "mb-2 flex h-10 w-full items-center justify-between rounded-md border border-border-gray-100 p-4 text-text-black-100 transition-all",
+        "flex h-10 w-full items-center justify-between rounded-md border border-border-gray-100 p-4 text-text-black-100 transition-all",
         "active:bg-bg-light-200",
         "hover:border-border-gray-200 hover:text-text-black-200",
         className,
@@ -55,7 +55,7 @@ export const AccordionContent = forwardRef<
   HTMLDivElement,
   AccordionContentProps
 >(({ children, className, value, ...props }, ref) => (
-  <AnimatePresence>
+  <AnimatePresence initial={false}>
     {value && (
       <AccordionPrimitive.Content ref={ref} {...props} forceMount>
         <motion.div

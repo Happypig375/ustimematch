@@ -19,34 +19,25 @@ export const AlertContent = forwardRef<HTMLDivElement, AlertContentProps>(
         {open && (
           <AlertDialogPrimitive.Portal forceMount>
             <MotionAlertOverlay
-              className="fixed inset-0 bg-zinc-200/40"
+              forceMount
               exit="close"
               animate="open"
               initial="close"
               variants={modalOverlayVariants}
-              forceMount
-            />
-
-            <MotionAlertContent
-              forceMount
-              exit="close"
-              animate="open"
-              initial="close"
-              variants={modalVariants}
-              className={clsx(
-                "fixed overflow-auto bg-bg-light-100 shadow-xl",
-                "inset-0 flex items-center justify-center bg-transparent shadow-none",
-              )}
-              onClick={() => onOpenChange(false)}
-              ref={ref}
+              className="fixed inset-0 z-50 grid place-items-center overflow-auto bg-bg-light-200/40 py-4"
             >
-              <div
-                onClick={(e) => e.stopPropagation()}
-                className="max-h-[80vh] w-[95%] overflow-auto rounded-xl bg-bg-light-100 p-6 shadow-xl sm:w-[clamp(450px,45%,500px)]"
+              <MotionAlertContent
+                ref={ref}
+                forceMount
+                exit="close"
+                animate="open"
+                initial="close"
+                variants={modalVariants}
+                className="w-[95%] overflow-auto rounded-xl bg-bg-light-100 p-6 shadow-xl sm:w-[clamp(450px,45%,500px)]"
               >
-                {children}
-              </div>
-            </MotionAlertContent>
+                <div className="flex flex-col gap-4">{children}</div>
+              </MotionAlertContent>
+            </MotionAlertOverlay>
           </AlertDialogPrimitive.Portal>
         )}
       </AnimatePresence>
@@ -60,7 +51,7 @@ export const AlertTitle = forwardRef<
   AlertDialogPrimitive.AlertDialogTitleProps
 >(({ children, ...props }, ref) => (
   <AlertDialogPrimitive.Title
-    className="text-xl font-semibold"
+    className="text-xl font-semibold leading-none"
     ref={ref}
     {...props}
   >
@@ -74,7 +65,7 @@ export const AlertDescription = forwardRef<
   AlertDialogPrimitive.AlertDialogDescriptionProps
 >(({ children, ...props }, ref) => (
   <AlertDialogPrimitive.Description
-    className="text-sm text-text-black-100"
+    className="text-sm leading-none text-text-black-100"
     ref={ref}
     {...props}
   >

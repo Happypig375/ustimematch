@@ -27,6 +27,7 @@ module.exports = {
           "0 2px 8px 4px rgba(0,0,0,0.02), 0 2px 16px 8px rgba(0,0,0,0.01)",
         "color-chip":
           "inset 0 0 0 1px rgba(0,0,0,0.1), 0 0 4px 2px rgba(0,0,0,0.01)",
+        drawer: "0 0 8px 4px rgba(0,0,0,0.04), 0 0 32px 16px rgba(0,0,0,0.02)",
       },
     },
   },

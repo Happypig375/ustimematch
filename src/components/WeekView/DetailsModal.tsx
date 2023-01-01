@@ -31,28 +31,21 @@ const DetailsModal = () => {
         // Prevents focusing on button
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
-        <ModalTitle className="flex justify-between text-xl font-semibold">
+        <ModalTitle className="flex justify-between">
           <div>{parseUSTName(detailsLesson.name).lessonName}</div>
           <div>{parseUSTName(detailsLesson.name).section}</div>
         </ModalTitle>
 
         <ModalDescription>{detailsTimetable.name}</ModalDescription>
 
-        <div className="mt-2 mb-4 flex flex-col gap-2">
-          <table className="border-separate border-spacing-y-2">
-            <tbody>
-              <tr>
-                <td className="w-24">Time:</td>
-                <td>{`${parseTime(detailsLesson.begin)} - ${parseTime(
-                  detailsLesson.end,
-                )}`}</td>
-              </tr>
-              <tr>
-                <td className="w-24">Venue:</td>
-                <td>{detailsLesson.venue || "TBA"}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="flex flex-col gap-2">
+          <div>
+            {`${parseTime(detailsLesson.begin)}
+             - ${parseTime(detailsLesson.end)}`}
+          </div>
+
+          <div>{detailsLesson.venue || "TBA"}</div>
+
           <Accordion
             type="single"
             collapsible
@@ -65,7 +58,7 @@ const DetailsModal = () => {
                 value={value}
                 className="whitespace-pre-wrap leading-relaxed"
               >
-                {detailsLesson.description}
+                <p className="pt-2">{detailsLesson.description}</p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -83,6 +76,7 @@ const DetailsModal = () => {
               Path Advisor
             </Button>
           )}
+
           <DialogClose asChild>
             <Button fullWidth>Close</Button>
           </DialogClose>

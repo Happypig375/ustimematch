@@ -38,69 +38,69 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
         {open && (
           <DialogPrimitive.Portal forceMount>
             <MotionDialogOverlay
-              className="fixed inset-0 z-50 bg-zinc-200/40"
+              forceMount
               exit="close"
               animate="open"
               initial="close"
               variants={
                 matchDesktop ? modalOverlayVariants : drawerOverlayVariants
               }
-              forceMount
-            />
-
-            <MotionDialogContent
-              drag={matchDesktop ? undefined : "y"}
-              // @ts-expect-error: wrong type
-              onDragEnd={onDragEnd}
-              dragSnapToOrigin
-              dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
-              // dragElastic does not work, cannot constrain drag to only bottom direction
-              // dragElastic={{ top: 0, bottom: 0.5 }}
-              forceMount
-              exit="close"
-              animate="open"
-              initial="close"
-              variants={matchDesktop ? modalVariants : drawerVariants}
-              // onOpenAutoFocus={(e) => e.preventDefault()}
-              className={clsx(
-                "fixed z-50 overflow-auto bg-bg-light-100 shadow-xl",
-                // Mobile drawer styles
-                "inset-x-0 bottom-0 rounded-t-xl",
-                // Desktop modal styles
-                "sm:inset-0 sm:flex sm:items-center sm:justify-center sm:bg-transparent sm:shadow-none",
-                // Dirty fix for showing drawer background color while dragging up (will affect animation)
-                // "-bottom-[2000px] border-b-[2000px] border-bg-light-100 sm:border-b-0 sm:border-none",
-                // Dirty fix for disabling upward drag (will cause flicker)
-                // offset < 0 && "!translate-y-0",
-              )}
-              onClick={matchDesktop ? () => onOpenChange(false) : undefined}
-              ref={ref}
-              {...props}
+              className="fixed inset-0 z-50 grid place-items-end overflow-auto bg-bg-light-200/40 pt-8 sm:place-items-center sm:py-4"
             >
-              {matchDesktop ? (
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className="max-h-[80vh] w-[clamp(475px,50%,525px)] overflow-auto rounded-xl bg-bg-light-100 p-6 shadow-xl"
-                >
-                  {children}
-                </div>
-              ) : (
-                <>
-                  {/* Drag handler */}
-                  <div className="my-4">
-                    <div className="mx-auto h-[6px] w-14 rounded-full bg-zinc-100" />
-                  </div>
+              <MotionDialogContent
+                asChild
+                ref={ref}
+                {...props}
+                forceMount
+                exit="close"
+                animate="open"
+                initial="close"
+                variants={matchDesktop ? modalVariants : drawerVariants}
+                drag={matchDesktop ? undefined : "y"}
+                dragSnapToOrigin
+                // @ts-expect-error: wrong type
+                onDragEnd={onDragEnd}
+                dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
+                // dragElastic does not work, cannot constrain drag to only bottom direction
+                // dragElastic={{ top: 0, bottom: 0.5 }}
 
-                  {/* Prevent drag unless on drag handler */}
+                // className={clsx(
+                //   "bg-bg-light-100 shadow-xl",
+                //   // Mobile drawer styles
+                //   "inset-x-0 bottom-0 rounded-t-xl",
+                //   // Desktop modal styles
+                //   "sm:inset-0 sm:flex sm:items-center sm:justify-center sm:bg-transparent sm:shadow-none",
+                //   // Dirty fix for showing drawer background color while dragging up (will affect animation)
+                //   // "-bottom-[2000px] border-b-[2000px] border-bg-light-100 sm:border-b-0 sm:border-none",
+                //   // Dirty fix for disabling upward drag (will cause flicker)
+                //   // offset < 0 && "!translate-y-0",
+                // )}
+              >
+                {matchDesktop ? (
                   <div
-                    onPointerDownCapture={(e) => e.stopPropagation()}
-                    className="max-h-[80vh] overflow-auto px-6 pb-6"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex w-[clamp(475px,50%,525px)] flex-col gap-4 rounded-xl bg-bg-light-100 p-6 shadow-xl"
                   >
                     {children}
                   </div>
-                </>
-              )}
-            </MotionDialogContent>
+                ) : (
+                  <div className="min-w-[100%] max-w-[100%] rounded-t-xl bg-bg-light-100 shadow-drawer">
+                    {/* Drag handler */}
+                    <div className="my-4">
+                      <div className="mx-auto h-[6px] w-14 rounded-full bg-bg-light-400" />
+                    </div>
+
+                    <div
+                      className="flex flex-col gap-4 px-6 pb-6"
+                      // Prevent drag unless on drag handler
+                      onPointerDownCapture={(e) => e.stopPropagation()}
+                    >
+                      {children}
+                    </div>
+                  </div>
+                )}
+              </MotionDialogContent>
+            </MotionDialogOverlay>
           </DialogPrimitive.Portal>
         )}
       </AnimatePresence>
@@ -112,8 +112,12 @@ ModalContent.displayName = "ModalContent";
 export const ModalTitle = forwardRef<
   HTMLHeadingElement,
   DialogPrimitive.DialogTitleProps
->(({ children, ...props }, ref) => (
-  <DialogPrimitive.Title className="text-xl font-semibold" ref={ref} {...props}>
+>(({ children, className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    className={clsx("text-xl font-semibold leading-none", className)}
+    ref={ref}
+    {...props}
+  >
     {children}
   </DialogPrimitive.Title>
 ));
@@ -122,9 +126,9 @@ ModalTitle.displayName = "ModalTitle";
 export const ModalDescription = forwardRef<
   HTMLParagraphElement,
   DialogPrimitive.DialogDescriptionProps
->(({ children, ...props }, ref) => (
+>(({ children, className, ...props }, ref) => (
   <DialogPrimitive.Description
-    className="text-lg font-medium"
+    className={clsx("text-lg font-medium leading-none", className)}
     ref={ref}
     {...props}
   >
@@ -136,8 +140,8 @@ ModalDescription.displayName = "ModalDescription";
 export const ModalControl = forwardRef<
   HTMLDivElement,
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
->(({ children, ...props }, ref) => (
-  <div className="flex gap-2" ref={ref} {...props}>
+>(({ children, className, ...props }, ref) => (
+  <div className={clsx("flex gap-2", className)} ref={ref} {...props}>
     {children}
   </div>
 ));

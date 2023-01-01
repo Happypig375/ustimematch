@@ -31,6 +31,7 @@ import {
   Modal,
   ModalContent,
   ModalControl,
+  ModalDescription,
   ModalTitle,
   ModalTrigger,
 } from "@ui/Modal";
@@ -140,8 +141,8 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
           {timetable ? "Edit" : "Import"} Personal Timetable
         </ModalTitle>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mt-4 mb-8 flex flex-col gap-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             <Input
               type="text"
               label="Name"
@@ -187,36 +188,34 @@ const ImportPersonalModal = ({ timetable, onAdd, onDelete }: Props) => {
               </AlertTrigger>
 
               <AlertContent open={openAlert} onOpenChange={setOpenAlert}>
-                <div className="flex flex-col gap-4">
-                  <AlertTitle>Are you sure?</AlertTitle>
+                <AlertTitle>Are you sure?</AlertTitle>
 
-                  <AlertDescription>
-                    You are deleteing your personal timetable, this action
-                    cannot be undone.
-                  </AlertDescription>
+                <AlertDescription>
+                  You are deleteing your personal timetable, this action cannot
+                  be undone.
+                </AlertDescription>
 
-                  <div className="flex gap-2">
-                    <AlertCancel asChild>
-                      <Button fullWidth>Cancel</Button>
-                    </AlertCancel>
+                <div className="flex gap-2">
+                  <AlertCancel asChild>
+                    <Button fullWidth>Cancel</Button>
+                  </AlertCancel>
 
-                    {/* BUG: Unmounting modal will cancel alert animation */}
-                    <AlertAction asChild>
-                      <Button
-                        error
-                        fullWidth
-                        onClick={() => {
-                          onDelete && onDelete();
-                          // FIX: Wait for alert modal animation (200ms comes from variants)
-                          setTimeout(() => {
-                            setOpen(false);
-                          }, 200);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </AlertAction>
-                  </div>
+                  {/* BUG: Unmounting modal will cancel alert animation */}
+                  <AlertAction asChild>
+                    <Button
+                      error
+                      fullWidth
+                      onClick={() => {
+                        onDelete && onDelete();
+                        // FIX: Wait for alert modal animation (200ms comes from variants)
+                        setTimeout(() => {
+                          setOpen(false);
+                        }, 200);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </AlertAction>
                 </div>
               </AlertContent>
             </Alert>
