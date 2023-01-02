@@ -202,10 +202,11 @@ const Period = ({
           height,
           zIndex: 0,
           marginLeft: indent
-            ? indent.totalLevels < 3
-              ? // Make the first ident level less deep, more visually balanced
-                `${indent.indentLevel * 40}%`
-              : `${indent.indentLevel * (100 / indent.totalLevels)}%`
+            ? // indent.totalLevels < 3
+              // ? // Make the first ident level less deep, more visually balanced
+              //   `${indent.indentLevel * 40}%`
+              // :
+              `${indent.indentLevel * (100 / indent.totalLevels)}%`
             : 0,
           marginRight: 0,
           backgroundColor: color + "e8",
@@ -224,6 +225,7 @@ const Period = ({
         }}
       >
         {children}
+        {/* {indent?.indentLevel} {indent?.totalLevels} */}
       </HoverContext.Provider>
     </motion.div>
   ) : null;

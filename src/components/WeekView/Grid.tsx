@@ -123,6 +123,8 @@ const Grid = () => {
 
       <Border />
 
+      {/* Note that personal timetable should always be rendered at the bottom, with the lowest z-index */}
+
       {/* Personal timetable */}
       {personalTimetableConfig?.visible &&
         personalTimetable?.lessons.map((weekday, i) =>

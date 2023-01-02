@@ -131,100 +131,93 @@ export const WeekViewProvider = ({ children }: Props) => {
   );
   const [detailsLesson, setdetailsLesson] = useState<Lesson | null>(null);
 
-  // This is an unoptimized solution
+  // This is probably an unoptimized solution
   // TODO: Find a better method
   const getIndent = useCallback<IWeekViewContext["getIndent"]>(
     (timetableId, lessonIndex, weekday, begin, end) => {
-      // prettier-ignore
-      const visiblePersonalTimetable = personalTimetable && personalTimetableConfig?.visible ? [personalTimetable] : [];
-      // prettier-ignore
-      const visiblePersonalTimetableConfig = personalTimetable && personalTimetableConfig?.visible ? [personalTimetableConfig]: [];
-      // prettier-ignore
-      const visibleTimetalbes = timetables.filter((_, i) => timetablesConfigs[i]?.visible);
-      // prettier-ignore
-      const visibleTimetalbesConfigs = timetablesConfigs.filter((config) => config.visible);
-      // prettier-ignore
-      const flattenTimetables = [...visiblePersonalTimetable, ...visibleTimetalbes];
-      // prettier-ignore
-      const flattenTimetablesConfigs = [...visiblePersonalTimetableConfig, ...visibleTimetalbesConfigs];
+      // Note that personal timetable should always be at index 0 (Grid.tsx)
 
+      // Combines all visible timtables
+      const flattenTimetables = [
+        ...(personalTimetable && personalTimetableConfig?.visible
+          ? [personalTimetable]
+          : []),
+        ...timetables.filter((_, i) => timetablesConfigs[i]?.visible),
+      ];
+
+      // Combines all visible timetables configs
+      const flattenTimetablesConfigs = [
+        ...(personalTimetable && personalTimetableConfig?.visible
+          ? [personalTimetableConfig]
+          : []),
+        ...timetablesConfigs.filter((config) => config.visible),
+      ];
+
+      // Cannot just pass timetableIndex because there are hidden timetables
       const timetableIndex = flattenTimetablesConfigs.findIndex(
         (config) => config.id === timetableId,
       );
 
+      let totalLevels = 0;
       let indentLevel = 0;
+
       // For tracing all overlap
       let tmpBegin = begin;
       let tmpEnd = end;
 
       // Finding the indent level of a specific lesson
-      for (let i = timetableIndex - 1; i >= 0; i--) {
-        const lessons = flattenTimetables[i]?.lessons[weekday];
-        if (!lessons) continue;
-
-        for (let j = 0; j < lessons.length; j++) {
-          const lesson = lessons[j];
-          if (!lesson) continue;
-
-          // https://stackoverflow.com/questions/13513932/algorithm-to-detect-overlapping-periods
-          // String comparisoin works becuase the time is in the format of "HH:MM"
-          if (lesson.begin < tmpEnd && tmpBegin < lesson.end) {
-            tmpBegin = lesson.begin;
-            tmpEnd = lesson.end;
-            indentLevel += 1;
-          }
-        }
-      }
-
-      // In case overlapping in the same timetable
-      // Uses reverse for loop because z-index is higher for larger array index
-      tmpBegin = begin;
-      tmpEnd = end;
-      const tmpWeekday = flattenTimetables[timetableIndex]?.lessons[weekday];
-      if (tmpWeekday) {
-        for (let i = lessonIndex; i >= 0; i--) {
-          const lesson = tmpWeekday[i];
-          if (!lesson) continue;
-
-          if (
-            lesson.begin < tmpEnd &&
-            tmpBegin < lesson.end &&
-            i !== lessonIndex
-          ) {
-            tmpBegin = lesson.begin;
-            tmpEnd = lesson.end;
-            indentLevel += 1;
-          }
-        }
-      }
-
-      // First approach to get totalLevel
-      // const totalLevels = flattenTimetables.length;
-
-      // Second approach to get totalLevels (should be better visually)
-      let totalLevels = 0;
-      tmpBegin = begin;
-      tmpEnd = end;
-
       for (let i = flattenTimetables.length - 1; i >= 0; i--) {
         const lessons = flattenTimetables[i]?.lessons[weekday];
         if (!lessons) continue;
 
-        let overlap = false;
-
         for (let j = 0; j < lessons.length; j++) {
           const lesson = lessons[j];
           if (!lesson) continue;
 
+          let overlap = false;
+
+          // https://stackoverflow.com/questions/13513932/algorithm-to-detect-overlapping-periods
+          // String comparisoin works becuase the time is in "HH:mm"
           if (lesson.begin < tmpEnd && tmpBegin < lesson.end) {
             tmpBegin = lesson.begin;
             tmpEnd = lesson.end;
             overlap = true;
+            if (i === timetableIndex) {
+              tmpBegin = begin;
+              tmpEnd = end;
+            }
+            if (i < timetableIndex) indentLevel += 1;
+          }
+
+          if (overlap) {
+            totalLevels += 1;
           }
         }
-
-        if (overlap) totalLevels += 1;
       }
+
+      // Another approach to get totalLevel
+      // const totalLevels = flattenTimetables.length;
+
+      // In case overlapping in the same timetable, although it shouldn't happen
+      // Uses reverse for loop because z-index is higher for larger array index
+      // tmpBegin = begin;
+      // tmpEnd = end;
+      // const tmpWeekday = flattenTimetables[timetableIndex]?.lessons[weekday];
+      // if (!tmpWeekday) return { indentLevel, totalLevels };
+      // let overlap = false;
+      // for (let i = lessonIndex; i >= 0; i--) {
+      //   const lesson = tmpWeekday[i];
+      //   if (!lesson) continue;
+
+      //   if (lesson.begin < tmpEnd && tmpBegin < lesson.end) {
+      //     tmpBegin = lesson.begin;
+      //     tmpEnd = lesson.end;
+
+      //     overlap = true;
+      //     if (i !== lessonIndex) indentLevel += 1;
+      //   }
+      // }
+      // if (overlap) totalLevels += 1;
 
       return { indentLevel, totalLevels };
     },

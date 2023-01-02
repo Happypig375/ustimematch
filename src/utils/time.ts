@@ -1,4 +1,4 @@
-// return int hour and min of HH:MM
+// return int hour and min of HH:mm
 export const hour = (time: string): number =>
   parseInt(time.split(":")[0] as string);
 export const min = (time: string): number =>

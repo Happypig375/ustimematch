@@ -4,7 +4,7 @@ interface Lesson {
   venue: string;
   // Additional information (e.g. course title, instructors)
   description: string;
-  // Time in 24-hour format (HH:MM)
+  // Time in 24-hour format (HH:mm)
   begin: string;
   end: string;
 }

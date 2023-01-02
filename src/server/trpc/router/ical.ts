@@ -38,7 +38,7 @@ export const icalRouter = router({
           name: event.summary,
           venue: event.location,
           description: event.description,
-          // Ensuring date is in HH:MM format
+          // Ensuring date is in HH:mm format
           begin:
             event.startDate.hour.toString().padStart(2, "0") +
             ":" +
