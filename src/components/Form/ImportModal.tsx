@@ -101,7 +101,7 @@ const ImportPersonalModal = ({
         const tempConfig = {
           id: timetable && timetableConfig ? timetableConfig.id : nanoid(),
           color: getValues("color"),
-          visible: timetableConfig?.visible || true,
+          visible: timetableConfig ? timetableConfig.visible : true,
         };
         timetable && timetableConfig
           ? onEdit && onEdit(tmpTimetable, tempConfig)
