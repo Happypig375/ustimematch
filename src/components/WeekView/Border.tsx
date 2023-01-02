@@ -5,6 +5,26 @@ import { WeekViewContext } from "./Context";
 const Border = () => {
   const { rows, cols } = useContext(WeekViewContext);
 
+  // TODO: use linear gradient to render borders
+  // return (
+  //   <>
+  //     {Array.from({ length: cols }, (_, i) => (
+  //       <div
+  //         key={i}
+  //         style={{
+  //           gridRow: "2 / -1",
+  //           // + 1 because grid is 1-indexed
+  //           // + 1 because first row is weekday
+  //           gridColumn: `${i + 2} / span 1`,
+  //           background:
+  //             "linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em)",
+  //           backgroundSize: "100% 30px",
+  //         }}
+  //       />
+  //     ))}
+  //   </>
+  // );
+
   // This method renders too much divs and is quite slow
   return (
     <>

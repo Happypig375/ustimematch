@@ -1,5 +1,4 @@
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
-import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { forwardRef } from "react";
 import { modalVariants, modalOverlayVariants } from "@ui/variants";
@@ -9,11 +8,10 @@ const MotionAlertContent = motion(AlertDialogPrimitive.Content);
 
 interface AlertContentProps extends AlertDialogPrimitive.DialogContentProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
 }
 
 export const AlertContent = forwardRef<HTMLDivElement, AlertContentProps>(
-  ({ children, open, onOpenChange }, ref) => {
+  ({ children, open }, ref) => {
     return (
       <AnimatePresence>
         {open && (

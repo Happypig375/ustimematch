@@ -1,11 +1,14 @@
+import { IconEye } from "@tabler/icons";
 import {
   SortableTree,
   type TreeItemComponentProps,
   type TreeItems,
 } from "dnd-kit-sortable-tree";
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, Dispatch, SetStateAction } from "react";
+import Button from "@components/ui/Button";
 import TreeTimetableItem from "@ui/TreeTimetableItem";
 import { useStore } from "@store/index";
+import { Timetable, TimetableConfig } from "../../types/timetable";
 
 type MinimalTreeItemData = {
   value: string;
@@ -80,12 +83,20 @@ const MinimalTreeItemComponent = forwardRef<
 });
 MinimalTreeItemComponent.displayName = "MinimalTreeItemComponent";
 
-const TimetablesTree = () => {
+interface Props {
+  onClick: (timetable: Timetable, timetableConfig: TimetableConfig) => void;
+  onEyeClick: (timetable: Timetable, timetableConfig: TimetableConfig) => void;
+}
+
+const TimetablesTree = ({ onClick, onEyeClick }: Props) => {
   const [items, setItems] = useState(initialViableMinimalData);
+
+  const timetables = useStore.use.timetables();
+  const timetablesConfigs = useStore.use.timetablesConfigs();
 
   return (
     <div className="h-full overflow-y-auto">
-      <SortableTree
+      {/* <SortableTree
         // pointerSensorOptions={{ activationConstraint: {} }}
         items={items}
         onItemsChanged={(items) => {
@@ -103,7 +114,31 @@ const TimetablesTree = () => {
           setItems(items);
         }}
         TreeItemComponent={MinimalTreeItemComponent}
-      />
+      /> */}
+      {timetables.map((timetable, i) => (
+        <div
+          className="flex justify-between"
+          key={timetablesConfigs[i]?.id}
+          onClick={() => {
+            timetablesConfigs[i] &&
+              onClick(timetable, timetablesConfigs[i] as TimetableConfig);
+          }}
+        >
+          name: {timetable.name} visible:{" "}
+          {timetablesConfigs[i]?.visible.toString()}
+          <Button
+            icon
+            plain
+            onClick={(e) => {
+              e.stopPropagation();
+              timetablesConfigs[i] &&
+                onEyeClick(timetable, timetablesConfigs[i] as TimetableConfig);
+            }}
+          >
+            <IconEye stroke={1.75} className="h-5 w-5" />
+          </Button>
+        </div>
+      ))}
     </div>
   );
 };

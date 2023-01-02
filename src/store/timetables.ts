@@ -9,9 +9,18 @@ export interface TimetablesSlice {
   setPersonalTimetableConfig: (config: TimetableConfig | null) => void;
   // One-to-one mapping of timetables and configs
   timetables: Timetable[];
-  setTimetables: (timetables: Timetable[]) => void;
+  // setTimetables: (timetables: Timetable[]) => void;
   timetablesConfigs: TimetableConfig[];
-  setTimetablesConfigs: (configs: TimetableConfig[]) => void;
+  // setTimetablesConfigs: (configs: TimetableConfig[]) => void;
+  addTimetable: (
+    timetable: Timetable,
+    timetableConfig: TimetableConfig,
+  ) => void;
+  deleteTimetable: (timetableId: string) => void;
+  editTimetable: (
+    timetable: Timetable,
+    timetableConfig: TimetableConfig,
+  ) => void;
 }
 
 export const createTimetableSlice: StateCreator<
@@ -35,13 +44,37 @@ export const createTimetableSlice: StateCreator<
       state.personalTimetableConfig = config;
     }),
   timetables: [],
-  setTimetables: (timetables: Timetable[]) =>
-    set((state) => {
-      state.timetables = timetables;
-    }),
+  // setTimetables: (timetables) =>
+  //   set((state) => {
+  //     state.timetables = timetables;
+  //   }),
   timetablesConfigs: [],
-  setTimetablesConfigs: (configs: TimetableConfig[]) =>
+  // setTimetablesConfigs: (configs) =>
+  //   set((state) => {
+  //     state.timetablesConfigs = configs;
+  //   }),
+  addTimetable: (timetable, timetableConfig) =>
     set((state) => {
-      state.timetablesConfigs = configs;
+      state.timetables.push(timetable);
+      state.timetablesConfigs.push(timetableConfig);
+    }),
+  deleteTimetable: (timetableId) =>
+    set((state) => {
+      const idx = state.timetablesConfigs.findIndex(
+        (config) => config.id === timetableId,
+      );
+      if (idx === -1) return;
+      state.timetables.splice(idx, 1);
+      state.timetablesConfigs.splice(idx, 1);
+    }),
+  editTimetable: (timetable, timetableConfig) =>
+    set((state) => {
+      const idx = state.timetablesConfigs.findIndex(
+        (config) => config.id === timetableConfig.id,
+      );
+      if (idx === -1) return;
+
+      state.timetables[idx] = timetable;
+      state.timetablesConfigs[idx] = timetableConfig;
     }),
 });

@@ -1,6 +1,7 @@
 import { DialogClose } from "@radix-ui/react-dialog";
 import { IconDownload, IconTrash, IconX } from "@tabler/icons";
 import clsx from "clsx";
+import { nanoid } from "nanoid";
 import { useEffect, useMemo, useState } from "react";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -23,10 +24,13 @@ import { ColorInput } from "./ColorInput";
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
-  timetable?: Timetable;
-  timetableConfig?: TimetableConfig;
+  personal?: boolean;
   onAdd: (timetable: Timetable, config: TimetableConfig) => void;
   onDelete?: () => void;
+  onEdit?: (timetable: Timetable, config: TimetableConfig) => void;
+  // If these two fields are passed, it means the modal is in edit mode
+  timetable?: Timetable;
+  timetableConfig?: TimetableConfig;
 }
 
 export interface PersonalTimetableForm
@@ -40,10 +44,12 @@ export interface PersonalTimetableForm
 const ImportPersonalModal = ({
   open,
   setOpen,
-  timetable,
-  timetableConfig,
+  personal,
   onAdd,
   onDelete,
+  onEdit,
+  timetable,
+  timetableConfig,
 }: Props) => {
   const defaultValues = useMemo<PersonalTimetableForm>(
     () => ({
@@ -86,18 +92,20 @@ const ImportPersonalModal = ({
       retry: false,
       enabled: false,
       onSuccess: ({ lessons }) => {
-        onAdd(
-          {
-            lessons,
-            plannerURL,
-            name: getValues("name"),
-            university: getValues("university"),
-          },
-          {
-            visible: timetableConfig?.visible || true,
-            color: getValues("color"),
-          },
-        );
+        const tmpTimetable = {
+          lessons,
+          plannerURL,
+          name: getValues("name"),
+          university: getValues("university"),
+        };
+        const tempConfig = {
+          id: timetable && timetableConfig ? timetableConfig.id : nanoid(),
+          color: getValues("color"),
+          visible: timetableConfig?.visible || true,
+        };
+        timetable && timetableConfig
+          ? onEdit && onEdit(tmpTimetable, tempConfig)
+          : onAdd(tmpTimetable, tempConfig);
         setOpen(false);
       },
       onError: (err) => {
@@ -120,7 +128,8 @@ const ImportPersonalModal = ({
     <Modal open={open} onOpenChange={controlledSetOpen}>
       <ModalContent open={open} onOpenChange={controlledSetOpen}>
         <ModalTitle>
-          {timetable ? "Edit" : "Import"} Personal Timetable
+          {timetable && timetableConfig ? "Edit" : "Import"}{" "}
+          {personal && "Personal"} Timetable
         </ModalTitle>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -169,12 +178,13 @@ const ImportPersonalModal = ({
                 </Button>
               </AlertTrigger>
 
-              <AlertContent open={openAlert} onOpenChange={setOpenAlert}>
+              <AlertContent open={openAlert}>
                 <AlertTitle>Are you sure?</AlertTitle>
 
                 <AlertDescription>
-                  You are deleteing your personal timetable, this action cannot
-                  be undone.
+                  You are deleteing{" "}
+                  <b>{personal ? "your personal" : `${timetable?.name}'s`}</b>{" "}
+                  timetable, this action cannot be undone.
                 </AlertDescription>
 
                 <div className="flex gap-2">
@@ -188,9 +198,9 @@ const ImportPersonalModal = ({
                       error
                       fullWidth
                       onClick={() => {
-                        onDelete && onDelete();
                         // FIX: Wait for alert modal animation (200ms comes from variants)
                         setTimeout(() => {
+                          onDelete && onDelete();
                           setOpen(false);
                         }, 200);
                       }}

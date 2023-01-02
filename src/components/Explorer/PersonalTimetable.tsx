@@ -1,7 +1,7 @@
 import { IconEdit, IconEye, IconEyeOff, IconUserPlus } from "@tabler/icons";
 import clsx from "clsx";
 import { useCallback, useState } from "react";
-import PersonalTimetableModal from "@components/Form/PersonalTimetableModal";
+import PersonalTimetableModal from "@components/Form/ImportModal";
 import Button from "@ui/Button";
 import { useStore } from "@store/index";
 import { type TimetableConfig, type Timetable } from "../../types/timetable";
@@ -21,6 +21,14 @@ const PersonalTimetable = () => {
   }, [setPersonalTimetable, setPersonalTimetableConfig]);
 
   const onAdd = useCallback(
+    (timetable: Timetable, config: TimetableConfig) => {
+      setPersonalTimetable(timetable);
+      setPersonalTimetableConfig(config);
+    },
+    [setPersonalTimetable, setPersonalTimetableConfig],
+  );
+
+  const onEdit = useCallback(
     (timetable: Timetable, config: TimetableConfig) => {
       setPersonalTimetable(timetable);
       setPersonalTimetableConfig(config);
@@ -83,9 +91,11 @@ const PersonalTimetable = () => {
       )}
 
       <PersonalTimetableModal
+        personal
         open={open}
         setOpen={setOpen}
         onAdd={onAdd}
+        onEdit={onEdit}
         onDelete={onDelete}
         timetable={personalTimetable || undefined}
         timetableConfig={personalTimetableConfig || undefined}

@@ -1,10 +1,15 @@
 import clsx from "clsx";
 import { useCallback, useContext, useEffect, useRef } from "react";
-import { type Lesson, type Timetable } from "../../types/timetable";
+import {
+  type TimetableConfig,
+  type Lesson,
+  type Timetable,
+} from "../../types/timetable";
 import Border from "./Border";
 import { WeekViewContext } from "./Context";
 import DetailsModal from "./DetailsModal";
 import Event from "./Event";
+import Period from "./Period";
 import Timeline from "./Timeline";
 
 const Grid = () => {
@@ -16,6 +21,8 @@ const Grid = () => {
     showWeekend,
     personalTimetable,
     personalTimetableConfig,
+    timetables,
+    timetablesConfigs,
     setMinuteHeight,
     setColumnWidth,
     openDetails,
@@ -23,6 +30,7 @@ const Grid = () => {
     setDetailsTimetable,
     setdetailsLesson,
     rowTo12,
+    getIndent,
   } = useContext(WeekViewContext);
 
   /* ---------- Fetch timematch when calendars change or when toggled --------- */
@@ -30,20 +38,6 @@ const Grid = () => {
   //   if (!showTimematch) return;
   //   getTimematch();
   // }, [showTimematch, calendars, getTimematch]);
-
-  /* ------------------ Function passed as prop to open modal ----------------- */
-  // const [detailsModal, setDetailsModal] = useState(false);
-
-  // const [person, setPerson] = useState<string | undefined>();
-  // const [lesson, setLesson] = useState<Lesson | undefined>();
-
-  // const toggleDetailsModal = () => setDetailsModal(!detailsModal);
-
-  // const showModal = (name: string, lesson: Lesson) => {
-  //   setPerson(name);
-  //   setLesson(lesson);
-  //   toggleDetailsModal();
-  // };
 
   const toggleOpenDetails = useCallback(
     (timetable: Timetable, lesson: Lesson) => {
@@ -139,9 +133,44 @@ const Grid = () => {
               lesson={lesson}
               color={personalTimetableConfig.color}
               onClick={() => toggleOpenDetails(personalTimetable, lesson)}
+              indent={getIndent(
+                personalTimetableConfig.id,
+                j,
+                i,
+                lesson.begin,
+                lesson.end,
+              )}
             />
           )),
         )}
+
+      {/* Timetables */}
+      {timetables.map((timetable, i) => {
+        if (!timetablesConfigs[i] || !timetablesConfigs[i]?.visible)
+          return null;
+        return timetable.lessons.map((weekday, j) => {
+          return weekday.map((lesson, k) => {
+            return (
+              <Event
+                key={`${i}${j}${k}`}
+                weekday={j}
+                lesson={lesson}
+                color={(timetablesConfigs[i] as TimetableConfig).color}
+                onClick={() => toggleOpenDetails(timetable, lesson)}
+                indent={getIndent(
+                  (timetablesConfigs[i] as TimetableConfig).id,
+                  k,
+                  j,
+                  lesson.begin,
+                  lesson.end,
+                )}
+              />
+            );
+          });
+        });
+      })}
+
+      {/* <Period begin="12:35" end="13:45" color="#555555" weekday={5} /> */}
 
       <Timeline />
 

@@ -4,7 +4,7 @@ interface Lesson {
   venue: string;
   // Additional information (e.g. course title, instructors)
   description: string;
-  // Time in 24-hour format
+  // Time in 24-hour format (HH:MM)
   begin: string;
   end: string;
 }
@@ -60,6 +60,10 @@ interface HKUSTTimetable extends BaseTimetable {
 export type Timetable = HKUSTTimetable;
 
 interface TimetableConfig {
-  visible: boolean;
+  // id is only for client side reference
+  id: string;
+  // color can be modified after being imported
   color: string;
+  // visible can also be modified
+  visible: boolean;
 }

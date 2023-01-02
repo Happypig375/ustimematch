@@ -17,11 +17,12 @@ export const getStaticProps = () => {
 
 const Test: NextPage = () => {
   const personalTimetable = useStore.use.personalTimetable();
+  const timetables = useStore.use.timetables();
 
   return (
     <Header>
       <div className="w-full p-4">
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           {/* <Button fullWidth>Full Width</Button>
           <Button icon>
             <BanknotesIcon className="h-5 w-5" />
@@ -61,6 +62,10 @@ const Test: NextPage = () => {
             <DynamicReactJson
               src={personalTimetable ? personalTimetable.lessons : {}}
             />
+          </div>
+          Timetables:
+          <div className="max-h-[512px] overflow-auto">
+            <DynamicReactJson src={timetables} />
           </div>
         </div>
       </div>

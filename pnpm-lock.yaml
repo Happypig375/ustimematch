@@ -36,6 +36,7 @@ specifiers:
   framer-motion: ^8.0.2
   ical.js: ^1.5.0
   immer: ^9.0.16
+  nanoid: ^4.0.0
   next: 13.0.2
   next-auth: ^4.18.3
   nodemailer: ^6.8.0
@@ -81,6 +82,7 @@ dependencies:
   framer-motion: 8.0.2_biqbaboplfbrettd7655fr4n2y
   ical.js: 1.5.0
   immer: 9.0.16
+  nanoid: 4.0.0
   next: 13.0.2_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.18.7_vo2mwhatbdlbtvmnsv5k22xfpu
   nodemailer: 6.8.0
@@ -2975,6 +2977,12 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   /natural-compare-lite/1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}

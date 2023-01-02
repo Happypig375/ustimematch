@@ -1,8 +1,11 @@
 import { IconFolderPlus, IconPlus, IconSwitchVertical } from "@tabler/icons";
 import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useState } from "react";
+import ImportModal from "@components/Form/ImportModal";
 import Button from "@ui/Button";
 import { explorerVariants } from "@ui/variants";
 import { useStore } from "@store/index";
+import { type Timetable, type TimetableConfig } from "../../types/timetable";
 import PersonalTimetable from "./PersonalTimetable";
 import TimetablesTree from "./TimetablesTree";
 
@@ -10,6 +13,39 @@ const Explorer = () => {
   const showExplorer = useStore.use.showExplorer();
   const explorerReorderMode = useStore.use.explorerReorderMode();
   const toggleExplorerReorderMode = useStore.use.toggleExplorerReorderMode();
+
+  const [open, setOpen] = useState(false);
+  const [tmpEditTb, setTmpEditTb] = useState<Timetable>();
+  const [tmpEditTbCf, setTmpEditTbCf] = useState<TimetableConfig>();
+
+  const addTimetable = useStore.use.addTimetable();
+  const deleteTimetable = useStore.use.deleteTimetable();
+  const editTimetable = useStore.use.editTimetable();
+
+  const onDelete = useCallback(() => {
+    tmpEditTbCf && deleteTimetable(tmpEditTbCf?.id);
+  }, [deleteTimetable, tmpEditTbCf]);
+
+  const onAdd = useCallback(
+    (timetable: Timetable, config: TimetableConfig) => {
+      addTimetable(timetable, config);
+    },
+    [addTimetable],
+  );
+
+  const onEdit = useCallback(
+    (timetable: Timetable, config: TimetableConfig) => {
+      editTimetable(timetable, config);
+    },
+    [editTimetable],
+  );
+
+  // For resetting edit modal to import modal
+  useEffect(() => {
+    if (open) return;
+    setTmpEditTb(undefined);
+    setTmpEditTbCf(undefined);
+  }, [open]);
 
   return (
     <AnimatePresence initial={false}>
@@ -23,11 +59,7 @@ const Explorer = () => {
         >
           {/* Buttons */}
           <div className="flex gap-2 border-b border-border-gray-100 px-4 py-2">
-            <Button
-              fullWidth
-              title="Import"
-              // onClick={toggleShowImportModal}
-            >
+            <Button fullWidth title="Import" onClick={() => setOpen(true)}>
               <IconPlus stroke={1.75} className="h-5 w-5" />
               Import
             </Button>
@@ -49,9 +81,31 @@ const Explorer = () => {
             </Button>
           </div>
 
-          <TimetablesTree />
+          <TimetablesTree
+            onClick={(timetable, timetableConfig) => {
+              setOpen(true);
+              setTmpEditTb(timetable);
+              setTmpEditTbCf(timetableConfig);
+            }}
+            onEyeClick={(timetable, timetableConfig) => {
+              editTimetable(timetable, {
+                ...timetableConfig,
+                visible: !timetableConfig.visible,
+              });
+            }}
+          />
 
           <PersonalTimetable />
+
+          <ImportModal
+            open={open}
+            setOpen={setOpen}
+            onAdd={onAdd}
+            onDelete={onDelete}
+            onEdit={onEdit}
+            timetable={tmpEditTb}
+            timetableConfig={tmpEditTbCf}
+          />
         </motion.div>
       )}
     </AnimatePresence>

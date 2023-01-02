@@ -1,4 +1,3 @@
-import { LayoutGroup } from "framer-motion";
 import { type NextPage } from "next";
 import { useEffect, useState } from "react";
 import Explorer from "@components/Explorer";
