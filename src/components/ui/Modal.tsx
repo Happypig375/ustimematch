@@ -42,12 +42,14 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               exit="close"
               animate="open"
               initial="close"
+              // BUG: transparency background will change opacity when dragging drawer to bottom on iOS
+              // FIX: background color is handled in variants
               variants={
                 matchDesktop ? modalOverlayVariants : drawerOverlayVariants
               }
-              // sm:overflow-auto: mobile implementation based on variants
-              // drawerOverlayVariants: fix for scroll bar showing when animating
-              className="fixed inset-0 z-50 grid place-items-end bg-bg-light-200/40 pt-8 sm:place-items-center sm:overflow-auto sm:py-4"
+              // BUG: drawer animation will cause scrollbar to appear when animating
+              // FIX: uses sm:overflow-auto to handle desktop modal, while mobile implementation is based on variants
+              className="fixed inset-0 z-50 grid place-items-end pt-8 sm:place-items-center sm:overflow-auto sm:bg-bg-light-200/40 sm:py-4"
             >
               <MotionDialogContent
                 asChild
@@ -63,20 +65,8 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 // @ts-expect-error: wrong type
                 onDragEnd={onDragEnd}
                 dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
-                // dragElastic does not work, cannot constrain drag to only bottom direction
+                // BUG: dragElastic does not work, cannot constrain drag to only bottom direction
                 // dragElastic={{ top: 0, bottom: 0.5 }}
-
-                // className={clsx(
-                //   "bg-bg-light-100 shadow-xl",
-                //   // Mobile drawer styles
-                //   "inset-x-0 bottom-0 rounded-t-xl",
-                //   // Desktop modal styles
-                //   "sm:inset-0 sm:flex sm:items-center sm:justify-center sm:bg-transparent sm:shadow-none",
-                //   // Dirty fix for showing drawer background color while dragging up (will affect animation)
-                //   // "-bottom-[2000px] border-b-[2000px] border-bg-light-100 sm:border-b-0 sm:border-none",
-                //   // Dirty fix for disabling upward drag (will cause flicker)
-                //   // offset < 0 && "!translate-y-0",
-                // )}
               >
                 {matchDesktop ? (
                   <div

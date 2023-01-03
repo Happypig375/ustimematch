@@ -33,7 +33,7 @@
     "@trpc/server": "^10.0.0",
     "clsx": "^1.2.1",
     "dnd-kit-sortable-tree": "^0.1.57",
-    "framer-motion": "^8.0.2",
+    "framer-motion": "^8.1.3",
     "ical.js": "^1.5.0",
     "immer": "^9.0.16",
     "nanoid": "^4.0.0",

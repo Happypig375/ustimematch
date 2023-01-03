@@ -8,6 +8,7 @@
  * @return {String} The contrasting color (black or white)
  */
 export const getContrast = function (hexcolor: string) {
+  if (!hexcolor) return;
   // If a leading # is provided, remove it
   if (hexcolor.slice(0, 1) === "#") {
     hexcolor = hexcolor.slice(1);
@@ -37,6 +38,7 @@ export const getContrast = function (hexcolor: string) {
 
 // https://gist.github.com/renancouto/4675192
 const lighten = (color: string, percent: number) => {
+  if (!color) return;
   color = color.replace("#", "");
   const num = parseInt(color, 16),
     amt = Math.round(2.55 * percent),
