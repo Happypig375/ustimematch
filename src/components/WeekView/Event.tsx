@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { parseUSTName } from "@utils/parseName";
-import { borderColor, textColor } from "@utils/shade";
+import { textColor } from "@utils/shade";
 import { parseTime } from "@utils/time";
 import { type Lesson } from "../../types/timetable";
 import GridPeriod, { HoverContext } from "./Period";
@@ -33,7 +33,7 @@ const CalendarEvent = ({
         {({ hover, matchDesktop, hoverTransition, idleTransition }) => (
           <>
             {/* Main content */}
-            <div className="flex flex-col gap-1 px-1 py-[5px] leading-none sm:gap-2 sm:px-[7px] sm:py-2">
+            <div className="flex flex-col gap-1 p-1 leading-none sm:gap-2 sm:p-[6px]">
               <div
                 style={{ color: textColor(color) + "ee" }}
                 className="flex flex-wrap justify-between gap-x-2 gap-y-1 text-[clamp(0.675rem,1.4vw,0.875rem)] font-medium"
@@ -44,13 +44,11 @@ const CalendarEvent = ({
                   animate={matchDesktop ? "hover" : hover ? "hover" : "idle"}
                   variants={{
                     hover: {
-                      scale: 1,
                       opacity: 1,
                       display: "block",
                       transition: hoverTransition,
                     },
                     idle: {
-                      scale: 0,
                       opacity: 0,
                       display: "none",
                       transition: idleTransition,
@@ -69,12 +67,6 @@ const CalendarEvent = ({
                 <div style={{ color: textColor(color) + "aa" }}>{venue}</div>
               </div>
             </div>
-
-            {/* Border hack */}
-            <div
-              style={{ border: `1px solid ${borderColor(color)}` }}
-              className="absolute top-0 left-0 h-full w-full"
-            />
           </>
         )}
       </HoverContext.Consumer>

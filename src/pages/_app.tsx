@@ -1,4 +1,4 @@
-import { Inter } from "@next/font/google";
+import { IBM_Plex_Sans } from "@next/font/google";
 import { IconX } from "@tabler/icons";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
@@ -10,7 +10,11 @@ import { trpc } from "@utils/trpc";
 import useMediaQuery from "../hooks/useMediaQuery";
 import "../styles/globals.css";
 
-const inter = Inter();
+const IBMPlexSans = IBM_Plex_Sans({
+  display: "swap",
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+});
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -29,9 +33,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
       </Head>
 
-      <main className={inter.className}>
-        <Component {...pageProps} />
-      </main>
+      {/* https://github.com/vercel/next.js/discussions/42023 */}
+      <style jsx global>{`
+        :root {
+          --font-ibm-plex-sans: ${IBMPlexSans.style.fontFamily};
+        }
+      `}</style>
+
+      <Component {...pageProps} />
 
       <Toaster
         position={matchDesktop ? "bottom-right" : "top-right"}

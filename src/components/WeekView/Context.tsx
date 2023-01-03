@@ -181,11 +181,14 @@ export const WeekViewProvider = ({ children }: Props) => {
           if (lesson.begin < tmpEnd && tmpBegin < lesson.end) {
             tmpBegin = lesson.begin;
             tmpEnd = lesson.end;
+
             overlap = true;
+
             if (i === timetableIndex) {
               tmpBegin = begin;
               tmpEnd = end;
             }
+
             if (i < timetableIndex) indentLevel += 1;
           }
 

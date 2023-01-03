@@ -31,8 +31,8 @@ const About: NextPage = () => {
           </Paragraph>
 
           {/* Version number */}
-          <footer className="flex items-center gap-1 text-sm font-medium tracking-wide">
-            <IconSettings stroke={1.75} className="h-5 w-5" />v
+          <footer className="flex items-center gap-1 text-sm tracking-wide">
+            <IconSettings stroke={1.75} className="h-4 w-4" />v
             {env.NEXT_PUBLIC_VERSION}
           </footer>
         </div>

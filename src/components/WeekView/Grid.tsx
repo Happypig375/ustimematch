@@ -96,7 +96,7 @@ const Grid = () => {
           className={clsx(
             "flex select-none items-center justify-center p-2 leading-none",
             new Date().getDay() === (i + 1) % 7
-              ? "font-medium text-brand"
+              ? "font-semibold text-brand"
               : "text-text-black-100",
           )}
         >
@@ -172,7 +172,13 @@ const Grid = () => {
         });
       })}
 
-      {/* <Period begin="12:35" end="13:45" color="#555555" weekday={5} /> */}
+      {/* Edge cases for ui testing period (hovering margin) */}
+      {/* <Period begin="22:00" end="23:00" color="#555555" weekday={3} />
+      <Period begin="08:00" end="10:00" color="#555555" weekday={0} />
+      <Period begin="07:00" end="10:30" color="#555555" weekday={6} />
+      <Period begin="20:12" end="22:59" color="#555555" weekday={0} />
+      <Period begin="20:12" end="22:31" color="#555555" weekday={1} />
+      <Period begin="20:00" end="22:43" color="#555555" weekday={2} /> */}
 
       <Timeline />
 
