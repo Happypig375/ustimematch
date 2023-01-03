@@ -43,7 +43,7 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               animate="open"
               initial="close"
               // BUG: transparency background will change opacity when dragging drawer to bottom on iOS
-              // FIX: background color is handled in variants
+              // FIX: drawer background color is now handled in variants
               variants={
                 matchDesktop ? modalOverlayVariants : drawerOverlayVariants
               }

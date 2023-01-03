@@ -71,7 +71,6 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
           />
         </div>
 
-        {/* BUG: pointer device mouse up outside modal will cause modal to close */}
         <HexColorPicker
           color={field.value}
           onChange={onChange}
