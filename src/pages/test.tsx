@@ -3,7 +3,7 @@ import dynamic from "next/dynamic.js";
 import toast from "react-hot-toast";
 import Header from "@components/Header";
 import Button from "@ui/Button";
-import { useStore } from "@store/index";
+import { useTrackedStore } from "@store/index";
 import { env } from "../env/server.mjs";
 
 const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
@@ -16,8 +16,8 @@ export const getStaticProps = () => {
 };
 
 const Test: NextPage = () => {
-  const personalTimetable = useStore.use.personalTimetable();
-  const timetables = useStore.use.timetables();
+  const personalTimetable = useTrackedStore().timetable.personalTimetable();
+  const timetables = useTrackedStore().timetable.timetables();
 
   return (
     <Header>

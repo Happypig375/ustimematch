@@ -1,20 +1,23 @@
-import create from "zustand";
-import { persist, devtools } from "zustand/middleware";
-import { immer } from "zustand/middleware/immer";
-import { createSelectors } from "./createSelectors";
-import { type StatesSlice, createStatesSlice } from "./states";
-import { type TimetablesSlice, createTimetableSlice } from "./timetables";
+import { mapValuesKey } from "@udecode/zustood";
+import { timetableStore } from "./timetable";
+import { uiStore } from "./ui";
+import { weekViewStore } from "./weekView";
 
-const useStoreBase = create<StatesSlice & TimetablesSlice>()(
-  persist(
-    immer(
-      devtools((...a) => ({
-        ...createStatesSlice(...a),
-        ...createTimetableSlice(...a),
-      })),
-    ),
-    { name: "store" },
-  ),
-);
+// Global store
+export const rootStore = {
+  ui: uiStore,
+  timetable: timetableStore,
+  weekView: weekViewStore,
+};
 
-export const useStore = createSelectors(useStoreBase);
+// Global hook selectors
+export const useStore = () => mapValuesKey("use", rootStore);
+
+// Global tracked hook selectors
+export const useTrackedStore = () => mapValuesKey("useTracked", rootStore);
+
+// Global getter selectors
+export const store = mapValuesKey("get", rootStore);
+
+// Global actions
+export const actions = mapValuesKey("set", rootStore);

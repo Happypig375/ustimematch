@@ -1,12 +1,12 @@
-import { useContext } from "react";
+import { useTrackedStore } from "@store/index";
 import useDate from "@hooks/useDate";
-import { WeekViewContext } from "./Context";
 
 const Timeline = () => {
   const { date } = useDate();
 
-  const { showWeekend, displayedHours, minuteHeight } =
-    useContext(WeekViewContext);
+  const showWeekend = useTrackedStore().ui.showWeekend();
+  const displayedHours = useTrackedStore().ui.displayedHours();
+  const minuteHeight = useTrackedStore().weekView.minuteHeight();
 
   const weekday = (date.getDay() + 6) % 7;
 

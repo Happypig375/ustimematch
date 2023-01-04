@@ -67,3 +67,7 @@ interface TimetableConfig {
   // visible can also be modified
   visible: boolean;
 }
+
+export interface FlattenTimetable extends Timetable {
+  config: TimetableConfig;
+}

@@ -1,6 +1,6 @@
 import { AccordionItem } from "@radix-ui/react-accordion";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Accordion, { AccordionContent, AccordionTrigger } from "@ui/Accordion";
 import Button from "@ui/Button";
 import {
@@ -10,14 +10,16 @@ import {
   ModalDescription,
   ModalTitle,
 } from "@ui/Modal";
+import { actions, useTrackedStore } from "@store/index";
 import { parseUSTName } from "@utils/parseName";
 import { getPathAdvisorUrl } from "@utils/pathAdvisor";
 import { parseTime } from "@utils/time";
-import { WeekViewContext } from "./Context";
 
 const DetailsModal = () => {
-  const { openDetails, setOpenDetails, detailsTimetable, detailsLesson } =
-    useContext(WeekViewContext);
+  const openDetails = useTrackedStore().weekView.openDetails();
+  const detailsTimetable = useTrackedStore().weekView.detailsTimetable();
+  const detailsLesson = useTrackedStore().weekView.detailsLesson();
+  const setOpenDetails = actions.weekView.setOpenDetails;
 
   const [value, setValue] = useState("");
 

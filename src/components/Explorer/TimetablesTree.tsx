@@ -1,4 +1,4 @@
-import { IconEye } from "@tabler/icons";
+import { IconEye, IconEyeOff } from "@tabler/icons";
 import {
   SortableTree,
   type TreeItemComponentProps,
@@ -7,8 +7,9 @@ import {
 import { useState, forwardRef, Dispatch, SetStateAction } from "react";
 import Button from "@components/ui/Button";
 import TreeTimetableItem from "@ui/TreeTimetableItem";
-import { useStore } from "@store/index";
+import { useStore, useTrackedStore } from "@store/index";
 import { Timetable, TimetableConfig } from "../../types/timetable";
+import ColorChip from "./ColorChip";
 
 type MinimalTreeItemData = {
   value: string;
@@ -65,7 +66,7 @@ const MinimalTreeItemComponent = forwardRef<
   HTMLDivElement,
   TreeItemComponentProps<MinimalTreeItemData>
 >((props, ref) => {
-  const explorerReorderMode = useStore.use.explorerReorderMode();
+  const explorerReorderMode = useTrackedStore().ui.explorerReorderMode();
 
   return (
     <TreeTimetableItem
@@ -91,8 +92,8 @@ interface Props {
 const TimetablesTree = ({ onClick, onEyeClick }: Props) => {
   const [items, setItems] = useState(initialViableMinimalData);
 
-  const timetables = useStore.use.timetables();
-  const timetablesConfigs = useStore.use.timetablesConfigs();
+  const timetables = useStore().timetable.timetables();
+  const timetablesConfigs = useStore().timetable.timetablesConfigs();
 
   return (
     <div className="h-full overflow-y-auto">
@@ -117,15 +118,14 @@ const TimetablesTree = ({ onClick, onEyeClick }: Props) => {
       /> */}
       {timetables.map((timetable, i) => (
         <div
-          className="flex justify-between"
+          className="flex justify-between py-1"
           key={timetablesConfigs[i]?.id}
           onClick={() => {
             timetablesConfigs[i] &&
               onClick(timetable, timetablesConfigs[i] as TimetableConfig);
           }}
         >
-          name: {timetable.name} visible:{" "}
-          {timetablesConfigs[i]?.visible.toString()}
+          {timetable.name}
           <Button
             icon
             plain
@@ -135,7 +135,18 @@ const TimetablesTree = ({ onClick, onEyeClick }: Props) => {
                 onEyeClick(timetable, timetablesConfigs[i] as TimetableConfig);
             }}
           >
-            <IconEye stroke={1.75} className="h-5 w-5" />
+            <ColorChip
+              color={
+                timetablesConfigs[i]
+                  ? (timetablesConfigs[i] as TimetableConfig).color
+                  : "#000000"
+              }
+            />
+            {(timetablesConfigs[i] as TimetableConfig).visible ? (
+              <IconEye stroke={1.75} className="h-5 w-5" />
+            ) : (
+              <IconEyeOff stroke={1.75} className="h-5 w-5" />
+            )}
           </Button>
         </div>
       ))}

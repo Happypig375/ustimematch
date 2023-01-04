@@ -95,7 +95,7 @@ const ImportPersonalModal = ({
         const tmpTimetable = {
           lessons,
           plannerURL,
-          name: getValues("name"),
+          name: getValues("name").trim(),
           university: getValues("university"),
         };
         const tempConfig = {
@@ -103,9 +103,11 @@ const ImportPersonalModal = ({
           color: getValues("color"),
           visible: timetableConfig ? timetableConfig.visible : true,
         };
+
         timetable && timetableConfig
           ? onEdit && onEdit(tmpTimetable, tempConfig)
           : onAdd(tmpTimetable, tempConfig);
+
         setOpen(false);
       },
       onError: (err) => {

@@ -1,10 +1,10 @@
 import { motion, type Transition } from "framer-motion";
-import { createContext, useContext, useMemo, useState } from "react";
+import debounce from "lodash.debounce";
+import { createContext, useEffect, useMemo, useState } from "react";
+import { useTrackedStore } from "@store/index";
 import useMediaQuery from "@hooks/useMediaQuery";
-import usePrevious from "@hooks/usePrevious";
 import { borderColor } from "@utils/shade";
 import { hour, min } from "@utils/time";
-import { WeekViewContext } from "./Context";
 
 interface IHoverContext {
   hover: boolean;
@@ -46,8 +46,10 @@ const Period = ({
   children,
   onClick,
 }: Props) => {
-  const { showWeekend, displayedHours, minPerRow, minuteHeight } =
-    useContext(WeekViewContext);
+  const showWeekend = useTrackedStore().ui.showWeekend();
+  const displayedHours = useTrackedStore().ui.displayedHours();
+  const minutePerRow = useTrackedStore().ui.minutePerRow();
+  const minuteHeight = useTrackedStore().weekView.minuteHeight();
 
   // Check if period exceeds displayed hours or if it is on weekend but weekend is hidden
   const periodOverflow = useMemo(
@@ -79,23 +81,23 @@ const Period = ({
     () =>
       hour(begin) >= (displayedHours[0] as number)
         ? ((hour(begin) - (displayedHours[0] as number)) * 60 +
-            (Math.floor(min(begin) / minPerRow) ? minPerRow : 0)) /
-            minPerRow +
+            (Math.floor(min(begin) / minutePerRow) ? minutePerRow : 0)) /
+            minutePerRow +
           2
         : 2,
-    [begin, displayedHours, minPerRow],
+    [begin, displayedHours, minutePerRow],
   );
   const gridRowEnd = useMemo(
     () =>
       hour(end) <= (displayedHours[displayedHours.length - 1] as number)
         ? ((hour(end) - (displayedHours[0] as number)) * 60 +
-            (Math.ceil(min(end) / minPerRow)
-              ? Math.ceil(min(end) / minPerRow) * minPerRow
+            (Math.ceil(min(end) / minutePerRow)
+              ? Math.ceil(min(end) / minutePerRow) * minutePerRow
               : 0)) /
-            minPerRow +
+            minutePerRow +
           2
         : displayedHours.length * 2 + 2,
-    [displayedHours, end, minPerRow],
+    [displayedHours, end, minutePerRow],
   );
 
   // Length of period in minutes
@@ -106,31 +108,40 @@ const Period = ({
 
   // Calculate grid offset (how many mins from the beginning of hour)
   const minPrefix = useMemo(
-    () => (min(begin) >= minPerRow ? min(begin) - minPerRow : min(begin)),
-    [begin, minPerRow],
+    () => (min(begin) >= minutePerRow ? min(begin) - minutePerRow : min(begin)),
+    [begin, minutePerRow],
   );
 
-  // Hover effect
+  // Hover state used for transition
   const [hover, setHover] = useState(false);
-  const prevHover = usePrevious(hover);
-
   const onHoverStart = () => setHover(true);
   const onHoverEnd = () => setHover(false);
+
+  // Previous hover state for determining if user is hovering
+  const [prevHover, setPrevHover] = useState(hover);
+  const debounceSetPrevHover = useMemo(
+    // This delay is how long before it is considered hovering
+    // Here uses 300ms to match hover transition delay
+    () => debounce((v: boolean) => setPrevHover(v), 300),
+    [],
+  );
+  useEffect(() => {
+    debounceSetPrevHover(hover);
+  }, [hover, debounceSetPrevHover]);
 
   // Matching touch screen devices
   const matchTouch = useMediaQuery("(pointer: coarse)");
   // Matching tailwind's sm: breakpoint
   const matchDesktop = useMediaQuery("(min-width: 640px)");
 
-  // Control vertical hover offset, and constrain hover effect by grid border (right and bottom)
-  // If period cannot be expanded
+  // Controls vertical hover offset, and constrain it by grid border (right and bottom)
   const isBottom = useMemo(
     () => end > `${displayedHours[displayedHours.length - 1]}:30`,
     [displayedHours, end],
   );
   const yOffset = useMemo(
-    () => minPerRow * minuteHeight * (matchDesktop ? 0.8 : 0.9),
-    [matchDesktop, minPerRow, minuteHeight],
+    () => minutePerRow * minuteHeight * (matchDesktop ? 0.8 : 0.9),
+    [matchDesktop, minutePerRow, minuteHeight],
   );
   const height = useMemo(
     () =>
@@ -144,7 +155,6 @@ const Period = ({
           // (min(end) || 60) to check for HH:00, otherwise this will return 60 - 0 = 60, correct return should be 0
           yOffset + (60 - (min(end) || 60)) * minuteHeight
         : 0),
-
     [minuteHeight, periodMin, isBottom, hover, yOffset, end],
   );
   const marginTop = useMemo(
@@ -167,10 +177,10 @@ const Period = ({
       hover
         ? xOffset
         : indent
-        ? /* indent.totalLevels < 3
-          ? // Make the first ident level thinner, more visually balanced
+        ? indent.totalLevels < 3
+          ? // Make the first ident level more visually balanced
             `${indent.indentLevel * 40}%`
-          : */ `${indent.indentLevel * (100 / indent.totalLevels)}%`
+          : `${indent.indentLevel * (100 / indent.totalLevels)}%`
         : 0,
     [hover, indent, xOffset],
   );
@@ -194,21 +204,26 @@ const Period = ({
       type: "spring",
       duration: 0.3,
       bounce: 0,
-      // BUG: mobile devices interrupt hover will not trigger exit
-
-      // Delay hover exit for better viewing on mobile devices
-      // prevHover is used becuase hover is always false when animation is in idle state, so cannot just use hover.
+      // Delay hover exit for better viewing on mobile devices.
+      // prevHover is used to restrict delay to only when hovering. (prevent unnecessary delay)
+      // Cannot use hover beucase it is always false when animation is in idle state.
       delay: matchTouch && prevHover ? 1.5 : 0,
     }),
     [matchTouch, prevHover],
   );
 
-  // Check minuteHeight for preventing initial height animation
+  // Check minuteHeight to prevent initial height animation (default is 0 as defined in weekView store)
   return minuteHeight && !periodOverflow ? (
     <motion.div
-      // BUG: iOS will trigger onClick when leaving hover
       onClick={() => {
-        onClick && onClick();
+        // BUG: Touch devices will trigger onClick onHoverEnd (iOS's tolerance is longer, Android's shorter)
+        // What we want is only trigger onClick when user is not hovering, otherwise continue with the hover transition.
+        // prevHover here determines whether user is hovering
+        onClick && !prevHover && onClick();
+
+        // The above doesn't apply to desktop devices
+        onClick && !matchTouch && onClick();
+
         // To prevent hover persist when details modal is shown
         onHoverEnd();
       }}
@@ -241,7 +256,7 @@ const Period = ({
           marginLeft,
           marginRight,
           zIndex: 0,
-          backgroundColor: color + "e8",
+          backgroundColor: color + "d8",
           transition: idleTransition,
         },
       }}

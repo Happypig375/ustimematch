@@ -3,15 +3,17 @@ import clsx from "clsx";
 import { useCallback, useState } from "react";
 import PersonalTimetableModal from "@components/Form/ImportModal";
 import Button from "@ui/Button";
-import { useStore } from "@store/index";
+import { actions, useStore as useTrackedStore } from "@store/index";
 import { type TimetableConfig, type Timetable } from "../../types/timetable";
 import ColorChip from "./ColorChip";
 
 const PersonalTimetable = () => {
-  const personalTimetable = useStore.use.personalTimetable();
-  const setPersonalTimetable = useStore.use.setPersonalTimetable();
-  const personalTimetableConfig = useStore.use.personalTimetableConfig();
-  const setPersonalTimetableConfig = useStore.use.setPersonalTimetableConfig();
+  const personalTimetable = useTrackedStore().timetable.personalTimetable();
+  const setPersonalTimetable = actions.timetable.setPersonalTimetable;
+  const personalTimetableConfig =
+    useTrackedStore().timetable.personalTimetableConfig();
+  const setPersonalTimetableConfig =
+    actions.timetable.setPersonalTimetableConfig;
 
   const [open, setOpen] = useState(false);
 

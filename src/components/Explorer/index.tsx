@@ -4,23 +4,23 @@ import { useCallback, useEffect, useState } from "react";
 import ImportModal from "@components/Form/ImportModal";
 import Button from "@ui/Button";
 import { explorerVariants } from "@ui/variants";
-import { useStore } from "@store/index";
+import { actions, useTrackedStore } from "@store/index";
 import { type Timetable, type TimetableConfig } from "../../types/timetable";
 import PersonalTimetable from "./PersonalTimetable";
 import TimetablesTree from "./TimetablesTree";
 
 const Explorer = () => {
-  const showExplorer = useStore.use.showExplorer();
-  const explorerReorderMode = useStore.use.explorerReorderMode();
-  const toggleExplorerReorderMode = useStore.use.toggleExplorerReorderMode();
+  const showExplorer = useTrackedStore().ui.showExplorer();
+  const explorerReorderMode = useTrackedStore().ui.explorerReorderMode();
+  const toggleExplorerReorderMode = actions.ui.toggleExplorerReorderMode;
 
   const [open, setOpen] = useState(false);
   const [tmpEditTb, setTmpEditTb] = useState<Timetable>();
   const [tmpEditTbCf, setTmpEditTbCf] = useState<TimetableConfig>();
 
-  const addTimetable = useStore.use.addTimetable();
-  const deleteTimetable = useStore.use.deleteTimetable();
-  const editTimetable = useStore.use.editTimetable();
+  const addTimetable = actions.timetable.addTimetable;
+  const deleteTimetable = actions.timetable.deleteTimetable;
+  const editTimetable = actions.timetable.editTimetable;
 
   const onDelete = useCallback(() => {
     tmpEditTbCf && deleteTimetable(tmpEditTbCf?.id);
