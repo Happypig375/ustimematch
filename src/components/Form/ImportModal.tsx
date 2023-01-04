@@ -18,23 +18,22 @@ import Button from "@ui/Button";
 import Input from "@ui/Input";
 import { Modal, ModalContent, ModalControl, ModalTitle } from "@ui/Modal";
 import { trpc } from "@utils/trpc";
-import type { Timetable, TimetableConfig } from "../../types/timetable";
+import type { Timetable } from "../../types/timetable";
 import { ColorInput } from "./ColorInput";
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   personal?: boolean;
-  onAdd: (timetable: Timetable, config: TimetableConfig) => void;
+  onAdd: (timetable: Timetable) => void;
   onDelete?: () => void;
-  onEdit?: (timetable: Timetable, config: TimetableConfig) => void;
-  // If these two fields are passed, it means the modal is in edit mode
+  onEdit?: (timetable: Timetable) => void;
+  // If timetable prop is passed, it means the modal is in edit mode
   timetable?: Timetable;
-  timetableConfig?: TimetableConfig;
 }
 
 export interface PersonalTimetableForm
-  extends Omit<Timetable, "lessons" | "modifications"> {
+  extends Omit<Timetable, "lessons" | "config"> {
   color: string;
 }
 
@@ -49,7 +48,6 @@ const ImportPersonalModal = ({
   onDelete,
   onEdit,
   timetable,
-  timetableConfig,
 }: Props) => {
   const defaultValues = useMemo<PersonalTimetableForm>(
     () => ({
@@ -57,14 +55,14 @@ const ImportPersonalModal = ({
       name: timetable?.name || "",
       plannerURL: timetable?.plannerURL || "",
       color:
-        timetableConfig?.color ||
+        timetable?.config.color ||
         // https://stackoverflow.com/questions/5092808/how-do-i-randomly-generate-html-hex-color-codes-using-javascript
         // Consider using hsl then convert to hex to generate more pelasing colors
         "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0"),
     }),
     // open is included for randomizing color on open
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [timetable, timetableConfig, open],
+    [timetable, open],
   );
 
   const {
@@ -97,16 +95,14 @@ const ImportPersonalModal = ({
           plannerURL,
           name: getValues("name").trim(),
           university: getValues("university"),
-        };
-        const tempConfig = {
-          id: timetable && timetableConfig ? timetableConfig.id : nanoid(),
-          color: getValues("color"),
-          visible: timetableConfig ? timetableConfig.visible : true,
+          config: {
+            id: timetable ? timetable.config.id : nanoid(),
+            color: getValues("color"),
+            visible: timetable ? timetable.config.visible : true,
+          },
         };
 
-        timetable && timetableConfig
-          ? onEdit && onEdit(tmpTimetable, tempConfig)
-          : onAdd(tmpTimetable, tempConfig);
+        timetable ? onEdit && onEdit(tmpTimetable) : onAdd(tmpTimetable);
 
         setOpen(false);
       },
@@ -130,8 +126,7 @@ const ImportPersonalModal = ({
     <Modal open={open} onOpenChange={controlledSetOpen}>
       <ModalContent open={open} onOpenChange={controlledSetOpen}>
         <ModalTitle>
-          {timetable && timetableConfig ? "Edit" : "Import"}{" "}
-          {personal && "Personal"} Timetable
+          {timetable ? "Edit" : "Import"} {personal && "Personal"} Timetable
         </ModalTitle>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">

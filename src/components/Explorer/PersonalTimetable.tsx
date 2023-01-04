@@ -4,48 +4,39 @@ import { useCallback, useState } from "react";
 import PersonalTimetableModal from "@components/Form/ImportModal";
 import Button from "@ui/Button";
 import { actions, useStore as useTrackedStore } from "@store/index";
-import { type TimetableConfig, type Timetable } from "../../types/timetable";
+import { type Timetable } from "../../types/timetable";
 import ColorChip from "./ColorChip";
 
 const PersonalTimetable = () => {
   const personalTimetable = useTrackedStore().timetable.personalTimetable();
   const setPersonalTimetable = actions.timetable.setPersonalTimetable;
-  const personalTimetableConfig =
-    useTrackedStore().timetable.personalTimetableConfig();
-  const setPersonalTimetableConfig =
-    actions.timetable.setPersonalTimetableConfig;
 
   const [open, setOpen] = useState(false);
 
   const onDelete = useCallback(() => {
     setPersonalTimetable(null);
-    setPersonalTimetableConfig(null);
-  }, [setPersonalTimetable, setPersonalTimetableConfig]);
+  }, [setPersonalTimetable]);
 
   const onAdd = useCallback(
-    (timetable: Timetable, config: TimetableConfig) => {
+    (timetable: Timetable) => {
       setPersonalTimetable(timetable);
-      setPersonalTimetableConfig(config);
     },
-    [setPersonalTimetable, setPersonalTimetableConfig],
+    [setPersonalTimetable],
   );
 
   const onEdit = useCallback(
-    (timetable: Timetable, config: TimetableConfig) => {
+    (timetable: Timetable) => {
       setPersonalTimetable(timetable);
-      setPersonalTimetableConfig(config);
     },
-    [setPersonalTimetable, setPersonalTimetableConfig],
+    [setPersonalTimetable],
   );
 
-  // Here uses hidden to hide, otherwise animation would get cancelled if the component is unmounted
-  // TODO: Find a better way to do this
   return (
     <div className="border-t border-border-gray-100">
-      {personalTimetable && personalTimetableConfig ? (
-        <div className={clsx("flex gap-4", !personalTimetable && "hidden")}>
+      {personalTimetable ? (
+        <div className="flex gap-4">
           <div className="flex flex-grow items-center gap-2 overflow-hidden pl-4">
-            <ColorChip color={personalTimetableConfig.color} />
+            <ColorChip color={personalTimetable.config.color} />
             <span title={personalTimetable.name} className="truncate">
               {personalTimetable.name}
             </span>
@@ -56,14 +47,17 @@ const PersonalTimetable = () => {
               icon
               title="Toggle personal timetable visibility"
               onClick={() =>
-                personalTimetableConfig &&
-                setPersonalTimetableConfig({
-                  ...personalTimetableConfig,
-                  visible: !personalTimetableConfig.visible,
+                personalTimetable &&
+                setPersonalTimetable({
+                  ...personalTimetable,
+                  config: {
+                    ...personalTimetable.config,
+                    visible: !personalTimetable.config.visible,
+                  },
                 })
               }
             >
-              {personalTimetableConfig?.visible ? (
+              {personalTimetable.config.visible ? (
                 <IconEye stroke={1.75} className="h-5 w-5" />
               ) : (
                 <IconEyeOff stroke={1.75} className="h-5 w-5" />
@@ -80,7 +74,7 @@ const PersonalTimetable = () => {
           </div>
         </div>
       ) : (
-        <div className={clsx("py-2 px-4", personalTimetable && "hidden")}>
+        <div className={clsx("py-2 px-4")}>
           <Button
             fullWidth
             title="Add personal timetable"
@@ -100,7 +94,6 @@ const PersonalTimetable = () => {
         onEdit={onEdit}
         onDelete={onDelete}
         timetable={personalTimetable || undefined}
-        timetableConfig={personalTimetableConfig || undefined}
       />
     </div>
   );

@@ -4,11 +4,11 @@ import {
   type TreeItemComponentProps,
   type TreeItems,
 } from "dnd-kit-sortable-tree";
-import { useState, forwardRef, Dispatch, SetStateAction } from "react";
+import { useState, forwardRef } from "react";
 import Button from "@components/ui/Button";
 import TreeTimetableItem from "@ui/TreeTimetableItem";
 import { useStore, useTrackedStore } from "@store/index";
-import { Timetable, TimetableConfig } from "../../types/timetable";
+import { type Timetable, type TimetableConfig } from "../../types/timetable";
 import ColorChip from "./ColorChip";
 
 type MinimalTreeItemData = {
@@ -85,15 +85,14 @@ const MinimalTreeItemComponent = forwardRef<
 MinimalTreeItemComponent.displayName = "MinimalTreeItemComponent";
 
 interface Props {
-  onClick: (timetable: Timetable, timetableConfig: TimetableConfig) => void;
-  onEyeClick: (timetable: Timetable, timetableConfig: TimetableConfig) => void;
+  onClick: (timetable: Timetable) => void;
+  onEyeClick: (timetable: Timetable) => void;
 }
 
 const TimetablesTree = ({ onClick, onEyeClick }: Props) => {
   const [items, setItems] = useState(initialViableMinimalData);
 
   const timetables = useStore().timetable.timetables();
-  const timetablesConfigs = useStore().timetable.timetablesConfigs();
 
   return (
     <div className="h-full overflow-y-auto">
@@ -119,10 +118,9 @@ const TimetablesTree = ({ onClick, onEyeClick }: Props) => {
       {timetables.map((timetable, i) => (
         <div
           className="flex justify-between py-1"
-          key={timetablesConfigs[i]?.id}
+          key={timetable.config.id}
           onClick={() => {
-            timetablesConfigs[i] &&
-              onClick(timetable, timetablesConfigs[i] as TimetableConfig);
+            onClick(timetable);
           }}
         >
           {timetable.name}
@@ -131,18 +129,11 @@ const TimetablesTree = ({ onClick, onEyeClick }: Props) => {
             plain
             onClick={(e) => {
               e.stopPropagation();
-              timetablesConfigs[i] &&
-                onEyeClick(timetable, timetablesConfigs[i] as TimetableConfig);
+              onEyeClick(timetable);
             }}
           >
-            <ColorChip
-              color={
-                timetablesConfigs[i]
-                  ? (timetablesConfigs[i] as TimetableConfig).color
-                  : "#000000"
-              }
-            />
-            {(timetablesConfigs[i] as TimetableConfig).visible ? (
+            <ColorChip color={timetable.config.color} />
+            {timetable.config.visible ? (
               <IconEye stroke={1.75} className="h-5 w-5" />
             ) : (
               <IconEyeOff stroke={1.75} className="h-5 w-5" />

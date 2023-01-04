@@ -21,6 +21,8 @@ type Lessons = [
   Lesson[],
 ];
 
+// Change how lesson names are interpreted
+// (e.g. HKUST: COMP 1021 (L01) -> {COMP 1021}{L01})
 export type University =
   | "HKUST"
   | "HKU"
@@ -31,43 +33,43 @@ export type University =
   | "EDUHK"
   | "HKMU";
 
-interface Remark {
-  // Indexs of lessons
-  index: number;
-  value: string;
-}
+// interface Remark {
+//   // Indexs of lessons
+//   index: number;
+//   value: string;
+// }
 
-interface Modifications {
-  add: Lessons;
-  // Indexs of lessons to hide (ignoring add)
-  hide: number[];
-  remarks: Remark[];
+// interface Modifications {
+//   add: Lessons;
+//   // Indexs of lessons to hide (ignoring add)
+//   hide: number[];
+//   remarks: Remark[];
+// }
+
+// Local config of timetable (shouldn't be send to server)
+interface TimetableConfig {
+  // id is only for client side reference
+  id: string;
+  color: string;
+  visible: boolean;
 }
 
 interface BaseTimetable {
   name: string;
   lessons: Lessons;
-  modifications?: Modifications;
   university: University;
+  config: TimetableConfig;
+  // modifications?: Modifications;
 }
 
 interface HKUSTTimetable extends BaseTimetable {
-  plannerURL: string;
   university: "HKUST";
+  plannerURL: string;
+
+  // Should fetch update from planner or ustimematch
+  // Placeholder for implementing modifications
+  // soure: "PLANNER" | "USTIMEMATCH";
 }
 
 // Can be constructed as union for additional universities
 export type Timetable = HKUSTTimetable;
-
-interface TimetableConfig {
-  // id is only for client side reference
-  id: string;
-  // color can be modified after being imported
-  color: string;
-  // visible can also be modified
-  visible: boolean;
-}
-
-export interface FlattenTimetable extends Timetable {
-  config: TimetableConfig;
-}

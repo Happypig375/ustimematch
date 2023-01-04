@@ -2,7 +2,6 @@ import { useTrackedStore } from "@store/index";
 import Border from "./Border";
 import DetailsModal from "./DetailsModal";
 import Legend from "./Legend";
-import Period from "./Period";
 import Timeline from "./Timeline";
 import Timetable from "./Timetable";
 

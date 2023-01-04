@@ -1,113 +1,81 @@
 import { createStore } from "@udecode/zustood";
-import {
-  type FlattenTimetable,
-  type Timetable,
-  type TimetableConfig,
-} from "../types/timetable";
+import { type Timetable } from "../types/timetable";
 
 interface TimetableStore {
   personalTimetable: Timetable | null;
-  personalTimetableConfig: TimetableConfig | null;
-  // One-to-one mapping of timetables and configs
   timetables: Timetable[];
-  timetablesConfigs: TimetableConfig[];
 }
 
 export const timetableStore = createStore("timetable")<TimetableStore>(
   {
     personalTimetable: null,
-    personalTimetableConfig: null,
     timetables: [],
-    timetablesConfigs: [],
   },
   { devtools: { enabled: true }, persist: { enabled: true } },
 )
-  .extendActions((set) => ({
+  .extendSelectors((_, get) => ({
+    // Note that personal timetable will be at index 0
+    combinedTimetables: (): Timetable[] => {
+      const personalTimetable = get.personalTimetable();
+      const timetables = get.timetables();
+
+      if (!personalTimetable) return timetables;
+      return [personalTimetable, ...timetables];
+    },
+    // Excluding personal timetable
+    getTimetableById: (timetableId: string) => {
+      return get
+        .timetables()
+        .find((timetable) => timetable.config.id === timetableId);
+    },
+    // Excluding personal timetable
+    getTimetableIndexById: (timetableId: string) => {
+      return get
+        .timetables()
+        .findIndex((timetable) => timetable.config.id === timetableId);
+    },
+  }))
+  .extendSelectors((_, get) => ({
+    // Note that personal timetable will be at index 0
+    combinedVisibleTimetables: () => {
+      return get
+        .combinedTimetables()
+        .filter((timetable) => timetable.config.visible);
+    },
+  }))
+  .extendSelectors((_, get) => ({
+    // Including personal timetable
+    getCombinedVisibleTimetableIndexById: (timetableId: string) => {
+      return get
+        .combinedVisibleTimetables()
+        .findIndex((timetable) => timetable.config.id === timetableId);
+    },
+  }))
+  .extendActions((set, get) => ({
     setPersonalTimetable: (timetable: Timetable | null) => {
       set.state((draft) => {
         draft.personalTimetable = timetable;
       });
     },
-    setPersonalTimetableConfig: (timetableConfig: TimetableConfig | null) => {
-      set.state((draft) => {
-        draft.personalTimetableConfig = timetableConfig;
-      });
-    },
-    addTimetable: (timetable: Timetable, timetableConfig: TimetableConfig) => {
+    addTimetable: (timetable: Timetable) => {
       set.state((draft) => {
         draft.timetables.push(timetable);
-        draft.timetablesConfigs.push(timetableConfig);
       });
     },
     deleteTimetable: (timetableId: string) => {
       set.state((draft) => {
-        const idx = draft.timetablesConfigs.findIndex(
-          (config) => config.id === timetableId,
-        );
-        if (idx === -1) return;
-
-        draft.timetables.splice(idx, 1);
-        draft.timetablesConfigs.splice(idx, 1);
+        const idx = get.getTimetableIndexById(timetableId);
+        if (idx !== -1) draft.timetables.splice(idx, 1);
       });
     },
-    editTimetable: (timetable: Timetable, timetableConfig: TimetableConfig) => {
+    editTimetable: (timetable: Timetable) => {
       set.state((draft) => {
-        const idx = draft.timetablesConfigs.findIndex(
-          (config) => config.id === timetableConfig.id,
-        );
-        if (idx === -1) return;
-
-        draft.timetables[idx] = timetable;
-        draft.timetablesConfigs[idx] = timetableConfig;
+        const idx = get.getTimetableIndexById(timetable.config.id);
+        if (idx !== -1) draft.timetables[idx] = timetable;
       });
     },
   }))
   .extendSelectors((_, get) => ({
-    // All visible timetables, with config flattened
-    flattenTimetables: (): FlattenTimetable[] => {
-      const timetables = get.timetables();
-      const timetablesConfigs = get.timetablesConfigs();
-
-      const filteredTimetables = timetables.reduce<FlattenTimetable[]>(
-        (prev, curr, i) => {
-          const config = timetablesConfigs[i];
-          if (!config) return prev;
-
-          // if (config.visible)
-          prev.push({
-            ...curr,
-            config,
-          });
-
-          return prev;
-        },
-        [],
-      );
-
-      const personalTimetable = get.personalTimetable();
-      const personalTimetableConfig = get.personalTimetableConfig();
-
-      // if (!personalTimetable || !personalTimetableConfig?.visible)
-      if (!personalTimetable || !personalTimetableConfig)
-        return filteredTimetables;
-      // Note that personal timetable will be placed at index 0
-      return [
-        { ...personalTimetable, config: personalTimetableConfig },
-        ...filteredTimetables,
-      ];
-    },
-  }))
-  .extendSelectors((_, get) => ({
-    visibleZipTimetables: () => {
-      return get.flattenTimetables().filter((tb) => tb.config.visible);
-    },
-  }))
-  .extendSelectors((_, get) => ({
-    getTimetableById: (timetableId: string) => {
-      return get
-        .visibleZipTimetables()
-        .find((timetable) => timetable.config.id === timetableId);
-    },
     getIndent: (
       timetableId: string,
       lessonIndex: number,
@@ -116,9 +84,8 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
       end: string,
     ) => {
       // Cannot just pass timetableIndex because there are hidden timetables
-      const timetableIndex = get
-        .visibleZipTimetables()
-        .findIndex(({ config }) => config?.id === timetableId);
+      const timetableIndex =
+        get.getCombinedVisibleTimetableIndexById(timetableId);
 
       let totalLevels = 0;
       let indentLevel = 0;
@@ -128,8 +95,8 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
       let tmpEnd = end;
 
       // Finding the indent level of a specific lesson
-      for (let i = get.visibleZipTimetables().length - 1; i >= 0; i--) {
-        const lessons = get.visibleZipTimetables()[i]?.lessons[weekday];
+      for (let i = get.combinedVisibleTimetables().length - 1; i >= 0; i--) {
+        const lessons = get.combinedVisibleTimetables()[i]?.lessons[weekday];
         if (!lessons) continue;
 
         for (let j = 0; j < lessons.length; j++) {

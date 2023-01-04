@@ -5,7 +5,7 @@ import ImportModal from "@components/Form/ImportModal";
 import Button from "@ui/Button";
 import { explorerVariants } from "@ui/variants";
 import { actions, useTrackedStore } from "@store/index";
-import { type Timetable, type TimetableConfig } from "../../types/timetable";
+import { type Timetable } from "../../types/timetable";
 import PersonalTimetable from "./PersonalTimetable";
 import TimetablesTree from "./TimetablesTree";
 
@@ -15,27 +15,26 @@ const Explorer = () => {
   const toggleExplorerReorderMode = actions.ui.toggleExplorerReorderMode;
 
   const [open, setOpen] = useState(false);
-  const [tmpEditTb, setTmpEditTb] = useState<Timetable>();
-  const [tmpEditTbCf, setTmpEditTbCf] = useState<TimetableConfig>();
+  const [tmpEditTimetable, setTmpEditTimetable] = useState<Timetable>();
 
   const addTimetable = actions.timetable.addTimetable;
   const deleteTimetable = actions.timetable.deleteTimetable;
   const editTimetable = actions.timetable.editTimetable;
 
   const onDelete = useCallback(() => {
-    tmpEditTbCf && deleteTimetable(tmpEditTbCf?.id);
-  }, [deleteTimetable, tmpEditTbCf]);
+    tmpEditTimetable && deleteTimetable(tmpEditTimetable.config.id);
+  }, [deleteTimetable, tmpEditTimetable]);
 
   const onAdd = useCallback(
-    (timetable: Timetable, config: TimetableConfig) => {
-      addTimetable(timetable, config);
+    (timetable: Timetable) => {
+      addTimetable(timetable);
     },
     [addTimetable],
   );
 
   const onEdit = useCallback(
-    (timetable: Timetable, config: TimetableConfig) => {
-      editTimetable(timetable, config);
+    (timetable: Timetable) => {
+      editTimetable(timetable);
     },
     [editTimetable],
   );
@@ -43,8 +42,7 @@ const Explorer = () => {
   // For resetting edit modal to import modal
   useEffect(() => {
     if (open) return;
-    setTmpEditTb(undefined);
-    setTmpEditTbCf(undefined);
+    setTmpEditTimetable(undefined);
   }, [open]);
 
   return (
@@ -82,15 +80,17 @@ const Explorer = () => {
           </div>
 
           <TimetablesTree
-            onClick={(timetable, timetableConfig) => {
+            onClick={(timetable) => {
               setOpen(true);
-              setTmpEditTb(timetable);
-              setTmpEditTbCf(timetableConfig);
+              setTmpEditTimetable(timetable);
             }}
-            onEyeClick={(timetable, timetableConfig) => {
-              editTimetable(timetable, {
-                ...timetableConfig,
-                visible: !timetableConfig.visible,
+            onEyeClick={(timetable) => {
+              editTimetable({
+                ...timetable,
+                config: {
+                  ...timetable.config,
+                  visible: !timetable.config.visible,
+                },
               });
             }}
           />
@@ -103,8 +103,7 @@ const Explorer = () => {
             onAdd={onAdd}
             onDelete={onDelete}
             onEdit={onEdit}
-            timetable={tmpEditTb}
-            timetableConfig={tmpEditTbCf}
+            timetable={tmpEditTimetable}
           />
         </motion.div>
       )}
