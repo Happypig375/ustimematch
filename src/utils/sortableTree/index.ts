@@ -3,6 +3,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 import debounce from "lodash.debounce";
 import { toast } from "react-hot-toast";
 import type { FlattenedItem, TreeItem, TreeItems } from "../../types/tree";
+import { FolderItem } from "./../../types/tree.d";
 
 function getDragDepth(offset: number, indentationWidth: number) {
   return Math.round(offset / indentationWidth);
@@ -275,4 +276,53 @@ export function removeChildrenOf(
 
     return true;
   });
+}
+
+/**
+ * @returns whether a folder's children are visible
+ *
+ * @true at least one timetable are visible
+ *
+ * @false all timetables are not visible
+ */
+export function getFolderVisible(folderItem: FolderItem): boolean {
+  let visible = false;
+
+  for (const item of folderItem.children) {
+    if (item.type === "TIMETABLE" && item.timetable.config.visible) {
+      return true;
+    } else if (item.type === "FOLDER" && item.children.length > 0) {
+      visible = getFolderVisible(item);
+    }
+  }
+
+  return visible;
+}
+
+/**
+ * @returns a folder item with its children's timetable's visiblity toggled with regards to {@link getFolderVisible}
+ */
+export function toggleFolderVisibility(folderItem: FolderItem): FolderItem {
+  const folderVisible = getFolderVisible(folderItem);
+
+  const newChildren = folderItem.children.reduce<TreeItem[]>((acc, child) => {
+    if (child.type === "FOLDER") return [...acc, toggleFolderVisibility(child)];
+    if (child.type === "TIMETABLE")
+      return [
+        ...acc,
+        {
+          ...child,
+          timetable: {
+            ...child.timetable,
+            config: {
+              ...child.timetable.config,
+              visible: !folderVisible,
+            },
+          },
+        },
+      ];
+    return acc;
+  }, []);
+
+  return { ...folderItem, children: newChildren };
 }

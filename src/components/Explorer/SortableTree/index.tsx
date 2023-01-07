@@ -80,6 +80,8 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
   const items = useStore().timetable.timetablesTree();
   const setItems = actions.timetable.setTimetablesTree;
 
+  const toggleVisibility = actions.timetable.toggleVisibility;
+
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
   const [offsetLeft, setOffsetLeft] = useState(0);
@@ -167,6 +169,7 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
     },
   };
 
+  // Handle editing modal of folder and timetable
   const [openTimetableModal, setOpenTimetableModal] = useState(false);
   const [openFolderModal, setOpenFolderModal] = useState(false);
   const [editingFolder, setEditingFolder] = useState<FolderItem>();
@@ -206,36 +209,26 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
             {flattenedItems.map(({ depth, treeItem }) => {
               return (
                 <SortableTreeItem
-                  key={treeItem.id}
                   id={treeItem.id}
+                  key={treeItem.id}
+                  treeItem={treeItem}
+                  indentationWidth={indentationWidth}
                   depth={
                     treeItem.id === activeId && projected
                       ? projected.depth
                       : depth
-                  }
-                  indentationWidth={indentationWidth}
-                  collapsed={
-                    treeItem.type === "FOLDER" ? treeItem.collapsed : undefined
                   }
                   onCollapse={
                     treeItem.type === "FOLDER"
                       ? () => handleCollapse(treeItem.id, treeItem)
                       : undefined
                   }
-                  childCount={getChildCount(items, treeItem.id)}
                   onClick={
                     treeItem.type === "FOLDER"
                       ? () => onFolderClick(treeItem)
                       : () => onTimetableClick(treeItem)
                   }
-                  onRemove={() => handleRemove(treeItem.id)}
-                  type={treeItem.type}
-                  folder={treeItem.type === "FOLDER" ? treeItem : undefined}
-                  timetable={
-                    treeItem.type === "TIMETABLE"
-                      ? treeItem.timetable
-                      : undefined
-                  }
+                  onEyeClick={() => toggleVisibility(treeItem.id)}
                 />
               );
             })}
@@ -249,19 +242,9 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
                     clone
                     depth={0}
                     id={activeId}
-                    type={activeItem.treeItem.type}
                     indentationWidth={indentationWidth}
                     childCount={getChildCount(items, activeId)}
-                    folder={
-                      activeItem.treeItem.type === "FOLDER"
-                        ? activeItem.treeItem
-                        : undefined
-                    }
-                    timetable={
-                      activeItem.treeItem.type === "TIMETABLE"
-                        ? activeItem.treeItem.timetable
-                        : undefined
-                    }
+                    treeItem={activeItem.treeItem}
                   />
                 ) : null}
               </DragOverlay>,
@@ -271,6 +254,7 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
         </DndContext>
       </div>
 
+      {/* Timetable editing modal */}
       <ImportModal
         onEdit={(timetable) =>
           editingTimetable &&
@@ -284,6 +268,7 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
         timetable={editingTimetable?.timetable}
       />
 
+      {/* Folder editing modal */}
       <FolderModal
         onEdit={(name) =>
           editingFolder &&

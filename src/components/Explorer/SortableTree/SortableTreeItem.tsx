@@ -2,14 +2,19 @@ import type { UniqueIdentifier } from "@dnd-kit/core";
 import type { AnimateLayoutChanges } from "@dnd-kit/sortable";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { IconChevronDown, IconGripVertical } from "@tabler/icons";
+import {
+  IconChevronDown,
+  IconEye,
+  IconEyeOff,
+  IconGripVertical,
+} from "@tabler/icons";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
 import Button from "@components/ui/Button";
 import { chevronHalfVariants } from "@components/ui/variants";
-import type { Timetable } from "../../../types/timetable";
-import type { FolderItem } from "../../../types/tree";
+import { getFolderVisible } from "@utils/sortableTree";
+import type { TreeItem } from "../../../types/tree";
 import ColorChip from "../ColorChip";
 
 interface Props {
@@ -18,15 +23,12 @@ interface Props {
   clone?: boolean;
   indentationWidth: number;
 
-  type: "FOLDER" | "TIMETABLE";
-  folder?: FolderItem;
-  collapsed?: boolean;
+  treeItem: TreeItem;
   childCount?: number;
-  timetable?: Timetable;
 
-  onClick?(): void;
-  onRemove?(): void;
-  onCollapse?(): void;
+  onClick?: () => void;
+  onEyeClick?: () => void;
+  onCollapse?: () => void;
 }
 
 const animateLayoutChanges: AnimateLayoutChanges = ({
@@ -40,14 +42,11 @@ export function SortableTreeItem({
   clone,
   indentationWidth,
 
-  type,
-  folder,
-  collapsed,
+  treeItem,
   childCount,
-  timetable,
 
   onClick,
-  onRemove,
+  onEyeClick,
   onCollapse,
 }: Props) {
   const {
@@ -75,7 +74,9 @@ export function SortableTreeItem({
       className={clsx(
         "h-12 list-none",
         clone && "w-1/2",
-        isDragging && "opacity-50",
+        // Items must be relatively positioned to be given higher z-index
+        // https://github.com/clauderic/dnd-kit/issues/503
+        isDragging && "relative z-10",
       )}
     >
       <div
@@ -83,61 +84,74 @@ export function SortableTreeItem({
         style={style}
         onClick={onClick}
         className={clsx(
-          "flex h-full items-center gap-2 rounded-md bg-bg-light-200 px-2",
+          "flex h-full items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2",
           clone && "pointer-events-none shadow-tree-item",
-          isDragging && "border border-border-gray-100",
-          onClick && "cursor-pointer",
+          isDragging && "border border-border-gray-100 opacity-50",
+          "cursor-pointer",
         )}
       >
-        {/* {type === "FOLDER" && childCount ? (
-          <div
-            className="absolute top-full left-[16px] w-[1.5px] bg-bg-light-400"
-            style={{ height: 48 * childCount }}
-          />
-        ) : null} */}
-
-        {type === "FOLDER" && folder ? (
+        {/* Folder item collapse and name */}
+        {treeItem.type === "FOLDER" && (
           <span className="flex flex-grow items-center gap-2 overflow-hidden">
-            {onCollapse && (
-              <Button
-                icon
-                plain
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onCollapse();
-                }}
+            <Button
+              icon
+              plain
+              onClick={(e) => {
+                e.stopPropagation();
+                onCollapse && onCollapse();
+              }}
+            >
+              <motion.div
+                initial={false}
+                variants={chevronHalfVariants}
+                animate={treeItem.collapsed ? "close" : "open"}
               >
-                <motion.div
-                  initial={false}
-                  variants={chevronHalfVariants}
-                  animate={collapsed ? "close" : "open"}
-                >
-                  <IconChevronDown stroke={1.75} className="h-5 w-5" />
-                </motion.div>
-              </Button>
-            )}
+                <IconChevronDown stroke={1.75} className="h-5 w-5" />
+              </motion.div>
+            </Button>
 
-            <span title={folder.name} className="truncate">
-              {folder.name}
+            <span title={treeItem.name} className="truncate">
+              {treeItem.name}
             </span>
           </span>
-        ) : null}
+        )}
 
-        {type === "TIMETABLE" && timetable ? (
-          <span className="flex flex-grow items-center gap-2 overflow-hidden pl-1">
-            <ColorChip color={timetable.config.color} />
-            <span title={timetable.name} className="truncate">
-              {timetable.name}
+        {/* Timetable item color chip and name */}
+        {treeItem.type === "TIMETABLE" && (
+          <span className="flex flex-grow items-center gap-2 overflow-hidden">
+            <ColorChip color={treeItem.timetable.config.color} />
+            <span title={treeItem.timetable.name} className="truncate">
+              {treeItem.timetable.name}
             </span>
           </span>
-        ) : null}
+        )}
 
-        {/* Children count badge */}
+        {/* Children count badge on clone while dragging*/}
         {clone && childCount ? (
           <span className="absolute -top-2 -left-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand text-xs font-medium text-white">
             {childCount}
           </span>
         ) : null}
+
+        {/* Toggle visibility button */}
+        {!clone && (
+          <Button
+            icon
+            plain
+            onClick={(e) => {
+              e.stopPropagation();
+              onEyeClick && onEyeClick();
+            }}
+          >
+            {(treeItem.type === "TIMETABLE" &&
+              treeItem.timetable.config.visible) ||
+            (treeItem.type === "FOLDER" && getFolderVisible(treeItem)) ? (
+              <IconEye stroke={1.75} className="h-5 w-5" />
+            ) : (
+              <IconEyeOff stroke={1.75} className="h-5 w-5" />
+            )}
+          </Button>
+        )}
 
         {/* Drag handle */}
         <Button
