@@ -84,15 +84,14 @@ export function SortableTreeItem({
         style={style}
         onClick={onClick}
         className={clsx(
-          "flex h-full items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2",
+          "flex h-full cursor-pointer items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 hover:relative hover:z-10 hover:shadow-tree-item",
           clone && "pointer-events-none shadow-tree-item",
           isDragging && "border border-border-gray-100 opacity-50",
-          "cursor-pointer",
         )}
       >
         {/* Folder item collapse and name */}
         {treeItem.type === "FOLDER" && (
-          <span className="flex flex-grow items-center gap-2 overflow-hidden">
+          <>
             <Button
               icon
               plain
@@ -110,20 +109,23 @@ export function SortableTreeItem({
               </motion.div>
             </Button>
 
-            <span title={treeItem.name} className="truncate">
+            <span title={treeItem.name} className="flex-grow truncate">
               {treeItem.name}
             </span>
-          </span>
+          </>
         )}
 
         {/* Timetable item color chip and name */}
         {treeItem.type === "TIMETABLE" && (
-          <span className="flex flex-grow items-center gap-2 overflow-hidden">
+          <>
             <ColorChip color={treeItem.timetable.config.color} />
-            <span title={treeItem.timetable.name} className="truncate">
+            <span
+              title={treeItem.timetable.name}
+              className="flex-grow truncate"
+            >
               {treeItem.timetable.name}
             </span>
-          </span>
+          </>
         )}
 
         {/* Children count badge on clone while dragging*/}
@@ -134,24 +136,27 @@ export function SortableTreeItem({
         ) : null}
 
         {/* Toggle visibility button */}
-        {!clone && (
-          <Button
-            icon
-            plain
-            onClick={(e) => {
-              e.stopPropagation();
-              onEyeClick && onEyeClick();
-            }}
-          >
-            {(treeItem.type === "TIMETABLE" &&
-              treeItem.timetable.config.visible) ||
-            (treeItem.type === "FOLDER" && getFolderVisible(treeItem)) ? (
-              <IconEye stroke={1.75} className="h-5 w-5" />
-            ) : (
-              <IconEyeOff stroke={1.75} className="h-5 w-5" />
-            )}
-          </Button>
-        )}
+        {!clone &&
+          (treeItem.type === "FOLDER"
+            ? treeItem.children.length > 0
+            : true) && (
+            <Button
+              icon
+              plain
+              onClick={(e) => {
+                e.stopPropagation();
+                onEyeClick && onEyeClick();
+              }}
+            >
+              {(treeItem.type === "TIMETABLE" &&
+                treeItem.timetable.config.visible) ||
+              (treeItem.type === "FOLDER" && getFolderVisible(treeItem)) ? (
+                <IconEye stroke={1.75} className="h-5 w-5" />
+              ) : (
+                <IconEyeOff stroke={1.75} className="h-5 w-5" />
+              )}
+            </Button>
+          )}
 
         {/* Drag handle */}
         <Button

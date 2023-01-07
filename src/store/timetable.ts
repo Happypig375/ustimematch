@@ -1,17 +1,8 @@
 import { createStore } from "@udecode/zustood";
 import { nanoid } from "nanoid";
-import {
-  findItemDeep,
-  getFolderVisible,
-  toggleFolderVisibility,
-} from "@utils/sortableTree";
+import { findItemDeep, toggleFolderVisibility } from "@utils/sortableTree";
 import { type Timetable } from "../types/timetable";
-import type {
-  FolderItem,
-  TimetableItem,
-  TreeItems,
-  TreeItem,
-} from "../types/tree";
+import type { TimetableItem, TreeItems, TreeItem } from "../types/tree";
 
 interface TimetableStore {
   personalTimetable: Timetable | null;
@@ -199,6 +190,12 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
 
       if (item.type === "FOLDER")
         set.editTreeItem(item.id, toggleFolderVisibility(item));
+    },
+    toggleFolderCollapse: (id: string) => {
+      const folderItem = findItemDeep(get.timetablesTree(), id);
+      if (!folderItem || folderItem.type !== "FOLDER") return;
+
+      set.editTreeItem(id, { ...folderItem, collapsed: !folderItem.collapsed });
     },
   }))
   .extendSelectors((_, get) => ({

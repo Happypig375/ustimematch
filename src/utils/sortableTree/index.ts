@@ -1,9 +1,7 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import debounce from "lodash.debounce";
-import { toast } from "react-hot-toast";
 import type { FlattenedItem, TreeItem, TreeItems } from "../../types/tree";
-import { FolderItem } from "./../../types/tree.d";
+import type { FolderItem } from "./../../types/tree";
 
 function getDragDepth(offset: number, indentationWidth: number) {
   return Math.round(offset / indentationWidth);

@@ -81,6 +81,7 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
   const setItems = actions.timetable.setTimetablesTree;
 
   const toggleVisibility = actions.timetable.toggleVisibility;
+  const toggleFolderCollapse = actions.timetable.toggleFolderCollapse;
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
@@ -220,7 +221,7 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
                   }
                   onCollapse={
                     treeItem.type === "FOLDER"
-                      ? () => handleCollapse(treeItem.id, treeItem)
+                      ? () => toggleFolderCollapse(treeItem.id)
                       : undefined
                   }
                   onClick={
@@ -350,26 +351,6 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
     setCurrentPosition(null);
 
     document.body.style.setProperty("cursor", "");
-  }
-
-  function handleRemove(id: UniqueIdentifier) {
-    // setItems((items) => removeItem(items, id));
-    // removeItem(id as string)
-    // const newItems = removeItem(items, id);
-    // setItems(newItems);
-  }
-
-  function handleCollapse(id: string, treeItem: FolderItem) {
-    editTreeItem(id, { ...treeItem, collapsed: !treeItem.collapsed });
-    // setItems((items) =>
-    //   setProperty(items, id, "collapsed", (value) => {
-    //     return !value;
-    //   }),
-    // );
-    // const newItems = setProperty(items, id, "collapsed", (value) => {
-    //   return !value;
-    // });
-    // setItems(newItems);
   }
 
   function getMovementAnnouncement(

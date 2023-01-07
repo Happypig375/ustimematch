@@ -15,8 +15,10 @@ import Grid from "./Grid";
 const Controls = () => {
   const showExplorer = useTrackedStore().ui.showExplorer();
   const showWeekend = useTrackedStore().ui.showWeekend();
+  const showTimematch = useTrackedStore().ui.showTimematch();
   const toggleShowExplorer = actions.ui.toggleshowExplorer;
   const toggleShowWeekend = actions.ui.toggleShowWeekend;
+  const toggleShowTimematch = actions.ui.toggleShowTimematch;
 
   return (
     <div className="flex items-center justify-between gap-4 border-b px-4 py-2">
@@ -30,7 +32,7 @@ const Controls = () => {
         </motion.div>
       </Button>
 
-      <div className="flex gap-4 overflow-x-auto">
+      <div className="flex gap-4">
         <Button icon title="Toggle Weekend" onClick={toggleShowWeekend}>
           {showWeekend ? (
             <IconColumns stroke={1.75} className="h-5 w-5" />
@@ -39,11 +41,7 @@ const Controls = () => {
           )}
         </Button>
 
-        <Button
-          icon
-          title="Toggle Timematch"
-          // onClick={toggleShowTimematch}
-        >
+        <Button icon title="Toggle Timematch" onClick={toggleShowTimematch}>
           <IconClock stroke={1.75} className="h-5 w-5" />
         </Button>
 
