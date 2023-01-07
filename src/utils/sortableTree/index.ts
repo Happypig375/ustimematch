@@ -1,6 +1,8 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import type { FlattenedItem, TreeItem, TreeItems } from "../../../types/tree";
+import debounce from "lodash.debounce";
+import { toast } from "react-hot-toast";
+import type { FlattenedItem, TreeItem, TreeItems } from "../../types/tree";
 
 function getDragDepth(offset: number, indentationWidth: number) {
   return Math.round(offset / indentationWidth);
@@ -27,9 +29,7 @@ export function getProjection(
 
   const projectedDepth = activeItem.depth + dragDepth;
 
-  const maxDepth = getMaxDepth({
-    previousItem,
-  });
+  const maxDepth = getMaxDepth(activeItem, previousItem);
 
   const minDepth = getMinDepth({ nextItem });
   let depth = projectedDepth;
@@ -64,10 +64,17 @@ export function getProjection(
   }
 }
 
-function getMaxDepth({ previousItem }: { previousItem?: FlattenedItem }) {
+function getMaxDepth(activeItem: FlattenedItem, previousItem?: FlattenedItem) {
   if (previousItem?.treeItem.type === "FOLDER") {
-    return previousItem.depth + 1;
+    const actualDepth = previousItem.depth + 1;
+
+    // Prevent nesting further if item's children dpeth + actual depth > 4 (max depth)
+    if (getDepth(activeItem.treeItem) + actualDepth > 4)
+      return previousItem.depth;
+
+    return actualDepth;
   } else if (previousItem?.treeItem.type === "TIMETABLE") {
+    // Prevent nesting under timetable item
     return previousItem.depth;
   }
 
@@ -80,6 +87,18 @@ function getMinDepth({ nextItem }: { nextItem?: FlattenedItem }) {
   }
 
   return 0;
+}
+
+// Finding the depth of an tree item's children
+function getDepthHelper(item: TreeItem): number {
+  if (item.type !== "FOLDER" || item.children.length === 0) return 0;
+  for (const child of item.children) {
+    return getDepthHelper(child) + 1;
+  }
+  return 0;
+}
+function getDepth(item: TreeItem) {
+  return getDepthHelper(item);
 }
 
 function flatten(

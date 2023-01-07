@@ -1,4 +1,4 @@
-import {
+import type {
   Announcements,
   DragStartEvent,
   DragMoveEvent,
@@ -7,8 +7,6 @@ import {
   DropAnimation,
   Modifier,
   UniqueIdentifier,
-  TouchSensor,
-  MouseSensor,
 } from "@dnd-kit/core";
 import {
   DndContext,
@@ -26,19 +24,19 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { toast } from "react-hot-toast";
 import FolderModal from "@components/Form/FolderModal";
 import ImportModal from "@components/Form/ImportModal";
 import { actions, useStore } from "@store/index";
-import { Timetable } from "../../../types/timetable";
+import {
+  buildTree,
+  flattenTree,
+  getProjection,
+  getChildCount,
+  removeChildrenOf,
+} from "@utils/sortableTree";
+import { sortableTreeKeyboardCoordinates } from "@utils/sortableTree/keyboardCoordinates";
 import type {
   FlattenedItem,
   FolderItem,
@@ -46,14 +44,6 @@ import type {
   TimetableItem,
 } from "../../../types/tree";
 import { SortableTreeItem } from "./SortableTreeItem";
-import { sortableTreeKeyboardCoordinates } from "./keyboardCoordinates";
-import {
-  buildTree,
-  flattenTree,
-  getProjection,
-  getChildCount,
-  removeChildrenOf,
-} from "./utilities";
 
 const measuring = {
   droppable: {
@@ -224,7 +214,6 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
                       : depth
                   }
                   indentationWidth={indentationWidth}
-                  indicator={indicator}
                   collapsed={
                     treeItem.type === "FOLDER" ? treeItem.collapsed : undefined
                   }

@@ -17,7 +17,7 @@ export const getStaticProps = () => {
 
 const Test: NextPage = () => {
   const personalTimetable = useTrackedStore().timetable.personalTimetable();
-  const timetables = useTrackedStore().timetable.timetables();
+  const timetablesTree = useTrackedStore().timetable.timetablesTree();
 
   return (
     <Header>
@@ -58,14 +58,14 @@ const Test: NextPage = () => {
             Toast Normal
           </Button> */}
           Personal Timetable:
-          <div className="max-h-[512px] overflow-auto">
+          <div className="max-h-[1024px] overflow-auto">
             <DynamicReactJson
               src={personalTimetable ? personalTimetable.lessons : {}}
             />
           </div>
           Timetables:
-          <div className="max-h-[512px] overflow-auto">
-            <DynamicReactJson src={timetables} />
+          <div className="max-h-[1024px] overflow-auto">
+            <DynamicReactJson src={timetablesTree} />
           </div>
         </div>
       </div>

@@ -3,8 +3,8 @@ import type {
   DroppableContainer,
 } from "@dnd-kit/core";
 import { closestCorners, getFirstCollision, KeyboardCode } from "@dnd-kit/core";
-import type { SensorContext } from "../../../types/tree";
-import { getProjection } from "./utilities";
+import { getProjection } from "@utils/sortableTree";
+import type { FlattenedItem, SensorContext } from "../../types/tree";
 
 const directions: string[] = [
   KeyboardCode.Down,
@@ -126,22 +126,24 @@ export const sortableTreeKeyboardCoordinates: (
 
         if (activeRect && newRect && newDroppable) {
           const newIndex = items.findIndex(
-            (item) => item.treeItem.id === closestId,
+            (item: FlattenedItem) => item.treeItem.id === closestId,
           );
           const newItem = items[newIndex];
           const activeIndex = items.findIndex(
-            (item) => item.treeItem.id === active.id,
+            (item: FlattenedItem) => item.treeItem.id === active.id,
           );
           const activeItem = items[activeIndex];
 
           if (newItem && activeItem) {
-            const { depth } = getProjection(
+            const projection = getProjection(
               items,
               active.id,
               closestId,
               (newItem.depth - activeItem.depth) * indentationWidth,
               indentationWidth,
             );
+            if (!projection) return undefined;
+
             const isBelow = newIndex > activeIndex;
             const modifier = isBelow ? 1 : -1;
             const offset = indicator
@@ -149,7 +151,7 @@ export const sortableTreeKeyboardCoordinates: (
               : 0;
 
             const newCoordinates = {
-              x: newRect.left + depth * indentationWidth,
+              x: newRect.left + projection.depth * indentationWidth,
               y: newRect.top + modifier * offset,
             };
 
