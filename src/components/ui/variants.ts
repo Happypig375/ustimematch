@@ -43,7 +43,7 @@ export const explorerVariants: Variants = {
   },
 };
 
-// Chevron icon
+// Chevron 180 deg
 export const chevronVariants: Variants = {
   open: {
     rotate: 0,
@@ -55,6 +55,26 @@ export const chevronVariants: Variants = {
   },
   close: {
     rotate: 180,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.4,
+    },
+  },
+};
+
+// Chevron 90 deg
+export const chevronHalfVariants: Variants = {
+  open: {
+    rotate: 0,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.4,
+    },
+  },
+  close: {
+    rotate: -90,
     transition: {
       type: "spring",
       bounce: 0,

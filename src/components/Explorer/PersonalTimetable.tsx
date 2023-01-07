@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useCallback, useState } from "react";
 import PersonalTimetableModal from "@components/Form/ImportModal";
 import Button from "@ui/Button";
-import { actions, useStore as useTrackedStore } from "@store/index";
+import { actions, useTrackedStore } from "@store/index";
 import { type Timetable } from "../../types/timetable";
 import ColorChip from "./ColorChip";
 

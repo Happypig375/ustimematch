@@ -5,9 +5,8 @@
 /* Full height app */
 html,
 body,
-#__next,
-main {
-  @apply h-full text-text-black-200;
+#__next {
+  @apply h-full bg-bg-light-100 text-text-black-200;
 }
 
 /* Replace default focus outline */

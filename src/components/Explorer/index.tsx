@@ -1,49 +1,41 @@
-import { IconFolderPlus, IconPlus, IconSwitchVertical } from "@tabler/icons";
+import {
+  IconCalendarPlus,
+  IconFolderPlus,
+  IconSwitchVertical,
+} from "@tabler/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import SortableTree from "@components/Explorer/SortableTree";
+import FolderModal from "@components/Form/FolderModal";
 import ImportModal from "@components/Form/ImportModal";
 import Button from "@ui/Button";
 import { explorerVariants } from "@ui/variants";
 import { actions, useTrackedStore } from "@store/index";
 import { type Timetable } from "../../types/timetable";
 import PersonalTimetable from "./PersonalTimetable";
-import TimetablesTree from "./TimetablesTree";
 
 const Explorer = () => {
   const showExplorer = useTrackedStore().ui.showExplorer();
-  const explorerReorderMode = useTrackedStore().ui.explorerReorderMode();
-  const toggleExplorerReorderMode = actions.ui.toggleExplorerReorderMode;
 
-  const [open, setOpen] = useState(false);
-  const [tmpEditTimetable, setTmpEditTimetable] = useState<Timetable>();
+  const [openImportModal, setOpenImportModal] = useState(false);
+  const [openFolderModal, setOpenFolderModal] = useState(false);
 
   const addTimetable = actions.timetable.addTimetable;
-  const deleteTimetable = actions.timetable.deleteTimetable;
-  const editTimetable = actions.timetable.editTimetable;
+  const addFolder = actions.timetable.addFolder;
 
-  const onDelete = useCallback(() => {
-    tmpEditTimetable && deleteTimetable(tmpEditTimetable.config.id);
-  }, [deleteTimetable, tmpEditTimetable]);
-
-  const onAdd = useCallback(
+  const onAddTimetable = useCallback(
     (timetable: Timetable) => {
       addTimetable(timetable);
     },
     [addTimetable],
   );
 
-  const onEdit = useCallback(
-    (timetable: Timetable) => {
-      editTimetable(timetable);
+  const onAddFolder = useCallback(
+    (name: string) => {
+      addFolder(name);
     },
-    [editTimetable],
+    [addFolder],
   );
-
-  // For resetting edit modal to import modal
-  useEffect(() => {
-    if (open) return;
-    setTmpEditTimetable(undefined);
-  }, [open]);
 
   return (
     <AnimatePresence initial={false}>
@@ -57,14 +49,18 @@ const Explorer = () => {
         >
           {/* Buttons */}
           <div className="flex gap-2 border-b border-border-gray-100 px-4 py-2">
-            <Button fullWidth title="Import" onClick={() => setOpen(true)}>
-              <IconPlus stroke={1.75} className="h-5 w-5" />
-              Import
+            <Button
+              fullWidth
+              title="Import"
+              onClick={() => setOpenImportModal(true)}
+            >
+              <IconCalendarPlus stroke={1.75} className="h-5 w-5" />
+              Timetable
             </Button>
             <Button
               title="Add Folder"
               icon
-              // onClick={toggleAddFolderModal}
+              onClick={() => setOpenFolderModal(true)}
             >
               <IconFolderPlus stroke={1.75} className="h-5 w-5" />
             </Button>
@@ -72,38 +68,27 @@ const Explorer = () => {
             <Button
               icon
               title="Toggle Reorder Mode"
-              toggle={explorerReorderMode}
-              onClick={toggleExplorerReorderMode}
+              // toggle={explorerReorderMode}
+              // onClick={toggleExplorerReorderMode}
             >
               <IconSwitchVertical stroke={1.75} className="h-5 w-5" />
             </Button>
           </div>
 
-          <TimetablesTree
-            onClick={(timetable) => {
-              setOpen(true);
-              setTmpEditTimetable(timetable);
-            }}
-            onEyeClick={(timetable) => {
-              editTimetable({
-                ...timetable,
-                config: {
-                  ...timetable.config,
-                  visible: !timetable.config.visible,
-                },
-              });
-            }}
-          />
+          <SortableTree />
 
           <PersonalTimetable />
 
           <ImportModal
-            open={open}
-            setOpen={setOpen}
-            onAdd={onAdd}
-            onDelete={onDelete}
-            onEdit={onEdit}
-            timetable={tmpEditTimetable}
+            open={openImportModal}
+            setOpen={setOpenImportModal}
+            onAdd={onAddTimetable}
+          />
+
+          <FolderModal
+            onAdd={onAddFolder}
+            open={openFolderModal}
+            setOpen={setOpenFolderModal}
           />
         </motion.div>
       )}

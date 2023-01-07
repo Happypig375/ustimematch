@@ -14,8 +14,8 @@ import Grid from "./Grid";
 
 const Controls = () => {
   const showExplorer = useTrackedStore().ui.showExplorer();
-  const toggleShowExplorer = actions.ui.toggleshowExplorer;
   const showWeekend = useTrackedStore().ui.showWeekend();
+  const toggleShowExplorer = actions.ui.toggleshowExplorer;
   const toggleShowWeekend = actions.ui.toggleShowWeekend;
 
   return (

@@ -7,14 +7,14 @@ import { type PersonalTimetableForm } from "./ImportModal";
 
 interface ColorInputProps
   extends UseControllerProps<PersonalTimetableForm, "color"> {
-  disabled: boolean;
+  disabled?: boolean;
 }
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface ColorPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   color: string;
 }
 
-const ColorPreview = ({ color, className }: Props) => {
+const ColorPreview = ({ color, className }: ColorPreviewProps) => {
   return (
     <div
       className={clsx("overflow-hidden rounded-md", className)}

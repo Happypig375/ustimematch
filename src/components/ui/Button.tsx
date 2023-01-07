@@ -42,7 +42,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       {...props}
       disabled={disabled}
       className={clsx(
-        "flex h-10 items-center justify-center gap-2 rounded-md border border-border-gray-100 bg-bg-light-100 text-text-black-100 transition-all",
+        "flex h-10 select-none items-center justify-center gap-2 rounded-md border border-border-gray-100 bg-bg-light-100 text-text-black-100 transition-all",
         "active:bg-bg-light-200",
         "enabled:hover:border-border-gray-200 enabled:hover:text-text-black-200",
         "disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:opacity-50",

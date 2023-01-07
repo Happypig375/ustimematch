@@ -1,5 +1,5 @@
 import { DialogClose } from "@radix-ui/react-dialog";
-import { IconDownload, IconTrash, IconX } from "@tabler/icons";
+import { IconPencil, IconPlus, IconTrash, IconX } from "@tabler/icons";
 import clsx from "clsx";
 import { nanoid } from "nanoid";
 import { useEffect, useMemo, useState } from "react";
@@ -17,6 +17,7 @@ import {
 import Button from "@ui/Button";
 import Input from "@ui/Input";
 import { Modal, ModalContent, ModalControl, ModalTitle } from "@ui/Modal";
+import { randomHex } from "@utils/randomHex";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
 import { ColorInput } from "./ColorInput";
@@ -25,7 +26,7 @@ interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   personal?: boolean;
-  onAdd: (timetable: Timetable) => void;
+  onAdd?: (timetable: Timetable) => void;
   onDelete?: () => void;
   onEdit?: (timetable: Timetable) => void;
   // If timetable prop is passed, it means the modal is in edit mode
@@ -54,11 +55,7 @@ const ImportPersonalModal = ({
       university: "HKUST",
       name: timetable?.name || "",
       plannerURL: timetable?.plannerURL || "",
-      color:
-        timetable?.config.color ||
-        // https://stackoverflow.com/questions/5092808/how-do-i-randomly-generate-html-hex-color-codes-using-javascript
-        // Consider using hsl then convert to hex to generate more pelasing colors
-        "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0"),
+      color: timetable?.config.color || randomHex(),
     }),
     // open is included for randomizing color on open
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,7 +99,9 @@ const ImportPersonalModal = ({
           },
         };
 
-        timetable ? onEdit && onEdit(tmpTimetable) : onAdd(tmpTimetable);
+        timetable
+          ? onEdit && onEdit(tmpTimetable)
+          : onAdd && onAdd(tmpTimetable);
 
         setOpen(false);
       },
@@ -126,7 +125,7 @@ const ImportPersonalModal = ({
     <Modal open={open} onOpenChange={controlledSetOpen}>
       <ModalContent open={open} onOpenChange={controlledSetOpen}>
         <ModalTitle>
-          {timetable ? "Edit" : "Import"} {personal && "Personal"} Timetable
+          {timetable ? "Edit" : "Add"} {personal && "Personal"} Timetable
         </ModalTitle>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -222,8 +221,17 @@ const ImportPersonalModal = ({
               loading={isFetching}
               disabled={isFetching}
             >
-              <IconDownload stroke={1.75} className="h-5 w-5" />
-              Save
+              {timetable ? (
+                <>
+                  <IconPencil stroke={1.75} className="h-5 w-5" />
+                  Edit
+                </>
+              ) : (
+                <>
+                  <IconPlus stroke={1.75} className="h-5 w-5" />
+                  Add
+                </>
+              )}
             </Button>
           </ModalControl>
         </form>
