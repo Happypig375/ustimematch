@@ -59,10 +59,16 @@ const lighten = (color: string, percent: number) => {
   );
 };
 
+/**
+ * Lighten or darken depending on contrast
+ */
 export const textColor = (hex: string) => {
-  return getContrast(hex) === "black" ? lighten(hex, -50) : lighten(hex, 75);
+  return getContrast(hex) === "black" ? lighten(hex, -50) : lighten(hex, 60);
 };
 
+/**
+ * Darken with partial transparency
+ */
 export const borderColor = (hex: string) => {
   return lighten(hex, -40) + "20";
 };
