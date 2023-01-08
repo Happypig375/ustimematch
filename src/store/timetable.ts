@@ -1,6 +1,10 @@
 import { createStore } from "@udecode/zustood";
 import { nanoid } from "nanoid";
-import { findItemDeep, toggleFolderVisibility } from "@utils/sortableTree";
+import {
+  findItemDeep,
+  rawFlatten,
+  toggleFolderVisibility,
+} from "@utils/sortableTree";
 import type { Period, Periods } from "../types/timetable";
 import { type Timetable } from "../types/timetable";
 import type { TimetableItem, TreeItems, TreeItem } from "../types/tree";
@@ -21,20 +25,9 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
 )
   .extendSelectors((_, get) => ({
     flattenedTimetablesTree: (): Timetable[] => {
-      function flatten(items: TreeItems): TreeItem[] {
-        return items.reduce<TreeItem[]>((acc, item) => {
-          if (item.type === "FOLDER")
-            return [...acc, item, ...flatten(item.children)];
-
-          return [...acc, item];
-        }, []);
-      }
-
-      const flatTree = flatten(get.timetablesTree()).filter(
-        (item): item is TimetableItem => item.type === "TIMETABLE",
-      );
-
-      return flatTree.map((item) => item.timetable);
+      return rawFlatten(get.timetablesTree())
+        .filter((item): item is TimetableItem => item.type === "TIMETABLE")
+        .map((item) => item.timetable);
     },
   }))
   .extendSelectors((_, get) => ({

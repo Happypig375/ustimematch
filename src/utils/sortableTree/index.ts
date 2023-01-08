@@ -277,6 +277,17 @@ export function removeChildrenOf(
 }
 
 /**
+ * @returns All items flattened within a tree
+ */
+export function rawFlatten(items: TreeItems): TreeItem[] {
+  return items.reduce<TreeItem[]>((acc, item) => {
+    if (item.type === "FOLDER" && item.children.length > 0)
+      return [...acc, item, ...rawFlatten(item.children)];
+    return [...acc, item];
+  }, []);
+}
+
+/**
  * @returns whether a folder's children are visible
  *
  * @true at least one timetable are visible
