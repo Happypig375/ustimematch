@@ -324,3 +324,19 @@ export function toggleFolderVisibility(folderItem: FolderItem): FolderItem {
 
   return { ...folderItem, children: newChildren };
 }
+
+/**
+ * Used to determine whether to show toggle visibility button or not
+ *
+ * @returns number of timetables of a given folder
+ */
+export function getTimetableCount(folderItem: FolderItem): number {
+  let timetableCount = 0;
+
+  for (const child of folderItem.children) {
+    if (child.type === "TIMETABLE") timetableCount += 1;
+    if (child.type === "FOLDER") timetableCount += getTimetableCount(child);
+  }
+
+  return timetableCount;
+}

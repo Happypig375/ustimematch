@@ -26,6 +26,23 @@ module.exports = {
           "gray-200": "#d4d4d4",
           "gray-100": "#e4e4e4",
         },
+        // Dark mode template
+        // brand: "#996600",
+        // bg: {
+        //   "light-500": "#060606",
+        //   "light-400": "#080808",
+        //   "light-300": "#101010",
+        //   "light-200": "#121212",
+        //   "light-100": "#161616",
+        // },
+        // text: {
+        //   "black-200": "#cccccc",
+        //   "black-100": "#888888",
+        // },
+        // border: {
+        //   "gray-200": "#323232",
+        //   "gray-100": "#242424",
+        // },
       },
       boxShadow: {
         "tree-item":

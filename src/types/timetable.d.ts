@@ -73,3 +73,18 @@ interface HKUSTTimetable extends BaseTimetable {
 
 // Can be constructed as union for additional universities
 export type Timetable = HKUSTTimetable;
+
+export interface Period {
+  begin: string;
+  end: string;
+}
+
+export type Periods = [
+  Period[],
+  Period[],
+  Period[],
+  Period[],
+  Period[],
+  Period[],
+  Period[],
+];

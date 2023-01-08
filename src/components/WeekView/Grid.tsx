@@ -3,12 +3,14 @@ import Border from "./Border";
 import DetailsModal from "./DetailsModal";
 import Legend from "./Legend";
 import Timeline from "./Timeline";
+import Timematch from "./Timematch";
 import Timetable from "./Timetable";
 
 const Grid = () => {
   const rows = useTrackedStore().ui.weekViewRows();
   const cols = useTrackedStore().ui.weekViewCols();
 
+  const showTimematch = useTrackedStore().ui.showTimematch();
   /* ---------- Fetch timematch when calendars change or when toggled --------- */
   // useEffect(() => {
   //   if (!showTimematch) return;
@@ -23,15 +25,18 @@ const Grid = () => {
         gridTemplateColumns: `auto repeat(${cols}, minmax(0,1fr))`,
       }}
     >
-      {/* Row and column size are calculated here */}
+      {/* First row weekday and first column time, row and column size are calculated here */}
       <Legend />
 
+      {/* Background border */}
       <Border />
 
-      <Timetable />
+      {showTimematch ? <Timematch /> : <Timetable />}
 
+      {/* Current time indicator */}
       <Timeline />
 
+      {/* Lesson's details */}
       <DetailsModal />
 
       {/* Edge cases for ui testing period (hovering margin) */}

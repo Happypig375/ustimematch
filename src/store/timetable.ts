@@ -1,6 +1,7 @@
 import { createStore } from "@udecode/zustood";
 import { nanoid } from "nanoid";
 import { findItemDeep, toggleFolderVisibility } from "@utils/sortableTree";
+import type { Period, Periods } from "../types/timetable";
 import { type Timetable } from "../types/timetable";
 import type { TimetableItem, TreeItems, TreeItem } from "../types/tree";
 
@@ -35,25 +36,6 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
 
       return flatTree.map((item) => item.timetable);
     },
-    // // Note that personal timetable will be at index 0
-    // combinedTimetables: (): Timetable[] => {
-    //   const personalTimetable = get.personalTimetable();
-    //   const timetables = get.timetables();
-    //   if (!personalTimetable) return timetables;
-    //   return [personalTimetable, ...timetables];
-    // },
-    // // Excluding personal timetable
-    // getTimetableById: (timetableId: string) => {
-    //   return get
-    //     .timetables()
-    //     .find((timetable) => timetable.config.id === timetableId);
-    // },
-    // // Excluding personal timetable
-    // getTimetableIndexById: (timetableId: string) => {
-    //   return get
-    //     .timetables()
-    //     .findIndex((timetable) => timetable.config.id === timetableId);
-    // },
   }))
   .extendSelectors((_, get) => ({
     // Note that personal timetable will be at index 0
@@ -63,12 +45,6 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
       if (!personalTimetable) return timetables;
       return [personalTimetable, ...timetables];
     },
-    // Note that personal timetable will be at index 0
-    // combinedVisibleTimetables: () => {
-    //   return get
-    //     .combinedTimetables()
-    //     .filter((timetable) => timetable.config.visible);
-    // },
   }))
   .extendSelectors((_, get) => ({
     // Note that personal timetable will be at index 0
@@ -77,18 +53,79 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
         .combinedTimetables()
         .filter((timetable) => timetable.config.visible);
     },
-    // Including personal timetable
-    // getCombinedVisibleTimetableIndexById: (timetableId: string) => {
-    //   return get
-    //     .combinedVisibleTimetables()
-    //     .findIndex((timetable) => timetable.config.id === timetableId);
-    // },
   }))
   .extendSelectors((_, get) => ({
     getCombinedVisibleTimetableIndexById: (timetableId: string) => {
       return get
         .combinedVisibleTimetables()
         .findIndex((timetable) => timetable.config.id === timetableId);
+    },
+    // Inverted time periods of all visible timetables
+    timematch: (): Periods => {
+      const timetables = get.combinedVisibleTimetables();
+
+      const timematchPeriods: Periods = [[], [], [], [], [], [], []];
+
+      for (const timetable of timetables) {
+        for (const [weekdayIndex, weekday] of timetable.lessons.entries()) {
+          // Map into periods
+          timematchPeriods[weekdayIndex]?.push(
+            ...weekday.map(({ begin, end }) => ({
+              begin,
+              end,
+            })),
+          );
+        }
+      }
+
+      for (const [weekdayIndex, weekday] of timematchPeriods.entries()) {
+        // Sort with regards to beginning time in case if they aren't already
+        weekday.sort((a, b) => a.begin.localeCompare(b.begin));
+
+        // Merge overlapping periods
+        // https://leetcode.com/problems/merge-intervals
+        // https://stackoverflow.com/questions/60937883/merge-overlapping-date-ranges
+        let newWeekday = weekday.reduce<Period[]>((acc, curr) => {
+          // Push first element into acc
+          if (acc.length === 0) return [curr];
+
+          // Pop the pervious element for comparison
+          const prev = acc.pop();
+          if (!prev) return acc;
+
+          // If prev and curr overlap
+          if (curr.begin <= prev.end)
+            // Returns the larger end
+            return curr.end <= prev.end
+              ? [...acc, prev]
+              : [...acc, { begin: prev.begin, end: curr.end }];
+
+          // Non-intersecting periods
+          return [...acc, prev, curr];
+        }, []);
+
+        // Invert periods
+        newWeekday = newWeekday.reduce<[Period[], string]>(
+          ([acc, prevEnd], { begin, end }) => {
+            return begin > prevEnd
+              ? [[...acc, { begin: prevEnd, end: begin }], end]
+              : [acc, prevEnd];
+          },
+          [[], "00:00"],
+        )[0];
+
+        // Extend last period to end of date
+        const lastEnd = weekday[weekday.length - 1]?.end;
+        if (lastEnd) newWeekday.push({ begin: lastEnd, end: "23:59" });
+
+        // Check for empty weekday
+        if (newWeekday.length === 0)
+          newWeekday.push({ begin: "00:00", end: "23:59" });
+
+        timematchPeriods[weekdayIndex] = newWeekday;
+      }
+
+      return timematchPeriods;
     },
   }))
   .extendActions((set, get) => ({

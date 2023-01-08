@@ -1,13 +1,4 @@
-import {
-  ArrowPathIcon,
-  Bars2Icon,
-  Bars4Icon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ShareIcon,
-  ClockIcon as OutlineClockIcon,
-} from "@heroicons/react/24/outline";
-import { ClockIcon as SolidClockIcon } from "@heroicons/react/24/solid";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { type NextPage } from "next";
 import Header from "@components/Header";
 import Button from "@ui/Button";
@@ -83,10 +74,10 @@ const Tutorial: NextPage = () => {
               <div className="flex flex-col gap-1">
                 <div className="flex gap-2">
                   <Button icon>
-                    <ChevronLeftIcon className="h-5 w-5" />
+                    <IconChevronLeft stroke={1.75} className="h-5 w-5" />
                   </Button>
                   <Button icon>
-                    <ChevronRightIcon className="h-5 w-5" />
+                    <IconChevronRight stroke={1.75} className="h-5 w-5" />
                   </Button>
                 </div>
                 <Paragraph.Body>
@@ -98,10 +89,10 @@ const Tutorial: NextPage = () => {
               <div className="flex flex-col gap-1">
                 <div className="flex gap-2">
                   <Button icon>
-                    <Bars2Icon className="h-5 w-5 rotate-90" />
+                    {/* <Bars2Icon className="h-5 w-5 rotate-90" /> */}
                   </Button>
                   <Button icon>
-                    <Bars4Icon className="h-5 w-5 rotate-90" />
+                    {/* <Bars4Icon className="h-5 w-5 rotate-90" /> */}
                   </Button>
                 </div>
                 <Paragraph.Body>
@@ -113,10 +104,10 @@ const Tutorial: NextPage = () => {
               <div className="flex flex-col gap-1">
                 <div className="flex gap-2">
                   <Button icon>
-                    <OutlineClockIcon className="h-5 w-5" />
+                    {/* <OutlineClockIcon className="h-5 w-5" /> */}
                   </Button>
                   <Button icon>
-                    <SolidClockIcon className="h-5 w-5" />
+                    {/* <SolidClockIcon className="h-5 w-5" /> */}
                   </Button>
                 </div>
                 <Paragraph.Body>
@@ -128,7 +119,7 @@ const Tutorial: NextPage = () => {
               <div className="flex flex-col gap-1">
                 <div>
                   <Button icon>
-                    <ArrowPathIcon className="h-5 w-5" />
+                    {/* <ArrowPathIcon className="h-5 w-5" /> */}
                   </Button>
                 </div>
                 <Paragraph.Body>Refresh all timetables</Paragraph.Body>
@@ -137,7 +128,7 @@ const Tutorial: NextPage = () => {
               <div className="flex flex-col gap-1">
                 <div>
                   <Button icon title="Share">
-                    <ShareIcon className="h-5 w-5" />
+                    {/* <ShareIcon className="h-5 w-5" /> */}
                   </Button>
                 </div>
                 <Paragraph.Body>Open sharing screen</Paragraph.Body>

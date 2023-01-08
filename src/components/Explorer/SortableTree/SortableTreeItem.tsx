@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
 import Button from "@components/ui/Button";
 import { chevronHalfVariants } from "@components/ui/variants";
-import { getFolderVisible } from "@utils/sortableTree";
+import { getFolderVisible, getTimetableCount } from "@utils/sortableTree";
 import type { TreeItem } from "../../../types/tree";
 import ColorChip from "../ColorChip";
 
@@ -84,7 +84,7 @@ export function SortableTreeItem({
         style={style}
         onClick={onClick}
         className={clsx(
-          "flex h-full cursor-pointer items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 hover:relative hover:z-10 hover:shadow-tree-item",
+          "flex h-full cursor-pointer items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 text-text-black-100 hover:relative hover:z-10 hover:text-text-black-200 hover:shadow-tree-item",
           clone && "pointer-events-none shadow-tree-item",
           isDragging && "border border-border-gray-100 opacity-50",
         )}
@@ -138,7 +138,7 @@ export function SortableTreeItem({
         {/* Toggle visibility button */}
         {!clone &&
           (treeItem.type === "FOLDER"
-            ? treeItem.children.length > 0
+            ? getTimetableCount(treeItem) > 0
             : true) && (
             <Button
               icon
