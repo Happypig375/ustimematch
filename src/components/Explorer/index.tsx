@@ -1,8 +1,4 @@
-import {
-  IconCalendarPlus,
-  IconFolderPlus,
-  IconSwitchVertical,
-} from "@tabler/icons";
+import { IconCalendarPlus, IconFolderPlus } from "@tabler/icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import SortableTree from "@components/Explorer/SortableTree";
@@ -63,15 +59,6 @@ const Explorer = () => {
               onClick={() => setOpenFolderModal(true)}
             >
               <IconFolderPlus stroke={1.75} className="h-5 w-5" />
-            </Button>
-
-            <Button
-              icon
-              title="Toggle Reorder Mode"
-              // toggle={explorerReorderMode}
-              // onClick={toggleExplorerReorderMode}
-            >
-              <IconSwitchVertical stroke={1.75} className="h-5 w-5" />
             </Button>
           </div>
 

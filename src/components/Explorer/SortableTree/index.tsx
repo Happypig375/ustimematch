@@ -173,6 +173,8 @@ const SortableTree = () => {
     setActiveId(null);
     setOffsetLeft(0);
     setCurrentPosition(null);
+
+    document.body.style.setProperty("cursor", "");
   }, []);
 
   const handleDragStart = useCallback(

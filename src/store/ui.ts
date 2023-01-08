@@ -21,7 +21,6 @@ export const uiStore = createStore("ui")(
     showWeekend: true,
     showExplorer: true,
     showTimematch: false,
-    explorerReorderMode: false,
   },
   { devtools: { enabled: true }, persist: { enabled: true } },
 )
@@ -48,11 +47,6 @@ export const uiStore = createStore("ui")(
     toggleShowTimematch: () => {
       set.state((draft) => {
         draft.showTimematch = !draft.showTimematch;
-      });
-    },
-    toggleExplorerReorderMode: () => {
-      set.state((draft) => {
-        draft.explorerReorderMode = !draft.explorerReorderMode;
       });
     },
   }));
