@@ -387,6 +387,8 @@ const SortableTree = () => {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
           onDragCancel={handleDragCancel}
+          // Disable horizontal auto scrolling, 0.2 is the default value
+          autoScroll={{ threshold: { x: 0, y: 0.2 } }}
         >
           <SortableContext
             items={sortedIds}

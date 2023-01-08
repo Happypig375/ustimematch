@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
 import Button from "@components/ui/Button";
 import { chevronHalfVariants } from "@components/ui/variants";
+import useMediaQuery from "@hooks/useMediaQuery";
 import { getFolderVisible, getTimetableCount } from "@utils/sortableTree";
 import type { TreeItem } from "../../../types/tree";
 import ColorChip from "../ColorChip";
@@ -67,6 +68,8 @@ export function SortableTreeItem({
     transition,
   };
 
+  const matchTouch = useMediaQuery("(pointer: coarse)");
+
   return (
     <li
       ref={setDroppableNodeRef}
@@ -84,7 +87,9 @@ export function SortableTreeItem({
         style={style}
         onClick={onClick}
         className={clsx(
-          "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 text-text-black-100 hover:relative hover:z-10 hover:text-text-black-200 hover:shadow-tree-item",
+          "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 text-text-black-100",
+          !matchTouch &&
+            "hover:relative hover:z-10 hover:text-text-black-200 hover:shadow-tree-item",
           clone && "pointer-events-none shadow-tree-item",
           isDragging && "border border-border-gray-100 opacity-50",
         )}
