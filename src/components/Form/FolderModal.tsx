@@ -1,12 +1,5 @@
 import { DialogClose } from "@radix-ui/react-dialog";
-import {
-  IconDownload,
-  IconFolderPlus,
-  IconPencil,
-  IconPlus,
-  IconTrash,
-  IconX,
-} from "@tabler/icons";
+import { IconPencil, IconPlus, IconTrash, IconX } from "@tabler/icons";
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -57,7 +50,6 @@ const FolderModal = ({
 
   const {
     reset,
-    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -71,8 +63,8 @@ const FolderModal = ({
   }, [defaultValues, open, reset]);
 
   const onSubmit: SubmitHandler<FolderForm> = ({ name }) => {
-    folder && onEdit && onEdit(name);
-    onAdd && onAdd(name);
+    folder && onEdit && onEdit(name.trim());
+    onAdd && onAdd(name.trim());
     setOpen(false);
   };
 

@@ -84,7 +84,7 @@ export function SortableTreeItem({
         style={style}
         onClick={onClick}
         className={clsx(
-          "flex h-full cursor-pointer items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 text-text-black-100 hover:relative hover:z-10 hover:text-text-black-200 hover:shadow-tree-item",
+          "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 text-text-black-100 hover:relative hover:z-10 hover:text-text-black-200 hover:shadow-tree-item",
           clone && "pointer-events-none shadow-tree-item",
           isDragging && "border border-border-gray-100 opacity-50",
         )}
@@ -164,7 +164,7 @@ export function SortableTreeItem({
           plain
           {...listeners}
           {...attributes}
-          className="cursor-grab touch-none select-none"
+          className="cursor-grab touch-none"
         >
           <IconGripVertical stroke={1.75} className="h-5 w-5" />
         </Button>

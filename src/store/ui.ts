@@ -29,9 +29,9 @@ export const uiStore = createStore("ui")(
     minutePerRow: () => MINUTE_PER_ROW,
     displayedHours: () => DISPLAYED_HOURS,
     weekdays: () => (get.showWeekend() ? SEVEN_WEEKDAYS : FIVE_WEEKDAYS),
-    weekViewRows: () => DISPLAYED_HOURS.length * (60 / MINUTE_PER_ROW),
   }))
   .extendSelectors((_, get) => ({
+    weekViewRows: () => DISPLAYED_HOURS.length * (60 / MINUTE_PER_ROW),
     weekViewCols: () => get.weekdays().length,
   }))
   .extendActions((set) => ({

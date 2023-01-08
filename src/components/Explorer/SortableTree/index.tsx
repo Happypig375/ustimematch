@@ -24,7 +24,13 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import FolderModal from "@components/Form/FolderModal";
 import ImportModal from "@components/Form/ImportModal";
@@ -45,10 +51,20 @@ import type {
 } from "../../../types/tree";
 import { SortableTreeItem } from "./SortableTreeItem";
 
+const indentationWidth = 24;
+
 const measuring = {
   droppable: {
     strategy: MeasuringStrategy.Always,
   },
+};
+
+const adjustTranslate: Modifier = ({ transform, draggingNodeRect }) => {
+  if (!draggingNodeRect) return transform;
+  return {
+    ...transform,
+    x: transform.x + draggingNodeRect.width,
+  };
 };
 
 const dropAnimationConfig: DropAnimation = {
@@ -71,33 +87,47 @@ const dropAnimationConfig: DropAnimation = {
   },
 };
 
-interface Props {
-  indicator?: boolean;
-  indentationWidth?: number;
-}
-
-const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
+const SortableTree = () => {
   const items = useStore().timetable.timetablesTree();
   const setItems = actions.timetable.setTimetablesTree;
-
+  const editTreeItem = actions.timetable.editTreeItem;
+  const removeTreeItem = actions.timetable.removeTreeItem;
   const toggleVisibility = actions.timetable.toggleVisibility;
   const toggleFolderCollapse = actions.timetable.toggleFolderCollapse;
 
-  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-  const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
+  // Editing modal for folder and timetable
+  const [openFolderModal, setOpenFolderModal] = useState(false);
+  const [editingFolder, setEditingFolder] = useState<FolderItem | null>(null);
+  const [openTimetableModal, setOpenTimetableModal] = useState(false);
+  const [editingTimetable, setEditingTimetable] =
+    useState<TimetableItem | null>(null);
+
+  const onFolderClick = useCallback((folderItem: FolderItem) => {
+    setOpenFolderModal(true);
+    setEditingFolder(folderItem);
+  }, []);
+
+  const onTimetableClick = useCallback((timetableItem: TimetableItem) => {
+    setOpenTimetableModal(true);
+    setEditingTimetable(timetableItem);
+  }, []);
+
+  // Drag and drop states
   const [offsetLeft, setOffsetLeft] = useState(0);
+  const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [currentPosition, setCurrentPosition] = useState<{
     parentId: UniqueIdentifier | null;
     overId: UniqueIdentifier;
   } | null>(null);
 
+  // Flattened items without collapsed folders
   const flattenedItems = useMemo(() => {
     const flattenedTree = flattenTree(items);
+
     const collapsedItems = flattenedTree.reduce<string[]>(
       (acc, { treeItem }) =>
-        treeItem.type === "FOLDER" &&
-        treeItem.collapsed &&
-        treeItem.children.length
+        treeItem.type === "FOLDER" && treeItem.collapsed
           ? [...acc, treeItem.id]
           : acc,
       [],
@@ -109,24 +139,117 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
     );
   }, [activeId, items]);
 
-  const projected =
-    activeId && overId
-      ? getProjection(
-          flattenedItems,
-          activeId,
-          overId,
-          offsetLeft,
-          indentationWidth,
-        )
-      : null;
+  // Projection while dragging
+  const projected = useMemo(
+    () =>
+      activeId && overId
+        ? getProjection(
+            flattenedItems,
+            activeId,
+            overId,
+            offsetLeft,
+            indentationWidth,
+          )
+        : null,
+    [flattenedItems, offsetLeft, activeId, overId],
+  );
 
+  const sortedIds = useMemo(
+    () => flattenedItems.map((item) => item.treeItem.id),
+    [flattenedItems],
+  );
+
+  const activeItem = useMemo(
+    () =>
+      activeId
+        ? flattenedItems.find((item) => item.treeItem.id === activeId)
+        : null,
+    [flattenedItems, activeId],
+  );
+
+  // Drag and drop event handler
+  const resetState = useCallback(() => {
+    setOverId(null);
+    setActiveId(null);
+    setOffsetLeft(0);
+    setCurrentPosition(null);
+  }, []);
+
+  const handleDragStart = useCallback(
+    ({ active: { id: activeId } }: DragStartEvent) => {
+      setActiveId(activeId);
+      setOverId(activeId);
+
+      const activeItem = flattenedItems.find(
+        (item) => item.treeItem.id === activeId,
+      );
+
+      if (activeItem) {
+        setCurrentPosition({
+          parentId: activeItem.parentId,
+          overId: activeId,
+        });
+      }
+
+      document.body.style.setProperty("cursor", "grabbing");
+    },
+    [flattenedItems],
+  );
+
+  const handleDragMove = useCallback(({ delta }: DragMoveEvent) => {
+    setOffsetLeft(delta.x);
+  }, []);
+
+  const handleDragOver = useCallback(({ over }: DragOverEvent) => {
+    setOverId(over?.id ?? null);
+  }, []);
+
+  const handleDragEnd = useCallback(
+    ({ active, over }: DragEndEvent) => {
+      resetState();
+
+      if (projected && over) {
+        const { depth, parentId } = projected;
+
+        const clonedItems: FlattenedItem[] = JSON.parse(
+          JSON.stringify(flattenTree(items)),
+        );
+
+        const overIndex = clonedItems.findIndex(
+          (item) => item.treeItem.id === over.id,
+        );
+
+        const activeIndex = clonedItems.findIndex(
+          (item) => item.treeItem.id === active.id,
+        );
+
+        const activeTreeItem = clonedItems[activeIndex];
+        if (!activeTreeItem) return;
+
+        clonedItems[activeIndex] = { ...activeTreeItem, depth, parentId };
+
+        const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
+
+        const newItems = buildTree(sortedItems);
+
+        setItems(newItems);
+      }
+    },
+    [resetState, projected, items, setItems],
+  );
+
+  const handleDragCancel = useCallback(() => {
+    resetState();
+  }, [resetState]);
+
+  // Drag and drop context
   const sensorContext: SensorContext = useRef({
     items: flattenedItems,
     offset: offsetLeft,
   });
 
   const [coordinateGetter] = useState(() =>
-    sortableTreeKeyboardCoordinates(sensorContext, indicator, indentationWidth),
+    sortableTreeKeyboardCoordinates(sensorContext, indentationWidth),
   );
 
   const sensors = useSensors(
@@ -136,15 +259,6 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
     }),
   );
 
-  const sortedIds = useMemo(
-    () => flattenedItems.map((item) => item.treeItem.id),
-    [flattenedItems],
-  );
-
-  const activeItem = activeId
-    ? flattenedItems.find((item) => item.treeItem.id === activeId)
-    : null;
-
   useEffect(() => {
     sensorContext.current = {
       items: flattenedItems,
@@ -152,51 +266,120 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
     };
   }, [flattenedItems, offsetLeft]);
 
-  const announcements: Announcements = {
-    onDragStart({ active }) {
-      return `Picked up ${active.id}.`;
-    },
-    onDragMove({ active, over }) {
-      return getMovementAnnouncement("onDragMove", active.id, over?.id);
-    },
-    onDragOver({ active, over }) {
-      return getMovementAnnouncement("onDragOver", active.id, over?.id);
-    },
-    onDragEnd({ active, over }) {
-      return getMovementAnnouncement("onDragEnd", active.id, over?.id);
-    },
-    onDragCancel({ active }) {
-      return `Moving was cancelled. ${active.id} was dropped in its original position.`;
-    },
-  };
+  // Accessibility
+  const getMovementAnnouncement = useCallback(
+    (
+      eventName: string,
+      activeId: UniqueIdentifier,
+      overId?: UniqueIdentifier,
+    ) => {
+      if (overId && projected) {
+        if (eventName !== "onDragEnd") {
+          if (
+            currentPosition &&
+            projected.parentId === currentPosition.parentId &&
+            overId === currentPosition.overId
+          ) {
+            return;
+          } else {
+            setCurrentPosition({
+              parentId: projected.parentId,
+              overId,
+            });
+          }
+        }
 
-  // Handle editing modal of folder and timetable
-  const [openTimetableModal, setOpenTimetableModal] = useState(false);
-  const [openFolderModal, setOpenFolderModal] = useState(false);
-  const [editingFolder, setEditingFolder] = useState<FolderItem>();
-  const [editingTimetable, setEditingTimetable] = useState<TimetableItem>();
+        const clonedItems: FlattenedItem[] = JSON.parse(
+          JSON.stringify(flattenTree(items)),
+        );
+        const overIndex = clonedItems.findIndex(
+          (item) => item.treeItem.id === overId,
+        );
+        const activeIndex = clonedItems.findIndex(
+          (item) => item.treeItem.id === activeId,
+        );
+        const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
 
-  const editTreeItem = actions.timetable.editTreeItem;
-  const removeTreeItem = actions.timetable.removeTreeItem;
+        const activeItem = sortedItems[activeIndex];
+        const previousItem = sortedItems[overIndex - 1];
 
-  const onFolderClick = (folderItem: FolderItem) => {
-    setOpenFolderModal(true);
-    setEditingFolder(folderItem);
-  };
+        function getName(item: FlattenedItem) {
+          return item.treeItem.type === "FOLDER"
+            ? `Folder ${item.treeItem.name}`
+            : item.treeItem.type === "TIMETABLE"
+            ? `Timetable ${item.treeItem.timetable.name}`
+            : null;
+        }
+        const activeName = activeItem ? getName(activeItem) : "";
 
-  const onTimetableClick = (timetableItem: TimetableItem) => {
-    setOpenTimetableModal(true);
-    setEditingTimetable(timetableItem);
-  };
+        let announcement;
+        const movedVerb = eventName === "onDragEnd" ? "dropped" : "moved";
+        const nestedVerb = eventName === "onDragEnd" ? "dropped" : "nested";
+
+        if (!previousItem) {
+          const nextItem = sortedItems[overIndex + 1];
+          const nextName = nextItem ? getName(nextItem) : "";
+          announcement = `${activeName} was ${movedVerb} before ${nextName}.`;
+        } else {
+          if (projected.depth > previousItem.depth) {
+            const previousName = previousItem ? getName(previousItem) : "";
+            announcement = `${activeName} was ${nestedVerb} under ${previousName}.`;
+          } else {
+            let previousSibling: FlattenedItem | undefined = previousItem;
+            const previousSiblingName = previousSibling
+              ? getName(previousSibling)
+              : "";
+            while (previousSibling && projected.depth < previousSibling.depth) {
+              const parentId: UniqueIdentifier | null =
+                previousSibling.parentId;
+              previousSibling = sortedItems.find(
+                (item) => item.treeItem.id === parentId,
+              );
+            }
+
+            if (previousSibling) {
+              announcement = `${activeName} was ${movedVerb} after ${previousSiblingName}.`;
+            }
+          }
+        }
+
+        return announcement;
+      }
+
+      return;
+    },
+    [items, currentPosition, projected],
+  );
+
+  const announcements: Announcements = useMemo(
+    () => ({
+      onDragStart({ active }) {
+        return `Picked up ${active.id}.`;
+      },
+      onDragMove({ active, over }) {
+        return getMovementAnnouncement("onDragMove", active.id, over?.id);
+      },
+      onDragOver({ active, over }) {
+        return getMovementAnnouncement("onDragOver", active.id, over?.id);
+      },
+      onDragEnd({ active, over }) {
+        return getMovementAnnouncement("onDragEnd", active.id, over?.id);
+      },
+      onDragCancel({ active }) {
+        return `Moving was cancelled. ${active.id} was dropped in its original position.`;
+      },
+    }),
+    [getMovementAnnouncement],
+  );
 
   return (
     <>
       <div className="h-full overflow-y-auto">
         <DndContext
-          accessibility={{ announcements }}
           sensors={sensors}
-          collisionDetection={closestCenter}
           measuring={measuring}
+          accessibility={{ announcements }}
+          collisionDetection={closestCenter}
           onDragStart={handleDragStart}
           onDragMove={handleDragMove}
           onDragOver={handleDragOver}
@@ -233,19 +416,20 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
                 />
               );
             })}
+
             {createPortal(
               <DragOverlay
                 dropAnimation={dropAnimationConfig}
-                modifiers={indicator ? [adjustTranslate] : undefined}
+                modifiers={[adjustTranslate]}
               >
                 {activeId && activeItem ? (
                   <SortableTreeItem
                     clone
                     depth={0}
                     id={activeId}
+                    treeItem={activeItem.treeItem}
                     indentationWidth={indentationWidth}
                     childCount={getChildCount(items, activeId)}
-                    treeItem={activeItem.treeItem}
                   />
                 ) : null}
               </DragOverlay>,
@@ -253,193 +437,38 @@ const SortableTree = ({ indicator = true, indentationWidth = 24 }: Props) => {
             )}
           </SortableContext>
         </DndContext>
+
+        {/* Folder editing modal */}
+        <FolderModal
+          open={openFolderModal}
+          setOpen={setOpenFolderModal}
+          folder={editingFolder ?? undefined}
+          onDelete={() => editingFolder && removeTreeItem(editingFolder?.id)}
+          onEdit={(name) =>
+            editingFolder &&
+            editTreeItem(editingFolder?.id, { ...editingFolder, name })
+          }
+        />
+
+        {/* Timetable editing modal */}
+        <ImportModal
+          open={openTimetableModal}
+          setOpen={setOpenTimetableModal}
+          timetable={editingTimetable?.timetable}
+          onDelete={() =>
+            editingTimetable && removeTreeItem(editingTimetable?.id)
+          }
+          onEdit={(timetable) =>
+            editingTimetable &&
+            editTreeItem(editingTimetable?.id, {
+              ...editingTimetable,
+              timetable,
+            })
+          }
+        />
       </div>
-
-      {/* Timetable editing modal */}
-      <ImportModal
-        onEdit={(timetable) =>
-          editingTimetable &&
-          editTreeItem(editingTimetable?.id, { ...editingTimetable, timetable })
-        }
-        onDelete={() =>
-          editingTimetable && removeTreeItem(editingTimetable?.id)
-        }
-        open={openTimetableModal}
-        setOpen={setOpenTimetableModal}
-        timetable={editingTimetable?.timetable}
-      />
-
-      {/* Folder editing modal */}
-      <FolderModal
-        onEdit={(name) =>
-          editingFolder &&
-          editTreeItem(editingFolder?.id, { ...editingFolder, name })
-        }
-        onDelete={() => editingFolder && removeTreeItem(editingFolder?.id)}
-        folder={editingFolder}
-        open={openFolderModal}
-        setOpen={setOpenFolderModal}
-      />
     </>
   );
-
-  function handleDragStart({ active: { id: activeId } }: DragStartEvent) {
-    setActiveId(activeId);
-    setOverId(activeId);
-
-    const activeItem = flattenedItems.find(
-      (item) => item.treeItem.id === activeId,
-    );
-
-    if (activeItem) {
-      setCurrentPosition({
-        parentId: activeItem.parentId,
-        overId: activeId,
-      });
-    }
-
-    document.body.style.setProperty("cursor", "grabbing");
-  }
-
-  function handleDragMove({ delta }: DragMoveEvent) {
-    setOffsetLeft(delta.x);
-  }
-
-  function handleDragOver({ over }: DragOverEvent) {
-    setOverId(over?.id ?? null);
-  }
-
-  function handleDragEnd({ active, over }: DragEndEvent) {
-    resetState();
-
-    if (projected && over) {
-      const { depth, parentId } = projected;
-
-      const clonedItems: FlattenedItem[] = JSON.parse(
-        JSON.stringify(flattenTree(items)),
-      );
-
-      const overIndex = clonedItems.findIndex(
-        (item) => item.treeItem.id === over.id,
-      );
-
-      const activeIndex = clonedItems.findIndex(
-        (item) => item.treeItem.id === active.id,
-      );
-
-      const activeTreeItem = clonedItems[activeIndex];
-      if (!activeTreeItem) return;
-
-      clonedItems[activeIndex] = { ...activeTreeItem, depth, parentId };
-
-      const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
-
-      const newItems = buildTree(sortedItems);
-
-      setItems(newItems);
-    }
-  }
-
-  function handleDragCancel() {
-    resetState();
-  }
-
-  function resetState() {
-    setOverId(null);
-    setActiveId(null);
-    setOffsetLeft(0);
-    setCurrentPosition(null);
-
-    document.body.style.setProperty("cursor", "");
-  }
-
-  function getMovementAnnouncement(
-    eventName: string,
-    activeId: UniqueIdentifier,
-    overId?: UniqueIdentifier,
-  ) {
-    if (overId && projected) {
-      if (eventName !== "onDragEnd") {
-        if (
-          currentPosition &&
-          projected.parentId === currentPosition.parentId &&
-          overId === currentPosition.overId
-        ) {
-          return;
-        } else {
-          setCurrentPosition({
-            parentId: projected.parentId,
-            overId,
-          });
-        }
-      }
-
-      const clonedItems: FlattenedItem[] = JSON.parse(
-        JSON.stringify(flattenTree(items)),
-      );
-      const overIndex = clonedItems.findIndex(
-        (item) => item.treeItem.id === overId,
-      );
-      const activeIndex = clonedItems.findIndex(
-        (item) => item.treeItem.id === activeId,
-      );
-      const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
-
-      const activeItem = sortedItems[activeIndex];
-      const previousItem = sortedItems[overIndex - 1];
-
-      function getName(item: FlattenedItem) {
-        return item.treeItem.type === "FOLDER"
-          ? `Folder ${item.treeItem.name}`
-          : item.treeItem.type === "TIMETABLE"
-          ? `Timetable ${item.treeItem.timetable.name}`
-          : null;
-      }
-      const activeName = activeItem ? getName(activeItem) : "";
-
-      let announcement;
-      const movedVerb = eventName === "onDragEnd" ? "dropped" : "moved";
-      const nestedVerb = eventName === "onDragEnd" ? "dropped" : "nested";
-
-      if (!previousItem) {
-        const nextItem = sortedItems[overIndex + 1];
-        const nextName = nextItem ? getName(nextItem) : "";
-        announcement = `${activeName} was ${movedVerb} before ${nextName}.`;
-      } else {
-        if (projected.depth > previousItem.depth) {
-          const previousName = previousItem ? getName(previousItem) : "";
-          announcement = `${activeName} was ${nestedVerb} under ${previousName}.`;
-        } else {
-          let previousSibling: FlattenedItem | undefined = previousItem;
-          const previousSiblingName = previousSibling
-            ? getName(previousSibling)
-            : "";
-          while (previousSibling && projected.depth < previousSibling.depth) {
-            const parentId: UniqueIdentifier | null = previousSibling.parentId;
-            previousSibling = sortedItems.find(
-              (item) => item.treeItem.id === parentId,
-            );
-          }
-
-          if (previousSibling) {
-            announcement = `${activeName} was ${movedVerb} after ${previousSiblingName}.`;
-          }
-        }
-      }
-
-      return announcement;
-    }
-
-    return;
-  }
-};
-
-const adjustTranslate: Modifier = ({ transform, draggingNodeRect }) => {
-  if (!draggingNodeRect) return transform;
-  return {
-    ...transform,
-    x: transform.x + draggingNodeRect.width,
-  };
 };
 
 export default SortableTree;
