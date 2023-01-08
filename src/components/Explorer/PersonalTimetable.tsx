@@ -1,7 +1,7 @@
 import { IconEdit, IconEye, IconEyeOff, IconUserPlus } from "@tabler/icons";
 import clsx from "clsx";
 import { useCallback, useState } from "react";
-import PersonalTimetableModal from "@components/Form/ImportModal";
+import PersonalTimetableModal from "@components/Modal/TimetableForm";
 import Button from "@ui/Button";
 import { actions, useTrackedStore } from "@store/index";
 import { type Timetable } from "../../types/timetable";

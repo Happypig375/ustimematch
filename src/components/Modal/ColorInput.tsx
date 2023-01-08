@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useController, type UseControllerProps } from "react-hook-form";
 import { borderColor, textColor } from "@utils/color";
-import { type PersonalTimetableForm } from "./ImportModal";
+import { type PersonalTimetableForm } from "./TimetableForm";
 
 interface ColorInputProps
   extends UseControllerProps<PersonalTimetableForm, "color"> {

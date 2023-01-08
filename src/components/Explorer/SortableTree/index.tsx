@@ -32,8 +32,8 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import FolderModal from "@components/Form/FolderModal";
-import ImportModal from "@components/Form/ImportModal";
+import FolderModal from "@components/Modal/FolderForm";
+import ImportModal from "@components/Modal/TimetableForm";
 import { actions, useStore } from "@store/index";
 import {
   buildTree,
