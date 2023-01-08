@@ -29,7 +29,7 @@ const NavLink = React.forwardRef<HTMLAnchorElement, Props>(
         icon && "gap-2",
         inMenu
           ? "border-b border-border-gray-100 px-4 py-2 first:rounded-tl-md first:rounded-tr-md last:rounded-bl-md last:rounded-br-md last:border-b-0 hover:bg-bg-light-200 hover:ring-0 hover:ring-offset-0"
-          : "underline decoration-transparent decoration-[1.5px] underline-offset-4 transition-[text-decoration] hover:decoration-brand",
+          : `shadow-[0_2px_transparent] transition-shadow hover:shadow-[0_2px_#003366]`,
       )}
     >
       {icon}

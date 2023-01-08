@@ -34,19 +34,19 @@ const Controls = () => {
       </Button>
 
       <div className="flex gap-4">
-        <Button icon title="Toggle Weekend" onClick={toggleShowWeekend}>
-          {showWeekend ? (
-            <IconColumns stroke={1.75} className="h-5 w-5" />
-          ) : (
-            <IconColumnsOff stroke={1.75} className="h-5 w-5" />
-          )}
-        </Button>
-
         <Button icon title="Toggle Timematch" onClick={toggleShowTimematch}>
           {showTimematch ? (
             <IconClock stroke={1.75} className="h-5 w-5" />
           ) : (
             <IconClockOff stroke={1.75} className="h-5 w-5" />
+          )}
+        </Button>
+
+        <Button icon title="Toggle Weekend" onClick={toggleShowWeekend}>
+          {showWeekend ? (
+            <IconColumns stroke={1.75} className="h-5 w-5" />
+          ) : (
+            <IconColumnsOff stroke={1.75} className="h-5 w-5" />
           )}
         </Button>
 

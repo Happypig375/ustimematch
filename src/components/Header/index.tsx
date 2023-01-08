@@ -1,4 +1,9 @@
 import * as Separator from "@radix-ui/react-separator";
+import {
+  IconCalendarTime,
+  IconInfoCircle,
+  IconQuestionCircle,
+} from "@tabler/icons";
 import Link from "next/link";
 import { type DetailedHTMLProps, type HTMLAttributes } from "react";
 import NavLink from "@ui/NavLink";
@@ -23,9 +28,23 @@ const Header = ({
 
         {/* Navigation links */}
         <div className="hidden sm:flex sm:gap-8">
-          <NavLink href="/about">About</NavLink>
-          <NavLink href="/tutorial">Tutorial</NavLink>
-          <NavLink href="https://admlu65.ust.hk" external>
+          <NavLink
+            href="/about"
+            icon={<IconInfoCircle stroke={1.75} className="h-4 w-4" />}
+          >
+            About
+          </NavLink>
+          <NavLink
+            href="/tutorial"
+            icon={<IconQuestionCircle stroke={1.75} className="h-4 w-4" />}
+          >
+            Tutorial
+          </NavLink>
+          <NavLink
+            href="https://admlu65.ust.hk"
+            external
+            icon={<IconCalendarTime stroke={1.75} className="h-4 w-4" />}
+          >
             Timetable Planner
           </NavLink>
         </div>
