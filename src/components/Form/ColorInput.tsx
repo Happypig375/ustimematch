@@ -17,21 +17,28 @@ interface ColorPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
 const ColorPreview = ({ color, className }: ColorPreviewProps) => {
   return (
     <div
-      className={clsx("overflow-hidden rounded-md", className)}
       style={{
-        backgroundColor: color + "cc",
+        backgroundColor: color + "d8",
         border: `1px solid ${borderColor(color)}`,
       }}
+      className={clsx(
+        "flex flex-col gap-2 rounded-md p-2 leading-none",
+        className,
+      )}
     >
       <div
         style={{ color: textColor(color) }}
-        className="flex flex-col gap-[0.1rem] p-2 text-sm font-semibold"
+        className="flex flex-wrap justify-between gap-x-2 gap-y-1 text-[clamp(0.8rem,1.8vw,0.9rem)] font-medium"
       >
-        <div className="flex flex-wrap justify-between gap-x-2 gap-y-[0.1rem]">
-          <p>PREVIEW</p>
-          <p>L0</p>
-        </div>
-        <p className="text-xs font-light">12:00 am - 11:59 pm</p>
+        <div>Preview</div>
+        <div>L0</div>
+      </div>
+
+      <div
+        style={{ color: textColor(color) + "cc" }}
+        className="text-[clamp(0.7rem,1.7vw,0.8rem)]"
+      >
+        12:00 am - 11:59 pm
       </div>
     </div>
   );
