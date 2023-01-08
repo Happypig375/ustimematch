@@ -1,5 +1,5 @@
 import { useTrackedStore } from "@store/index";
-import { textColor } from "@utils/shade";
+import { textColor } from "@utils/color";
 import { parseTime } from "@utils/time";
 import Period from "./Period";
 

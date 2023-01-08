@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
+import { textColor } from "@utils/color";
 import { parseUSTName } from "@utils/parseName";
-import { textColor } from "@utils/shade";
 import { parseTime } from "@utils/time";
 import { type Lesson } from "../../types/timetable";
 import GridPeriod, { HoverContext } from "./Period";

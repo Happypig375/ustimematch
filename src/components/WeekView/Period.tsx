@@ -3,7 +3,7 @@ import debounce from "lodash.debounce";
 import { createContext, useEffect, useMemo, useState } from "react";
 import { useTrackedStore } from "@store/index";
 import useMediaQuery from "@hooks/useMediaQuery";
-import { borderColor } from "@utils/shade";
+import { borderColor } from "@utils/color";
 import { hour, min } from "@utils/time";
 
 interface IHoverContext {

@@ -2,7 +2,7 @@ import * as Label from "@radix-ui/react-label";
 import clsx from "clsx";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useController, type UseControllerProps } from "react-hook-form";
-import { borderColor, textColor } from "@utils/shade";
+import { borderColor, textColor } from "@utils/color";
 import { type PersonalTimetableForm } from "./ImportModal";
 
 interface ColorInputProps
