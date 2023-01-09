@@ -20,7 +20,20 @@ input {
   @apply focus:outline-none focus:ring-2 focus:ring-blue-200/80 focus:ring-offset-2 focus:ring-offset-blue-400;
 }
 
-/* Remove default webkit tap hightlight */
 * {
+  /* Remove default webkit tap hightlight */
   -webkit-tap-highlight-color: transparent;
+  /* Thinner scrollbar for Firefox */
+  scrollbar-width: thin;
+}
+
+/* Scrollbar styles for desktop webkit browsers */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    @apply h-1 w-1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-bg-light-500;
+  }
 }
