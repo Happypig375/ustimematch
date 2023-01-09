@@ -1,4 +1,3 @@
-import { DialogClose } from "@radix-ui/react-dialog";
 import { IconPencil, IconPlus, IconTrash, IconX } from "@tabler/icons";
 import clsx from "clsx";
 import { nanoid } from "nanoid";
@@ -16,7 +15,13 @@ import {
 } from "@ui/Alert";
 import Button from "@ui/Button";
 import Input from "@ui/Input";
-import { Modal, ModalContent, ModalControl, ModalTitle } from "@ui/Modal";
+import {
+  Modal,
+  ModalClose,
+  ModalContent,
+  ModalControl,
+  ModalTitle,
+} from "@ui/Modal";
 import { randomHex } from "@utils/randomHex";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
@@ -33,15 +38,14 @@ interface Props {
   timetable?: Timetable;
 }
 
-export interface PersonalTimetableForm
-  extends Omit<Timetable, "lessons" | "config"> {
+export interface ITimetableForm extends Omit<Timetable, "lessons" | "config"> {
   color: string;
 }
 
 /**
- * Default import university is now HKUST, support for other universities will be added later
+ * Default import university is HKUST, support for other universities might be added later
  */
-const ImportPersonalModal = ({
+const TimetableForm = ({
   open,
   setOpen,
   personal,
@@ -50,7 +54,7 @@ const ImportPersonalModal = ({
   onEdit,
   timetable,
 }: Props) => {
-  const defaultValues = useMemo<PersonalTimetableForm>(
+  const defaultValues = useMemo<ITimetableForm>(
     () => ({
       university: "HKUST",
       name: timetable?.name || "",
@@ -69,7 +73,7 @@ const ImportPersonalModal = ({
     getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm<PersonalTimetableForm>({
+  } = useForm<ITimetableForm>({
     defaultValues,
   });
 
@@ -87,6 +91,9 @@ const ImportPersonalModal = ({
       retry: false,
       enabled: false,
       onSuccess: ({ lessons }) => {
+        // Prevent callback is modal isn't open (will be trigger from refresh modal because query are the same)
+        if (!open) return;
+
         const tmpTimetable = {
           lessons,
           plannerURL,
@@ -106,13 +113,16 @@ const ImportPersonalModal = ({
         setOpen(false);
       },
       onError: (err) => {
+        // Prevent callback is modal isn't open (will be trigger from refresh modal because query are the same)
+        if (!open) return;
+
         console.error(err);
         toast.error("Failed to import timetable, please check your URL.");
       },
     },
   );
 
-  const onSubmit: SubmitHandler<PersonalTimetableForm> = () => {
+  const onSubmit: SubmitHandler<ITimetableForm> = () => {
     refetch();
   };
 
@@ -131,7 +141,7 @@ const ImportPersonalModal = ({
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Input
-              type="text"
+              inputMode="text"
               label="Name"
               labelId="name"
               disabled={isFetching}
@@ -142,7 +152,7 @@ const ImportPersonalModal = ({
               })}
             />
             <Input
-              type="url"
+              inputMode="url"
               labelId="planner-url"
               label="Timetable Planner URL"
               disabled={isFetching}
@@ -208,12 +218,12 @@ const ImportPersonalModal = ({
               </AlertContent>
             </Alert>
 
-            <DialogClose asChild>
+            <ModalClose asChild>
               <Button fullWidth type="button" disabled={isFetching}>
                 <IconX stroke={1.75} className="h-5 w-5" />
                 Cancel
               </Button>
-            </DialogClose>
+            </ModalClose>
 
             <Button
               fullWidth
@@ -240,4 +250,4 @@ const ImportPersonalModal = ({
   );
 };
 
-export default ImportPersonalModal;
+export default TimetableForm;

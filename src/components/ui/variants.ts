@@ -130,9 +130,6 @@ export const drawerOverlayVariants: Variants = {
   open: {
     // same as bg-bg-light-200/40
     background: "rgba(250,250,250,0.4)",
-    transitionEnd: {
-      overflow: "auto",
-    },
     transition: {
       type: "spring",
       bounce: 0,
@@ -141,7 +138,6 @@ export const drawerOverlayVariants: Variants = {
   },
   close: {
     background: "rgba(250,250,250,0)",
-    overflow: "hidden",
     transition: {
       type: "spring",
       bounce: 0,

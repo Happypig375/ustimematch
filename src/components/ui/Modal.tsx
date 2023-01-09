@@ -47,9 +47,7 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               variants={
                 matchDesktop ? modalOverlayVariants : drawerOverlayVariants
               }
-              // BUG: drawer animation will cause scrollbar to appear when animating
-              // FIX: uses sm:overflow-auto to handle desktop modal, while mobile implementation is based on variants
-              className="fixed inset-0 z-50 grid place-items-end pt-8 sm:place-items-center sm:overflow-auto sm:bg-bg-light-200/40 sm:py-4"
+              className="fixed inset-0 z-50 grid place-items-end sm:place-items-center sm:overflow-auto sm:bg-bg-light-200/40 sm:py-4"
             >
               <MotionDialogContent
                 asChild
@@ -69,21 +67,18 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 // dragElastic={{ top: 0, bottom: 0.5 }}
               >
                 {matchDesktop ? (
-                  <div
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex w-[clamp(475px,50%,525px)] flex-col gap-4 rounded-xl bg-bg-light-100 p-6 shadow-xl"
-                  >
+                  <div className="flex w-[clamp(475px,50%,525px)] flex-col gap-4 rounded-xl bg-bg-light-100 p-6 shadow-xl">
                     {children}
                   </div>
                 ) : (
-                  <div className="min-w-[100%] max-w-[100%] rounded-t-xl bg-bg-light-100 shadow-drawer">
+                  <div className="w-[100vw] rounded-t-xl bg-bg-light-100 shadow-drawer">
                     {/* Drag handler */}
                     <div className="my-4">
                       <div className="mx-auto h-[6px] w-14 rounded-full bg-bg-light-400" />
                     </div>
 
                     <div
-                      className="flex flex-col gap-4 px-6 pb-6"
+                      className="flex max-h-[80vh] flex-col gap-4 overflow-y-auto px-6 pb-6"
                       // Prevent drag unless on drag handler
                       onPointerDownCapture={(e) => e.stopPropagation()}
                     >
@@ -158,12 +153,12 @@ ModalControl.displayName = "ModalControl";
  *     <div>Main Content</div>
  *
  *     <ModalControl>
- *       <DialogClose asChild>
+ *       <ModalClose asChild>
  *         <buttton>Cancel</button>
- *       </DialogClose>
- *       <DialogClose asChild>
+ *       </ModalClose>
+ *       <ModalClose asChild>
  *         <buttton>Submit</button>
- *       </DialogClose>
+ *       </ModalClose>
  *     </ModalControl>
  *   </ModalContent>
  * </Modal>
