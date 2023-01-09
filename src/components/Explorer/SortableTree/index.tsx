@@ -32,8 +32,8 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import FolderModal from "@components/Modal/FolderForm";
-import ImportModal from "@components/Modal/TimetableForm";
+import FolderForm from "@components/Modal/FolderForm";
+import TimetableForm from "@components/Modal/TimetableForm";
 import { actions, useStore } from "@store/index";
 import {
   buildTree,
@@ -49,7 +49,7 @@ import type {
   SensorContext,
   TimetableItem,
 } from "../../../types/tree";
-import { SortableTreeItem } from "./SortableTreeItem";
+import SortableTreeItem from "./SortableTreeItem";
 
 const indentationWidth = 24;
 
@@ -443,7 +443,7 @@ const SortableTree = () => {
         </DndContext>
 
         {/* Folder editing modal */}
-        <FolderModal
+        <FolderForm
           open={openFolderModal}
           setOpen={setOpenFolderModal}
           folder={editingFolder ?? undefined}
@@ -455,7 +455,7 @@ const SortableTree = () => {
         />
 
         {/* Timetable editing modal */}
-        <ImportModal
+        <TimetableForm
           open={openTimetableModal}
           setOpen={setOpenTimetableModal}
           timetable={editingTimetable?.timetable}

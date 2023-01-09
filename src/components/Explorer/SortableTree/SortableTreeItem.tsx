@@ -11,8 +11,8 @@ import {
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
-import Button from "@components/ui/Button";
-import { chevronHalfVariants } from "@components/ui/variants";
+import Button from "@ui/Button";
+import { chevronHalfVariants } from "@ui/variants";
 import useMediaQuery from "@hooks/useMediaQuery";
 import { getFolderVisible, getTimetableCount } from "@utils/sortableTree";
 import type { TreeItem } from "../../../types/tree";
@@ -37,7 +37,7 @@ const animateLayoutChanges: AnimateLayoutChanges = ({
   wasDragging,
 }) => (isSorting || wasDragging ? false : true);
 
-export function SortableTreeItem({
+const SortableTreeItem = ({
   id,
   depth,
   clone,
@@ -49,7 +49,7 @@ export function SortableTreeItem({
   onClick,
   onEyeClick,
   onCollapse,
-}: Props) {
+}: Props) => {
   const {
     transform,
     transition,
@@ -176,4 +176,6 @@ export function SortableTreeItem({
       </div>
     </li>
   );
-}
+};
+
+export default SortableTreeItem;

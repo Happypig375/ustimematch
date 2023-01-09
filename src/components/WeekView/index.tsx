@@ -4,10 +4,10 @@ import {
   IconClockOff,
   IconColumns,
   IconColumnsOff,
-  IconRefresh,
   IconShare,
 } from "@tabler/icons";
 import { motion } from "framer-motion";
+import RefreshModal from "@components/Modal/RefreshModal";
 import Button from "@ui/Button";
 import { chevronVariants } from "@ui/variants";
 import { actions, useTrackedStore } from "@store/index";
@@ -50,16 +50,7 @@ const Controls = () => {
           )}
         </Button>
 
-        <Button
-          icon
-          title="Refresh"
-          // className="!p-2"
-          // onClick={refresh}
-          // loading={loading}
-          // disabled={loading}
-        >
-          <IconRefresh stroke={1.75} className="h-5 w-5" />
-        </Button>
+        <RefreshModal />
 
         <Button icon title="Share">
           <IconShare stroke={1.75} className="h-5 w-5" />

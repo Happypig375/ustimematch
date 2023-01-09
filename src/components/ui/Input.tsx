@@ -17,7 +17,7 @@ interface Props
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ type, label, labelId, disabled, error, ...props }, ref) => {
+  ({ label, labelId, disabled, error, ...props }, ref) => {
     return (
       <div className="flex flex-col gap-1">
         <Label.Root
@@ -31,10 +31,9 @@ const Input = forwardRef<HTMLInputElement, Props>(
         <input
           id={labelId}
           ref={ref}
-          type={type}
           disabled={disabled}
           className={clsx(
-            "h-10 rounded-md border border-border-gray-100 px-2 transition-all hover:border-border-gray-200",
+            "h-10 rounded-md border border-border-gray-100 bg-bg-light-100 px-2 transition-all hover:border-border-gray-200",
             "disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:opacity-50",
             error && "focus:ring-red-200/80 focus:ring-offset-red-400",
           )}

@@ -1,6 +1,11 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import type { FlattenedItem, TreeItem, TreeItems } from "../../types/tree";
+import type {
+  FlattenedItem,
+  TimetableItem,
+  TreeItem,
+  TreeItems,
+} from "../../types/tree";
 import type { FolderItem } from "./../../types/tree";
 
 function getDragDepth(offset: number, indentationWidth: number) {
@@ -222,26 +227,6 @@ export function removeItem(items: TreeItems, id: UniqueIdentifier) {
   return newItems;
 }
 
-export function setProperty<T extends keyof TreeItem>(
-  items: TreeItems,
-  id: UniqueIdentifier,
-  property: T,
-  setter: (value: TreeItem[T]) => TreeItem[T],
-) {
-  for (const item of items) {
-    if (item.id === id) {
-      item[property] = setter(item[property]);
-      continue;
-    }
-
-    if (item.type === "FOLDER" && item.children.length) {
-      item.children = setProperty(item.children, id, property, setter);
-    }
-  }
-
-  return [...items];
-}
-
 function countChildren(items: TreeItem[], count = 0): number {
   return items.reduce((acc, item) => {
     if (item.type === "FOLDER" && item.children.length) {
@@ -350,4 +335,25 @@ export function getTimetableCount(folderItem: FolderItem): number {
   }
 
   return timetableCount;
+}
+
+/**
+ * Find timetable item in tree by timetable id
+ */
+export function findTimetableByIdDeep(
+  items: TreeItems,
+  timetableId: string,
+): TimetableItem | undefined {
+  for (const item of items) {
+    if (item.type === "TIMETABLE" && item.timetable.config.id === timetableId)
+      return item;
+
+    if (item.type === "FOLDER" && item.children.length > 0) {
+      const child = findTimetableByIdDeep(item.children, timetableId);
+
+      if (child) return child;
+    }
+  }
+
+  return undefined;
 }

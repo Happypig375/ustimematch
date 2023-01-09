@@ -2,6 +2,7 @@ import { createStore } from "@udecode/zustood";
 import { nanoid } from "nanoid";
 import {
   findItemDeep,
+  findTimetableByIdDeep,
   rawFlatten,
   toggleFolderVisibility,
 } from "@utils/sortableTree";
@@ -24,6 +25,7 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
   { devtools: { enabled: true }, persist: { enabled: true } },
 )
   .extendSelectors((_, get) => ({
+    // All timetables within tree
     flattenedTimetablesTree: (): Timetable[] => {
       return rawFlatten(get.timetablesTree())
         .filter((item): item is TimetableItem => item.type === "TIMETABLE")
@@ -31,6 +33,7 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
     },
   }))
   .extendSelectors((_, get) => ({
+    // All timetables within tree including personal timetable
     // Note that personal timetable will be at index 0
     combinedTimetables: (): Timetable[] => {
       const personalTimetable = get.personalTimetable();
@@ -40,7 +43,7 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
     },
   }))
   .extendSelectors((_, get) => ({
-    // Note that personal timetable will be at index 0
+    // All visible timetables
     combinedVisibleTimetables: () => {
       return get
         .combinedTimetables()
@@ -154,6 +157,7 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
         });
       });
     },
+
     // Either folder or timetable by their id
     removeTreeItem: (id: string) => {
       const removeItem = (items: TreeItems, id: string) => {
@@ -201,6 +205,17 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
     },
   }))
   .extendActions((set, get) => ({
+    editTimetable: (timetable: Timetable) => {
+      const timetableItem = findTimetableByIdDeep(
+        get.timetablesTree(),
+        timetable.config.id,
+      );
+      if (!timetableItem) return;
+
+      console.log(timetableItem);
+
+      set.editTreeItem(timetableItem.id, { ...timetableItem, timetable });
+    },
     // Toggle visibility of folder or timetable
     toggleVisibility: (id: string) => {
       const item = findItemDeep(get.timetablesTree(), id);

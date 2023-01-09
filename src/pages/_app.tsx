@@ -1,5 +1,6 @@
 import { IBM_Plex_Sans } from "@next/font/google";
 import { IconX } from "@tabler/icons";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
@@ -40,6 +41,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
         }
       `}</style>
 
+      {/* <ReactQueryDevtools initialIsOpen={false}  /> */}
+
       <Component {...pageProps} />
 
       <Toaster
@@ -47,7 +50,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         toastOptions={{
           error: {
             className: "border-red-400 border-l-[6px]",
-            duration: 5000,
+            duration: 10000,
           },
           success: {
             className: "border-emerald-400 border-l-[6px]",

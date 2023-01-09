@@ -33,10 +33,10 @@ const CalendarEvent = ({
         {({ hover, matchDesktop, hoverTransition, idleTransition }) => (
           <>
             {/* Main content */}
-            <div className="flex flex-col gap-1 p-1 leading-none sm:gap-2 sm:p-[6px]">
+            <div className="flex flex-col gap-1 p-1 leading-none sm:p-[6px]">
               <div
                 style={{ color: textColor(color) + "ee" }}
-                className="flex flex-wrap justify-between gap-x-2 gap-y-1 text-[clamp(0.675rem,1.4vw,0.875rem)] font-medium"
+                className="flex flex-wrap justify-between gap-x-1 gap-y-0 text-[clamp(0.675rem,1.4vw,0.875rem)] font-medium"
               >
                 <div>{parseUSTName(name).lessonName}</div>
                 <motion.div
@@ -60,11 +60,17 @@ const CalendarEvent = ({
               </div>
 
               {/* TODO: settings for toggling visible previews */}
-              <div className="flex flex-col gap-1 text-[clamp(0.6rem,1.2vw,0.7rem)] sm:gap-2">
-                <div style={{ color: textColor(color) + "cc" }}>
-                  {`${parseTime(begin)} - ${parseTime(end)}`}
-                </div>
-                <div style={{ color: textColor(color) + "aa" }}>{venue}</div>
+              <div
+                style={{ color: textColor(color) + "cc" }}
+                className="text-[clamp(0.6rem,1.2vw,0.7rem)]"
+              >
+                {`${parseTime(begin)} - ${parseTime(end)}`}
+              </div>
+              <div
+                style={{ color: textColor(color) + "aa" }}
+                className="text-[clamp(0.6rem,1.2vw,0.7rem)]"
+              >
+                {venue}
               </div>
             </div>
           </>

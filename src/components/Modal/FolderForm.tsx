@@ -1,4 +1,3 @@
-import { DialogClose } from "@radix-ui/react-dialog";
 import { IconPencil, IconPlus, IconTrash, IconX } from "@tabler/icons";
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
@@ -14,7 +13,13 @@ import {
 } from "@ui/Alert";
 import Button from "@ui/Button";
 import Input from "@ui/Input";
-import { Modal, ModalContent, ModalControl, ModalTitle } from "@ui/Modal";
+import {
+  Modal,
+  ModalClose,
+  ModalContent,
+  ModalControl,
+  ModalTitle,
+} from "@ui/Modal";
 import type { FolderItem } from "../../types/tree";
 
 interface Props {
@@ -27,11 +32,11 @@ interface Props {
   onDelete?: () => void;
 }
 
-export interface FolderForm {
+export interface IFolderForm {
   name: string;
 }
 
-const FolderModal = ({
+const FolderForm = ({
   open,
   setOpen,
   onAdd,
@@ -39,7 +44,7 @@ const FolderModal = ({
   folder,
   onEdit,
 }: Props) => {
-  const defaultValues = useMemo<FolderForm>(
+  const defaultValues = useMemo<IFolderForm>(
     () => ({
       name: folder?.name || "",
     }),
@@ -53,7 +58,7 @@ const FolderModal = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FolderForm>({
+  } = useForm<IFolderForm>({
     defaultValues,
   });
 
@@ -62,7 +67,7 @@ const FolderModal = ({
     if (open) reset(defaultValues);
   }, [defaultValues, open, reset]);
 
-  const onSubmit: SubmitHandler<FolderForm> = ({ name }) => {
+  const onSubmit: SubmitHandler<IFolderForm> = ({ name }) => {
     folder && onEdit && onEdit(name.trim());
     onAdd && onAdd(name.trim());
     setOpen(false);
@@ -79,7 +84,7 @@ const FolderModal = ({
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Input
-              type="text"
+              inputMode="text"
               label="Name"
               labelId="name"
               error={errors.name?.message}
@@ -137,12 +142,12 @@ const FolderModal = ({
               </AlertContent>
             </Alert>
 
-            <DialogClose asChild>
+            <ModalClose asChild>
               <Button fullWidth type="button">
                 <IconX stroke={1.75} className="h-5 w-5" />
                 Cancel
               </Button>
-            </DialogClose>
+            </ModalClose>
 
             <Button fullWidth type="submit">
               {folder ? (
@@ -164,4 +169,4 @@ const FolderModal = ({
   );
 };
 
-export default FolderModal;
+export default FolderForm;

@@ -4,6 +4,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
@@ -27,21 +28,21 @@ module.exports = {
           "gray-100": "#e4e4e4",
         },
         // Dark mode template
-        // brand: "#996600",
+        // brand: "#0066CC",
         // bg: {
         //   "light-500": "#060606",
         //   "light-400": "#080808",
-        //   "light-300": "#101010",
-        //   "light-200": "#121212",
-        //   "light-100": "#161616",
+        //   "light-300": "#181818",
+        //   "light-200": "#161616",
+        //   "light-100": "#121212",
         // },
         // text: {
-        //   "black-200": "#cccccc",
-        //   "black-100": "#888888",
+        //   "black-200": "#dddddd",
+        //   "black-100": "#aaaaaa",
         // },
         // border: {
-        //   "gray-200": "#323232",
-        //   "gray-100": "#242424",
+        //   "gray-200": "#363636",
+        //   "gray-100": "#323232",
         // },
       },
       boxShadow: {

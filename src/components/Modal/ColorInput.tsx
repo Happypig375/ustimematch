@@ -3,10 +3,9 @@ import clsx from "clsx";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useController, type UseControllerProps } from "react-hook-form";
 import { borderColor, textColor } from "@utils/color";
-import { type PersonalTimetableForm } from "./TimetableForm";
+import { type ITimetableForm } from "./TimetableForm";
 
-interface ColorInputProps
-  extends UseControllerProps<PersonalTimetableForm, "color"> {
+interface ColorInputProps extends UseControllerProps<ITimetableForm, "color"> {
   disabled?: boolean;
 }
 
@@ -67,7 +66,7 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
             disabled={disabled}
             className={clsx(
               "flex-shrink-0",
-              "h-10 rounded-md border border-border-gray-100 px-2 transition-all hover:border-border-gray-200",
+              "h-10 rounded-md border border-border-gray-100 bg-bg-light-100 px-2 transition-all hover:border-border-gray-200",
               "disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:opacity-50",
             )}
           />

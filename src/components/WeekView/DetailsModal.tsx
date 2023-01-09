@@ -1,5 +1,4 @@
 import { AccordionItem } from "@radix-ui/react-accordion";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import Accordion, { AccordionContent, AccordionTrigger } from "@ui/Accordion";
 import Button from "@ui/Button";
@@ -9,6 +8,7 @@ import {
   ModalControl,
   ModalDescription,
   ModalTitle,
+  ModalClose,
 } from "@ui/Modal";
 import { actions, useTrackedStore } from "@store/index";
 import { parseUSTName } from "@utils/parseName";
@@ -80,9 +80,9 @@ const DetailsModal = () => {
               </Button>
             )}
 
-            <DialogClose asChild>
+            <ModalClose asChild>
               <Button fullWidth>Close</Button>
-            </DialogClose>
+            </ModalClose>
           </div>
         </ModalControl>
       </ModalContent>

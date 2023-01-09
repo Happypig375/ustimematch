@@ -52,7 +52,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
         error &&
           "text-red-600 focus-visible:ring-red-200/80 focus-visible:ring-offset-red-400 enabled:hover:text-red-700",
         plain &&
-          "h-auto w-auto border-none bg-transparent opacity-80 enabled:hover:opacity-100",
+          "h-auto w-auto border-none bg-transparent p-[2px] opacity-80 enabled:hover:opacity-100",
         className,
       )}
     >
