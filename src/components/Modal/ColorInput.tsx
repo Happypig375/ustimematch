@@ -67,7 +67,7 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
             className={clsx(
               "flex-shrink-0",
               "h-10 rounded-md border border-border-gray-100 bg-bg-light-100 px-2 transition-all hover:border-border-gray-200",
-              "disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:opacity-50",
+              "disabled:cursor-not-allowed disabled:opacity-50",
             )}
           />
 

@@ -23,11 +23,11 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
     const matchDesktop = useMediaQuery("(min-width: 640px)");
 
     const onDragEnd = (
-      event: MouseEvent | TouchEvent | PointerEvent,
+      _: MouseEvent | TouchEvent | PointerEvent,
       info: PanInfo,
     ) => {
       if (
-        info.velocity.y > 500 ||
+        info.velocity.y > 400 ||
         info.point.y > window.innerHeight - window.innerHeight / 10
       )
         onOpenChange(false);
@@ -57,14 +57,16 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 exit="close"
                 animate="open"
                 initial="close"
-                variants={matchDesktop ? modalVariants : drawerVariants}
-                drag={matchDesktop ? undefined : "y"}
+                // Constrains drag to negative y axis only
                 dragSnapToOrigin
+                dragMomentum={false}
+                dragElastic={{ top: 0 }}
+                dragConstraints={{ top: 0 }}
                 // @ts-expect-error: wrong type
                 onDragEnd={onDragEnd}
+                drag={matchDesktop ? undefined : "y"}
+                variants={matchDesktop ? modalVariants : drawerVariants}
                 dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
-                // BUG: dragElastic does not work, cannot constrain drag to only bottom direction
-                // dragElastic={{ top: 0, bottom: 0.5 }}
               >
                 {matchDesktop ? (
                   <div className="flex w-[clamp(475px,50%,525px)] flex-col gap-4 rounded-xl bg-bg-light-100 p-6 shadow-xl">
@@ -146,7 +148,7 @@ ModalControl.displayName = "ModalControl";
  *   </ModalTrigger>
  *
  *   <ModalContent open={open} onOpenChange={setOpen}>
- *     <ModalTitle>Title/ModalTitle>
+ *     <ModalTitle>Title</ModalTitle>
  *
  *     <ModalDescription>Description</ModalDescription>
  *

@@ -1,4 +1,4 @@
-import { IconCheck, IconRefresh, IconX } from "@tabler/icons";
+import { IconCheck, IconMoodEmpty, IconRefresh, IconX } from "@tabler/icons";
 import { useEffect, useState } from "react";
 import ColorChip from "@components/Explorer/ColorChip";
 import Button from "@ui/Button";
@@ -58,7 +58,7 @@ const TimetableStatus = ({
   return (
     <div
       key={timetable.config.id}
-      className="flex h-10 items-center gap-2 px-2"
+      className="flex h-10 items-center gap-2 px-4"
     >
       <ColorChip color={timetable.config.color} />
       <span title={timetable.name} className="flex-grow truncate">
@@ -134,11 +134,20 @@ const RefreshModal = () => {
               timetable={timetable}
             />
           ))}
+
+          {combinedTimetables.length === 0 && (
+            <span className="text-center text-sm">
+              Add some timetables first!
+            </span>
+          )}
         </div>
 
         <ModalControl>
           <ModalClose asChild>
-            <Button fullWidth>Close</Button>
+            <Button fullWidth>
+              <IconX stroke={1.75} className="h-5 w-5" />
+              Close
+            </Button>
           </ModalClose>
         </ModalControl>
       </ModalContent>

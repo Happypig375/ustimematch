@@ -4,10 +4,10 @@ import {
   IconClockOff,
   IconColumns,
   IconColumnsOff,
-  IconShare,
 } from "@tabler/icons";
 import { motion } from "framer-motion";
 import RefreshModal from "@components/Modal/RefreshModal";
+import Share from "@components/Share";
 import Button from "@ui/Button";
 import { chevronVariants } from "@ui/variants";
 import { actions, useTrackedStore } from "@store/index";
@@ -52,9 +52,7 @@ const Controls = () => {
 
         <RefreshModal />
 
-        <Button icon title="Share">
-          <IconShare stroke={1.75} className="h-5 w-5" />
-        </Button>
+        <Share />
       </div>
     </div>
   );

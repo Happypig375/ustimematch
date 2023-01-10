@@ -68,8 +68,8 @@ const adjustTranslate: Modifier = ({ transform, draggingNodeRect }) => {
 };
 
 const dropAnimationConfig: DropAnimation = {
-  duration: 300,
-  easing: "ease-out",
+  duration: 200,
+  easing: "ease",
   keyframes({ transform }) {
     return [
       { opacity: 1, transform: CSS.Transform.toString(transform.initial) },
@@ -81,8 +81,8 @@ const dropAnimationConfig: DropAnimation = {
   },
   sideEffects({ active }) {
     active.node.animate([{ opacity: 0 }, { opacity: 1 }], {
-      duration: 300,
-      easing: "ease-in",
+      duration: 200,
+      easing: "ease",
     });
   },
 };

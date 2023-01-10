@@ -42,15 +42,15 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       {...props}
       disabled={disabled}
       className={clsx(
-        "flex h-10 select-none items-center justify-center gap-2 rounded-md border border-border-gray-100 bg-bg-light-100 text-text-black-100 transition-all",
+        "flex h-10 select-none items-center justify-center gap-2 rounded-md border border-border-gray-100 bg-bg-light-100 text-text-black-100 transition-all active:text-text-black-200",
         "active:bg-bg-light-200",
         "enabled:hover:border-border-gray-200 enabled:hover:text-text-black-200",
-        "disabled:cursor-not-allowed disabled:bg-bg-light-300 disabled:opacity-50",
+        "disabled:cursor-not-allowed disabled:opacity-50",
         fullWidth && "w-full",
         icon ? "w-10 flex-shrink-0" : "px-4",
         toggle && "bg-bg-light-400 active:bg-bg-light-400",
         error &&
-          "text-red-600 focus-visible:ring-red-200/80 focus-visible:ring-offset-red-400 enabled:hover:text-red-700",
+          "text-red-600 focus-visible:ring-red-200/80 focus-visible:ring-offset-red-400 enabled:hover:text-red-700 enabled:active:text-red-700",
         plain &&
           "h-auto w-auto border-none bg-transparent p-[2px] opacity-80 enabled:hover:opacity-100",
         className,

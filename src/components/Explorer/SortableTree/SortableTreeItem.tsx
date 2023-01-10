@@ -65,10 +65,9 @@ const SortableTreeItem = ({
 
   const style: CSSProperties = {
     transform: CSS.Translate.toString(transform),
-    transition,
+    // For active opacity transition
+    transition: "opacity 200ms ease, " + transition,
   };
-
-  const matchTouch = useMediaQuery("(pointer: coarse)");
 
   return (
     <li
@@ -83,13 +82,14 @@ const SortableTreeItem = ({
       )}
     >
       <div
-        ref={setDraggableNodeRef}
         style={style}
         onClick={onClick}
+        ref={setDraggableNodeRef}
         className={clsx(
           "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 text-text-black-100",
-          !matchTouch &&
-            "hover:relative hover:z-10 hover:text-text-black-200 hover:shadow-tree-item",
+          "hover:relative hover:z-10 hover:text-text-black-200 hover:shadow-tree-item",
+          // https://stackoverflow.com/questions/38044030/css-active-selector-exception-for-a-child-element
+          "active:[&:not(:focus-within)]:opacity-80",
           clone && "pointer-events-none shadow-tree-item",
           isDragging && "border border-border-gray-100 opacity-50",
         )}

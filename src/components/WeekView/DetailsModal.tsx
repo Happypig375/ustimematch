@@ -1,4 +1,5 @@
 import { AccordionItem } from "@radix-ui/react-accordion";
+import { IconFileDescription, IconRoute, IconX } from "@tabler/icons";
 import { useState } from "react";
 import Accordion, { AccordionContent, AccordionTrigger } from "@ui/Accordion";
 import Button from "@ui/Button";
@@ -76,12 +77,16 @@ const DetailsModal = () => {
                   window.open(getPathAdvisorUrl(detailsLesson.venue), "_blank")
                 }
               >
+                <IconRoute stroke={1.75} className="h-5 w-5" />
                 Path Advisor
               </Button>
             )}
 
             <ModalClose asChild>
-              <Button fullWidth>Close</Button>
+              <Button fullWidth>
+                <IconX stroke={1.75} className="h-5 w-5" />
+                Close
+              </Button>
             </ModalClose>
           </div>
         </ModalControl>
