@@ -2,18 +2,18 @@ import { type Variants } from "framer-motion";
 
 // Theme toggle button
 export const themeVariants: Variants = {
-  light: {
-    rotate: 0,
-    opacity: [0, 1],
+  enter: {
+    opacity: 1,
+    rotate: 360,
     transition: {
       type: "spring",
       bounce: 0,
       duration: 0.5,
     },
   },
-  dark: {
-    rotate: 360,
-    opacity: [0, 1],
+  exit: {
+    rotate: 0,
+    opacity: 0,
     transition: {
       type: "spring",
       bounce: 0,
