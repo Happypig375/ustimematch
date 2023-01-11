@@ -5,14 +5,14 @@ import Button from "./ui/Button";
 
 const Toast = () => {
   const { theme } = useTheme();
-
   return (
+    // BUG: doesn't have prop for e.stopPropagation, clicking on toast will click through
     <Toaster
       position="top-right"
       toastOptions={{
         error: {
           className: "border-red-500 border-l-[6px]",
-          duration: 10003330,
+          duration: 10000,
         },
         success: {
           className: "border-emerald-500 border-l-[6px]",
@@ -29,7 +29,7 @@ const Toast = () => {
           style={{
             backgroundColor:
               theme === "light" ? "rgb(var(--bg-100))" : "rgb(var(--bg-200))",
-            color: "rgb(var(--fg-300))",
+            color: "rgb(var(--fg-200))",
           }}
         >
           {({ icon: _, message }) => (

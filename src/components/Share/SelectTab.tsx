@@ -29,8 +29,9 @@ const TimetableItem = ({
     <label
       htmlFor={timetable.config.id}
       className={clsx(
-        "flex h-10 cursor-pointer select-none items-center gap-2 rounded-md px-4 transition-colors",
-        "hover:bg-bg-200 active:bg-bg-200",
+        "flex h-10 cursor-pointer select-none items-center gap-2 rounded-md px-4 text-fg-100 transition-colors",
+        "hover:bg-bg-300 active:bg-bg-300",
+        checked && "bg-bg-300 text-fg-200",
       )}
     >
       <div className="flex flex-grow items-center gap-2 overflow-hidden">
@@ -48,12 +49,10 @@ const TimetableItem = ({
         className="pointer-events-none"
       >
         <Checkbox.Indicator>
-          <IconCheckbox stroke={1.75} className="h-5 w-5 text-fg-500" />
+          <IconCheckbox stroke={1.75} className="h-5 w-5" />
         </Checkbox.Indicator>
 
-        {!checked && (
-          <IconSquare stroke={1.75} className="h-5 w-5 text-fg-100" />
-        )}
+        {!checked && <IconSquare stroke={1.75} className="h-5 w-5" />}
       </Checkbox.Root>
     </label>
   );
@@ -119,7 +118,11 @@ const SelectTab = ({ checkedIds, setCheckedIds, onContinue }: Props) => {
           </Button>
         </ModalClose>
 
-        <Button fullWidth onClick={onContinueClick}>
+        <Button
+          fullWidth
+          onClick={onContinueClick}
+          disabled={checkedIds.length === 0}
+        >
           <IconArrowForward stroke={1.75} className="h-5 w-5" />
           Continue
         </Button>

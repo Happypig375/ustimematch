@@ -1,5 +1,4 @@
 import { IconEdit, IconEye, IconEyeOff, IconUserPlus } from "@tabler/icons";
-import clsx from "clsx";
 import { useCallback, useState } from "react";
 import TimetableForm from "@components/Modal/TimetableForm";
 import Button from "@ui/Button";
@@ -74,7 +73,7 @@ const PersonalTimetable = () => {
           </div>
         </div>
       ) : (
-        <div className={clsx("py-2 px-4")}>
+        <div className="py-2 px-4">
           <Button
             fullWidth
             title="Add personal timetable"

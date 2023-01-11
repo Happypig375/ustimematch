@@ -51,7 +51,6 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 asChild
                 ref={ref}
                 {...props}
-                onOpenAutoFocus={(e) => e.preventDefault()}
                 forceMount
                 exit="close"
                 animate="open"
@@ -75,7 +74,7 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                   <div className="w-[100vw] rounded-t-xl bg-bg-100 shadow-drawer dark:bg-bg-200">
                     {/* Drag handler */}
                     <div className="my-4">
-                      <div className="mx-auto h-[6px] w-14 rounded-full bg-bg-500" />
+                      <div className="mx-auto h-[6px] w-14 rounded-full bg-fg-100/10" />
                     </div>
 
                     <div

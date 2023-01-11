@@ -86,9 +86,7 @@ const SortableTreeItem = ({
         ref={setDraggableNodeRef}
         className={clsx(
           "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-200 pl-4 pr-2 text-fg-100",
-          "hover:relative hover:z-10 hover:text-fg-500 hover:shadow-tree-item",
-          // https://stackoverflow.com/questions/38044030/css-active-selector-exception-for-a-child-element
-          "active:[&:not(:focus-within)]:opacity-80",
+          "hover:bg-bg-300 hover:text-fg-200",
           clone && "pointer-events-none shadow-tree-item",
           isDragging && "border border-border-100 opacity-50 shadow-tree-item",
         )}
@@ -134,7 +132,7 @@ const SortableTreeItem = ({
 
         {/* Children count badge on clone while dragging*/}
         {clone && childCount ? (
-          <span className="absolute -top-2 -left-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand text-xs font-medium text-white">
+          <span className="absolute -top-2 -left-2 flex h-5 w-5 items-center justify-center rounded-full bg-blue-800 text-xs font-medium text-white">
             {childCount}
           </span>
         ) : null}

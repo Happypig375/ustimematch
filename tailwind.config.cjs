@@ -18,15 +18,10 @@ module.exports = {
           100: "rgb(var(--bg-100) / <alpha-value>)",
           200: "rgb(var(--bg-200) / <alpha-value>)",
           300: "rgb(var(--bg-300) / <alpha-value>)",
-          400: "rgb(var(--bg-400) / <alpha-value>)",
-          500: "rgb(var(--bg-500) / <alpha-value>)",
         },
         fg: {
           100: "rgb(var(--fg-100) / <alpha-value>)",
           200: "rgb(var(--fg-200) / <alpha-value>)",
-          300: "rgb(var(--fg-300) / <alpha-value>)",
-          400: "rgb(var(--fg-400) / <alpha-value>)",
-          500: "rgb(var(--fg-500) / <alpha-value>)",
         },
         border: {
           100: "rgb(var(--border-100) / <alpha-value>)",

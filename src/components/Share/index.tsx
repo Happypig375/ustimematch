@@ -23,16 +23,17 @@ const Share = () => {
     setTabsValue("select");
   }, [openShareModal]);
 
-  const { mutate, isLoading, isSuccess, isError } =
-    trpc.share.guestShare.useMutation({
-      onSuccess: ({ slug, expiresAt }) => {
-        setTabsValue("share");
-        setShareURL(`${window.origin}/share/${slug}`);
-      },
-      onError: () => {
-        toast.error("Unable to share selected timetables due to unknown error");
-      },
-    });
+  const { mutate, isLoading } = trpc.share.guestShare.useMutation({
+    onSuccess: ({ slug, expiresAt }) => {
+      setTabsValue("share");
+      setShareURL(`${window.origin}/share/${slug}`);
+      setCheckedIds([]);
+    },
+    onError: () => {
+      toast.error("Unable to share selected timetables due to unknown error");
+      setCheckedIds([]);
+    },
+  });
 
   const onContinue = (timetables: Timetable[]) => {
     mutate({ timetables });
@@ -63,39 +64,6 @@ const Share = () => {
             <ShareTab setTabsValue={setTabsValue} shareURL={shareURL} />
           </TabsContent>
         </Tabs>
-
-        {/* <ModalControl>
-          {tabsValue === "select" && (
-            <Button icon onClick={toggleCheck}>
-              <IconListCheck stroke={1.75} className="h-5 w-5" />
-            </Button>
-          )}
-
-          {tabsValue === "share" && (
-            <Button fullWidth onClick={() => setTabsValue("select")}>
-              <IconArrowBack stroke={1.75} className="h-5 w-5" />
-              Back
-            </Button>
-          )}
-
-          <ModalClose asChild>
-            <Button fullWidth>
-              <IconX stroke={1.75} className="h-5 w-5" />
-              Close
-            </Button>
-          </ModalClose>
-
-          {tabsValue === "select" && (
-            <Button
-              fullWidth
-              onClick={() => setTabsValue("share")}
-              // disabled={checkedIds.length === 0}
-            >
-              <IconArrowForward stroke={1.75} className="h-5 w-5" />
-              Continue
-            </Button>
-          )}
-        </ModalControl> */}
       </ModalContent>
     </Modal>
   );

@@ -44,7 +44,7 @@ const Legend = () => {
           className={clsx(
             "flex select-none items-center justify-center p-2 leading-none",
             new Date().getDay() === (i + 1) % 7
-              ? "font-semibold text-brand"
+              ? "font-medium text-brand"
               : "text-fg-100",
           )}
         >

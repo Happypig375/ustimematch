@@ -1,10 +1,12 @@
 import * as Separator from "@radix-ui/react-separator";
 import { IconMoonStars, IconSunHigh } from "@tabler/icons";
+import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useEffect, useState, type HTMLAttributes } from "react";
 import Button from "@ui/Button";
 import NavLink from "@ui/NavLink";
+import { themeVariants } from "@ui/variants";
 import MobileMenu from "./MobileMenu";
 
 const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {
@@ -46,11 +48,19 @@ const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {
             title="Toggle Dark Mode"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           >
-            {hydrated && theme === "light" ? (
-              <IconSunHigh stroke={1.75} className="h-5 w-5" />
-            ) : (
-              <IconMoonStars stroke={1.75} className="h-5 w-5" />
-            )}
+            <motion.div
+              initial={false}
+              variants={themeVariants}
+              animate={theme === "light" ? "light" : "dark"}
+            >
+              {hydrated ? (
+                theme === "light" ? (
+                  <IconSunHigh stroke={1.75} className="h-5 w-5" />
+                ) : (
+                  <IconMoonStars stroke={1.75} className="h-5 w-5" />
+                )
+              ) : null}
+            </motion.div>
           </Button>
 
           {/* Mobile navigation menu */}

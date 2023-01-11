@@ -10,8 +10,8 @@ export const Accordion = AccordionPrimitive.Root;
 export const AccordionItem = forwardRef<
   HTMLDivElement,
   AccordionPrimitive.AccordionItemProps
->(({ children, className, ...props }, ref) => (
-  <AccordionPrimitive.Item className={clsx(className)} ref={ref} {...props}>
+>(({ children, ...props }, ref) => (
+  <AccordionPrimitive.Item ref={ref} {...props}>
     {children}
   </AccordionPrimitive.Item>
 ));
@@ -26,9 +26,10 @@ export const AccordionTrigger = forwardRef<
       ref={ref}
       {...props}
       className={clsx(
-        "flex h-10 w-full items-center justify-between rounded-md border border-border-100 bg-bg-100 p-4 text-fg-100 transition-all dark:bg-bg-200",
-        "active:bg-bg-200 dark:active:bg-bg-300",
-        "hover:border-border-200 hover:text-fg-400",
+        "flex h-10 w-full items-center justify-between rounded-md p-4 transition-all",
+        "border border-border-100 bg-bg-100 text-fg-100 dark:bg-bg-200",
+        "hover:border-border-200 hover:text-fg-200",
+        "active:bg-bg-300 active:text-fg-200 dark:active:bg-bg-300",
         className,
       )}
     >
