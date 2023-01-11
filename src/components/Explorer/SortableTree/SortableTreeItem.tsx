@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
 import Button from "@ui/Button";
 import { chevronHalfVariants } from "@ui/variants";
-import useMediaQuery from "@hooks/useMediaQuery";
 import { getFolderVisible, getTimetableCount } from "@utils/sortableTree";
 import type { TreeItem } from "../../../types/tree";
 import ColorChip from "../ColorChip";
@@ -86,12 +85,12 @@ const SortableTreeItem = ({
         onClick={onClick}
         ref={setDraggableNodeRef}
         className={clsx(
-          "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-light-200 pl-4 pr-2 text-text-black-100",
-          "hover:relative hover:z-10 hover:text-text-black-200 hover:shadow-tree-item",
+          "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-200 pl-4 pr-2 text-fg-100",
+          "hover:relative hover:z-10 hover:text-fg-500 hover:shadow-tree-item",
           // https://stackoverflow.com/questions/38044030/css-active-selector-exception-for-a-child-element
           "active:[&:not(:focus-within)]:opacity-80",
           clone && "pointer-events-none shadow-tree-item",
-          isDragging && "border border-border-gray-100 opacity-50",
+          isDragging && "border border-border-100 opacity-50 shadow-tree-item",
         )}
       >
         {/* Folder item collapse and name */}

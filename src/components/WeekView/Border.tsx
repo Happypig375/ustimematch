@@ -21,8 +21,8 @@ const Border = () => {
           }}
           className={clsx(
             // Translate to ensure lines are in middle of two rows, with 0.5px on each side.
-            "-translate-y-[0.5px] select-none border-t border-t-border-gray-200",
-            i % 2 === 1 && "border-t-border-gray-200/40",
+            "-translate-y-[0.5px] select-none border-t border-t-border-200",
+            i % 2 === 1 && "border-t-border-200/40",
           )}
         />
       ))}
@@ -43,9 +43,9 @@ const Border = () => {
               }}
               className={clsx(
                 // Translate to ensure lines are in the middle of two columns, with 0.5px on each side.
-                "-translate-x-[0.5px] select-none border-l border-l-border-gray-200",
+                "-translate-x-[0.5px] select-none border-l border-l-border-200",
                 // Darken weekends
-                (i === 5 || i === 6) && "bg-zinc-200/40",
+                (i === 5 || i === 6) && "bg-bg-500/50",
               )}
             />
           ),

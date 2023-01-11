@@ -42,6 +42,7 @@ specifiers:
   nanoid: ^4.0.0
   next: 13.0.2
   next-auth: ^4.18.8
+  next-themes: ^0.2.1
   nodemailer: ^6.8.0
   postcss: ^8.4.21
   prettier: ^2.8.2
@@ -93,6 +94,7 @@ dependencies:
   nanoid: 4.0.0
   next: 13.0.2_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.18.8_vo2mwhatbdlbtvmnsv5k22xfpu
+  next-themes: 0.2.1_pknogjuzx4bv7zxtatcb2ahtsq
   nodemailer: 6.8.0
   qrcode.react: 3.1.0_react@18.2.0
   react: 18.2.0
@@ -3123,6 +3125,18 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       uuid: 8.3.2
+    dev: false
+
+  /next-themes/0.2.1_pknogjuzx4bv7zxtatcb2ahtsq:
+    resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}
+    peerDependencies:
+      next: '*'
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      next: 13.0.2_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /next/13.0.2_biqbaboplfbrettd7655fr4n2y:

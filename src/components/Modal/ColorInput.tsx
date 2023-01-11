@@ -1,8 +1,9 @@
 import * as Label from "@radix-ui/react-label";
 import clsx from "clsx";
+import { useTheme } from "next-themes";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useController, type UseControllerProps } from "react-hook-form";
-import { borderColor, textColor } from "@utils/color";
+import { borderColor, darkBorderColor, textColor } from "@utils/color";
 import { type ITimetableForm } from "./TimetableForm";
 
 interface ColorInputProps extends UseControllerProps<ITimetableForm, "color"> {
@@ -14,11 +15,15 @@ interface ColorPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const ColorPreview = ({ color, className }: ColorPreviewProps) => {
+  const { theme } = useTheme();
+
   return (
     <div
       style={{
         backgroundColor: color + "d8",
-        border: `1px solid ${borderColor(color)}`,
+        border: `1px solid ${
+          theme === "light" ? borderColor(color) : darkBorderColor(color)
+        }`,
       }}
       className={clsx(
         "flex flex-col gap-2 rounded-md p-2 leading-none",
@@ -66,7 +71,7 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
             disabled={disabled}
             className={clsx(
               "flex-shrink-0",
-              "h-10 rounded-md border border-border-gray-100 bg-bg-light-100 px-2 transition-all hover:border-border-gray-200",
+              "h-10 rounded-md border border-border-100 bg-bg-100 px-2 transition-all hover:border-border-200",
               "disabled:cursor-not-allowed disabled:opacity-50",
             )}
           />

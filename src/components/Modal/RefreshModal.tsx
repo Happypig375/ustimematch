@@ -58,7 +58,7 @@ const TimetableStatus = ({
   return (
     <div
       key={timetable.config.id}
-      className="flex h-10 items-center gap-2 px-4"
+      className="flex h-10 flex-shrink-0 items-center gap-2 px-4"
     >
       <ColorChip color={timetable.config.color} />
       <span title={timetable.name} className="flex-grow truncate">
@@ -68,7 +68,7 @@ const TimetableStatus = ({
       {isFetching && (
         <IconRefresh
           stroke={1.75}
-          className="h-5 w-5 flex-shrink-0 animate-spin text-text-black-100"
+          className="h-5 w-5 flex-shrink-0 animate-spin text-fg-100"
         />
       )}
 
@@ -81,7 +81,7 @@ const TimetableStatus = ({
             </span>
           )}
 
-          <span className="text-xs">
+          <span className="whitespace-nowrap text-xs">
             Last checked at{" "}
             {new Date(dataUpdatedAt)
               .toLocaleTimeString("en-US", {
@@ -125,7 +125,7 @@ const RefreshModal = () => {
       <ModalContent open={openRefreshModal} onOpenChange={setOpenRefreshModal}>
         <ModalTitle>Refresh</ModalTitle>
 
-        <div className="flex flex-col">
+        <div className="flex max-h-80 flex-col overflow-y-auto">
           {combinedTimetables.map((timetable, i) => (
             // Personal timetable is at index 0
             <TimetableStatus

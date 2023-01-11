@@ -212,8 +212,6 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
       );
       if (!timetableItem) return;
 
-      console.log(timetableItem);
-
       set.editTreeItem(timetableItem.id, { ...timetableItem, timetable });
     },
     // Toggle visibility of folder or timetable

@@ -128,8 +128,7 @@ export const drawerVariants: Variants = {
 // Drawer backdrop
 export const drawerOverlayVariants: Variants = {
   open: {
-    // same as bg-bg-light-200/40
-    background: "rgba(250,250,250,0.4)",
+    opacity: 1,
     transition: {
       type: "spring",
       bounce: 0,
@@ -137,7 +136,7 @@ export const drawerOverlayVariants: Variants = {
     },
   },
   close: {
-    background: "rgba(250,250,250,0)",
+    opacity: 0,
     transition: {
       type: "spring",
       bounce: 0,
@@ -186,4 +185,26 @@ export const modalOverlayVariants: Variants = {
       duration: 0.3,
     },
   },
+};
+
+// Tabs
+export const tabsVariants: Variants = {
+  enter: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.4,
+    },
+  },
+  exit: (direction: string) => ({
+    x: direction === "left" ? "-20px" : "20px",
+    opacity: 0,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.4,
+    },
+  }),
 };

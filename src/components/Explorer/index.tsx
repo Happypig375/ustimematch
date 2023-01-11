@@ -76,9 +76,9 @@ const Explorer = () => {
           animate="open"
           initial="close"
           variants={explorerVariants}
-          className="flex h-full w-[clamp(256px,20%,512px)] flex-shrink-0 flex-col border-r border-border-gray-100"
+          className="flex h-full w-[clamp(256px,20%,512px)] flex-shrink-0 flex-col border-r border-border-100"
         >
-          <div className="flex gap-2 border-b border-border-gray-100 px-4 py-2">
+          <div className="flex gap-2 border-b border-border-100 px-4 py-2">
             <AddTimetable />
             <AddFolder />
           </div>

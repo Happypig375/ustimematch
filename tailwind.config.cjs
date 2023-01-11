@@ -14,39 +14,25 @@ module.exports = {
         sans: ["var(--font-ibm-plex-sans)", defaultTheme.fontFamily.sans],
       },
       colors: {
-        brand: "#003366",
         bg: {
-          "light-500": "#dcdcdc",
-          "light-400": "#efefef",
-          "light-300": "#f7f9fa",
-          "light-200": "#fafafa",
-          "light-100": "#ffffff",
+          100: "rgb(var(--bg-100) / <alpha-value>)",
+          200: "rgb(var(--bg-200) / <alpha-value>)",
+          300: "rgb(var(--bg-300) / <alpha-value>)",
+          400: "rgb(var(--bg-400) / <alpha-value>)",
+          500: "rgb(var(--bg-500) / <alpha-value>)",
         },
-        text: {
-          "black-200": "#161616",
-          "black-100": "#484848",
+        fg: {
+          100: "rgb(var(--fg-100) / <alpha-value>)",
+          200: "rgb(var(--fg-200) / <alpha-value>)",
+          300: "rgb(var(--fg-300) / <alpha-value>)",
+          400: "rgb(var(--fg-400) / <alpha-value>)",
+          500: "rgb(var(--fg-500) / <alpha-value>)",
         },
         border: {
-          "gray-200": "#d4d4d4",
-          "gray-100": "#e4e4e4",
+          100: "rgb(var(--border-100) / <alpha-value>)",
+          200: "rgb(var(--border-200) / <alpha-value>)",
         },
-        // Dark mode template
-        // brand: "#0066CC",
-        // bg: {
-        //   "light-500": "#060606",
-        //   "light-400": "#080808",
-        //   "light-300": "#181818",
-        //   "light-200": "#161616",
-        //   "light-100": "#121212",
-        // },
-        // text: {
-        //   "black-200": "#dddddd",
-        //   "black-100": "#aaaaaa",
-        // },
-        // border: {
-        //   "gray-200": "#363636",
-        //   "gray-100": "#323232",
-        // },
+        brand: "rgb(var(--brand) / <alpha-value>)",
       },
       boxShadow: {
         "tree-item":

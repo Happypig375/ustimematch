@@ -27,11 +27,11 @@ const Tutorial: NextPage = () => {
                 Now go to our home page and click <b>Import</b>, then enter the
                 required information
               </li>
-              <p className="text-[0.825rem] text-text-black-100 before:pr-1 before:text-red-400 before:content-['*']">
+              <p className="text-[0.825rem] text-fg-100 before:pr-1 before:text-red-400 before:content-['*']">
                 You will need to request for desktop site when using mobile
                 devices.
               </p>
-              <p className="text-[0.825rem] text-text-black-100 before:pr-1 before:text-red-400 before:content-['*']">
+              <p className="text-[0.825rem] text-fg-100 before:pr-1 before:text-red-400 before:content-['*']">
                 The URL should be in the format of
                 &quot;https://admlu65.ust.hk/planner/export/xxxxx.ics&quot;
               </p>

@@ -42,17 +42,16 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               exit="close"
               animate="open"
               initial="close"
-              // BUG: transparency background will change opacity when dragging drawer to bottom on iOS
-              // FIX: drawer background color is now handled in variants
               variants={
                 matchDesktop ? modalOverlayVariants : drawerOverlayVariants
               }
-              className="fixed inset-0 z-50 grid place-items-end sm:place-items-center sm:overflow-auto sm:bg-bg-light-200/40 sm:py-4"
+              className="fixed inset-0 z-50 grid place-items-end bg-bg-200/40 sm:place-items-center sm:py-4"
             >
               <MotionDialogContent
                 asChild
                 ref={ref}
                 {...props}
+                onOpenAutoFocus={(e) => e.preventDefault()}
                 forceMount
                 exit="close"
                 animate="open"
@@ -69,14 +68,14 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
               >
                 {matchDesktop ? (
-                  <div className="flex w-[clamp(475px,50%,525px)] flex-col gap-4 rounded-xl bg-bg-light-100 p-6 shadow-xl">
+                  <div className="flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-100 p-6 shadow-xl dark:bg-bg-200">
                     {children}
                   </div>
                 ) : (
-                  <div className="w-[100vw] rounded-t-xl bg-bg-light-100 shadow-drawer">
+                  <div className="w-[100vw] rounded-t-xl bg-bg-100 shadow-drawer dark:bg-bg-200">
                     {/* Drag handler */}
                     <div className="my-4">
-                      <div className="mx-auto h-[6px] w-14 rounded-full bg-bg-light-400" />
+                      <div className="mx-auto h-[6px] w-14 rounded-full bg-bg-500" />
                     </div>
 
                     <div

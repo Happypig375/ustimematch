@@ -2,22 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --bg-100: 250 250 250;
+    --bg-200: 248 248 248;
+    --bg-300: 246 246 246;
+    --bg-400: 244 244 244;
+    --bg-500: 232 232 232;
+
+    --fg-100: 85 85 85;
+    --fg-200: 65 65 65;
+    --fg-300: 45 45 45;
+    --fg-400: 25 25 25;
+    --fg-500: 5 5 5;
+
+    --border-100: 225 225 225;
+    --border-200: 205 205 205;
+
+    --scroll-bar: 220 220 220;
+
+    --brand: 0 51 102;
+  }
+
+  html.dark {
+    --bg-100: 20 20 20;
+    --bg-200: 22 22 22;
+    --bg-300: 24 24 24;
+    --bg-400: 26 26 26;
+    --bg-500: 28 28 28;
+
+    --fg-100: 170 170 170;
+    --fg-200: 190 190 190;
+    --fg-300: 210 210 210;
+    --fg-400: 230 230 230;
+    --fg-500: 250 250 250;
+
+    --border-100: 40 40 40;
+    --border-200: 60 60 60;
+
+    --scroll-bar: 50 50 50;
+
+    --brand: 200 200 200;
+  }
+}
+
 /* Full height app */
 html,
 body,
 #__next {
-  @apply h-full bg-bg-light-100 text-text-black-200;
+  @apply h-full bg-bg-100 text-fg-500;
 }
 
 /* Replace default focus outline */
 a,
 button {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-400;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-blue-200/80 focus-visible:ring-offset-blue-400;
+  @apply dark:focus-visible:ring-blue-400/20 dark:focus-visible:ring-offset-blue-600;
 }
 
 /* Focus ring for input */
 input {
   @apply focus:outline-none focus:ring-2 focus:ring-blue-200/80 focus:ring-offset-2 focus:ring-offset-blue-400;
+  @apply dark:focus:ring-blue-400/20 dark:focus:ring-offset-blue-600;
 }
 
 * {
@@ -25,6 +72,7 @@ input {
   -webkit-tap-highlight-color: transparent;
   /* Thinner scrollbar for Firefox */
   scrollbar-width: thin;
+  scrollbar-color: rgb(var(--scroll-bar)) transparent;
 }
 
 /* Scrollbar styles for desktop webkit browsers */
@@ -33,7 +81,12 @@ input {
     @apply h-1 w-1;
   }
 
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-bg-light-500;
+    @apply rounded-full;
+    background-color: rgb(var(--scroll-bar));
   }
 }

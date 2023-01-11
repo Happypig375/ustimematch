@@ -1,15 +1,16 @@
+import { usePrevious } from "@dnd-kit/utilities";
 import {
-  IconCheck,
-  IconClipboard,
-  IconClipboardCheck,
-  IconCopy,
+  IconArrowBack,
+  IconArrowForward,
+  IconBoxMargin,
+  IconChecklist,
+  IconListCheck,
   IconShare,
   IconX,
 } from "@tabler/icons";
-import { QRCodeSVG } from "qrcode.react";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import Button from "@ui/Button";
-import Input from "@ui/Input";
 import {
   Modal,
   ModalClose,
@@ -18,31 +19,25 @@ import {
   ModalTitle,
   ModalTrigger,
 } from "@ui/Modal";
-import { useTrackedStore } from "@store/index";
-import TimetableItem from "./TimetableItem";
+import { Tabs, TabsContent } from "@ui/Tabs";
+import SelectTab from "./SelectTab";
+import ShareTab from "./ShareTab";
 
 const Share = () => {
   const [openShareModal, setOpenShareModal] = useState(false);
-
-  const combinedTimetables = useTrackedStore().timetable.combinedTimetables();
-
   const [checkedIds, setCheckedIds] = useState<string[]>([]);
-
-  const onCheckedChange = (id: string, checked: boolean) => {
-    if (checked) setCheckedIds([...checkedIds, id]);
-    else setCheckedIds((prev) => prev.filter((i) => i !== id));
-  };
-
-  const checked = (id: string) => checkedIds.includes(id);
+  const [tabsValue, setTabsValue] = useState<"select" | "share">("select");
 
   useEffect(() => {
-    if (openShareModal) setCheckedIds([]);
+    if (openShareModal) return;
+    setCheckedIds([]);
+    setTabsValue("select");
   }, [openShareModal]);
 
   return (
     <Modal open={openShareModal} onOpenChange={setOpenShareModal}>
       <ModalTrigger asChild>
-        <Button icon title="Refresh" onClick={() => setOpenShareModal(true)}>
+        <Button icon title="Share" onClick={() => setOpenShareModal(true)}>
           <IconShare stroke={1.75} className="h-5 w-5" />
         </Button>
       </ModalTrigger>
@@ -50,53 +45,34 @@ const Share = () => {
       <ModalContent open={openShareModal} onOpenChange={setOpenShareModal}>
         <ModalTitle>Share</ModalTitle>
 
-        <div className="flex flex-col">
-          {combinedTimetables.map((timetable) => (
-            <TimetableItem
-              key={timetable.config.id}
-              timetable={timetable}
-              checked={checked(timetable.config.id)}
-              onCheckedChange={(checked) =>
-                onCheckedChange(timetable.config.id, checked)
-              }
+        <Tabs value={tabsValue}>
+          <TabsContent tabsValue={tabsValue} value="select" direction="left">
+            <SelectTab
+              checkedIds={checkedIds}
+              setCheckedIds={setCheckedIds}
+              setTabsValue={setTabsValue}
             />
-          ))}
+          </TabsContent>
 
-          {combinedTimetables.length === 0 && (
-            <span className="text-center text-sm">
-              Add some timetables first!
-            </span>
-          )}
-        </div>
+          <TabsContent tabsValue={tabsValue} value="share" direction="right">
+            <ShareTab setTabsValue={setTabsValue} />
+          </TabsContent>
+        </Tabs>
 
-        {/* <div className="flex flex-col gap-2">
-          <QRCodeSVG
-            // includeMargin
-            value="testasdfffffasdffffffffffffffffffasdfffffffff"
-            // className="h-64 w-64 self-center rounded-xl"
-            className="h-64 w-64 self-center p-4"
-          />
-
-          <div className="flex gap-2">
-            <Input
-              readOnly
-              value="https://www.ustimematch.com/share/123"
-              className="flex-grow"
-              // onClick={selectUrl}
-              // ref={readOnlyInputRef}
-              // className="bg-bg-light-3 flex-grow rounded-md px-3"
-            />
-            <Button title="Copy share link" icon>
-              {true ? (
-                <IconCopy stroke={1.75} className="h-5 w-5" />
-              ) : (
-                <IconCheck stroke={1.75} className="h-5 w-5 text-emerald-500" />
-              )}
+        {/* <ModalControl>
+          {tabsValue === "select" && (
+            <Button icon onClick={toggleCheck}>
+              <IconListCheck stroke={1.75} className="h-5 w-5" />
             </Button>
-          </div>
-        </div> */}
+          )}
 
-        <ModalControl>
+          {tabsValue === "share" && (
+            <Button fullWidth onClick={() => setTabsValue("select")}>
+              <IconArrowBack stroke={1.75} className="h-5 w-5" />
+              Back
+            </Button>
+          )}
+
           <ModalClose asChild>
             <Button fullWidth>
               <IconX stroke={1.75} className="h-5 w-5" />
@@ -104,13 +80,17 @@ const Share = () => {
             </Button>
           </ModalClose>
 
-          {combinedTimetables.length !== 0 && (
-            <Button fullWidth>
-              <IconCheck stroke={1.75} className="h-5 w-5" />
-              Confirm
+          {tabsValue === "select" && (
+            <Button
+              fullWidth
+              onClick={() => setTabsValue("share")}
+              // disabled={checkedIds.length === 0}
+            >
+              <IconArrowForward stroke={1.75} className="h-5 w-5" />
+              Continue
             </Button>
           )}
-        </ModalControl>
+        </ModalControl> */}
       </ModalContent>
     </Modal>
   );

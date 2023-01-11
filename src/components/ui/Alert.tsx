@@ -22,7 +22,7 @@ export const AlertContent = forwardRef<HTMLDivElement, AlertContentProps>(
               animate="open"
               initial="close"
               variants={modalOverlayVariants}
-              className="fixed inset-0 z-50 grid place-items-center overflow-auto bg-bg-light-200/40 py-4"
+              className="fixed inset-0 z-50 grid place-items-center overflow-auto bg-bg-200/40 py-4"
             >
               <MotionAlertContent
                 ref={ref}
@@ -31,7 +31,7 @@ export const AlertContent = forwardRef<HTMLDivElement, AlertContentProps>(
                 animate="open"
                 initial="close"
                 variants={modalVariants}
-                className="w-[95%] overflow-auto rounded-xl bg-bg-light-100 p-6 shadow-xl sm:w-[clamp(450px,45%,500px)]"
+                className="w-[95%] overflow-auto rounded-xl bg-bg-100 p-6 shadow-xl dark:bg-bg-200 sm:w-[clamp(450px,45%,500px)]"
               >
                 <div className="flex flex-col gap-4">{children}</div>
               </MotionAlertContent>
@@ -63,7 +63,7 @@ export const AlertDescription = forwardRef<
   AlertDialogPrimitive.AlertDialogDescriptionProps
 >(({ children, ...props }, ref) => (
   <AlertDialogPrimitive.Description
-    className="text-sm leading-none text-text-black-100"
+    className="text-sm leading-none text-fg-100"
     ref={ref}
     {...props}
   >

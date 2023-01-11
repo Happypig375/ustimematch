@@ -45,7 +45,7 @@ const Legend = () => {
             "flex select-none items-center justify-center p-2 leading-none",
             new Date().getDay() === (i + 1) % 7
               ? "font-semibold text-brand"
-              : "text-text-black-100",
+              : "text-fg-100",
           )}
         >
           {v}
@@ -61,7 +61,7 @@ const Legend = () => {
               ref={i === 1 ? timeRef : undefined}
               style={{ gridRowStart: i + 1, gridColumnStart: 1 }}
             >
-              <div className="-translate-y-1/2 select-none pr-[6px] pl-[6px] text-right text-xs tracking-tight text-text-black-100">
+              <div className="-translate-y-1/2 select-none pr-[6px] pl-[6px] text-right text-xs tracking-tight text-fg-100">
                 {getTime(i)}
               </div>
             </div>
