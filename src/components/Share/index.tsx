@@ -1,25 +1,12 @@
-import { usePrevious } from "@dnd-kit/utilities";
-import {
-  IconArrowBack,
-  IconArrowForward,
-  IconBoxMargin,
-  IconChecklist,
-  IconListCheck,
-  IconShare,
-  IconX,
-} from "@tabler/icons";
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { IconShare } from "@tabler/icons";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import Button from "@ui/Button";
-import {
-  Modal,
-  ModalClose,
-  ModalContent,
-  ModalControl,
-  ModalTitle,
-  ModalTrigger,
-} from "@ui/Modal";
+import { Modal, ModalContent, ModalTitle, ModalTrigger } from "@ui/Modal";
 import { Tabs, TabsContent } from "@ui/Tabs";
+import { trpc } from "@utils/trpc";
+import { env } from "../../env/client.mjs";
+import type { Timetable } from "../../types/timetable";
 import SelectTab from "./SelectTab";
 import ShareTab from "./ShareTab";
 
@@ -28,11 +15,29 @@ const Share = () => {
   const [checkedIds, setCheckedIds] = useState<string[]>([]);
   const [tabsValue, setTabsValue] = useState<"select" | "share">("select");
 
+  const [shareURL, setShareURL] = useState<string>("");
+
   useEffect(() => {
     if (openShareModal) return;
     setCheckedIds([]);
     setTabsValue("select");
   }, [openShareModal]);
+
+  const { mutate, isLoading, isSuccess, isError } =
+    trpc.share.guestShare.useMutation({
+      onSuccess: ({ slug, expiresAt }) => {
+        setTabsValue("share");
+        setShareURL(`${window.origin}/share/${slug}`);
+      },
+      onError: () => {
+        toast.error("Unable to share selected timetables due to unknown error");
+      },
+    });
+
+  const onContinue = (timetables: Timetable[]) => {
+    mutate({ timetables });
+    // setTabsValue("share");
+  };
 
   return (
     <Modal open={openShareModal} onOpenChange={setOpenShareModal}>
@@ -50,12 +55,12 @@ const Share = () => {
             <SelectTab
               checkedIds={checkedIds}
               setCheckedIds={setCheckedIds}
-              setTabsValue={setTabsValue}
+              onContinue={onContinue}
             />
           </TabsContent>
 
           <TabsContent tabsValue={tabsValue} value="share" direction="right">
-            <ShareTab setTabsValue={setTabsValue} />
+            <ShareTab setTabsValue={setTabsValue} shareURL={shareURL} />
           </TabsContent>
         </Tabs>
 

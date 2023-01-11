@@ -62,10 +62,10 @@ const TimetableItem = ({
 interface Props {
   checkedIds: string[];
   setCheckedIds: Dispatch<SetStateAction<string[]>>;
-  setTabsValue: Dispatch<SetStateAction<"select" | "share">>;
+  onContinue: (timetables: Timetable[]) => void;
 }
 
-const SelectTab = ({ checkedIds, setCheckedIds, setTabsValue }: Props) => {
+const SelectTab = ({ checkedIds, setCheckedIds, onContinue }: Props) => {
   const combinedTimetables = useTrackedStore().timetable.combinedTimetables();
 
   const onCheckedChange = (id: string, checked: boolean) => {
@@ -78,6 +78,14 @@ const SelectTab = ({ checkedIds, setCheckedIds, setTabsValue }: Props) => {
   const toggleCheck = () => {
     if (checkedIds.length === combinedTimetables.length) setCheckedIds([]);
     else setCheckedIds(combinedTimetables.map((t) => t.config.id));
+  };
+
+  const onContinueClick = () => {
+    onContinue(
+      combinedTimetables.filter((timetable) =>
+        checkedIds.includes(timetable.config.id),
+      ),
+    );
   };
 
   return (
@@ -111,7 +119,7 @@ const SelectTab = ({ checkedIds, setCheckedIds, setTabsValue }: Props) => {
           </Button>
         </ModalClose>
 
-        <Button fullWidth onClick={() => setTabsValue("share")}>
+        <Button fullWidth onClick={onContinueClick}>
           <IconArrowForward stroke={1.75} className="h-5 w-5" />
           Continue
         </Button>

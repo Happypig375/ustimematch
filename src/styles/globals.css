@@ -50,7 +50,7 @@
 html,
 body,
 #__next {
-  @apply h-full bg-bg-100 text-fg-500;
+  @apply h-full bg-bg-100 text-fg-300;
 }
 
 /* Replace default focus outline */

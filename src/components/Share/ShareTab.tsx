@@ -6,38 +6,34 @@ import Input from "@ui/Input";
 import { ModalClose, ModalControl } from "@ui/Modal";
 
 interface Props {
+  shareURL: string;
   setTabsValue: Dispatch<SetStateAction<"select" | "share">>;
 }
 
-const ShareTab = ({ setTabsValue }: Props) => {
+const ShareTab = ({ shareURL, setTabsValue }: Props) => {
   return (
     <div className="flex flex-col justify-center gap-4">
-      <div className="flex flex-col gap-2">
-        <QRCodeCanvas
-          // includeMargin
-          value="testasdfffffasdffffffffffffffffffasdfffffffff"
-          // className="h-64 w-64 self-center rounded-xl"
-          className="self-center"
-          size={192}
-        />
+      <QRCodeCanvas
+        size={192}
+        value={shareURL}
+        className="self-center rounded-2xl border-[16px] border-white"
+      />
 
-        <div className="flex gap-2">
-          <Input
-            readOnly
-            value="https://www.ustimematch.com/share/123"
-            className="flex-grow"
-            // onClick={selectUrl}
-            // ref={readOnlyInputRef}
-            // className="bg-bg-light-3 flex-grow rounded-md px-3"
-          />
-          <Button title="Copy share link" icon>
-            {true ? (
-              <IconCopy stroke={1.75} className="h-5 w-5" />
-            ) : (
-              <IconCheck stroke={1.75} className="h-5 w-5 text-emerald-500" />
-            )}
-          </Button>
-        </div>
+      <div className="flex gap-2">
+        <Input
+          readOnly
+          value={shareURL}
+          className="flex-grow"
+          // onClick={selectUrl}
+          // ref={readOnlyInputRef}
+        />
+        <Button title="Copy share link" icon>
+          {true ? (
+            <IconCopy stroke={1.75} className="h-5 w-5" />
+          ) : (
+            <IconCheck stroke={1.75} className="h-5 w-5 text-emerald-500" />
+          )}
+        </Button>
       </div>
 
       <ModalControl>

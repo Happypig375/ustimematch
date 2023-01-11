@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { type AppType } from "next/app";
 import Head from "next/head";
 import toast, { ToastBar, Toaster } from "react-hot-toast";
+import Toast from "@components/Toast";
 import Button from "@ui/Button";
 import { trpc } from "@utils/trpc";
 import useMediaQuery from "../hooks/useMediaQuery";
@@ -46,42 +47,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           }
         `}</style>
 
-        {/* <ReactQueryDevtools initialIsOpen={false}  /> */}
+        <Toast />
 
         <Component {...pageProps} />
-
-        <Toaster
-          position={matchDesktop ? "bottom-right" : "top-right"}
-          toastOptions={{
-            error: {
-              className: "border-red-400 border-l-[6px]",
-              duration: 10000,
-            },
-            success: {
-              className: "border-emerald-400 border-l-[6px]",
-              duration: 5000,
-            },
-            blank: {
-              duration: 5000,
-            },
-          }}
-        >
-          {(t) => (
-            <ToastBar toast={t}>
-              {/* eslint-disable-next-line */}
-              {({ icon, message }) => (
-                <>
-                  {message}
-                  {t.type !== "loading" && (
-                    <Button onClick={() => toast.dismiss(t.id)} icon plain>
-                      <IconX />
-                    </Button>
-                  )}
-                </>
-              )}
-            </ToastBar>
-          )}
-        </Toaster>
       </ThemeProvider>
     </SessionProvider>
   );
