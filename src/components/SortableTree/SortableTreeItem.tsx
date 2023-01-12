@@ -14,8 +14,8 @@ import type { CSSProperties } from "react";
 import Button from "@ui/Button";
 import { chevronHalfVariants } from "@ui/variants";
 import { getFolderVisible, getTimetableCount } from "@utils/sortableTree";
-import type { TreeItem } from "../../../types/tree";
-import ColorChip from "../ColorChip";
+import type { TreeItem } from "../../types/tree";
+import ColorChip from "../Explorer/ColorChip";
 
 interface Props {
   id: UniqueIdentifier;

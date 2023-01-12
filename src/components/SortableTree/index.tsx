@@ -48,7 +48,7 @@ import type {
   FolderItem,
   SensorContext,
   TimetableItem,
-} from "../../../types/tree";
+} from "../../types/tree";
 import SortableTreeItem from "./SortableTreeItem";
 
 const indentationWidth = 24;

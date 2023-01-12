@@ -1,10 +1,10 @@
 import { IconCalendarPlus, IconFolderPlus } from "@tabler/icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
-import SortableTree from "@components/Explorer/SortableTree";
 import FolderForm from "@components/Modal/FolderForm";
 import TimetableForm from "@components/Modal/TimetableForm";
 import Share from "@components/Share";
+import SortableTree from "@components/SortableTree";
 import Button from "@ui/Button";
 import { explorerVariants } from "@ui/variants";
 import { actions, useTrackedStore } from "@store/index";
