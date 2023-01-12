@@ -1,6 +1,5 @@
 import { motion, type Transition } from "framer-motion";
 import debounce from "lodash.debounce";
-import { useTheme } from "next-themes";
 import { createContext, useEffect, useMemo, useState } from "react";
 import { useTrackedStore } from "@store/index";
 import useMediaQuery from "@hooks/useMediaQuery";
@@ -212,8 +211,6 @@ const Period = ({
     [matchTouch, prevHover],
   );
 
-  const { theme } = useTheme();
-
   // Check minuteHeight to prevent initial height animation (default is 0 as defined in weekView store)
   return minuteHeight && !periodOverflow ? (
     <motion.div
@@ -230,16 +227,13 @@ const Period = ({
         onHoverEnd();
       }}
       style={{
-        boxShadow: `inset 0 0 0 1px ${
-          theme === "light" ? "hsla(0,0%,0%,0.1)" : "hsla(0,0%,100%,0.05)"
-        }`,
         // + 1 because grid is 1-indexed
         // + 1 because first row is weekday
         gridColumnStart: weekday + 2,
         gridRowStart,
         gridRowEnd,
       }}
-      className="cursor-pointer select-none overflow-hidden"
+      className="cursor-pointer select-none overflow-hidden shadow-outline"
       initial={false}
       onHoverEnd={onHoverEnd}
       onHoverStart={onHoverStart}

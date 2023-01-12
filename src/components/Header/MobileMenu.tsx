@@ -39,7 +39,7 @@ const MobileMenu = () => {
                 animate="open"
                 initial="close"
                 variants={menuVariants}
-                className="z-50 origin-[var(--radix-dropdown-menu-content-transform-origin)] rounded-md border border-border-100 bg-bg-200 shadow-elevation dark:border-border-200 dark:shadow-none"
+                className="z-50 origin-[var(--radix-dropdown-menu-content-transform-origin)] rounded-md border border-border-100 bg-bg-200 shadow-elevation"
               >
                 <DropdownMenu.Item asChild>
                   <NavLink

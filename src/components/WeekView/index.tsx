@@ -4,14 +4,12 @@ import {
   IconClockOff,
   IconColumns,
   IconColumnsOff,
-  IconMoonStars,
-  IconSunHigh,
 } from "@tabler/icons";
-import { AnimatePresence, motion } from "framer-motion";
-import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 import Refresh from "@components/Refresh";
+import ThemeToggle from "@components/ThemeToggle";
 import Button from "@ui/Button";
-import { chevronVariants, themeVariants } from "@ui/variants";
+import { chevronVariants } from "@ui/variants";
 import { actions, useTrackedStore } from "@store/index";
 import Grid from "./Grid";
 
@@ -22,7 +20,6 @@ const Controls = () => {
   const toggleShowExplorer = actions.ui.toggleshowExplorer;
   const toggleShowWeekend = actions.ui.toggleShowWeekend;
   const toggleShowTimematch = actions.ui.toggleShowTimematch;
-  const { theme, setTheme } = useTheme();
 
   return (
     <div className="flex items-center justify-between gap-4 border-b border-border-100 px-4 py-2">
@@ -55,39 +52,7 @@ const Controls = () => {
 
         <Refresh />
 
-        {/* <Share /> */}
-        {/* Theme toggle */}
-        <Button
-          icon
-          title={`Toggle ${theme === "light" ? "Dark" : "Light"} Mode`}
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          className="transition-shadow dark:hover:shadow-[0_0_16px_4px_#1e40af40] dark:active:shadow-[0_0_16px_4px_#1e40af40]"
-        >
-          <AnimatePresence initial={false} mode="popLayout">
-            {theme === "light" && (
-              <motion.div
-                exit="exit"
-                initial="exit"
-                animate="enter"
-                variants={themeVariants}
-              >
-                <IconSunHigh stroke={1.75} className="h-5 w-5" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <AnimatePresence initial={false} mode="popLayout">
-            {theme === "dark" && (
-              <motion.div
-                exit="exit"
-                initial="exit"
-                animate="enter"
-                variants={themeVariants}
-              >
-                <IconMoonStars stroke={1.75} className="h-5 w-5" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </Button>
+        <ThemeToggle />
       </div>
     </div>
   );

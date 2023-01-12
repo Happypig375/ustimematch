@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import { useEffect, useState } from "react";
 import Explorer from "@components/Explorer";
 import Header from "@components/Header";
+import ReceiveModal from "@components/Share/ReceiveModal";
 import WeekView from "@components/WeekView";
 
 const Home: NextPage = () => {
@@ -21,6 +22,8 @@ const Home: NextPage = () => {
             <WeekView />
           </>
         )}
+
+        <ReceiveModal />
       </Header>
     </>
   );

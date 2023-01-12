@@ -87,9 +87,8 @@ const SortableTreeItem = ({
         className={clsx(
           "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-200 pl-4 pr-2 text-fg-100",
           "hover:bg-bg-300 hover:text-fg-200",
-          clone && "pointer-events-none shadow-elevation dark:shadow-highlight",
-          isDragging &&
-            "border border-border-100 opacity-50 shadow-elevation dark:shadow-highlight",
+          clone && "pointer-events-none shadow-elevation",
+          isDragging && "border border-border-100 opacity-50 shadow-elevation",
         )}
       >
         {/* Folder item collapse and name */}

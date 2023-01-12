@@ -1,6 +1,5 @@
 import * as Label from "@radix-ui/react-label";
 import clsx from "clsx";
-import { useTheme } from "next-themes";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useController, type UseControllerProps } from "react-hook-form";
 import { textColor } from "@utils/color";
@@ -15,18 +14,13 @@ interface ColorPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const ColorPreview = ({ color, className }: ColorPreviewProps) => {
-  const { theme } = useTheme();
-
   return (
     <div
       style={{
         backgroundColor: color + "d8",
-        boxShadow: `inset 0 0 0 1px ${
-          theme === "light" ? "hsla(0,0%,0%,0.1)" : "hsla(0,0%,100%,0.05)"
-        }`,
       }}
       className={clsx(
-        "flex flex-col gap-2 rounded-md p-2 leading-none",
+        "flex flex-col gap-2 rounded-md p-2 leading-none shadow-outline",
         className,
       )}
     >

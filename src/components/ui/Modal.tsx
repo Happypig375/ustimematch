@@ -67,11 +67,11 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
               >
                 {matchDesktop ? (
-                  <div className="flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-200 p-6 shadow-elevation dark:shadow-highlight">
+                  <div className="flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-200 p-6 shadow-elevation">
                     {children}
                   </div>
                 ) : (
-                  <div className="w-[100vw] rounded-t-xl bg-bg-200 shadow-elevation dark:shadow-highlight">
+                  <div className="w-[100vw] rounded-t-xl bg-bg-200 shadow-elevation">
                     {/* Drag handler */}
                     <div className="my-4">
                       <div className="mx-auto h-[6px] w-14 rounded-full bg-fg-100/10" />

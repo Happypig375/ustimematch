@@ -30,13 +30,10 @@ module.exports = {
         brand: "rgb(var(--brand) / <alpha-value>)",
       },
       boxShadow: {
-        // Inner darken border
-        "color-chip":
-          "inset 0 0 0 1px hsla(0,0%,0%,0.1), 0 0 4px 2px hsla(0,0%,0%,0.01)",
-        // For light mode
+        // Inner border for color chip and week view period
+        outline: "var(--shadow-outline)",
+        // Shadow for light mode, highlight for dark mode
         elevation: "var(--shadow-elevation)",
-        // For dark mode
-        highlight: "var(--shadow-highlight)",
       },
     },
   },
