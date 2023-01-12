@@ -5,7 +5,6 @@ import Button from "@ui/Button";
 import { Modal, ModalContent, ModalTitle, ModalTrigger } from "@ui/Modal";
 import { Tabs, TabsContent } from "@ui/Tabs";
 import { trpc } from "@utils/trpc";
-import { env } from "../../env/client.mjs";
 import type { Timetable } from "../../types/timetable";
 import SelectTab from "./SelectTab";
 import ShareTab from "./ShareTab";
@@ -23,8 +22,8 @@ const Share = () => {
     setTabsValue("select");
   }, [openShareModal]);
 
-  const { mutate, isLoading } = trpc.share.guestShare.useMutation({
-    onSuccess: ({ slug, expiresAt }) => {
+  const { mutate, isLoading: _ } = trpc.share.guestShare.useMutation({
+    onSuccess: ({ slug, expiresAt: _ }) => {
       setTabsValue("share");
       setShareURL(`${window.origin}/share/${slug}`);
       setCheckedIds([]);

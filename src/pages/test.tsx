@@ -1,14 +1,14 @@
 import { nanoid } from "nanoid";
 import { type NextPage } from "next";
-import dynamic from "next/dynamic.js";
+// import dynamic from "next/dynamic.js";
 import Header from "@components/Header";
 import Button from "@ui/Button";
-import { actions, useTrackedStore } from "@store/index";
+import { actions } from "@store/index";
 import { randomHex } from "@utils/randomHex";
 import { env } from "../env/server.mjs";
-import { Lesson, Lessons } from "../types/timetable.js";
+import type { Lesson, Lessons } from "../types/timetable.js";
 
-const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
+// const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
 
 export const getStaticProps = () => {
   return {
@@ -24,8 +24,8 @@ function getRandomInt(min: number, max: number) {
 }
 
 const Test: NextPage = () => {
-  const personalTimetable = useTrackedStore().timetable.personalTimetable();
-  const timetablesTree = useTrackedStore().timetable.timetablesTree();
+  // const personalTimetable = useTrackedStore().timetable.personalTimetable();
+  // const timetablesTree = useTrackedStore().timetable.timetablesTree();
   const addTimetable = actions.timetable.addTimetable;
 
   const addRandomTimetable = () => {

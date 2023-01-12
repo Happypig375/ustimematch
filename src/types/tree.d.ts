@@ -1,4 +1,3 @@
-import type { UniqueIdentifier } from "@dnd-kit/core";
 import type { Timetable } from "./timetable";
 
 // id is used internally in SortableTree

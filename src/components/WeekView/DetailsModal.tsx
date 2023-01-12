@@ -1,5 +1,5 @@
 import { AccordionItem } from "@radix-ui/react-accordion";
-import { IconFileDescription, IconRoute, IconX } from "@tabler/icons";
+import { IconRoute, IconX } from "@tabler/icons";
 import { useState } from "react";
 import Accordion, { AccordionContent, AccordionTrigger } from "@ui/Accordion";
 import Button from "@ui/Button";

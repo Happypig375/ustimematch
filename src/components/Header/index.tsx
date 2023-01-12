@@ -1,23 +1,10 @@
 import * as Separator from "@radix-ui/react-separator";
-import { IconMoonStars, IconSunHigh } from "@tabler/icons";
-import { AnimatePresence, motion } from "framer-motion";
-import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useEffect, useState, type HTMLAttributes } from "react";
-import Button from "@ui/Button";
+import { type HTMLAttributes } from "react";
 import NavLink from "@ui/NavLink";
-import { themeVariants } from "@ui/variants";
 import MobileMenu from "./MobileMenu";
 
 const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {
-  const { theme, setTheme } = useTheme();
-
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
-
   return (
     <div className="mx-auto flex h-full max-w-screen-2xl flex-col gap-2 bg-bg-100 p-2 sm:gap-3 sm:p-3">
       {/* Header */}
@@ -42,47 +29,6 @@ const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {
               Timetable Planner
             </NavLink>
           </div>
-
-          {/* Theme toggle */}
-          <Button
-            icon
-            title={
-              hydrated
-                ? `Toggle ${theme === "light" ? "Dark" : "Light"} Mode`
-                : ""
-            }
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="transition-shadow dark:hover:shadow-[0_0_16px_4px_#1e40af40] dark:active:shadow-[0_0_16px_4px_#1e40af40]"
-          >
-            {hydrated && (
-              <>
-                <AnimatePresence initial={false} mode="popLayout">
-                  {theme === "light" && (
-                    <motion.div
-                      exit="exit"
-                      initial="exit"
-                      animate="enter"
-                      variants={themeVariants}
-                    >
-                      <IconSunHigh stroke={1.75} className="h-5 w-5" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                <AnimatePresence initial={false} mode="popLayout">
-                  {theme === "dark" && (
-                    <motion.div
-                      exit="exit"
-                      initial="exit"
-                      animate="enter"
-                      variants={themeVariants}
-                    >
-                      <IconMoonStars stroke={1.75} className="h-5 w-5" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </>
-            )}
-          </Button>
 
           {/* Mobile navigation menu */}
           <MobileMenu />

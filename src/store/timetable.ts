@@ -245,7 +245,7 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
     // Indentation for weekview, to prevent overlapping events
     getIndent: (
       timetableId: string,
-      lessonIndex: number,
+      _: number,
       weekday: number,
       begin: string,
       end: string,

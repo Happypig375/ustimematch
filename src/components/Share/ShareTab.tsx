@@ -1,6 +1,7 @@
 import { IconArrowBack, IconCheck, IconCopy, IconX } from "@tabler/icons";
 import { QRCodeCanvas } from "qrcode.react";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useRef, useState } from "react";
 import Button from "@ui/Button";
 import Input from "@ui/Input";
 import { ModalClose, ModalControl } from "@ui/Modal";

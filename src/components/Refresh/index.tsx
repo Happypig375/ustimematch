@@ -1,4 +1,4 @@
-import { IconCheck, IconMoodEmpty, IconRefresh, IconX } from "@tabler/icons";
+import { IconCheck, IconRefresh, IconX } from "@tabler/icons";
 import { useEffect, useState } from "react";
 import ColorChip from "@components/Explorer/ColorChip";
 import Button from "@ui/Button";

@@ -16,6 +16,8 @@ export const shareRouter = router({
   guestShare: publicProcedure
     .input(z.object({ timetables: ZTimetable.array().min(1) }))
     .mutation(async ({ ctx, input }) => {
+      // await new Promise((resolve) => setTimeout(resolve, 10000));
+
       // Excludes clien-side only id and visible, only includes color when sharing
       const mappedTimetables = input.timetables.map((timetable) => ({
         ...timetable,

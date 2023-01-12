@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import SortableTree from "@components/Explorer/SortableTree";
 import FolderForm from "@components/Modal/FolderForm";
 import TimetableForm from "@components/Modal/TimetableForm";
+import Share from "@components/Share";
 import Button from "@ui/Button";
 import { explorerVariants } from "@ui/variants";
 import { actions, useTrackedStore } from "@store/index";
@@ -81,6 +82,7 @@ const Explorer = () => {
           <div className="flex gap-2 border-b border-border-100 px-4 py-2">
             <AddTimetable />
             <AddFolder />
+            <Share />
           </div>
 
           <SortableTree />

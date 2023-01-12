@@ -2,7 +2,7 @@ import clsx from "clsx";
 import debounce from "lodash.debounce";
 import { useCallback, useMemo } from "react";
 import useResizeObserver from "use-resize-observer";
-import { actions, store, useTrackedStore } from "@store/index";
+import { actions, useTrackedStore } from "@store/index";
 
 const Legend = () => {
   const rows = useTrackedStore().ui.weekViewRows();
