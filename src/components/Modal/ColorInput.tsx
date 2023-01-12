@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useTheme } from "next-themes";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useController, type UseControllerProps } from "react-hook-form";
-import { borderColor, darkBorderColor, textColor } from "@utils/color";
+import { textColor } from "@utils/color";
 import { type ITimetableForm } from "./TimetableForm";
 
 interface ColorInputProps extends UseControllerProps<ITimetableForm, "color"> {
@@ -21,8 +21,8 @@ const ColorPreview = ({ color, className }: ColorPreviewProps) => {
     <div
       style={{
         backgroundColor: color + "d8",
-        border: `1px solid ${
-          theme === "light" ? borderColor(color) : darkBorderColor(color)
+        boxShadow: `inset 0 0 0 1px ${
+          theme === "light" ? "hsla(0,0%,0%,0.1)" : "hsla(0,0%,100%,0.05)"
         }`,
       }}
       className={clsx(

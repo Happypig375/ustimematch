@@ -65,17 +65,3 @@ const lighten = (color: string, percent: number) => {
 export const textColor = (hex: string) => {
   return getContrast(hex) === "black" ? lighten(hex, -50) : lighten(hex, 60);
 };
-
-/**
- * Darken with partial transparency (light mode)
- */
-export const borderColor = (hex: string) => {
-  return lighten(hex, -40) + "20";
-};
-
-/**
- * Lighten with partial transparency (dark mode)
- */
-export const darkBorderColor = (hex: string) => {
-  return lighten(hex, 40) + "20";
-};

@@ -4,7 +4,6 @@ import { useTheme } from "next-themes";
 import { createContext, useEffect, useMemo, useState } from "react";
 import { useTrackedStore } from "@store/index";
 import useMediaQuery from "@hooks/useMediaQuery";
-import { borderColor, darkBorderColor } from "@utils/color";
 import { hour, min } from "@utils/time";
 
 interface IHoverContext {
@@ -231,8 +230,8 @@ const Period = ({
         onHoverEnd();
       }}
       style={{
-        border: `1px solid ${
-          theme === "light" ? borderColor(color) : darkBorderColor(color)
+        boxShadow: `inset 0 0 0 1px ${
+          theme === "light" ? "hsla(0,0%,0%,0.1)" : "hsla(0,0%,100%,0.05)"
         }`,
         // + 1 because grid is 1-indexed
         // + 1 because first row is weekday
