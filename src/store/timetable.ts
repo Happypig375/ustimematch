@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import {
   findItemDeep,
   findTimetableByIdDeep,
+  getFolderVisible,
   rawFlatten,
   toggleFolderVisibility,
 } from "@utils/sortableTree";
@@ -232,7 +233,10 @@ export const timetableStore = createStore("timetable")<TimetableStore>(
         });
 
       if (item.type === "FOLDER")
-        set.editTreeItem(item.id, toggleFolderVisibility(item));
+        set.editTreeItem(
+          item.id,
+          toggleFolderVisibility(item, getFolderVisible(item)),
+        );
     },
     toggleFolderCollapse: (id: string) => {
       const folderItem = findItemDeep(get.timetablesTree(), id);

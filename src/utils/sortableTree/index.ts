@@ -1,3 +1,5 @@
+// Based off of dnd-kit's example
+// https://github.com/clauderic/dnd-kit/tree/master/stories/3%20-%20Examples/Tree
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import type {
@@ -33,9 +35,9 @@ export function getProjection(
 
   const projectedDepth = activeItem.depth + dragDepth;
 
-  const maxDepth = getMaxDepth(activeItem, previousItem);
+  const maxDepth = getMaxDepth(previousItem);
 
-  const minDepth = getMinDepth({ nextItem });
+  const minDepth = getMinDepth(nextItem);
   let depth = projectedDepth;
 
   if (projectedDepth >= maxDepth) {
@@ -43,6 +45,9 @@ export function getProjection(
   } else if (projectedDepth < minDepth) {
     depth = minDepth;
   }
+
+  // Prevent nesting if active item's depth > 1 (2 levels)
+  if (getDepth(activeItem.treeItem) > 1) depth = activeItem.depth;
 
   return { depth, maxDepth, minDepth, parentId: getParentId() };
 
@@ -68,10 +73,7 @@ export function getProjection(
   }
 }
 
-function getMaxDepth(activeItem: FlattenedItem, previousItem?: FlattenedItem) {
-  // Prevent nesting if active item's depth > 1
-  if (getDepth(activeItem.treeItem) > 1) return activeItem.depth;
-
+function getMaxDepth(previousItem?: FlattenedItem) {
   if (previousItem?.treeItem.type === "FOLDER") return previousItem.depth + 1;
 
   // Prevent nesting under timetable item
@@ -81,7 +83,7 @@ function getMaxDepth(activeItem: FlattenedItem, previousItem?: FlattenedItem) {
   return 0;
 }
 
-function getMinDepth({ nextItem }: { nextItem?: FlattenedItem }) {
+function getMinDepth(nextItem?: FlattenedItem) {
   if (nextItem) return nextItem.depth;
 
   // Last item
@@ -89,19 +91,16 @@ function getMinDepth({ nextItem }: { nextItem?: FlattenedItem }) {
 }
 
 // Finding the depth of an tree item's children
-function getDepthHelper(item: TreeItem): number {
+function getDepth(item: TreeItem): number {
   if (item.type !== "FOLDER" || item.children.length === 0) return 0;
 
   const childDepth = [];
 
   for (const child of item.children) {
-    childDepth.push(getDepthHelper(child) + 1);
+    childDepth.push(getDepth(child) + 1);
   }
 
   return Math.max(...childDepth);
-}
-function getDepth(item: TreeItem) {
-  return getDepthHelper(item);
 }
 
 function flatten(
@@ -293,13 +292,15 @@ export function getFolderVisible(folderItem: FolderItem): boolean {
 }
 
 /**
- * @returns a folder item with its children's timetable's visiblity toggled with regards to {@link getFolderVisible}
+ * @returns a folder item with its children's timetable's visiblity toggled with respect to parameter
  */
-export function toggleFolderVisibility(folderItem: FolderItem): FolderItem {
-  const folderVisible = getFolderVisible(folderItem);
-
+export function toggleFolderVisibility(
+  folderItem: FolderItem,
+  folderVisible: boolean,
+): FolderItem {
   const newChildren = folderItem.children.reduce<TreeItem[]>((acc, child) => {
-    if (child.type === "FOLDER") return [...acc, toggleFolderVisibility(child)];
+    if (child.type === "FOLDER")
+      return [...acc, toggleFolderVisibility(child, folderVisible)];
     if (child.type === "TIMETABLE")
       return [
         ...acc,
