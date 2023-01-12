@@ -69,37 +69,36 @@ export function getProjection(
 }
 
 function getMaxDepth(activeItem: FlattenedItem, previousItem?: FlattenedItem) {
-  if (previousItem?.treeItem.type === "FOLDER") {
-    const actualDepth = previousItem.depth + 1;
+  // Prevent nesting if active item's depth > 1
+  if (getDepth(activeItem.treeItem) > 1) return activeItem.depth;
 
-    // Prevent nesting further if item's children dpeth + actual depth > 4 (max depth)
-    if (getDepth(activeItem.treeItem) + actualDepth > 4)
-      return previousItem.depth;
+  if (previousItem?.treeItem.type === "FOLDER") return previousItem.depth + 1;
 
-    return actualDepth;
-  } else if (previousItem?.treeItem.type === "TIMETABLE") {
-    // Prevent nesting under timetable item
-    return previousItem.depth;
-  }
+  // Prevent nesting under timetable item
+  if (previousItem?.treeItem.type === "TIMETABLE") return previousItem.depth;
 
+  // First item
   return 0;
 }
 
 function getMinDepth({ nextItem }: { nextItem?: FlattenedItem }) {
-  if (nextItem) {
-    return nextItem.depth;
-  }
+  if (nextItem) return nextItem.depth;
 
+  // Last item
   return 0;
 }
 
 // Finding the depth of an tree item's children
 function getDepthHelper(item: TreeItem): number {
   if (item.type !== "FOLDER" || item.children.length === 0) return 0;
+
+  const childDepth = [];
+
   for (const child of item.children) {
-    return getDepthHelper(child) + 1;
+    childDepth.push(getDepthHelper(child) + 1);
   }
-  return 0;
+
+  return Math.max(...childDepth);
 }
 function getDepth(item: TreeItem) {
   return getDepthHelper(item);
