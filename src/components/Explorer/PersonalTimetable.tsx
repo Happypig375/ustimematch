@@ -34,7 +34,7 @@ const PersonalTimetable = () => {
     <div className="border-t border-border-100">
       {personalTimetable ? (
         <div className="flex gap-4">
-          <div className="flex flex-grow items-center gap-2 overflow-hidden pl-4">
+          <div className="flex flex-grow items-center gap-2 overflow-hidden pl-4 text-fg-100">
             <ColorChip color={personalTimetable.config.color} />
             <span title={personalTimetable.name} className="truncate">
               {personalTimetable.name}

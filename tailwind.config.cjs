@@ -30,11 +30,13 @@ module.exports = {
         brand: "rgb(var(--brand) / <alpha-value>)",
       },
       boxShadow: {
-        "tree-item":
-          "0 2px 8px 4px rgba(0,0,0,0.01), 0 2px 12px 6px rgba(0,0,0,0.01)",
+        // Inner darken border
         "color-chip":
-          "inset 0 0 0 1px rgba(0,0,0,0.1), 0 0 4px 2px rgba(0,0,0,0.01)",
-        drawer: "0 0 8px 4px rgba(0,0,0,0.04), 0 0 32px 16px rgba(0,0,0,0.02)",
+          "inset 0 0 0 1px hsla(0,0%,0%,0.1), 0 0 4px 2px hsla(0,0%,0%,0.01)",
+        // For light mode
+        elevation: "var(--shadow-elevation)",
+        // For dark mode
+        highlight: "var(--shadow-highlight)",
       },
     },
   },

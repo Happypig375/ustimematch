@@ -45,7 +45,7 @@ const Border = () => {
                 // Translate to ensure lines are in the middle of two columns, with 0.5px on each side.
                 "-translate-x-[0.5px] select-none border-l border-l-border-200",
                 // Darken weekends
-                (i === 5 || i === 6) && "bg-bg-300/50",
+                (i === 5 || i === 6) && "bg-bg-300/60",
               )}
             />
           ),

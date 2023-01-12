@@ -46,9 +46,13 @@ const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {
           {/* Theme toggle */}
           <Button
             icon
-            title={`Toggle ${theme === "light" ? "Dark" : "Light"} Mode`}
+            title={
+              hydrated
+                ? `Toggle ${theme === "light" ? "Dark" : "Light"} Mode`
+                : ""
+            }
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="transition-shadow dark:hover:shadow-[0_0_16px_4px_#1e40af40]"
+            className="transition-shadow dark:hover:shadow-[0_0_16px_4px_#1e40af40] dark:active:shadow-[0_0_16px_4px_#1e40af40]"
           >
             {hydrated && (
               <>
