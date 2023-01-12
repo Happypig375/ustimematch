@@ -33,7 +33,7 @@
     --border-100: 40 40 40;
     --border-200: 50 50 50;
 
-    --shadow-highlight: inset 0 0.5px 0 0.5px hsla(0, 0%, 100%, 0.05);
+    --shadow-highlight: inset 0 0.5px 0 1px hsla(0, 0%, 100%, 0.1);
 
     --scroll-bar: 50 50 50;
 
