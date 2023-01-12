@@ -11,11 +11,6 @@ const Grid = () => {
   const cols = useTrackedStore().ui.weekViewCols();
 
   const showTimematch = useTrackedStore().ui.showTimematch();
-  /* ---------- Fetch timematch when calendars change or when toggled --------- */
-  // useEffect(() => {
-  //   if (!showTimematch) return;
-  //   getTimematch();
-  // }, [showTimematch, calendars, getTimematch]);
 
   return (
     <div
