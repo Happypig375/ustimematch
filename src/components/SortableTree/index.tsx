@@ -39,7 +39,6 @@ import {
   buildTree,
   flattenTree,
   getProjection,
-  getChildCount,
   removeChildrenOf,
 } from "@utils/sortableTree";
 import { sortableTreeKeyboardCoordinates } from "@utils/sortableTree/keyboardCoordinates";
@@ -433,7 +432,6 @@ const SortableTree = () => {
                     id={activeId}
                     treeItem={activeItem.treeItem}
                     indentationWidth={indentationWidth}
-                    childCount={getChildCount(items, activeId)}
                   />
                 ) : null}
               </DragOverlay>,

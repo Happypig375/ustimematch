@@ -24,7 +24,6 @@ interface Props {
   indentationWidth: number;
 
   treeItem: TreeItem;
-  childCount?: number;
 
   onClick?: () => void;
   onEyeClick?: () => void;
@@ -43,7 +42,6 @@ const SortableTreeItem = ({
   indentationWidth,
 
   treeItem,
-  childCount,
 
   onClick,
   onEyeClick,
@@ -130,12 +128,12 @@ const SortableTreeItem = ({
           </>
         )}
 
-        {/* Children count badge on clone while dragging*/}
-        {clone && childCount ? (
+        {/* Children count badge on clone while dragging */}
+        {clone && treeItem.type === "FOLDER" && (
           <span className="absolute -top-2 -left-2 flex h-5 w-5 items-center justify-center rounded-full bg-blue-800 text-xs font-medium text-white">
-            {childCount}
+            {getTimetableCount(treeItem)}
           </span>
-        ) : null}
+        )}
 
         {/* Toggle visibility button */}
         {!clone &&
