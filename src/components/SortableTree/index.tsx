@@ -32,12 +32,14 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { toast } from "react-hot-toast";
 import FolderForm from "@components/Modal/FolderForm";
 import TimetableForm from "@components/Modal/TimetableForm";
 import { actions, useStore } from "@store/index";
 import {
   buildTree,
   flattenTree,
+  getDepth,
   getProjection,
   removeChildrenOf,
 } from "@utils/sortableTree";
@@ -51,6 +53,8 @@ import type {
 import SortableTreeItem from "./SortableTreeItem";
 
 const indentationWidth = 24;
+
+const maxDepth = 2;
 
 const measuring = {
   droppable: {
@@ -210,7 +214,11 @@ const SortableTree = () => {
       resetState();
 
       if (projected && over) {
-        const { depth, parentId } = projected;
+        const { depth, activeItem, parentId } = projected;
+
+        // projected depth + depth of active item (in case dragging folder)
+        if (depth + getDepth(activeItem.treeItem) > maxDepth)
+          return toast.error("Depth limit exceeded");
 
         const clonedItems: FlattenedItem[] = JSON.parse(
           JSON.stringify(flattenTree(items)),
@@ -400,6 +408,11 @@ const SortableTree = () => {
                   key={treeItem.id}
                   treeItem={treeItem}
                   indentationWidth={indentationWidth}
+                  illegal={
+                    activeItem && treeItem.type === "FOLDER"
+                      ? depth + getDepth(activeItem.treeItem) + 1 > maxDepth
+                      : undefined
+                  }
                   depth={
                     treeItem.id === activeId && projected
                       ? projected.depth

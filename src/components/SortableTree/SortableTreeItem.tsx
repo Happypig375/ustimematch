@@ -21,6 +21,7 @@ interface Props {
   id: UniqueIdentifier;
   depth: number;
   clone?: boolean;
+  illegal?: boolean;
   indentationWidth: number;
 
   treeItem: TreeItem;
@@ -39,6 +40,7 @@ const SortableTreeItem = ({
   id,
   depth,
   clone,
+  illegal,
   indentationWidth,
 
   treeItem,
@@ -83,10 +85,11 @@ const SortableTreeItem = ({
         onClick={onClick}
         ref={setDraggableNodeRef}
         className={clsx(
-          "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-200 pl-4 pr-2 text-fg-100",
+          "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-200 px-2 text-fg-100",
           "hover:bg-bg-300 hover:text-fg-200",
           clone && "pointer-events-none shadow-elevation",
-          isDragging && "border border-border-100 opacity-50 shadow-elevation",
+          isDragging && "border border-border-200 opacity-50",
+          !isDragging && illegal && "opacity-25",
         )}
       >
         {/* Folder item collapse and name */}
@@ -95,6 +98,8 @@ const SortableTreeItem = ({
             <Button
               icon
               plain
+              // Align with color chip
+              className="pl-2"
               onClick={(e) => {
                 e.stopPropagation();
                 onCollapse && onCollapse();
@@ -118,7 +123,11 @@ const SortableTreeItem = ({
         {/* Timetable item color chip and name */}
         {treeItem.type === "TIMETABLE" && (
           <>
-            <ColorChip color={treeItem.timetable.config.color} />
+            <ColorChip
+              // Align with folder collapse button
+              className="ml-2"
+              color={treeItem.timetable.config.color}
+            />
             <span
               title={treeItem.timetable.name}
               className="flex-grow truncate"

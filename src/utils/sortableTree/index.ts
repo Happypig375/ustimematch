@@ -34,22 +34,15 @@ export function getProjection(
   const dragDepth = getDragDepth(dragOffset, indentationWidth);
 
   const projectedDepth = activeItem.depth + dragDepth;
-
   const maxDepth = getMaxDepth(previousItem);
-
   const minDepth = getMinDepth(nextItem);
+
   let depth = projectedDepth;
 
-  if (projectedDepth >= maxDepth) {
-    depth = maxDepth;
-  } else if (projectedDepth < minDepth) {
-    depth = minDepth;
-  }
+  if (projectedDepth >= maxDepth) depth = maxDepth;
+  else if (projectedDepth < minDepth) depth = minDepth;
 
-  // Prevent nesting if active item's depth > 1 (2 levels)
-  if (getDepth(activeItem.treeItem) > 1) depth = activeItem.depth;
-
-  return { depth, maxDepth, minDepth, parentId: getParentId() };
+  return { depth, maxDepth, minDepth, activeItem, parentId: getParentId() };
 
   function getParentId() {
     if (depth === 0 || !previousItem) {
@@ -91,7 +84,7 @@ function getMinDepth(nextItem?: FlattenedItem) {
 }
 
 // Finding the depth of an tree item's children
-function getDepth(item: TreeItem): number {
+export function getDepth(item: TreeItem): number {
   if (item.type !== "FOLDER" || item.children.length === 0) return 0;
 
   const childDepth = [];
