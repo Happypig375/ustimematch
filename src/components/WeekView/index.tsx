@@ -22,7 +22,7 @@ const Controls = () => {
   const toggleShowTimematch = actions.ui.toggleShowTimematch;
 
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-border-100 px-4 py-2">
+    <div className="flex items-center justify-between gap-4 border-b border-border-100 px-3 py-2">
       <Button icon title="Toggle Explorer" onClick={toggleShowExplorer}>
         <motion.div
           initial={false}

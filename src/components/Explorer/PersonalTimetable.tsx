@@ -73,7 +73,7 @@ const PersonalTimetable = () => {
           </div>
         </div>
       ) : (
-        <div className="py-2 px-4">
+        <div className="py-2 px-3">
           <Button
             fullWidth
             title="Add personal timetable"
