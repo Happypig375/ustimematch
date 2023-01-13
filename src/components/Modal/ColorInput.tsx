@@ -3,11 +3,8 @@ import clsx from "clsx";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useController, type UseControllerProps } from "react-hook-form";
 import { textColor } from "@utils/color";
+import { ZBaseTimetable } from "../../types/timetable";
 import { type ITimetableForm } from "./TimetableForm";
-
-interface ColorInputProps extends UseControllerProps<ITimetableForm, "color"> {
-  disabled?: boolean;
-}
 
 interface ColorPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   color: string;
@@ -42,14 +39,29 @@ const ColorPreview = ({ color, className }: ColorPreviewProps) => {
   );
 };
 
+interface ColorInputProps extends UseControllerProps<ITimetableForm, "color"> {
+  disabled?: boolean;
+}
+
 export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
   const { field } = useController(props);
 
-  const onChange = (newColor: string) => !disabled && field.onChange(newColor);
+  const onChange = (color: string) => {
+    // check for 3-character hex and convert to 6-character hex
+    if (color.length === 4) color = "#" + color.slice(1, 4).repeat(2);
+
+    if (
+      disabled ||
+      !ZBaseTimetable.shape.config.pick({ color: true }).safeParse({ color })
+        .success
+    )
+      return;
+
+    field.onChange(color);
+  };
 
   return (
-    // The styles of color input should be in parity with normal input.
-    // These two styles are not linked right now, manually copying is required.
+    // The styles of color input should be in parity with normal input
     <div className="flex flex-col gap-1">
       <Label.Root htmlFor="color" className="text-sm font-medium">
         Color
@@ -72,8 +84,8 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
           />
 
           <ColorPreview
-            className={clsx("h-full", disabled && "opacity-50")}
             color={field.value}
+            className={clsx("h-full", disabled && "opacity-50")}
           />
         </div>
 

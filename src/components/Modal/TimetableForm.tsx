@@ -1,18 +1,10 @@
-import { IconPencil, IconPlus, IconTrash, IconX } from "@tabler/icons";
-import clsx from "clsx";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { IconPencil, IconPlus, IconX } from "@tabler/icons";
 import { nanoid } from "nanoid";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import {
-  Alert,
-  AlertAction,
-  AlertCancel,
-  AlertContent,
-  AlertDescription,
-  AlertTitle,
-  AlertTrigger,
-} from "@ui/Alert";
+import type { z } from "zod";
 import Button from "@ui/Button";
 import Input from "@ui/Input";
 import {
@@ -24,39 +16,47 @@ import {
 } from "@ui/Modal";
 import { randomHex } from "@utils/randomHex";
 import { trpc } from "@utils/trpc";
-import type { Timetable } from "../../types/timetable";
+import { ZHKUSTTimetable, type Timetable } from "../../types/timetable";
 import { ColorInput } from "./ColorInput";
+import DeleteAlert from "./DeleteAlert";
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
-  personal?: boolean;
+
+  // Add mode
   onAdd?: (timetable: Timetable) => void;
+
+  // Edit mode
+  timetable?: Timetable;
   onDelete?: () => void;
   onEdit?: (timetable: Timetable) => void;
-  // If timetable prop is passed, it means the modal is in edit mode
-  timetable?: Timetable;
+
+  // Personal timetable
+  personal?: boolean;
 }
 
-export interface ITimetableForm extends Omit<Timetable, "lessons" | "config"> {
-  color: string;
-}
+const ZTimetableForm = ZHKUSTTimetable.pick({
+  name: true,
+  plannerURL: true,
+}).merge(ZHKUSTTimetable.shape.config.pick({ color: true }));
+
+export type ITimetableForm = z.infer<typeof ZTimetableForm>;
 
 /**
- * Default import university is HKUST, support for other universities might be added later
+ * Imports timetable by HKUST planner URL, might add other methods later.
  */
 const TimetableForm = ({
   open,
   setOpen,
-  personal,
   onAdd,
+  timetable,
   onDelete,
   onEdit,
-  timetable,
+  personal,
 }: Props) => {
   const defaultValues = useMemo<ITimetableForm>(
     () => ({
-      university: "HKUST",
       name: timetable?.name || "",
       plannerURL: timetable?.plannerURL || "",
       color: timetable?.config.color || randomHex(),
@@ -75,6 +75,7 @@ const TimetableForm = ({
     formState: { errors },
   } = useForm<ITimetableForm>({
     defaultValues,
+    resolver: zodResolver(ZTimetableForm),
   });
 
   // Reset form when modal is opened
@@ -94,18 +95,19 @@ const TimetableForm = ({
         // Prevent callback is modal isn't open (will be trigger from refresh modal because query are the same)
         if (!open) return;
 
-        const tmpTimetable = {
+        const tmpTimetable: Timetable = {
           lessons,
           plannerURL,
+          // Placeholder
+          university: "HKUST",
           name: getValues("name").trim(),
-          university: getValues("university"),
           config: {
             id: timetable ? timetable.config.id : nanoid(),
             color: getValues("color"),
             visible: timetable ? timetable.config.visible : true,
           },
         };
-
+        console.log(getValues("color"));
         timetable
           ? onEdit && onEdit(tmpTimetable)
           : onAdd && onAdd(tmpTimetable);
@@ -126,9 +128,6 @@ const TimetableForm = ({
     refetch();
   };
 
-  // Delete alert
-  const [openAlert, setOpenAlert] = useState(false);
-
   const controlledSetOpen: typeof setOpen = (v) => !isFetching && setOpen(v);
 
   return (
@@ -146,10 +145,7 @@ const TimetableForm = ({
               labelId="name"
               disabled={isFetching}
               error={errors.name?.message}
-              {...register("name", {
-                required: "Please enter a name",
-                maxLength: { value: 40, message: "Your name is too long" },
-              })}
+              {...register("name")}
             />
             <Input
               inputMode="url"
@@ -157,66 +153,23 @@ const TimetableForm = ({
               label="Timetable Planner URL"
               disabled={isFetching}
               error={errors.plannerURL?.message}
-              {...register("plannerURL", {
-                required: "Please enter an URL",
-                pattern: {
-                  value:
-                    /^https:\/\/admlu65\.ust\.hk\/planner\/export\/.+\.ics$/,
-                  message: "Please enter a correct URL",
-                },
-              })}
+              {...register("plannerURL")}
             />
             <ColorInput name="color" control={control} disabled={isFetching} />
           </div>
 
           <ModalControl>
-            <Alert open={openAlert} onOpenChange={setOpenAlert}>
-              <AlertTrigger asChild>
-                <Button
-                  icon
-                  type="button"
-                  error
-                  onClick={() => setOpenAlert(true)}
-                  disabled={isFetching}
-                  className={clsx(!timetable && "hidden")}
-                >
-                  <IconTrash stroke={1.75} className="h-5 w-5" />
-                </Button>
-              </AlertTrigger>
-
-              <AlertContent open={openAlert}>
-                <AlertTitle>Are you sure?</AlertTitle>
-
-                <AlertDescription>
-                  You are deleteing{" "}
-                  <b>{personal ? "your personal" : `${timetable?.name}'s`}</b>{" "}
-                  timetable, this action cannot be undone.
-                </AlertDescription>
-
-                <div className="flex gap-2">
-                  <AlertCancel asChild>
-                    <Button fullWidth>Cancel</Button>
-                  </AlertCancel>
-
-                  {/* BUG: Unmounting modal will cancel alert animation */}
-                  <AlertAction asChild>
-                    <Button
-                      error
-                      fullWidth
-                      onClick={() => {
-                        // FIX: Wait for alert modal animation (200ms comes from variants)
-                        setTimeout(() => {
-                          onDelete && onDelete();
-                          setOpen(false);
-                        }, 200);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </AlertAction>
-                </div>
-              </AlertContent>
-            </Alert>
+            <DeleteAlert
+              enabled={!!timetable}
+              onDelete={() => {
+                onDelete && onDelete();
+                setOpen(false);
+              }}
+            >
+              You are deleteing{" "}
+              <b>{personal ? "your personal" : `${timetable?.name}'s`}</b>{" "}
+              timetable, this action cannot be undone.
+            </DeleteAlert>
 
             <ModalClose asChild>
               <Button fullWidth type="button" disabled={isFetching}>

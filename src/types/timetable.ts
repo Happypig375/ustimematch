@@ -35,23 +35,28 @@ const ZTimetableConfig = z.object({
   id: z.string(),
   // Hex color
   // https://mkyong.com/regular-expressions/how-to-validate-hex-color-code-with-regular-expression/
-  color: z.string().regex(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/),
+  color: z.string().regex(/^#([a-fA-F0-9]{6})$/, { message: "Invalid color" }),
   visible: z.boolean(),
 });
 
-const ZBaseTimetable = z.object({
-  name: z.string().max(40),
+export const ZBaseTimetable = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, { message: "Please enter a name" })
+    .max(40, { message: "The name is too long" }),
   lessons: ZLessons,
   university: ZUniversity,
   config: ZTimetableConfig,
 });
 
-const ZHKUSTTimetable = ZBaseTimetable.extend({
+export const ZHKUSTTimetable = ZBaseTimetable.extend({
   university: z.literal("HKUST"),
   plannerURL: z
     .string()
-    .url()
-    .regex(/^https:\/\/admlu65\.ust\.hk\/planner\/export\/.+\.ics$/),
+    .regex(/^https:\/\/admlu65\.ust\.hk\/planner\/export\/.+\.ics$/, {
+      message: "Invalid planner URL",
+    }),
 });
 
 export const ZTimetable = z.discriminatedUnion("university", [ZHKUSTTimetable]);
