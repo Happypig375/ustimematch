@@ -51,6 +51,8 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 asChild
                 ref={ref}
                 {...props}
+                // Prevents weird bugs with input focusing
+                onOpenAutoFocus={(e) => e.preventDefault()}
                 forceMount
                 exit="close"
                 animate="open"

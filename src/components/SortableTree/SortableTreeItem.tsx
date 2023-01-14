@@ -100,7 +100,7 @@ const SortableTreeItem = ({
               icon
               plain
               // Align with color chip
-              className="pl-2"
+              className="ml-2 pl-0"
               onClick={(e) => {
                 e.stopPropagation();
                 onCollapse && onCollapse();
