@@ -30,6 +30,7 @@ const Toast = () => {
             backgroundColor:
               theme === "light" ? "rgb(var(--bg-100))" : "rgb(var(--bg-200))",
             color: "rgb(var(--fg-200))",
+            boxShadow: "var(--shadow-elevation)",
           }}
         >
           {({ icon: _, message }) => (
