@@ -79,7 +79,11 @@ const FolderForm = ({
       <ModalContent open={open} onOpenChange={setOpen}>
         <ModalTitle>{folder ? "Edit" : "Add"} Folder</ModalTitle>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+          data-cy="folder-form"
+        >
           <div className="flex flex-col gap-2">
             <Input
               label="Name"
@@ -87,6 +91,7 @@ const FolderForm = ({
               inputMode="text"
               error={errors.name?.message}
               {...register("name")}
+              data-cy="folder-form-name-input"
             />
           </div>
 

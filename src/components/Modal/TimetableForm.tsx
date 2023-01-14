@@ -137,7 +137,11 @@ const TimetableForm = ({
           {timetable ? "Edit" : "Add"} {personal && "Personal"} Timetable
         </ModalTitle>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+          data-cy="timetable-form"
+        >
           <div className="flex flex-col gap-2">
             <Input
               inputMode="text"
@@ -146,6 +150,7 @@ const TimetableForm = ({
               disabled={isFetching}
               error={errors.name?.message}
               {...register("name")}
+              data-cy="timetable-form-name-input"
             />
             <Input
               inputMode="url"
@@ -154,6 +159,7 @@ const TimetableForm = ({
               disabled={isFetching}
               error={errors.plannerURL?.message}
               {...register("plannerURL")}
+              data-cy="timetable-form-planner-url-input"
             />
             <ColorInput name="color" control={control} disabled={isFetching} />
           </div>

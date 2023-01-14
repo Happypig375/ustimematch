@@ -28,6 +28,7 @@ const AddTimetable = () => {
         fullWidth
         title="Add Timetable"
         onClick={() => setOpenImportModal(true)}
+        data-cy="add-timetable"
       >
         <IconCalendarPlus stroke={1.75} className="h-5 w-5" />
         Timetable
@@ -54,7 +55,12 @@ const AddFolder = () => {
 
   return (
     <>
-      <Button icon title="Add Folder" onClick={() => setOpenFolderModal(true)}>
+      <Button
+        icon
+        title="Add Folder"
+        onClick={() => setOpenFolderModal(true)}
+        data-cy="add-folder"
+      >
         <IconFolderPlus stroke={1.75} className="h-5 w-5" />
       </Button>
       <FolderForm

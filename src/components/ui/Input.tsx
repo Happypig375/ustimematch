@@ -24,6 +24,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           <Label.Root
             htmlFor={labelId}
             className="flex items-center justify-between text-sm font-medium"
+            data-cy={`input-label-${labelId}`}
           >
             {label}
             <span className="text-xs font-normal text-red-600">{error}</span>

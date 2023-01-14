@@ -24,7 +24,13 @@ const DeleteAlert = ({ enabled, onDelete, children }: Props) => {
     <Alert open={openAlert} onOpenChange={setOpenAlert}>
       {enabled && (
         <AlertTrigger asChild>
-          <Button icon error type="button" onClick={() => setOpenAlert(true)}>
+          <Button
+            icon
+            error
+            type="button"
+            onClick={() => setOpenAlert(true)}
+            data-cy="delete-alert-trigger"
+          >
             <IconTrash stroke={1.75} className="h-5 w-5" />
           </Button>
         </AlertTrigger>
@@ -48,6 +54,7 @@ const DeleteAlert = ({ enabled, onDelete, children }: Props) => {
                 setOpenAlert(false);
                 onDelete();
               }}
+              data-cy="delete-alert-delete"
             >
               Delete
             </Button>

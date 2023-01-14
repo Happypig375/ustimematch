@@ -67,6 +67,7 @@ const PersonalTimetable = () => {
               icon
               title="Edit personal timetable"
               onClick={() => setOpen(true)}
+              data-cy="edit-personal-timetable"
             >
               <IconEdit stroke={1.75} className="h-5 w-5" />
             </Button>
@@ -78,6 +79,7 @@ const PersonalTimetable = () => {
             fullWidth
             title="Add personal timetable"
             onClick={() => setOpen(true)}
+            data-cy="add-personal-timetable"
           >
             <IconUserPlus stroke={1.75} className="h-5 w-5" />
             Personal Timetable

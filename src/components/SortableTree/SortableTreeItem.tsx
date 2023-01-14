@@ -91,6 +91,7 @@ const SortableTreeItem = ({
           isDragging && "border border-border-200 opacity-50",
           !isDragging && illegal && "opacity-25",
         )}
+        data-cy="sortable-tree-item"
       >
         {/* Folder item collapse and name */}
         {treeItem.type === "FOLDER" && (

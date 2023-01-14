@@ -14,6 +14,7 @@ const ThemeToggle = () => {
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       // relative is needed to prevent popLayout jumping
       className="relative transition-shadow dark:hover:shadow-[0_0_16px_4px_#1e40af40] dark:active:shadow-[0_0_16px_4px_#1e40af40]"
+      data-cy="theme-toggle"
     >
       <AnimatePresence initial={false} mode="popLayout">
         {theme === "light" && (
