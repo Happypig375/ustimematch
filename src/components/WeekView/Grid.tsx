@@ -14,7 +14,7 @@ const Grid = () => {
 
   return (
     <div
-      className="grid h-full overflow-y-auto"
+      className="focus-visible-ring grid h-full overflow-y-auto"
       style={{
         gridTemplateRows: `auto repeat(${rows}, minmax(12px,1fr))`,
         gridTemplateColumns: `auto repeat(${cols}, minmax(0,1fr))`,

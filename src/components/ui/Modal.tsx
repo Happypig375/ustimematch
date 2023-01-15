@@ -1,7 +1,12 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import clsx from "clsx";
 import { motion, type PanInfo, AnimatePresence } from "framer-motion";
-import { type DetailedHTMLProps, forwardRef, type HTMLAttributes } from "react";
+import {
+  type DetailedHTMLProps,
+  forwardRef,
+  type HTMLAttributes,
+  useRef,
+} from "react";
 import {
   drawerVariants,
   modalVariants,
@@ -33,6 +38,8 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
         onOpenChange(false);
     };
 
+    const focusRef = useRef<HTMLDivElement>(null);
+
     return (
       <AnimatePresence>
         {open && (
@@ -51,8 +58,12 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 asChild
                 ref={ref}
                 {...props}
-                // Prevents weird bugs with input focusing
-                onOpenAutoFocus={(e) => e.preventDefault()}
+                onOpenAutoFocus={(e) => {
+                  // Prevents weird bugs with input focusing
+                  e.preventDefault();
+                  // Instead focus on modal for trapping focus
+                  focusRef.current?.focus();
+                }}
                 forceMount
                 exit="close"
                 animate="open"
@@ -69,18 +80,24 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
               >
                 {matchDesktop ? (
-                  <div className="flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-200 p-6 shadow-elevation">
+                  <div
+                    ref={focusRef}
+                    className="focus-visible-ring flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-200 p-6 shadow-elevation"
+                  >
                     {children}
                   </div>
                 ) : (
-                  <div className="w-[100vw] rounded-t-xl bg-bg-200 shadow-elevation">
+                  <div
+                    ref={focusRef}
+                    className="focus-visible-ring w-[100vw] rounded-t-xl bg-bg-200 shadow-elevation"
+                  >
                     {/* Drag handler */}
                     <div className="my-4">
                       <div className="mx-auto h-[6px] w-14 rounded-full bg-fg-100/10" />
                     </div>
 
                     <div
-                      className="flex max-h-[80vh] flex-col gap-4 overflow-y-auto px-6 pb-6"
+                      className="focus-visible-ring flex max-h-[80vh] flex-col gap-4 overflow-y-auto px-6 pb-6"
                       // Prevent drag unless on drag handler
                       onPointerDownCapture={(e) => e.stopPropagation()}
                     >

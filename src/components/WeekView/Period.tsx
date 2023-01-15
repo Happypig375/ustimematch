@@ -214,6 +214,8 @@ const Period = ({
   // Check minuteHeight to prevent initial height animation (default is 0 as defined in weekView store)
   return minuteHeight && !periodOverflow ? (
     <motion.div
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && onClick?.()}
       onClick={() => {
         // BUG: Touch devices will trigger onClick onHoverEnd (iOS's tolerance is longer, Android's shorter)
         // What we want is only trigger onClick when user is not hovering, otherwise continue with the hover transition.
@@ -233,7 +235,7 @@ const Period = ({
         gridRowStart,
         gridRowEnd,
       }}
-      className="cursor-pointer select-none overflow-hidden shadow-outline"
+      className="focus-visible-ring cursor-pointer select-none overflow-hidden shadow-outline"
       initial={false}
       onHoverEnd={onHoverEnd}
       onHoverStart={onHoverStart}

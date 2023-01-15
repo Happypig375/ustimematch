@@ -36,7 +36,8 @@ const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {
       </div>
 
       {/* Main content */}
-      <div className="flex flex-grow overflow-auto rounded-md border border-border-100 bg-bg-200">
+      {/* Focus ring for scrollable container */}
+      <div className="focus-visible-ring flex flex-grow overflow-auto rounded-md border border-border-100 bg-bg-200">
         {children}
       </div>
     </div>

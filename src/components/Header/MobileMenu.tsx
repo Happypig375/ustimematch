@@ -5,6 +5,7 @@ import {
   IconInfoCircle,
   IconQuestionCircle,
 } from "@tabler/icons";
+import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import React from "react";
@@ -39,7 +40,11 @@ const MobileMenu = () => {
                 animate="open"
                 initial="close"
                 variants={menuVariants}
-                className="z-50 origin-[var(--radix-dropdown-menu-content-transform-origin)] rounded-md border border-border-100 bg-bg-200 shadow-elevation"
+                className={clsx(
+                  "z-50 origin-[var(--radix-dropdown-menu-content-transform-origin)] rounded-md border border-border-100 bg-bg-200 shadow-elevation",
+                  // Padding for dark mode shadow-elevation (highlight), otherwise NavLink hover/active will overlap it
+                  "dark:border-none dark:p-[0.5px]",
+                )}
               >
                 <DropdownMenu.Item asChild>
                   <NavLink

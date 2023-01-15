@@ -44,49 +44,55 @@
 
     --brand: 210 210 210;
   }
-}
 
-/* Full height app */
-html,
-body,
-#__next {
-  @apply h-full bg-bg-100 text-fg-200;
-}
-
-/* Replace default focus outline */
-a,
-button {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
-  @apply focus-visible:ring-blue-200/80 focus-visible:ring-offset-blue-400;
-  @apply dark:focus-visible:ring-blue-400/20 dark:focus-visible:ring-offset-blue-600;
-}
-
-/* Focus ring for input */
-input {
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-200/80 focus:ring-offset-2 focus:ring-offset-blue-400;
-  @apply dark:focus:ring-blue-400/20 dark:focus:ring-offset-blue-600;
-}
-
-* {
-  /* Remove default webkit tap hightlight */
-  -webkit-tap-highlight-color: transparent;
-  /* Thinner scrollbar for Firefox */
-  scrollbar-width: thin;
-  scrollbar-color: rgb(var(--scroll-bar)) transparent;
-}
-
-/* Scrollbar styles for desktop webkit browsers */
-@media (pointer: fine) {
-  ::-webkit-scrollbar {
-    @apply h-1 w-1;
+  /* For applying on focusable elements (clickable/scrollable) that aren't buttons/anchors */
+  .focus-visible-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply focus-visible:ring-blue-200/80 focus-visible:ring-offset-blue-400;
+    @apply dark:focus-visible:ring-blue-400/20 dark:focus-visible:ring-offset-blue-600;
   }
 
-  ::-webkit-scrollbar-track {
-    @apply bg-transparent;
+  /* Full height */
+  html,
+  body,
+  #__next {
+    @apply h-full bg-bg-100 text-fg-200;
   }
 
-  ::-webkit-scrollbar-thumb {
-    @apply rounded-full;
-    background-color: rgb(var(--scroll-bar));
+  /* Replace default focus outline */
+  a,
+  button {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply focus-visible:ring-blue-200/80 focus-visible:ring-offset-blue-400;
+    @apply dark:focus-visible:ring-blue-400/20 dark:focus-visible:ring-offset-blue-600;
+  }
+
+  input {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-200/80 focus:ring-offset-2 focus:ring-offset-blue-400;
+    @apply dark:focus:ring-blue-400/20 dark:focus:ring-offset-blue-600;
+  }
+
+  * {
+    /* Remove default webkit tap hightlight */
+    -webkit-tap-highlight-color: transparent;
+    /* Thinner scrollbar for Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--scroll-bar)) transparent;
+  }
+
+  /* Scrollbar styles for desktop webkit browsers */
+  @media (pointer: fine) {
+    ::-webkit-scrollbar {
+      @apply h-1 w-1;
+    }
+
+    ::-webkit-scrollbar-track {
+      @apply bg-transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      @apply rounded-full;
+      background-color: rgb(var(--scroll-bar));
+    }
   }
 }

@@ -383,7 +383,7 @@ const SortableTree = () => {
 
   return (
     <>
-      <div className="h-full overflow-y-auto">
+      <div className="focus-visible-ring h-full overflow-y-auto">
         <DndContext
           sensors={sensors}
           measuring={measuring}

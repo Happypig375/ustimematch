@@ -84,10 +84,12 @@ const SortableTreeItem = ({
         style={style}
         onClick={onClick}
         ref={setDraggableNodeRef}
+        tabIndex={0}
+        onKeyDown={(e) => e.key === "Enter" && onClick?.()}
         className={clsx(
-          "flex h-full cursor-pointer select-none items-center gap-2 rounded-md bg-bg-200 px-2 text-fg-100",
+          "focus-visible-ring flex h-full cursor-pointer select-none items-center gap-2 rounded-md px-2 text-fg-100",
           "hover:bg-bg-300 hover:text-fg-200",
-          clone && "pointer-events-none shadow-elevation",
+          clone && "pointer-events-none bg-bg-200 shadow-elevation",
           isDragging && "border border-border-200 opacity-50",
           !isDragging && illegal && "opacity-25",
         )}
@@ -100,11 +102,12 @@ const SortableTreeItem = ({
               icon
               plain
               // Align with color chip
-              className="ml-2 pl-0"
+              className="ml-[6px]"
               onClick={(e) => {
                 e.stopPropagation();
                 onCollapse && onCollapse();
               }}
+              onKeyDown={(e) => e.stopPropagation()}
             >
               <motion.div
                 initial={false}
@@ -157,6 +160,7 @@ const SortableTreeItem = ({
                 e.stopPropagation();
                 onEyeClick && onEyeClick();
               }}
+              onKeyDown={(e) => e.stopPropagation()}
             >
               {(treeItem.type === "TIMETABLE" &&
                 treeItem.timetable.config.visible) ||
@@ -175,6 +179,7 @@ const SortableTreeItem = ({
           {...listeners}
           {...attributes}
           className="cursor-grab touch-none"
+          onKeyDown={(e) => e.stopPropagation()}
         >
           <IconGripVertical stroke={1.75} className="h-5 w-5" />
         </Button>
