@@ -44,6 +44,28 @@ export const menuVariants: Variants = {
   },
 };
 
+// Tips popover
+export const tipsVariants: Variants = {
+  open: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.2,
+    },
+  },
+  close: {
+    scale: 0.3,
+    opacity: 0,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.2,
+    },
+  },
+};
+
 // Explorer panel
 export const explorerVariants: Variants = {
   open: {
