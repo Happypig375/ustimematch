@@ -2,6 +2,7 @@
 // https://github.com/clauderic/dnd-kit/tree/master/stories/3%20-%20Examples/Tree
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+import type { Timetable } from "../../types/timetable";
 import type {
   FlattenedItem,
   TimetableItem,
@@ -250,6 +251,15 @@ export function removeChildrenOf(
 
     return true;
   });
+}
+
+export function getFlattenedTimetables(children: TreeItem[]): Timetable[] {
+  return children.reduce<Timetable[]>((acc, item) => {
+    if (item.type === "FOLDER" && item.children.length > 0)
+      return [...acc, ...getFlattenedTimetables(item.children)];
+    if (item.type === "TIMETABLE") return [...acc, item.timetable];
+    return acc;
+  }, []);
 }
 
 /**

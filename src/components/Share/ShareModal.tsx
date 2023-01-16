@@ -1,9 +1,15 @@
 import { IconShare } from "@tabler/icons";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import Button from "@ui/Button";
-import { Modal, ModalContent, ModalTitle, ModalTrigger } from "@ui/Modal";
-import { Tabs, TabsContent } from "@ui/Tabs";
+import Button from "@components/ui/Button";
+import {
+  Modal,
+  ModalContent,
+  ModalTitle,
+  ModalTrigger,
+} from "@components/ui/Modal";
+import { Tabs, TabsContent } from "@components/ui/Tabs";
+import Tips from "@components/ui/Tips";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
 import SelectTab from "./SelectTab";
@@ -22,10 +28,10 @@ const Share = () => {
     setTabsValue("select");
   }, [openShareModal]);
 
-  const { mutate, isLoading: _ } = trpc.share.guestShare.useMutation({
-    onSuccess: ({ slug, expiresAt: _ }) => {
+  const { data, mutate, isLoading } = trpc.share.guestShare.useMutation({
+    onSuccess: ({ slug, expiresAt }) => {
       setTabsValue("share");
-      setShareURL(`${window.origin}/share/${slug}`);
+      setShareURL(`${window.origin}/?share=${slug}`);
       setCheckedIds([]);
     },
     onError: () => {
@@ -48,8 +54,6 @@ const Share = () => {
       </ModalTrigger>
 
       <ModalContent open={openShareModal} onOpenChange={setOpenShareModal}>
-        <ModalTitle>Share</ModalTitle>
-
         <Tabs value={tabsValue}>
           <TabsContent tabsValue={tabsValue} value="select" direction="left">
             <SelectTab
@@ -59,9 +63,21 @@ const Share = () => {
             />
           </TabsContent>
 
-          <TabsContent tabsValue={tabsValue} value="share" direction="right">
-            <ShareTab setTabsValue={setTabsValue} shareURL={shareURL} />
-          </TabsContent>
+          {data && (
+            <TabsContent tabsValue={tabsValue} value="share" direction="right">
+              <ShareTab
+                setTabsValue={setTabsValue}
+                shareURL={`${window.origin}/?share=${data.slug}`}
+                expiresAt={data.expiresAt.toLocaleString(undefined, {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              />
+            </TabsContent>
+          )}
         </Tabs>
       </ModalContent>
     </Modal>

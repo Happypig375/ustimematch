@@ -1,62 +1,13 @@
-import * as Checkbox from "@radix-ui/react-checkbox";
-import {
-  IconArrowForward,
-  IconCheckbox,
-  IconListCheck,
-  IconSquare,
-  IconX,
-} from "@tabler/icons";
-import clsx from "clsx";
+import { IconArrowForward, IconListCheck, IconX } from "@tabler/icons";
 import type { Dispatch, SetStateAction } from "react";
-import ColorChip from "@components/Explorer/ColorChip";
-import Button from "@ui/Button";
-import { ModalClose, ModalControl } from "@ui/Modal";
+import { useMemo } from "react";
+import Button from "@components/ui/Button";
+import { ModalClose, ModalControl, ModalTitle } from "@components/ui/Modal";
+import Tips from "@components/ui/Tips";
 import { useTrackedStore } from "@store/index";
+import { flattenTree, getFlattenedTimetables } from "@utils/sortableTree";
 import type { Timetable } from "../../types/timetable";
-
-interface TimetableItemProps {
-  timetable: Timetable;
-  checked: boolean;
-  onCheckedChange: (checked: boolean) => void;
-}
-
-const TimetableItem = ({
-  timetable,
-  checked,
-  onCheckedChange,
-}: TimetableItemProps) => {
-  return (
-    <label
-      htmlFor={timetable.config.id}
-      className={clsx(
-        "flex h-10 cursor-pointer select-none items-center gap-2 rounded-md px-4 text-fg-100 transition-colors",
-        "hover:bg-bg-300 active:bg-bg-300",
-        checked && "bg-bg-300 text-fg-200",
-      )}
-    >
-      <div className="flex flex-grow items-center gap-2 overflow-hidden">
-        <ColorChip color={timetable.config.color} />
-
-        <span title={timetable.name} className="truncate">
-          {timetable.name}
-        </span>
-      </div>
-
-      <Checkbox.Root
-        checked={checked}
-        id={timetable.config.id}
-        onCheckedChange={onCheckedChange}
-        className="pointer-events-none"
-      >
-        <Checkbox.Indicator>
-          <IconCheckbox stroke={1.75} className="h-5 w-5" />
-        </Checkbox.Indicator>
-
-        {!checked && <IconSquare stroke={1.75} className="h-5 w-5" />}
-      </Checkbox.Root>
-    </label>
-  );
-};
+import SelectItem from "./SelectItem";
 
 interface Props {
   checkedIds: string[];
@@ -65,16 +16,68 @@ interface Props {
 }
 
 const SelectTab = ({ checkedIds, setCheckedIds, onContinue }: Props) => {
+  const personalTimetable = useTrackedStore().timetable.personalTimetable();
+  const timetablesTree = useTrackedStore().timetable.timetablesTree();
   const combinedTimetables = useTrackedStore().timetable.combinedTimetables();
 
+  const flattenedTree = useMemo(
+    () => flattenTree(timetablesTree),
+    [timetablesTree],
+  );
+
   const onCheckedChange = (id: string, checked: boolean) => {
-    if (checked) setCheckedIds([...checkedIds, id]);
-    else setCheckedIds((prev) => prev.filter((i) => i !== id));
+    const item = flattenedTree.find((item) => item.treeItem.id === id);
+
+    if (!item) return;
+
+    if (item.treeItem.type === "FOLDER") {
+      const timetableIds = getFlattenedTimetables(item.treeItem.children).map(
+        (timetable) => timetable.config.id,
+      );
+
+      if (checked) setCheckedIds((prev) => [...prev, ...timetableIds]);
+      else
+        setCheckedIds((prev) =>
+          prev.filter((id) => !timetableIds.includes(id)),
+        );
+    }
+
+    if (item.treeItem.type === "TIMETABLE") {
+      const id = item.treeItem.timetable.config.id;
+      if (checked) setCheckedIds((prev) => [...prev, id]);
+      else setCheckedIds((prev) => prev.filter((i) => i !== id));
+    }
   };
 
-  const checked = (id: string) => checkedIds.includes(id);
+  const folderChecked = (treeItemId: string): boolean | "indeterminate" => {
+    const item = flattenedTree.find((item) => item.treeItem.id === treeItemId);
 
-  const toggleCheck = () => {
+    if (
+      !item ||
+      item.treeItem.type !== "FOLDER" ||
+      item.treeItem.children.length === 0
+    )
+      return false;
+
+    const timetableIds = getFlattenedTimetables(item.treeItem.children).map(
+      (timetable) => timetable.config.id,
+    );
+
+    const checkedTimetablesLength = timetableIds.filter((timetableId) =>
+      checkedIds.includes(timetableId),
+    ).length;
+
+    return checkedTimetablesLength === timetableIds.length
+      ? true
+      : checkedTimetablesLength > 0
+      ? "indeterminate"
+      : false;
+  };
+
+  const timetableChecked = (timetableId: string): boolean =>
+    checkedIds.includes(timetableId);
+
+  const toggleCheckAll = () => {
     if (checkedIds.length === combinedTimetables.length) setCheckedIds([]);
     else setCheckedIds(combinedTimetables.map((t) => t.config.id));
   };
@@ -89,25 +92,73 @@ const SelectTab = ({ checkedIds, setCheckedIds, onContinue }: Props) => {
 
   return (
     <div className="flex flex-col justify-center gap-4">
-      <div className="max-h-[336px] overflow-y-auto">
-        {combinedTimetables.map((timetable) => (
-          <TimetableItem
-            key={timetable.config.id}
-            timetable={timetable}
-            checked={checked(timetable.config.id)}
-            onCheckedChange={(checked) =>
-              onCheckedChange(timetable.config.id, checked)
-            }
-          />
-        ))}
+      <div className="flex items-center justify-between">
+        <ModalTitle>Share</ModalTitle>
+
+        <div className="flex gap-2">
+          <span className="text-sm">
+            {checkedIds.length} / {combinedTimetables.length} Selected
+          </span>
+          <Tips>
+            Receivers will only be able to see timetables but not folders.
+          </Tips>
+        </div>
       </div>
 
-      {combinedTimetables.length === 0 && (
-        <span className="text-center text-sm">Add some timetables first!</span>
+      {flattenedTree.length === 0 ? (
+        <span className="text-center text-sm">
+          No timetables have been added
+        </span>
+      ) : (
+        <div className="flex max-h-[336px] flex-col gap-1 overflow-y-auto">
+          {/* Personal timetable */}
+          {personalTimetable && (
+            <SelectItem
+              id={personalTimetable.config.id}
+              timetable={personalTimetable}
+              checked={timetableChecked(personalTimetable.config.id)}
+              onCheckedChange={(checked) =>
+                setCheckedIds((prev) =>
+                  checked
+                    ? [...prev, personalTimetable.config.id]
+                    : prev.filter((id) => id !== personalTimetable.config.id),
+                )
+              }
+            />
+          )}
+
+          {/* Timetables tree */}
+          {flattenedTree.map(
+            ({ depth, treeItem }) =>
+              !(
+                treeItem.type === "FOLDER" && treeItem.children.length === 0
+              ) && (
+                <SelectItem
+                  key={treeItem.id}
+                  depth={depth}
+                  id={treeItem.id}
+                  timetable={
+                    treeItem.type === "TIMETABLE"
+                      ? treeItem.timetable
+                      : undefined
+                  }
+                  folderItem={treeItem.type === "FOLDER" ? treeItem : undefined}
+                  checked={
+                    treeItem.type === "FOLDER"
+                      ? folderChecked(treeItem.id)
+                      : timetableChecked(treeItem.timetable.config.id)
+                  }
+                  onCheckedChange={(chekced) =>
+                    onCheckedChange(treeItem.id, chekced)
+                  }
+                />
+              ),
+          )}
+        </div>
       )}
 
       <ModalControl>
-        <Button icon onClick={toggleCheck}>
+        <Button icon onClick={toggleCheckAll}>
           <IconListCheck stroke={1.75} className="h-5 w-5" />
         </Button>
 

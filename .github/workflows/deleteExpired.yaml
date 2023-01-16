@@ -1,0 +1,13 @@
+name: Delete expired shared timetables
+on:
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send request to Nextjs API route
+        run: |
+          curl --request POST \
+          --url '${{ secrets.URL }}/api/purgeExpired' \
+          --header 'Authorization: Bearer ${{ secrets.ACTION_KEY }}'

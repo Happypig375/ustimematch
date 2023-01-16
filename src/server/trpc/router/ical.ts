@@ -50,6 +50,10 @@ export const icalRouter = router({
         });
       }
 
+      // Sort lessons
+      for (const weekday of lessons)
+        weekday.sort((a, b) => a.begin.localeCompare(b.begin));
+
       return { lessons };
     }),
 });

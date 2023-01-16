@@ -2,16 +2,17 @@ import { IconArrowBack, IconCheck, IconCopy, IconX } from "@tabler/icons";
 import { QRCodeCanvas } from "qrcode.react";
 import type { Dispatch, SetStateAction } from "react";
 import { useRef, useState } from "react";
-import Button from "@ui/Button";
-import Input from "@ui/Input";
-import { ModalClose, ModalControl } from "@ui/Modal";
+import Button from "@components/ui/Button";
+import Input from "@components/ui/Input";
+import { ModalClose, ModalControl, ModalTitle } from "@components/ui/Modal";
 
 interface Props {
   shareURL: string;
+  expiresAt: string;
   setTabsValue: Dispatch<SetStateAction<"select" | "share">>;
 }
 
-const ShareTab = ({ shareURL, setTabsValue }: Props) => {
+const ShareTab = ({ shareURL, expiresAt, setTabsValue }: Props) => {
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -24,7 +25,7 @@ const ShareTab = ({ shareURL, setTabsValue }: Props) => {
 
     timeoutRef.current = setTimeout(() => {
       setCopied(false);
-    }, 5000);
+    }, 2000);
   };
 
   const selectURL = () => {
@@ -33,6 +34,11 @@ const ShareTab = ({ shareURL, setTabsValue }: Props) => {
 
   return (
     <div className="flex flex-col justify-center gap-4">
+      <div className="flex justify-between">
+        <ModalTitle>Share</ModalTitle>
+        <span className="text-sm">Expires at: {expiresAt}</span>
+      </div>
+
       <QRCodeCanvas
         size={192}
         value={shareURL}

@@ -1,17 +1,47 @@
+import { TRPCError } from "@trpc/server";
 import { nanoid } from "nanoid";
 import { z } from "zod";
+import type { Timetable } from "../../../types/timetable";
+import { ZTimetable } from "../../../types/timetable";
 import { router, publicProcedure } from "../trpc";
-import { ZTimetable } from "./../../../types/timetable.d";
 
 export const shareRouter = router({
+  // Authorization is handled in api route
+  deleteExpiredTimetables: publicProcedure.query(async ({ ctx }) => {
+    const { count } = await ctx.prisma.sharedTimetables.deleteMany({
+      where: {
+        expiresAt: {
+          lte: new Date(),
+        },
+      },
+    });
+
+    return { count };
+  }),
   getTimetables: publicProcedure
     .input(z.object({ slug: z.string() }))
+    .output(z.object({ timetables: ZTimetable.array().min(1) }))
     .query(async ({ ctx, input }) => {
-      const timetables = await ctx.prisma.sharedTimetables.findUniqueOrThrow({
+      const result = await ctx.prisma.sharedTimetables.findUnique({
         where: { slug: input.slug },
       });
 
-      return timetables;
+      if (!result || new Date() > result.expiresAt)
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message:
+            "The requested timetables do not exist or have already expired.",
+        });
+
+      const { timetables } = result as unknown as { timetables: Timetable[] };
+
+      return {
+        timetables: timetables.map((timetable) => ({
+          ...timetable,
+          // Add back client-side only id and visible
+          config: { ...timetable.config, id: nanoid(), visible: true },
+        })),
+      };
     }),
   guestShare: publicProcedure
     .input(z.object({ timetables: ZTimetable.array().min(1) }))
@@ -33,18 +63,21 @@ export const shareRouter = router({
         },
       });
 
-      if (existing)
+      if (existing && new Date() < existing.expiresAt)
         return {
           slug: existing.slug,
           expiresAt: existing.expiresAt,
         };
 
+      const t = new Date();
+      t.setMinutes(t.getMinutes() + 1);
       // Create shared timetables
       const { slug, expiresAt } = await ctx.prisma.sharedTimetables.create({
         data: {
           // URL-friendly querying key
           slug: nanoid(),
           timetables: mappedTimetables,
+          expiresAt: t,
         },
       });
 
