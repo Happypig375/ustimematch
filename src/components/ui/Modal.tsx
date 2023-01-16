@@ -12,7 +12,7 @@ import {
   modalVariants,
   drawerOverlayVariants,
   modalOverlayVariants,
-} from "@ui/variants";
+} from "@components/ui/variants";
 import useMediaQuery from "@hooks/useMediaQuery";
 
 const MotionDialogContent = motion(DialogPrimitive.Content);
@@ -82,14 +82,14 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 {matchDesktop ? (
                   <div
                     ref={focusRef}
-                    className="focus-visible-ring flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-200 p-6 shadow-elevation"
+                    className="flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-200 p-6 shadow-elevation focus-visible:outline-none"
                   >
                     {children}
                   </div>
                 ) : (
                   <div
                     ref={focusRef}
-                    className="focus-visible-ring w-[100vw] rounded-t-xl bg-bg-200 shadow-elevation"
+                    className="w-[100vw] rounded-t-xl bg-bg-200 shadow-elevation focus-visible:outline-none"
                   >
                     {/* Drag handler */}
                     <div className="my-4">

@@ -1,8 +1,11 @@
 import { AccordionItem } from "@radix-ui/react-accordion";
 import { IconRoute, IconX } from "@tabler/icons";
 import { useState } from "react";
-import Accordion, { AccordionContent, AccordionTrigger } from "@ui/Accordion";
-import Button from "@ui/Button";
+import Accordion, {
+  AccordionContent,
+  AccordionTrigger,
+} from "@components/ui/Accordion";
+import Button from "@components/ui/Button";
 import {
   Modal,
   ModalContent,
@@ -10,7 +13,7 @@ import {
   ModalDescription,
   ModalTitle,
   ModalClose,
-} from "@ui/Modal";
+} from "@components/ui/Modal";
 import { actions, useTrackedStore } from "@store/index";
 import { parseUSTName } from "@utils/parseName";
 import { getPathAdvisorUrl } from "@utils/pathAdvisor";

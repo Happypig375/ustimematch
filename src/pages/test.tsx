@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { type NextPage } from "next";
 // import dynamic from "next/dynamic.js";
 import Header from "@components/Header";
-import Button from "@ui/Button";
+import Button from "@components/ui/Button";
 import { actions } from "@store/index";
 import { randomHex } from "@utils/randomHex";
 import { env } from "../env/server.mjs";

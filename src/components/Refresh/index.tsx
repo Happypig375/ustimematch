@@ -1,7 +1,7 @@
 import { IconCheck, IconRefresh, IconX } from "@tabler/icons";
 import { useEffect, useState } from "react";
 import ColorChip from "@components/Explorer/ColorChip";
-import Button from "@ui/Button";
+import Button from "@components/ui/Button";
 import {
   Modal,
   ModalClose,
@@ -9,7 +9,7 @@ import {
   ModalControl,
   ModalTitle,
   ModalTrigger,
-} from "@ui/Modal";
+} from "@components/ui/Modal";
 import { actions, useTrackedStore } from "@store/index";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
@@ -137,7 +137,7 @@ const RefreshModal = () => {
 
           {combinedTimetables.length === 0 && (
             <span className="text-center text-sm">
-              Add some timetables first!
+              No timetables have been added
             </span>
           )}
         </div>

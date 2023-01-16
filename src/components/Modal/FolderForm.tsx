@@ -3,15 +3,15 @@ import { IconPencil, IconPlus, IconX } from "@tabler/icons";
 import { useEffect, useMemo } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import Button from "@ui/Button";
-import Input from "@ui/Input";
+import Button from "@components/ui/Button";
+import Input from "@components/ui/Input";
 import {
   Modal,
   ModalClose,
   ModalContent,
   ModalControl,
   ModalTitle,
-} from "@ui/Modal";
+} from "@components/ui/Modal";
 import type { FolderItem } from "../../types/tree";
 import DeleteAlert from "./DeleteAlert";
 

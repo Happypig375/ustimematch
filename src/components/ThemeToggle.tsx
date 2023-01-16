@@ -1,8 +1,8 @@
 import { IconMoonStars, IconSunHigh } from "@tabler/icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import Button from "@ui/Button";
-import { themeVariants } from "@ui/variants";
+import Button from "@components/ui/Button";
+import { themeVariants } from "@components/ui/variants";
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();

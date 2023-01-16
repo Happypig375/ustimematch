@@ -1,8 +1,8 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { type NextPage } from "next";
 import Header from "@components/Header";
-import Button from "@ui/Button";
-import Paragraph from "@ui/Paragraph";
+import Button from "@components/ui/Button";
+import Paragraph from "@components/ui/Paragraph";
 
 const Tutorial: NextPage = () => {
   return (

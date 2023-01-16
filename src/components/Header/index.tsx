@@ -1,7 +1,7 @@
 import * as Separator from "@radix-ui/react-separator";
 import Link from "next/link";
 import { type HTMLAttributes } from "react";
-import NavLink from "@ui/NavLink";
+import NavLink from "@components/ui/NavLink";
 import MobileMenu from "./MobileMenu";
 
 const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {

@@ -1,7 +1,7 @@
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import { motion, AnimatePresence } from "framer-motion";
-import { forwardRef } from "react";
-import { modalVariants, modalOverlayVariants } from "@ui/variants";
+import { forwardRef, useRef } from "react";
+import { modalVariants, modalOverlayVariants } from "@components/ui/variants";
 
 const MotionAlertOverlay = motion(AlertDialogPrimitive.Overlay);
 const MotionAlertContent = motion(AlertDialogPrimitive.Content);
@@ -12,6 +12,8 @@ interface AlertContentProps extends AlertDialogPrimitive.DialogContentProps {
 
 export const AlertContent = forwardRef<HTMLDivElement, AlertContentProps>(
   ({ children, open }, ref) => {
+    const focusRef = useRef<HTMLDivElement>(null);
+
     return (
       <AnimatePresence>
         {open && (
@@ -33,7 +35,12 @@ export const AlertContent = forwardRef<HTMLDivElement, AlertContentProps>(
                 variants={modalVariants}
                 className="w-[95%] overflow-auto rounded-xl bg-bg-200 p-6 shadow-elevation sm:w-[clamp(450px,45%,500px)]"
               >
-                <div className="flex flex-col gap-4">{children}</div>
+                <div
+                  ref={focusRef}
+                  className="flex flex-col gap-4 focus-visible:outline-none"
+                >
+                  {children}
+                </div>
               </MotionAlertContent>
             </MotionAlertOverlay>
           </AlertDialogPrimitive.Portal>

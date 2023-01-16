@@ -9,9 +9,9 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import React from "react";
-import Button from "@ui/Button";
-import NavLink from "@ui/NavLink";
-import { menuVariants } from "@ui/variants";
+import Button from "@components/ui/Button";
+import NavLink from "@components/ui/NavLink";
+import { menuVariants } from "@components/ui/variants";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);

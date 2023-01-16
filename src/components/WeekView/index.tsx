@@ -8,8 +8,8 @@ import {
 import { motion } from "framer-motion";
 import Refresh from "@components/Refresh";
 import ThemeToggle from "@components/ThemeToggle";
-import Button from "@ui/Button";
-import { chevronVariants } from "@ui/variants";
+import Button from "@components/ui/Button";
+import { chevronVariants } from "@components/ui/variants";
 import { actions, useTrackedStore } from "@store/index";
 import Grid from "./Grid";
 

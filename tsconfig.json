@@ -17,7 +17,6 @@
     "noUncheckedIndexedAccess": true,
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@ui/*": ["./src/components/ui/*"],
       "@store/*": ["./src/store/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@utils/*": ["./src/utils/*"]

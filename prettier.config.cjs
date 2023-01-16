@@ -8,11 +8,9 @@ module.exports = {
   trailingComma: "all",
   importOrder: [
     "^@components/(.*)$",
-    "^@ui/(.*)$",
     "^@store/(.*)$",
     "^@hooks/(.*)$",
     "^@utils/(.*)$",
-    "^@types//(.*)$",
     "^[./]",
   ],
 };

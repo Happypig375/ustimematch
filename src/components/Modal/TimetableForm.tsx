@@ -5,15 +5,15 @@ import { useEffect, useMemo } from "react";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import type { z } from "zod";
-import Button from "@ui/Button";
-import Input from "@ui/Input";
+import Button from "@components/ui/Button";
+import Input from "@components/ui/Input";
 import {
   Modal,
   ModalClose,
   ModalContent,
   ModalControl,
   ModalTitle,
-} from "@ui/Modal";
+} from "@components/ui/Modal";
 import { randomHex } from "@utils/randomHex";
 import { trpc } from "@utils/trpc";
 import { ZHKUSTTimetable, type Timetable } from "../../types/timetable";

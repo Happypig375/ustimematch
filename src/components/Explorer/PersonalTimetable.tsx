@@ -1,7 +1,7 @@
 import { IconEdit, IconEye, IconEyeOff, IconUserPlus } from "@tabler/icons";
 import { useCallback, useState } from "react";
 import TimetableForm from "@components/Modal/TimetableForm";
-import Button from "@ui/Button";
+import Button from "@components/ui/Button";
 import { actions, useTrackedStore } from "@store/index";
 import { type Timetable } from "../../types/timetable";
 import ColorChip from "./ColorChip";
