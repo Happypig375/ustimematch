@@ -6,18 +6,6 @@ import { ZTimetable } from "../../../types/timetable";
 import { router, publicProcedure } from "../trpc";
 
 export const shareRouter = router({
-  // Authorization is handled in api route
-  deleteExpiredTimetables: publicProcedure.query(async ({ ctx }) => {
-    const { count } = await ctx.prisma.sharedTimetables.deleteMany({
-      where: {
-        expiresAt: {
-          lte: new Date(),
-        },
-      },
-    });
-
-    return { count };
-  }),
   getTimetables: publicProcedure
     .input(z.object({ slug: z.string() }))
     .output(z.object({ timetables: ZTimetable.array().min(1) }))
@@ -46,8 +34,6 @@ export const shareRouter = router({
   guestShare: publicProcedure
     .input(z.object({ timetables: ZTimetable.array().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      // await new Promise((resolve) => setTimeout(resolve, 10000));
-
       // Excludes clien-side only id and visible, only includes color when sharing
       const mappedTimetables = input.timetables.map((timetable) => ({
         ...timetable,
@@ -69,15 +55,12 @@ export const shareRouter = router({
           expiresAt: existing.expiresAt,
         };
 
-      const t = new Date();
-      t.setMinutes(t.getMinutes() + 1);
       // Create shared timetables
       const { slug, expiresAt } = await ctx.prisma.sharedTimetables.create({
         data: {
           // URL-friendly querying key
           slug: nanoid(),
           timetables: mappedTimetables,
-          expiresAt: t,
         },
       });
 
