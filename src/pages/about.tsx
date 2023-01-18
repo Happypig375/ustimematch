@@ -2,7 +2,7 @@ import { IconSettings } from "@tabler/icons";
 import { type NextPage } from "next";
 import Header from "@components/Header";
 import Paragraph from "@components/ui/Paragraph";
-import { env } from "../env/client.mjs";
+import packageJson from "../../package.json";
 
 const About: NextPage = () => {
   return (
@@ -33,7 +33,7 @@ const About: NextPage = () => {
           {/* Version number */}
           <footer className="flex items-center gap-1 text-sm tracking-wide">
             <IconSettings stroke={1.75} className="h-4 w-4" />v
-            {env.NEXT_PUBLIC_VERSION}
+            {packageJson.version}
           </footer>
         </div>
       </div>
