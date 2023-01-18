@@ -166,7 +166,8 @@ const TimetableForm = ({
 
           <ModalControl>
             <DeleteAlert
-              enabled={!!timetable}
+              hidden={!timetable}
+              disabled={isFetching}
               onDelete={() => {
                 onDelete && onDelete();
                 setOpen(false);

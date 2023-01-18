@@ -97,7 +97,7 @@ const FolderForm = ({
 
           <ModalControl>
             <DeleteAlert
-              enabled={!!folder}
+              hidden={!folder}
               onDelete={() => {
                 onDelete && onDelete();
                 setOpen(false);

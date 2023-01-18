@@ -13,16 +13,17 @@ import {
 import Button from "@components/ui/Button";
 
 interface Props extends HTMLAttributes<HTMLParagraphElement> {
-  enabled?: boolean;
+  hidden?: boolean;
+  disabled?: boolean;
   onDelete: () => void;
 }
 
-const DeleteAlert = ({ enabled, onDelete, children }: Props) => {
+const DeleteAlert = ({ hidden, disabled, onDelete, children }: Props) => {
   const [openAlert, setOpenAlert] = useState(false);
 
   return (
     <Alert open={openAlert} onOpenChange={setOpenAlert}>
-      {enabled && (
+      {!hidden && (
         <AlertTrigger asChild>
           <Button
             icon
@@ -30,6 +31,7 @@ const DeleteAlert = ({ enabled, onDelete, children }: Props) => {
             type="button"
             onClick={() => setOpenAlert(true)}
             data-cy="delete-alert-trigger"
+            disabled={disabled}
           >
             <IconTrash stroke={1.75} className="h-5 w-5" />
           </Button>
