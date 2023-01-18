@@ -1,7 +1,14 @@
 import { IconRefresh } from "@tabler/icons";
+import clsx from "clsx";
+import type { HTMLAttributes } from "react";
 
-const Spinner = () => {
-  return <IconRefresh stroke={1.75} className="h-5 w-5 animate-spin" />;
+const Spinner = ({ className }: HTMLAttributes<HTMLOrSVGElement>) => {
+  return (
+    <IconRefresh
+      stroke={1.75}
+      className={clsx("h-5 w-5 animate-spin", className)}
+    />
+  );
 };
 
 export default Spinner;
