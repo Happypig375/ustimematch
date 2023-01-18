@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { InferGetServerSidePropsType } from "next";
 import type { CtxOrReq } from "next-auth/client/_utils";
-import { getCsrfToken, signIn } from "next-auth/react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { getCsrfToken } from "next-auth/react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Header from "@components/Header";
 import Button from "@components/ui/Button";

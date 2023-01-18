@@ -1,5 +1,6 @@
 import { IconArrowForward, IconListCheck, IconX } from "@tabler/icons";
-import { Dispatch, forwardRef, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { forwardRef } from "react";
 import { useMemo } from "react";
 import Button from "@components/ui/Button";
 import { ModalClose, ModalControl, ModalTitle } from "@components/ui/Modal";
