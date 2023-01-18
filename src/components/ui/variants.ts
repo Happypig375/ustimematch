@@ -232,19 +232,14 @@ export const modalOverlayVariants: Variants = {
 };
 
 // Tabs
+export interface TabsCustom {
+  direction: "left" | "right";
+}
+
 export const tabsVariants: Variants = {
-  enter: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
-  },
-  exit: (direction: string) => ({
-    x: direction === "left" ? "-20px" : "20px",
-    opacity: 0,
+  enter: ({ direction }: TabsCustom) => ({
+    x: [direction === "left" ? -24 : 24, 0],
+    opacity: [0, 1],
     transition: {
       type: "spring",
       bounce: 0,

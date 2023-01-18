@@ -10,6 +10,7 @@ import {
   ModalTitle,
   ModalTrigger,
 } from "@components/ui/Modal";
+import Spinner from "@components/ui/Spinner";
 import { actions, useTrackedStore } from "@store/index";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
@@ -65,12 +66,7 @@ const TimetableStatus = ({
         {timetable.name}
       </span>
 
-      {isFetching && (
-        <IconRefresh
-          stroke={1.75}
-          className="h-5 w-5 flex-shrink-0 animate-spin text-fg-100"
-        />
-      )}
+      {isFetching && <Spinner className="flex-shrink-0" />}
 
       {!isFetching && isSuccess && (
         <>
@@ -125,9 +121,9 @@ const RefreshModal = () => {
       <ModalContent open={openRefreshModal} onOpenChange={setOpenRefreshModal}>
         <ModalTitle>Refresh</ModalTitle>
 
-        <div className="flex max-h-80 flex-col overflow-y-auto">
+        <div className="flex max-h-96 flex-col overflow-y-auto">
           {combinedTimetables.map((timetable, i) => (
-            // Personal timetable is at index 0
+            // Personal timetable at index 0
             <TimetableStatus
               key={timetable.config.id}
               personal={i === 0}
@@ -136,8 +132,8 @@ const RefreshModal = () => {
           ))}
 
           {combinedTimetables.length === 0 && (
-            <span className="text-center text-sm">
-              No timetables have been added
+            <span className="grid h-16 place-items-center text-sm">
+              No timetables have been added.
             </span>
           )}
         </div>

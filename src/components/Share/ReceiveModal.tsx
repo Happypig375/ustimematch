@@ -1,7 +1,6 @@
 import { IconDownload, IconListCheck, IconX } from "@tabler/icons";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import Button from "@components/ui/Button";
 import {
   Modal,
@@ -10,41 +9,40 @@ import {
   ModalControl,
   ModalTitle,
 } from "@components/ui/Modal";
+import Spinner from "@components/ui/Spinner";
 import { actions, useTrackedStore } from "@store/index";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
 import SelectItem from "./SelectItem";
 
-// import SelectItem from "./TimetableItem";
-
 const ReceiveModal = () => {
   const router = useRouter();
   const { share } = router.query;
 
+  const [checkedIds, setCheckedIds] = useState<string[]>([]);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
-
   const [sharedTimetables, setSharedTimetables] = useState<Timetable[]>([]);
 
-  const { isLoading, isSuccess, isError } = trpc.share.getTimetables.useQuery(
+  useEffect(() => {
+    if (typeof share === "string") setOpenReceiveModal(true);
+  }, [share]);
+
+  const { isFetching, isSuccess, isError } = trpc.share.getTimetables.useQuery(
     { slug: share as string },
     {
       enabled: typeof share === "string",
       onSuccess: ({ timetables }) => {
-        router.push("/");
-        setCheckedIds([]);
         setSharedTimetables(timetables);
-        setOpenReceiveModal(true);
       },
-      onError: () => {
-        toast.error("The shared link might be invalid or has already expired");
+      onSettled: () => {
+        setCheckedIds([]);
       },
       retry: false,
       refetchOnMount: false,
+      refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     },
   );
-
-  const [checkedIds, setCheckedIds] = useState<string[]>([]);
 
   const onCheckedChange = (id: string, checked: boolean) => {
     if (checked) setCheckedIds([...checkedIds, id]);
@@ -65,42 +63,68 @@ const ReceiveModal = () => {
     sharedTimetables
       .filter((timetable) => checked(timetable.config.id))
       .forEach((timetable) => addTimetable(timetable));
+    router.replace("/");
+  };
+
+  const controlledSetOpenReceiveModal: typeof setOpenReceiveModal = (state) => {
+    if (isFetching) return;
+    setOpenReceiveModal(state);
+    router.replace("/");
   };
 
   return (
-    <Modal open={openReceiveModal} onOpenChange={setOpenReceiveModal}>
-      <ModalContent open={openReceiveModal} onOpenChange={setOpenReceiveModal}>
+    <Modal open={openReceiveModal} onOpenChange={controlledSetOpenReceiveModal}>
+      <ModalContent
+        open={openReceiveModal}
+        onOpenChange={controlledSetOpenReceiveModal}
+      >
         <div className="flex justify-between">
           <ModalTitle>Shared Timetables</ModalTitle>
-          <span className="text-sm">
-            {checkedIds.length} / {sharedTimetables.length} Selected
-          </span>
+          {isSuccess && (
+            <span className="text-sm">
+              {checkedIds.length} / {sharedTimetables.length} Selected
+            </span>
+          )}
         </div>
 
-        <div className="flex max-h-[336px] flex-col gap-1 overflow-y-auto">
-          {sharedTimetables.map((timetable) => (
-            <SelectItem
-              duplicateWarning={combinedTimetables.some(
-                ({ name }) => name === timetable.name,
-              )}
-              key={timetable.config.id}
-              id={timetable.config.id}
-              timetable={timetable}
-              checked={checked(timetable.config.id)}
-              onCheckedChange={(checked) =>
-                onCheckedChange(timetable.config.id, checked)
-              }
-            />
-          ))}
-        </div>
+        {isFetching && (
+          <div className="grid h-64 place-items-center">
+            <Spinner />
+          </div>
+        )}
+
+        {isError && (
+          <span className="grid h-64 place-items-center text-red-500">
+            The shared link might be expired or invalid.
+          </span>
+        )}
+
+        {isSuccess && (
+          <div className="flex max-h-64 flex-col gap-1 overflow-y-auto">
+            {sharedTimetables.map((timetable) => (
+              <SelectItem
+                duplicateWarning={combinedTimetables.some(
+                  ({ name }) => name === timetable.name,
+                )}
+                key={timetable.config.id}
+                id={timetable.config.id}
+                timetable={timetable}
+                checked={checked(timetable.config.id)}
+                onCheckedChange={(checked) =>
+                  onCheckedChange(timetable.config.id, checked)
+                }
+              />
+            ))}
+          </div>
+        )}
 
         <ModalControl>
-          <Button icon onClick={toggleCheckAll}>
+          <Button icon onClick={toggleCheckAll} disabled={!isSuccess}>
             <IconListCheck stroke={1.75} className="h-5 w-5" />
           </Button>
 
           <ModalClose asChild>
-            <Button fullWidth>
+            <Button fullWidth disabled={isFetching}>
               <IconX stroke={1.75} className="h-5 w-5" />
               Close
             </Button>
@@ -110,7 +134,7 @@ const ReceiveModal = () => {
             <Button
               fullWidth
               onClick={saveSharedTiemtables}
-              disabled={checkedIds.length === 0}
+              disabled={checkedIds.length === 0 || !isSuccess}
             >
               <IconDownload stroke={1.75} className="h-5 w-5" />
               Save
