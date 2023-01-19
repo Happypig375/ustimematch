@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconPencil, IconPlus, IconX } from "@tabler/icons";
 import { nanoid } from "nanoid";
+import Link from "next/link";
 import { useEffect, useMemo } from "react";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -107,7 +108,7 @@ const TimetableForm = ({
             visible: timetable ? timetable.config.visible : true,
           },
         };
-        console.log(getValues("color"));
+
         timetable
           ? onEdit && onEdit(tmpTimetable)
           : onAdd && onAdd(tmpTimetable);
@@ -160,6 +161,15 @@ const TimetableForm = ({
               error={errors.plannerURL?.message}
               {...register("plannerURL")}
               data-cy="timetable-form-planner-url-input"
+              tips={
+                <>
+                  Please refer to the{" "}
+                  <Link href="/tutorial" className="font-medium underline">
+                    tutorial
+                  </Link>{" "}
+                  if you&apos;re not sure what this is.
+                </>
+              }
             />
             <ColorInput name="color" control={control} disabled={isFetching} />
           </div>

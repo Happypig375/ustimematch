@@ -2,9 +2,11 @@ import * as Label from "@radix-ui/react-label";
 import clsx from "clsx";
 import {
   forwardRef,
+  type ReactNode,
   type DetailedHTMLProps,
   type InputHTMLAttributes,
 } from "react";
+import Tips from "./Tips";
 
 interface Props
   extends DetailedHTMLProps<
@@ -14,22 +16,29 @@ interface Props
   label?: string;
   labelId?: string;
   error?: string;
+  tips?: ReactNode;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ label, labelId, disabled, error, className, ...props }, ref) => {
+  ({ label, labelId, disabled, error, className, tips, ...props }, ref) => {
     return (
       <div className={clsx("flex flex-col gap-1", className)}>
-        {label && labelId && (
-          <Label.Root
-            htmlFor={labelId}
-            className="flex items-center justify-between text-sm font-medium"
-            data-cy={`input-label-${labelId}`}
-          >
-            {label}
+        <div className="flex justify-between">
+          {label && labelId && (
+            <Label.Root
+              htmlFor={labelId}
+              className="flex items-center justify-between text-sm font-medium"
+              data-cy={`input-label-${labelId}`}
+            >
+              {label}
+            </Label.Root>
+          )}
+
+          <div className="flex items-center gap-1">
             <span className="text-xs font-normal text-red-600">{error}</span>
-          </Label.Root>
-        )}
+            {tips && <Tips>{tips}</Tips>}
+          </div>
+        </div>
 
         <input
           id={labelId}

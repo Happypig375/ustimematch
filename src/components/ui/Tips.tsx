@@ -20,7 +20,7 @@ const Tips = ({ children }: HTMLAttributes<HTMLDivElement>) => {
       <AnimatePresence>
         {openTips && (
           <Popover.Portal forceMount>
-            <Popover.Content forceMount asChild side="top" sideOffset={8}>
+            <Popover.Content forceMount asChild side="top" sideOffset={6}>
               <motion.div
                 exit="close"
                 animate="open"

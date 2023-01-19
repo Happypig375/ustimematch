@@ -1,24 +1,34 @@
-import { type Variants } from "framer-motion";
+import type { Transition, Variants } from "framer-motion";
 
-// Theme toggle button
+export const long: Transition = {
+  type: "spring",
+  bounce: 0,
+  duration: 0.4,
+};
+
+export const medium: Transition = {
+  type: "spring",
+  bounce: 0,
+  duration: 0.3,
+};
+
+export const short: Transition = {
+  type: "spring",
+  bounce: 0,
+  duration: 0.2,
+};
+
+// Toggle theme button
 export const themeVariants: Variants = {
   enter: {
     opacity: 1,
     rotate: 360,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.5,
-    },
+    transition: long,
   },
   exit: {
     rotate: 0,
     opacity: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.5,
-    },
+    transition: long,
   },
 };
 
@@ -27,20 +37,12 @@ export const menuVariants: Variants = {
   open: {
     scale: 1,
     opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: short,
   },
   close: {
     scale: 0.3,
     opacity: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: short,
   },
 };
 
@@ -49,20 +51,12 @@ export const tipsVariants: Variants = {
   open: {
     scale: 1,
     opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.2,
-    },
+    transition: short,
   },
   close: {
     scale: 0.3,
     opacity: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.2,
-    },
+    transition: short,
   },
 };
 
@@ -70,20 +64,12 @@ export const tipsVariants: Variants = {
 export const explorerVariants: Variants = {
   open: {
     marginLeft: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   },
   close: {
     // Matching tailwind's "min-w-[256px] w-1/5"
     marginLeft: "min(-256px, -20%)",
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   },
 };
 
@@ -91,19 +77,11 @@ export const explorerVariants: Variants = {
 export const chevronVariants: Variants = {
   open: {
     rotate: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   },
   close: {
     rotate: 180,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   },
 };
 
@@ -111,19 +89,11 @@ export const chevronVariants: Variants = {
 export const chevronHalfVariants: Variants = {
   open: {
     rotate: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   },
   close: {
     rotate: -90,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   },
 };
 
@@ -132,20 +102,12 @@ export const accordionVariants: Variants = {
   open: {
     height: "var(--radix-accordion-content-height)",
     opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   },
   close: {
     height: 0,
     opacity: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   },
 };
 
@@ -153,19 +115,11 @@ export const accordionVariants: Variants = {
 export const drawerVariants: Variants = {
   open: {
     y: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: medium,
   },
   close: {
     y: "100%",
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: medium,
   },
 };
 
@@ -173,19 +127,11 @@ export const drawerVariants: Variants = {
 export const drawerOverlayVariants: Variants = {
   open: {
     opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: medium,
   },
   close: {
     opacity: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: medium,
   },
 };
 
@@ -194,20 +140,12 @@ export const modalVariants: Variants = {
   open: {
     scale: 1,
     opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: medium,
   },
   close: {
     scale: 0.95,
     opacity: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: medium,
   },
 };
 
@@ -215,19 +153,11 @@ export const modalVariants: Variants = {
 export const modalOverlayVariants: Variants = {
   open: {
     opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: medium,
   },
   close: {
     opacity: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
+    transition: medium,
   },
 };
 
@@ -240,10 +170,6 @@ export const tabsVariants: Variants = {
   enter: ({ direction }: TabsCustom) => ({
     x: [direction === "left" ? -24 : 24, 0],
     opacity: [0, 1],
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.4,
-    },
+    transition: long,
   }),
 };

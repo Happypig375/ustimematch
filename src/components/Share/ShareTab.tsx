@@ -1,4 +1,5 @@
 import { IconArrowBack, IconCheck, IconCopy, IconX } from "@tabler/icons";
+import { motion } from "framer-motion";
 import { QRCodeCanvas } from "qrcode.react";
 import type { Dispatch, SetStateAction } from "react";
 import { forwardRef } from "react";
@@ -7,6 +8,7 @@ import Button from "@components/ui/Button";
 import Input from "@components/ui/Input";
 import { ModalClose, ModalControl, ModalTitle } from "@components/ui/Modal";
 import Spinner from "@components/ui/Spinner";
+import { short } from "@components/ui/variants";
 
 interface Props {
   shareURL?: string;
@@ -59,7 +61,11 @@ const ShareTab = forwardRef<HTMLDivElement, Props>(
         )}
 
         {shareURL && (
-          <div className="flex flex-col gap-2">
+          <motion.div
+            transition={short}
+            animate={{ opacity: [0, 1] }}
+            className="flex flex-col gap-2"
+          >
             <QRCodeCanvas
               // Matching h-64
               size={208}
@@ -86,7 +92,7 @@ const ShareTab = forwardRef<HTMLDivElement, Props>(
                 )}
               </Button>
             </div>
-          </div>
+          </motion.div>
         )}
 
         <ModalControl>

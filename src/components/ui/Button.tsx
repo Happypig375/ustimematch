@@ -1,10 +1,11 @@
 import clsx from "clsx";
+import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 import React from "react";
 import Spinner from "./Spinner";
 
 interface Props
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
   icon?: boolean;

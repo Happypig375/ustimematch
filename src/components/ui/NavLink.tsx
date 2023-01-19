@@ -25,7 +25,7 @@ const NavLink = React.forwardRef<HTMLAnchorElement, Props>(
       href={{ pathname: href }}
       target={external ? "_blank" : undefined}
       className={clsx(
-        "flex items-center text-fg-100 hover:text-fg-200",
+        "flex items-center whitespace-nowrap text-fg-100 hover:text-fg-200",
         icon && inMenu ? "gap-2" : icon && "gap-[6px]",
         inMenu
           ? "border-b border-border-100 px-4 py-2 first:rounded-t-md last:rounded-b-md last:border-b-0 hover:bg-bg-300/50 hover:ring-0 hover:ring-offset-0 active:bg-bg-300"
