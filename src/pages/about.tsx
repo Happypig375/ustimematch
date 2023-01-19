@@ -1,41 +1,45 @@
-import { IconSettings } from "@tabler/icons";
+import clsx from "clsx";
 import { type NextPage } from "next";
+import Link from "next/link";
 import Header from "@components/Header";
-import Paragraph from "@components/ui/Paragraph";
 import packageJson from "../../package.json";
 
 const About: NextPage = () => {
   return (
     <Header>
       <div className="w-full overflow-auto py-4 px-6 sm:py-8 sm:px-10">
-        <div className="mx-auto flex max-w-screen-lg flex-col gap-8">
-          <Paragraph>
-            <Paragraph.Title>Features</Paragraph.Title>
-            <Paragraph.Body>
-              Search for common time slots between friends.
-            </Paragraph.Body>
-            <Paragraph.Body>
-              Share dynamically updated timetables among different people.
-            </Paragraph.Body>
-            <Paragraph.Body>
-              Locally or remotely store timetables exported from Timetable
-              Planner.
-            </Paragraph.Body>
-          </Paragraph>
-
-          <Paragraph>
-            <Paragraph.Title>Credits</Paragraph.Title>
-            <Paragraph.Body>
-              Inspired by USThing and Timetable Planner
-            </Paragraph.Body>
-          </Paragraph>
-
-          {/* Version number */}
-          <footer className="flex items-center gap-1 text-sm tracking-wide">
-            <IconSettings stroke={1.75} className="h-4 w-4" />v
-            {packageJson.version}
-          </footer>
-        </div>
+        <article
+          className={clsx(
+            "prose prose-sm mx-auto",
+            "sm:prose-base",
+            "dark:prose-invert",
+            "prose-code:before:hidden prose-code:after:hidden",
+            "prose-hr:border-border-100",
+          )}
+        >
+          <h3 id="features">Features</h3>
+          <ul>
+            <li>Keep track of you and your friends&apos; timetables.</li>
+            <li>Easily toggle between whose timetable to view.</li>
+            <li>Search for common free time slots.</li>
+            <li>Share timetables within a few clicks.</li>
+            <li>Refresh on demand in case of lessons swapping.</li>
+            <li>Folders for organizing different groups.</li>
+            <li>And more to come...</li>
+          </ul>
+          <h3 id="enquiry">Enquiry</h3>
+          <p>
+            Please fill out this <Link href="">form</Link> for bug reports,
+            feature requests, etc.
+          </p>
+          <h3 id="credits">Credits</h3>
+          <p>USTimematch is inspired by USThing and Timetable Planner.</p>
+          <hr />
+          <code>v{packageJson.version}</code>
+          &emsp;<Link href="">Changelog</Link>&emsp;
+          <Link href="">Donations</Link>&emsp;
+          <Link href="">Terms</Link>
+        </article>
       </div>
     </Header>
   );
