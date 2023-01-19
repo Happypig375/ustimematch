@@ -41,7 +41,7 @@ const PersonalTimetable = () => {
             </span>
           </div>
 
-          <div className="flex gap-2 py-2 pr-4">
+          <div className="flex gap-2 py-2 pr-2">
             <Button
               icon
               title="Toggle personal timetable visibility"
@@ -74,7 +74,7 @@ const PersonalTimetable = () => {
           </div>
         </div>
       ) : (
-        <div className="py-2 px-3">
+        <div className="p-2">
           <Button
             fullWidth
             title="Add personal timetable"
