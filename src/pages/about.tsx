@@ -7,7 +7,7 @@ import packageJson from "../../package.json";
 const About: NextPage = () => {
   return (
     <Header>
-      <div className="w-full overflow-auto py-4 px-6 sm:py-8 sm:px-10">
+      <div className="w-full overflow-auto p-6">
         <article
           className={clsx(
             "prose prose-sm mx-auto",
