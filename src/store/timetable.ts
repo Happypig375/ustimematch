@@ -1,5 +1,7 @@
 import { createStore } from "@udecode/zustood";
 import { nanoid } from "nanoid";
+import { z } from "zod";
+import { createJSONStorage } from "zustand/middleware";
 import {
   findItemDeep,
   findTimetableByIdDeep,
@@ -8,23 +10,51 @@ import {
   toggleFolderVisibility,
 } from "@utils/sortableTree";
 import type { Period, Periods } from "../types/timetable";
+import { ZTimetable } from "../types/timetable";
 import { type Timetable } from "../types/timetable";
 import type { TimetableItem, TreeItems, TreeItem } from "../types/tree";
+import { ZTreeItems } from "../types/tree";
 
-interface TimetableStore {
-  personalTimetable: Timetable | null;
-  timetablesTree: TreeItems;
-}
+export const ZTimetableStore = z.object({
+  personalTimetable: ZTimetable.nullable(),
+  timetablesTree: ZTreeItems,
+});
 
-// For future reference if implementing hydrate store from database
-// https://github.com/pmndrs/zustand/issues/405#issuecomment-1371261446
-export const timetableStore = createStore("timetable")<TimetableStore>(
-  {
-    personalTimetable: null,
-    timetablesTree: [],
+export type TimetableStore = z.infer<typeof ZTimetableStore>;
+
+export const defaultTimetableStore: TimetableStore = {
+  personalTimetable: null,
+  timetablesTree: [],
+};
+
+export const timetableStore = createStore("timetable")(defaultTimetableStore, {
+  devtools: { enabled: true },
+  persist: {
+    enabled: true,
+    // Disable storage initially, hydration is handled in react.
+    // Need to use empty function, otherwise `api.useStore.persist` will be undefined.
+    storage: {
+      getItem: () => null,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      setItem: () => {},
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      removeItem: () => {},
+    },
   },
-  { devtools: { enabled: true }, persist: { enabled: true } },
-)
+})
+  .extendActions((_, __, api) => ({
+    disableLocalStorage: () => {
+      api.useStore.persist.setOptions({
+        storage: undefined,
+      });
+    },
+    enableLocalStorage: () => {
+      api.useStore.persist.setOptions({
+        storage: createJSONStorage(() => localStorage),
+      });
+      api.useStore.persist.rehydrate();
+    },
+  }))
   .extendSelectors((_, get) => ({
     // All timetables within tree
     flattenedTimetablesTree: (): Timetable[] => {

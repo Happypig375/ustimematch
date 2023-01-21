@@ -4,9 +4,11 @@ import {
   IconDots,
   IconInfoCircle,
   IconQuestionCircle,
+  IconUserCircle,
 } from "@tabler/icons";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
+import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import React from "react";
 import Button from "@components/ui/Button";
@@ -15,6 +17,7 @@ import { menuVariants } from "@components/ui/variants";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
+  const { status } = useSession();
 
   return (
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
@@ -46,6 +49,33 @@ const MobileMenu = () => {
                   "dark:border-none dark:p-[0.5px]",
                 )}
               >
+                <DropdownMenu.Item asChild>
+                  <>
+                    {status === "unauthenticated" && (
+                      <NavLink
+                        inMenu
+                        onClick={() => signIn(undefined, { callbackUrl: "/" })}
+                        icon={
+                          <IconUserCircle stroke={1.75} className="h-4 w-4" />
+                        }
+                      >
+                        Sign In
+                      </NavLink>
+                    )}
+                    {status === "authenticated" && (
+                      <NavLink
+                        inMenu
+                        href="/account"
+                        icon={
+                          <IconUserCircle stroke={1.75} className="h-4 w-4" />
+                        }
+                      >
+                        Account
+                      </NavLink>
+                    )}
+                  </>
+                </DropdownMenu.Item>
+
                 <DropdownMenu.Item asChild>
                   <NavLink
                     inMenu

@@ -1,31 +1,26 @@
 import { type NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Explorer from "@components/Explorer";
 import Header from "@components/Header";
+import PersistHandler from "@components/PersistHandler";
 import ReceiveModal from "@components/Share/ReceiveModal";
 import WeekView from "@components/WeekView";
 
 const Home: NextPage = () => {
-  // Prevent loading persisted content by SSR
-  const [hydrated, setHydrated] = useState<boolean>(false);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  const [hydrated, setHydrated] = useState(false);
 
   return (
-    <>
-      <Header>
-        {hydrated && (
-          <>
-            <Explorer />
-            <WeekView />
-          </>
-        )}
+    <Header>
+      {hydrated && (
+        <>
+          <Explorer />
+          <WeekView />
+        </>
+      )}
 
-        <ReceiveModal />
-      </Header>
-    </>
+      <ReceiveModal />
+      <PersistHandler setHydrated={setHydrated} />
+    </Header>
   );
 };
 

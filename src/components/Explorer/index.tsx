@@ -1,4 +1,4 @@
-import { IconCalendarPlus, IconFolderPlus, IconLogin } from "@tabler/icons";
+import { IconCalendarPlus, IconFolderPlus } from "@tabler/icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import FolderForm from "@components/Modal/FolderForm";
