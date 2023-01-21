@@ -23,7 +23,14 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
     const combinedTimetables = useTrackedStore().timetable.combinedTimetables();
 
     const flattenedTree = useMemo(
-      () => flattenTree(timetablesTree),
+      () =>
+        flattenTree(timetablesTree).filter(
+          (item) =>
+            !(
+              item.treeItem.type === "FOLDER" &&
+              item.treeItem.children.length === 0
+            ),
+        ),
       [timetablesTree],
     );
 
@@ -94,7 +101,7 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
       );
     };
 
-    const empty = flattenedTree.length === 0;
+    const empty = flattenedTree.length === 0 && !personalTimetable;
 
     return (
       <div className="flex flex-col justify-center gap-4" ref={ref}>
@@ -111,7 +118,7 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
           </div>
         </div>
 
-        {flattenedTree.length === 0 ? (
+        {empty ? (
           <span className="grid h-16 place-items-center text-sm">
             No timetables have been added.
           </span>
@@ -134,39 +141,35 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
             )}
 
             {/* Timetables tree */}
-            {flattenedTree.map(
-              ({ depth, treeItem }) =>
-                !(
-                  treeItem.type === "FOLDER" && treeItem.children.length === 0
-                ) && (
-                  <SelectItem
-                    key={treeItem.id}
-                    depth={depth}
-                    id={treeItem.id}
-                    timetable={
-                      treeItem.type === "TIMETABLE"
-                        ? treeItem.timetable
-                        : undefined
-                    }
-                    folderItem={
-                      treeItem.type === "FOLDER" ? treeItem : undefined
-                    }
-                    checked={
-                      treeItem.type === "FOLDER"
-                        ? folderChecked(treeItem.id)
-                        : timetableChecked(treeItem.timetable.config.id)
-                    }
-                    onCheckedChange={(chekced) =>
-                      onCheckedChange(treeItem.id, chekced)
-                    }
-                  />
-                ),
-            )}
+            {flattenedTree.map(({ depth, treeItem }) => (
+              <SelectItem
+                key={treeItem.id}
+                depth={depth}
+                id={treeItem.id}
+                timetable={
+                  treeItem.type === "TIMETABLE" ? treeItem.timetable : undefined
+                }
+                folderItem={treeItem.type === "FOLDER" ? treeItem : undefined}
+                checked={
+                  treeItem.type === "FOLDER"
+                    ? folderChecked(treeItem.id)
+                    : timetableChecked(treeItem.timetable.config.id)
+                }
+                onCheckedChange={(chekced) =>
+                  onCheckedChange(treeItem.id, chekced)
+                }
+              />
+            ))}
           </div>
         )}
 
         <ModalControl>
-          <Button icon onClick={toggleCheckAll} disabled={empty}>
+          <Button
+            icon
+            onClick={toggleCheckAll}
+            disabled={empty}
+            title="Check/Uncheck All"
+          >
             <IconListCheck stroke={1.75} className="h-5 w-5" />
           </Button>
 

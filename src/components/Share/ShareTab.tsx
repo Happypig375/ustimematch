@@ -68,7 +68,7 @@ const ShareTab = forwardRef<HTMLDivElement, Props>(
           >
             <QRCodeCanvas
               // Matching h-64
-              size={208}
+              size={204}
               value={shareURL}
               className="self-center rounded-2xl border-[16px] border-white"
             />

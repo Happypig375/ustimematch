@@ -34,7 +34,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
             </Label.Root>
           )}
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-[6px]">
             <span className="text-xs font-normal text-red-600">{error}</span>
             {tips && <Tips>{tips}</Tips>}
           </div>
