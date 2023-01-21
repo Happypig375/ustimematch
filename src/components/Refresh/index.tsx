@@ -19,7 +19,7 @@ const TimetableStatus = ({
   personal,
   timetable,
 }: {
-  personal: boolean;
+  personal?: boolean;
   timetable: Timetable;
 }) => {
   const editTimetable = actions.timetable.editTimetable;
@@ -108,7 +108,9 @@ const TimetableStatus = ({
 const RefreshModal = () => {
   const [openRefreshModal, setOpenRefreshModal] = useState(false);
 
-  const combinedTimetables = useTrackedStore().timetable.combinedTimetables();
+  const personalTimetable = useTrackedStore().timetable.personalTimetable();
+  const flattenedTimetablesTree =
+    useTrackedStore().timetable.flattenedTimetablesTree();
 
   return (
     <Modal open={openRefreshModal} onOpenChange={setOpenRefreshModal}>
@@ -122,16 +124,14 @@ const RefreshModal = () => {
         <ModalTitle>Refresh</ModalTitle>
 
         <div className="flex max-h-96 flex-col overflow-y-auto">
-          {combinedTimetables.map((timetable, i) => (
-            // Personal timetable at index 0
-            <TimetableStatus
-              key={timetable.config.id}
-              personal={i === 0}
-              timetable={timetable}
-            />
+          {personalTimetable && (
+            <TimetableStatus personal timetable={personalTimetable} />
+          )}
+          {flattenedTimetablesTree.map((timetable) => (
+            <TimetableStatus key={timetable.config.id} timetable={timetable} />
           ))}
 
-          {combinedTimetables.length === 0 && (
+          {!personalTimetable && flattenedTimetablesTree.length === 0 && (
             <span className="grid h-16 place-items-center text-sm">
               No timetables have been added.
             </span>
