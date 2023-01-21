@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useRouter } from "next/router";
 import Header from "@components/Header";
 import Button from "@components/ui/Button";
@@ -7,14 +8,24 @@ const VerifyRequest = () => {
 
   return (
     <Header>
-      <div className="grid w-full place-items-center">
-        <div className="flex flex-col items-center gap-4">
-          <h1 className="text-2xl">Please Check your email</h1>
-          <span>A sign in link has been sent to your email address.</span>
-          <Button fullWidth onClick={() => router.replace("/")}>
-            Return to home page
+      <div className="grid w-full place-items-center p-6">
+        <article
+          className={clsx(
+            "prose prose-sm mx-auto",
+            "sm:prose-base",
+            "dark:prose-invert",
+          )}
+        >
+          <h2>Please check your email</h2>
+          <p>A sign in link has been sent to your email address.</p>
+          <Button
+            fullWidth
+            onClick={() => router.replace("/")}
+            className="text-base"
+          >
+            Return to Home Page
           </Button>
-        </div>
+        </article>
       </div>
     </Header>
   );

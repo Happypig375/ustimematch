@@ -1,22 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import clsx from "clsx";
 import type { InferGetServerSidePropsType } from "next";
 import type { CtxOrReq } from "next-auth/client/_utils";
 import { getCsrfToken } from "next-auth/react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useRouter } from "next/router";
 import Header from "@components/Header";
 import Button from "@components/ui/Button";
 import Input from "@components/ui/Input";
-
-const ZSignInForm = z.object({
-  csrfToken: z.string().min(1),
-  email: z
-    .string()
-    .min(1, { message: "Please enter an email address" })
-    .email({ message: "Invalid email address" }),
-});
-
-type SignInForm = z.infer<typeof ZSignInForm>;
 
 export async function getServerSideProps(context: CtxOrReq) {
   const csrfToken = await getCsrfToken(context);
@@ -28,38 +17,42 @@ export async function getServerSideProps(context: CtxOrReq) {
 const SignIn = ({
   csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const {
-    register,
-    formState: { errors },
-  } = useForm<SignInForm>({
-    defaultValues: {
-      csrfToken,
-      email: "",
-    },
-    resolver: zodResolver(ZSignInForm),
-  });
+  const router = useRouter();
+  const { error } = router.query;
 
   return (
     <Header>
-      <div className="grid w-full place-items-center">
-        <form
-          method="post"
-          action="/api/auth/signin/email"
-          className="flex w-80 flex-col gap-4"
+      <div className="relative grid w-full place-items-center p-6">
+        <article
+          className={clsx(
+            "prose prose-sm mx-auto",
+            "sm:prose-base",
+            "dark:prose-invert",
+          )}
         >
-          <input type="hidden" {...register("csrfToken")} />
-          <Input
-            inputMode="email"
-            id="email"
-            labelId="email"
-            label="Email"
-            error={errors?.email?.message}
-            {...register("email")}
-          />
-          <Button type="submit" fullWidth>
-            Sign in
-          </Button>
-        </form>
+          <h2>Sign in to USTimematch</h2>
+          <form
+            method="post"
+            action="/api/auth/signin/email"
+            className="flex w-[80vw] flex-col gap-4 sm:w-96"
+          >
+            <input type="hidden" name="csrfToken" value={csrfToken} />
+            <Input
+              inputMode="email"
+              id="email"
+              labelId="email"
+              label="Email"
+              name="email"
+              error={
+                typeof error === "string" ? "Failed to sign in" : undefined
+              }
+              tips="A sign in link will be sent to you via email."
+            />
+            <Button type="submit" fullWidth className="text-base">
+              Sign in
+            </Button>
+          </form>
+        </article>
       </div>
     </Header>
   );
