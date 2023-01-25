@@ -4,6 +4,7 @@ import Explorer from "@components/Explorer";
 import Header from "@components/Header";
 import PersistHandler from "@components/PersistHandler";
 import ReceiveModal from "@components/Share/ReceiveModal";
+import Tour from "@components/Tour";
 import WeekView from "@components/WeekView";
 
 const Home: NextPage = () => {
@@ -13,6 +14,8 @@ const Home: NextPage = () => {
     <Header>
       {hydrated && (
         <>
+          <Tour />
+
           <Explorer />
           <WeekView />
         </>

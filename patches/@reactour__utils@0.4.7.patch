@@ -1,0 +1,34 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index cbc10acf15c25002a71b37b69e8ca71503570911..6a71bac36d59e911b2d7c5ee1898a179ee1ffa05 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -132,23 +132,14 @@ function smoothScroll(elem, options) {
+     if (!(elem instanceof Element)) {
+       throw new TypeError("Argument 1 must be an Element");
+     }
+-    let same = 0;
+-    let lastPos = null;
+     const scrollOptions = Object.assign({ behavior: "smooth" }, options);
+     elem.scrollIntoView(scrollOptions);
+-    requestAnimationFrame(check);
+-    function check() {
+-      const newPos = elem == null ? void 0 : elem.getBoundingClientRect().top;
+-      if (newPos === lastPos) {
+-        if (same++ > 2) {
+-          return resolve(null);
+-        }
+-      } else {
+-        same = 0;
+-        lastPos = newPos;
+-      }
+-      requestAnimationFrame(check);
+-    }
++    const intersectionObserver = new IntersectionObserver((entries) => {
++      let [entry] = entries;
++      if (entry.isIntersecting) 
++        resolve(null)
++    }, { threshold: 1 });
++    intersectionObserver.observe(elem)
+   });
+ }
+ 

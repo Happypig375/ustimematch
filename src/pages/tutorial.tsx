@@ -8,11 +8,16 @@ import {
 import clsx from "clsx";
 import { type NextPage } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import Header from "@components/Header";
+import Button from "@components/ui/Button";
 import Tips from "@components/ui/Tips";
+import { uiStore } from "@store/ui";
 import importImage from "../../public/import.png";
 
 const Tutorial: NextPage = () => {
+  const router = useRouter();
+
   return (
     <Header>
       <div className="w-full overflow-auto p-6">
@@ -115,6 +120,20 @@ const Tutorial: NextPage = () => {
               version.
             </li>
           </ul>
+
+          <hr />
+
+          <Button
+            fullWidth
+            onClick={() => {
+              uiStore.set.showTour(true);
+              router.push("/");
+            }}
+            data-cy="tour-launch"
+            className="text-base"
+          >
+            Launch tutorial again
+          </Button>
         </article>
       </div>
     </Header>

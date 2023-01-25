@@ -2,7 +2,7 @@ import debounce from "lodash.debounce";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
-import { actions } from "@store/index";
+import { actions, useTrackedStore } from "@store/index";
 import type { TimetableStore } from "@store/timetable";
 import { timetableStore } from "@store/timetable";
 import { trpc } from "@utils/trpc";
@@ -47,18 +47,21 @@ const PersistHandler = ({
     () =>
       debounce(
         (timetableStore: TimetableStore) => mutate({ timetableStore }),
-        10000,
+        0,
       ),
     [mutate],
   );
+
+  const showTour = useTrackedStore().ui.showTour();
 
   useEffect(() => {
     // Prevent initial hydration from triggering mutation
     if (authHydrated)
       return timetableStore.store.subscribe((timetableStore) => {
-        mutateDebounce(timetableStore);
+        // Prevent state changes from tour triggering mutation
+        !showTour && mutateDebounce(timetableStore);
       });
-  }, [authHydrated, mutateDebounce]);
+  }, [authHydrated, mutateDebounce, showTour]);
 
   // Flush debounce when unloading
   const handleUnload = useCallback(

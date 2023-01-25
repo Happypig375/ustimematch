@@ -31,7 +31,7 @@ const PersonalTimetable = () => {
   );
 
   return (
-    <div className="border-t border-border-100">
+    <div className="border-t border-border-100" data-tour="personal-timetable">
       {personalTimetable ? (
         <div className="flex gap-4">
           <div className="flex flex-grow items-center gap-2 overflow-hidden pl-4 text-fg-100">

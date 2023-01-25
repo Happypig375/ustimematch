@@ -1,0 +1,13 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 83f5df42dbb7e5fbd85b8ac1e315e3d0210df4db..077507f2f3c633d22f3432d1bc1724d5a609aaf8 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -55,6 +55,8 @@ var Popover = ({
+   const targetTop = sizes == null ? void 0 : sizes.top;
+   const targetRight = sizes == null ? void 0 : sizes.right;
+   const targetBottom = sizes == null ? void 0 : sizes.bottom;
++  // Prevent initial transition from triggering
++  if (!sizes.width && !sizes.height) return null
+   const position = providedPosition && typeof providedPosition === "function" ? providedPosition(
+     {
+       width: helperWidth,

@@ -22,7 +22,7 @@ const Controls = () => {
   const toggleShowTimematch = actions.ui.toggleShowTimematch;
 
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-border-100 p-2">
+    <div className="flex items-center justify-between gap-4 border-b border-border-100 pl-2">
       <Button icon title="Toggle Explorer" onClick={toggleShowExplorer}>
         <motion.div
           initial={false}
@@ -33,7 +33,10 @@ const Controls = () => {
         </motion.div>
       </Button>
 
-      <div className="flex gap-4">
+      <div
+        className="flex gap-4 overflow-auto p-2"
+        data-tour="weekview-controls"
+      >
         <Button icon title="Toggle Timematch" onClick={toggleShowTimematch}>
           {showTimematch ? (
             <IconClock stroke={1.75} className="h-5 w-5" />

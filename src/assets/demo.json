@@ -1,0 +1,343 @@
+{
+  "personalTimetable": {
+    "lessons": [
+      [],
+      [
+        {
+          "name": "MATH 1014 (L01)",
+          "venue": "Lecture Theater D (216)",
+          "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+          "begin": "12:00",
+          "end": "13:20"
+        },
+        {
+          "name": "CHEM 1008 (L1)",
+          "venue": "Lecture Theater C (211)",
+          "description": "CHEM 1008 - Introductory Chemistry\nSection: L1\nInstructor: TSANG, Ming Wai Emily",
+          "begin": "13:30",
+          "end": "14:50"
+        },
+        {
+          "name": "MATH 1014 (T01C)",
+          "venue": "G009B, CYT Bldg (70)",
+          "description": "MATH 1014 - Calculus II\nSection: T01C\nInstructor: IP, Ivan Chi Ho",
+          "begin": "18:00",
+          "end": "18:50"
+        }
+      ],
+      [
+        {
+          "name": "CORE 1403A (T13)",
+          "venue": "Rm 2128A, Lift 19 (28)",
+          "description": "CORE 1403A - Academic English for University Studies\nSection: T13",
+          "begin": "13:30",
+          "end": "14:50"
+        }
+      ],
+      [
+        {
+          "name": "MATH 1014 (L01)",
+          "venue": "Lecture Theater D (216)",
+          "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+          "begin": "12:00",
+          "end": "13:20"
+        },
+        {
+          "name": "CHEM 1008 (L1)",
+          "venue": "Lecture Theater C (211)",
+          "description": "CHEM 1008 - Introductory Chemistry\nSection: L1\nInstructor: TSANG, Ming Wai Emily",
+          "begin": "13:30",
+          "end": "14:50"
+        }
+      ],
+      [
+        {
+          "name": "CORE 1403A (T13)",
+          "venue": "Rm 2128A, Lift 19 (28)",
+          "description": "CORE 1403A - Academic English for University Studies\nSection: T13",
+          "begin": "13:30",
+          "end": "14:50"
+        }
+      ],
+      [],
+      []
+    ],
+    "plannerURL": "demo-timetable-0",
+    "university": "HKUST",
+    "name": "Terry",
+    "config": {
+      "id": "demo-timetable-0",
+      "color": "#b98bb9",
+      "visible": true
+    }
+  },
+  "timetablesTree": [
+    {
+      "name": "CORE 1402",
+      "id": "demo-folder-1",
+      "type": "FOLDER",
+      "collapsed": false,
+      "children": [
+        {
+          "timetable": {
+            "lessons": [
+              [
+                {
+                  "name": "BIBU 4830 (L1)",
+                  "venue": "Rm 4504, Lift 25-26 (54)",
+                  "description": "BIBU 4830 - Biotechnology Management\nSection: L1\nInstructor: LEE, Hong Seng Daniel",
+                  "begin": "12:00",
+                  "end": "14:50"
+                },
+                {
+                  "name": "CORE 1402 (T01)",
+                  "venue": "Rm 2132A, Lift 19 (28)",
+                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "begin": "15:00",
+                  "end": "16:20"
+                }
+              ],
+              [
+                {
+                  "name": "ACCT 2200 (L03)",
+                  "venue": "G009A, CYT Bldg (80)",
+                  "description": "ACCT 2200 - Principles of Accounting II\nSection: L03\nInstructor: WANG, Emily",
+                  "begin": "16:30",
+                  "end": "17:50"
+                }
+              ],
+              [],
+              [
+                {
+                  "name": "ACCT 2200 (L03)",
+                  "venue": "G009A, CYT Bldg (80)",
+                  "description": "ACCT 2200 - Principles of Accounting II\nSection: L03\nInstructor: WANG, Emily",
+                  "begin": "16:30",
+                  "end": "17:50"
+                },
+                {
+                  "name": "HUMA 1155 (T1)",
+                  "venue": "Rm 2463, Lift 25-26 (42)",
+                  "description": "HUMA 1155 - Video Art\nSection: T1\nInstructor: CHU, Shun",
+                  "begin": "20:00",
+                  "end": "20:50"
+                }
+              ],
+              [
+                {
+                  "name": "CORE 1402 (T01)",
+                  "venue": "Rm 2132A, Lift 19 (28)",
+                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "begin": "10:30",
+                  "end": "11:50"
+                },
+                {
+                  "name": "HUMA 1155 (L2)",
+                  "venue": "Rm 2463, Lift 25-26 (42)",
+                  "description": "HUMA 1155 - Video Art\nSection: L2\nInstructor: CHU, Shun",
+                  "begin": "18:00",
+                  "end": "19:50"
+                }
+              ],
+              [],
+              []
+            ],
+            "plannerURL": "demo-timetable-1",
+            "university": "HKUST",
+            "name": "Mary",
+            "config": {
+              "id": "demo-timetable-1",
+              "color": "#8fc095",
+              "visible": true
+            }
+          },
+          "id": "demo-timetable-1",
+          "type": "TIMETABLE"
+        },
+        {
+          "timetable": {
+            "lessons": [
+              [
+                {
+                  "name": "COMP 1021 (L2)",
+                  "venue": "Rm 2407, Lift 17-18 (126)",
+                  "description": "COMP 1021 - Introduction to Computer Science\nSection: L2\nInstructor: ROSSITER, David",
+                  "begin": "13:30",
+                  "end": "14:20"
+                },
+                {
+                  "name": "CORE 1402 (T01)",
+                  "venue": "Rm 2132A, Lift 19 (28)",
+                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "begin": "15:00",
+                  "end": "16:20"
+                }
+              ],
+              [
+                {
+                  "name": "BIEN 1010 (L1)",
+                  "venue": "Lecture Theater C (211)",
+                  "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+                  "begin": "12:00",
+                  "end": "13:20"
+                }
+              ],
+              [
+                {
+                  "name": "COMP 1021 (LA1)",
+                  "venue": "",
+                  "description": "COMP 1021 - Introduction to Computer Science\nSection: LA1\nInstructors: ROSSITER, David, LAM, Gibson, LI, Xin",
+                  "begin": "15:00",
+                  "end": "16:50"
+                }
+              ],
+              [
+                {
+                  "name": "BIEN 1010 (L1)",
+                  "venue": "Lecture Theater C (211)",
+                  "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+                  "begin": "12:00",
+                  "end": "13:20"
+                }
+              ],
+              [
+                {
+                  "name": "COMP 1021 (L2)",
+                  "venue": "Rm 2407, Lift 17-18 (126)",
+                  "description": "COMP 1021 - Introduction to Computer Science\nSection: L2\nInstructor: ROSSITER, David",
+                  "begin": "09:00",
+                  "end": "09:50"
+                },
+                {
+                  "name": "CORE 1402 (T01)",
+                  "venue": "Rm 2132A, Lift 19 (28)",
+                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "begin": "10:30",
+                  "end": "11:50"
+                }
+              ],
+              [],
+              []
+            ],
+            "plannerURL": "demo-timetable-2",
+            "university": "HKUST",
+            "name": "John",
+            "config": {
+              "id": "demo-timetable-2",
+              "color": "#94bec5",
+              "visible": true
+            }
+          },
+          "id": "demo-timetable-2",
+          "type": "TIMETABLE"
+        }
+      ]
+    },
+    {
+      "name": "MATH 1014",
+      "id": "demo-folder-2",
+      "type": "FOLDER",
+      "collapsed": false,
+      "children": [
+        {
+          "timetable": {
+            "lessons": [
+              [
+                {
+                  "name": "OCES 1010 (L1)",
+                  "venue": "Lecture Theater A (401)",
+                  "description": "OCES 1010 - Principles and Applications of Environmental Science\nSection: L1\nInstructors: WU, Longjun, ZHANG, Qiong, HE, Ding, LI, Jiying",
+                  "begin": "10:30",
+                  "end": "11:50"
+                },
+                {
+                  "name": "CHEM 1020 (L2)",
+                  "venue": "Lecture Theater D (216)",
+                  "description": "CHEM 1020 - General Chemistry I\nSection: L2\nInstructors: HUANG, Jinqing, LU, Haipeng",
+                  "begin": "12:00",
+                  "end": "13:20"
+                },
+                {
+                  "name": "PHYS 1112 (L1)",
+                  "venue": "Lecture Theater G (132)",
+                  "description": "PHYS 1112 - General Physics I with Calculus\nSection: L1\nInstructor: XU, Qin",
+                  "begin": "15:00",
+                  "end": "16:20"
+                }
+              ],
+              [
+                {
+                  "name": "MATH 1014 (L01)",
+                  "venue": "Lecture Theater D (216)",
+                  "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+                  "begin": "12:00",
+                  "end": "13:20"
+                },
+                {
+                  "name": "MATH 1014 (T01C)",
+                  "venue": "G009B, CYT Bldg (70)",
+                  "description": "MATH 1014 - Calculus II\nSection: T01C\nInstructor: IP, Ivan Chi Ho",
+                  "begin": "18:00",
+                  "end": "18:50"
+                }
+              ],
+              [
+                {
+                  "name": "OCES 1010 (L1)",
+                  "venue": "Lecture Theater A (401)",
+                  "description": "OCES 1010 - Principles and Applications of Environmental Science\nSection: L1\nInstructors: WU, Longjun, ZHANG, Qiong, HE, Ding, LI, Jiying",
+                  "begin": "10:30",
+                  "end": "11:50"
+                },
+                {
+                  "name": "CHEM 1020 (L2)",
+                  "venue": "Lecture Theater D (216)",
+                  "description": "CHEM 1020 - General Chemistry I\nSection: L2\nInstructors: HUANG, Jinqing, LU, Haipeng",
+                  "begin": "12:00",
+                  "end": "13:20"
+                }
+              ],
+              [
+                {
+                  "name": "MATH 1014 (L01)",
+                  "venue": "Lecture Theater D (216)",
+                  "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+                  "begin": "12:00",
+                  "end": "13:20"
+                },
+                {
+                  "name": "PHYS 1112 (T08)",
+                  "venue": "Rm 5620, Lift 31-32 (70)",
+                  "description": "PHYS 1112 - General Physics I with Calculus\nSection: T08",
+                  "begin": "15:00",
+                  "end": "15:50"
+                }
+              ],
+              [
+                {
+                  "name": "PHYS 1112 (L1)",
+                  "venue": "Lecture Theater G (132)",
+                  "description": "PHYS 1112 - General Physics I with Calculus\nSection: L1\nInstructor: XU, Qin",
+                  "begin": "10:30",
+                  "end": "11:50"
+                }
+              ],
+              [],
+              []
+            ],
+            "plannerURL": "demo-timetable-3",
+            "university": "HKUST",
+            "name": "George",
+            "config": {
+              "id": "demo-timetable-3",
+              "color": "#ccc39c",
+              "visible": true
+            }
+          },
+          "id": "demo-timetable-3",
+          "type": "TIMETABLE"
+        }
+      ]
+    }
+  ]
+}

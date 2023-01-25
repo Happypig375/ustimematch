@@ -21,6 +21,8 @@ export const uiStore = createStore("ui")(
     showWeekend: true,
     showExplorer: true,
     showTimematch: false,
+
+    showTour: true,
   },
   { devtools: { enabled: true }, persist: { enabled: true } },
 )

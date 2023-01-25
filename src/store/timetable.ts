@@ -27,25 +27,27 @@ export const defaultTimetableStore: TimetableStore = {
   timetablesTree: [],
 };
 
+const storagePlaceholder = {
+  getItem: () => null,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setItem: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  removeItem: () => {},
+};
+
 export const timetableStore = createStore("timetable")(defaultTimetableStore, {
   devtools: { enabled: true },
   persist: {
     enabled: true,
     // Disable storage initially, hydration is handled in react.
     // Need to use empty function, otherwise `api.useStore.persist` will be undefined.
-    storage: {
-      getItem: () => null,
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      setItem: () => {},
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      removeItem: () => {},
-    },
+    storage: storagePlaceholder,
   },
 })
   .extendActions((_, __, api) => ({
     disableLocalStorage: () => {
       api.useStore.persist.setOptions({
-        storage: undefined,
+        storage: storagePlaceholder,
       });
     },
     enableLocalStorage: () => {

@@ -14,6 +14,7 @@ const Grid = () => {
 
   return (
     <div
+      data-tour="weekview"
       className="focus-visible-ring grid h-full overflow-y-auto"
       style={{
         gridTemplateRows: `auto repeat(${rows}, minmax(12px,1fr))`,
