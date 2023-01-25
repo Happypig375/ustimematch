@@ -1,4 +1,5 @@
 import { IBM_Plex_Sans } from "@next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
@@ -55,6 +56,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
         `}</style>
 
         <Toast />
+
+        <Analytics />
 
         <Component {...pageProps} />
       </ThemeProvider>
