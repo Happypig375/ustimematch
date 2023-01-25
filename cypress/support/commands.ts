@@ -1,39 +1,47 @@
-/// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable {
+      dataCy: typeof dataCy;
+      store: typeof store;
+      actions: typeof actions;
+      folderForm: typeof folderForm;
+      timetableForm: typeof timetableForm;
+    }
+  }
+}
+
+function dataCy(key: string) {
+  return cy.get(`[data-cy='${key}']`);
+}
+
+function store(store: string, key: string) {
+  return cy.window().its("store").its(store).invoke(key);
+}
+
+function actions(store: string, key: string, ...args: unknown[]) {
+  cy.window()
+    .its("actions")
+    .its(store)
+    .invoke(key, ...args);
+}
+
+function folderForm(name?: string) {
+  name && cy.dataCy("folder-form-name-input").focus().type(name);
+  cy.dataCy("folder-form").submit();
+}
+
+function timetableForm(name?: string, plannerURL?: string) {
+  name && cy.dataCy("timetable-form-name-input").focus().type(name);
+  plannerURL &&
+    cy.dataCy("timetable-form-planner-url-input").focus().type(plannerURL);
+  cy.dataCy("timetable-form").submit();
+}
+
+Cypress.Commands.add("dataCy", dataCy);
+Cypress.Commands.add("store", store);
+Cypress.Commands.add("actions", actions);
+Cypress.Commands.add("folderForm", folderForm);
+Cypress.Commands.add("timetableForm", timetableForm);
 
 export {};

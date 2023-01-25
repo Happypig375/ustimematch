@@ -1,55 +1,41 @@
 import timetable from "../fixtures/timetable.json";
 
-describe("personal timetable form", () => {
+describe("personal timetable form actions", () => {
   beforeEach(() => {
     cy.visit("/");
-
-    cy.get('[data-cy="add-personal-timetable"]').click();
-    cy.get('[data-cy="timetable-form-name-input"]').type(timetable.name);
-    cy.get('[data-cy="timetable-form-planner-url-input"]')
+    cy.dataCy("tour-skip").click();
+    cy.dataCy("add-personal-timetable").click();
+    cy.dataCy("timetable-form-name-input").focus().type(timetable.name);
+    cy.dataCy("timetable-form-planner-url-input")
       .focus()
       .type(timetable.plannerURL);
-    cy.get('[data-cy="timetable-form"]').submit();
+    cy.dataCy("timetable-form").submit();
   });
 
   it("can add", () => {
-    cy.window()
-      .its("store")
-      .its("timetable")
-      .invoke("personalTimetable")
+    cy.store("timetable", "personalTimetable")
       .its("name")
       .should("eq", timetable.name);
-
-    cy.window()
-      .its("store")
-      .its("timetable")
-      .invoke("personalTimetable")
+    cy.store("timetable", "personalTimetable")
       .its("plannerURL")
       .should("eq", timetable.plannerURL);
   });
 
   it("can edit", () => {
-    cy.get('[data-cy="edit-personal-timetable"]').click();
-    cy.get('[data-cy="timetable-form-name-input"]').clear().type("Edited");
-    cy.get('[data-cy="timetable-form"]').submit();
+    cy.dataCy("edit-personal-timetable").click();
+    cy.dataCy("timetable-form-name-input").focus().clear().type("Edited");
+    cy.dataCy("timetable-form").submit();
 
-    cy.window()
-      .its("store")
-      .its("timetable")
-      .invoke("personalTimetable")
+    cy.store("timetable", "personalTimetable")
       .its("name")
       .should("eq", "Edited");
   });
 
   it("can delete", () => {
-    cy.get('[data-cy="edit-personal-timetable"]').click();
-    cy.get('[data-cy="delete-alert-trigger"]').click();
-    cy.get('[data-cy="delete-alert-delete"]').click();
+    cy.dataCy("edit-personal-timetable").click();
+    cy.dataCy("delete-alert-trigger").click();
+    cy.dataCy("delete-alert-delete").click();
 
-    cy.window()
-      .its("store")
-      .its("timetable")
-      .invoke("personalTimetable")
-      .should("eq", null);
+    cy.store("timetable", "personalTimetable").should("eq", null);
   });
 });

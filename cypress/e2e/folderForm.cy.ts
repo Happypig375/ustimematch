@@ -1,89 +1,67 @@
 describe("folder form validity", () => {
   beforeEach(() => {
     cy.visit("/");
-
-    cy.get('[data-cy="add-folder"]').click();
+    cy.dataCy("tour-skip").click();
+    cy.dataCy("add-folder").click();
   });
 
   it("shows error on empty name", () => {
-    cy.get('[data-cy="folder-form"]').submit();
+    cy.folderForm();
 
-    cy.get('[data-cy="input-label-name"').should(
-      "contain.text",
-      "Please enter a name",
-    );
+    cy.dataCy("input-error-name").should("contain.text", "Please enter a name");
   });
 
   it("shows error on long name", () => {
-    cy.get('[data-cy="folder-form-name-input"]').type(
-      "12345678901234567890123456789012345678901",
-    );
-    cy.get('[data-cy="folder-form"]').submit();
+    cy.folderForm("12345678901234567890123456789012345678901");
 
-    cy.get('[data-cy="input-label-name"').should(
+    cy.dataCy("input-error-name").should(
       "contain.text",
       "The name is too long",
     );
   });
 
   it("can trim name", () => {
-    cy.get('[data-cy="folder-form-name-input"]').type(" trim ");
-    cy.get('[data-cy="folder-form"]').submit();
+    cy.folderForm(" trim ");
 
-    cy.window()
-      .its("store")
-      .its("timetable")
-      .invoke("timetablesTree")
+    cy.store("timetable", "timetablesTree")
       .its(0)
       .its("name")
       .should("eq", "trim");
   });
 });
 
-describe("folder form", () => {
+describe("folder form actions", () => {
   beforeEach(() => {
     cy.visit("/");
-
-    cy.get('[data-cy="add-folder"]').click();
-    cy.get('[data-cy="folder-form-name-input"]').type("test");
-    cy.get('[data-cy="folder-form"]').submit();
+    cy.dataCy("tour-skip").click();
+    cy.dataCy("add-folder").click();
+    cy.dataCy("folder-form-name-input").focus().type("test");
+    cy.dataCy("folder-form").submit();
   });
 
   it("can add", () => {
-    cy.window()
-      .its("store")
-      .its("timetable")
-      .invoke("timetablesTree")
+    cy.store("timetable", "timetablesTree")
       .its(0)
       .its("name")
       .should("eq", "test");
   });
 
   it("can edit", () => {
-    cy.get('[data-cy="sortable-tree-item"]').click();
-    cy.get('[data-cy="folder-form-name-input"]').clear().type("edited");
-    cy.get('[data-cy="folder-form"]').submit();
+    cy.dataCy("sortable-tree-item").click();
+    cy.folderForm(" edited");
 
-    cy.window()
-      .its("store")
-      .its("timetable")
-      .invoke("timetablesTree")
+    cy.store("timetable", "timetablesTree")
       .its(0)
       .its("name")
-      .should("eq", "edited");
+      .should("eq", "test edited");
   });
 
   it("can delete", () => {
-    cy.get('[data-cy="sortable-tree-item"]').click();
-    cy.get('[data-cy="delete-alert-trigger"]').click();
-    cy.get('[data-cy="delete-alert-delete"]').click();
+    cy.dataCy("sortable-tree-item").click();
+    cy.dataCy("delete-alert-trigger").click();
+    cy.dataCy("delete-alert-delete").click();
 
-    cy.window()
-      .its("store")
-      .its("timetable")
-      .invoke("timetablesTree")
-      .its("length")
-      .should("eq", 0);
+    cy.store("timetable", "timetablesTree").its("length").should("eq", 0);
   });
 });
 
