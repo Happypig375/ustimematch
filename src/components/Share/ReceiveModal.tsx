@@ -1,4 +1,4 @@
-import { IconDownload, IconListCheck, IconX } from "@tabler/icons";
+import { IconDownload, IconListCheck, IconX } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Button from "@components/ui/Button";
@@ -120,12 +120,12 @@ const ReceiveModal = () => {
 
         <ModalControl>
           <Button icon onClick={toggleCheckAll} disabled={!isSuccess}>
-            <IconListCheck stroke={1.75} className="h-5 w-5" />
+            <IconListCheck strokeWidth={1.75} className="h-5 w-5" />
           </Button>
 
           <ModalClose asChild>
             <Button fullWidth disabled={isFetching}>
-              <IconX stroke={1.75} className="h-5 w-5" />
+              <IconX strokeWidth={1.75} className="h-5 w-5" />
               Close
             </Button>
           </ModalClose>
@@ -136,7 +136,7 @@ const ReceiveModal = () => {
               onClick={saveSharedTiemtables}
               disabled={checkedIds.length === 0 || !isSuccess}
             >
-              <IconDownload stroke={1.75} className="h-5 w-5" />
+              <IconDownload strokeWidth={1.75} className="h-5 w-5" />
               Save
             </Button>
           </ModalClose>

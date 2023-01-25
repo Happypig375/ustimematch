@@ -28,7 +28,7 @@ specifiers:
   '@reactour/popover': ^1.0.5
   '@reactour/tour': ^3.1.9
   '@reactour/utils': ^0.4.7
-  '@tabler/icons': ^1.119.0
+  '@tabler/icons-react': ^2.0.0
   '@tailwindcss/typography': ^0.5.9
   '@tanstack/react-query': ^4.22.0
   '@tanstack/react-query-devtools': ^4.22.0
@@ -97,7 +97,7 @@ dependencies:
   '@reactour/popover': 1.0.5_pn5clhngnoa7k4f263lrh2ot7m_react@18.2.0
   '@reactour/tour': 3.1.9_react@18.2.0
   '@reactour/utils': 0.4.7_54xm5f4v4f6ohmxmjs5p4dr6y4_react@18.2.0
-  '@tabler/icons': 1.119.0_biqbaboplfbrettd7655fr4n2y
+  '@tabler/icons-react': 2.0.0_react@18.2.0
   '@tanstack/react-query': 4.22.0_biqbaboplfbrettd7655fr4n2y
   '@tanstack/react-query-devtools': 4.22.0_gp275tdwez2a4eujt75dnnp754
   '@trpc/client': 10.9.0_@trpc+server@10.9.0
@@ -1400,19 +1400,18 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@tabler/icons/1.119.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-Fk3Qq4w2SXcTjc/n1cuL5bccPkylrOMo7cYpQIf/yw6zP76LQV9dtLcHQUjFiUnaYuswR645CnURIhlafyAh9g==}
+  /@tabler/icons-react/2.0.0_react@18.2.0:
+    resolution: {integrity: sha512-KUgJtVS+HDLQuFfqIdgYMDAbUlfG6LqfPwomc26cS6BEL9v01YptZtBU+KVaP6QZ+kleKrHMzFJajOtK9xIXDw==}
     peerDependencies:
-      react: ^16.x || 17.x || 18.x
-      react-dom: ^16.x || 17.x || 18.x
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
+      prop-types: ^15.7.2
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
+      '@tabler/icons': 2.0.0
       react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@tabler/icons/2.0.0:
+    resolution: {integrity: sha512-ye93cVD8baCwJJ7J3GKlUM3FN+qW6lsEz4uaH8bHCwC8un2R4p+ZzyRNc/ksqVgMQJ4PKQ8xbYpv4dnbbRffsA==}
     dev: false
 
   /@tailwindcss/typography/0.5.9_tailwindcss@3.2.4:

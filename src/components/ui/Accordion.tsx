@@ -1,5 +1,5 @@
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { IconChevronDown } from "@tabler/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { forwardRef } from "react";
@@ -40,7 +40,7 @@ export const AccordionTrigger = forwardRef<
         animate={value ? "close" : "open"}
         variants={chevronVariants}
       >
-        <IconChevronDown stroke={1.75} className="h-5 w-5" />
+        <IconChevronDown strokeWidth={1.75} className="h-5 w-5" />
       </motion.div>
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>

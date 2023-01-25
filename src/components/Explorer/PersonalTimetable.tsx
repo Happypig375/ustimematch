@@ -1,4 +1,9 @@
-import { IconEdit, IconEye, IconEyeOff, IconUserPlus } from "@tabler/icons";
+import {
+  IconEdit,
+  IconEye,
+  IconEyeOff,
+  IconUserPlus,
+} from "@tabler/icons-react";
 import { useCallback, useState } from "react";
 import TimetableForm from "@components/Modal/TimetableForm";
 import Button from "@components/ui/Button";
@@ -57,9 +62,9 @@ const PersonalTimetable = () => {
               }
             >
               {personalTimetable.config.visible ? (
-                <IconEye stroke={1.75} className="h-5 w-5" />
+                <IconEye strokeWidth={1.75} className="h-5 w-5" />
               ) : (
-                <IconEyeOff stroke={1.75} className="h-5 w-5" />
+                <IconEyeOff strokeWidth={1.75} className="h-5 w-5" />
               )}
             </Button>
 
@@ -69,7 +74,7 @@ const PersonalTimetable = () => {
               onClick={() => setOpen(true)}
               data-cy="edit-personal-timetable"
             >
-              <IconEdit stroke={1.75} className="h-5 w-5" />
+              <IconEdit strokeWidth={1.75} className="h-5 w-5" />
             </Button>
           </div>
         </div>
@@ -81,7 +86,7 @@ const PersonalTimetable = () => {
             onClick={() => setOpen(true)}
             data-cy="add-personal-timetable"
           >
-            <IconUserPlus stroke={1.75} className="h-5 w-5" />
+            <IconUserPlus strokeWidth={1.75} className="h-5 w-5" />
             Personal Timetable
           </Button>
         </div>

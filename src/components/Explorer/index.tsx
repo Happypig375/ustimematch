@@ -1,4 +1,4 @@
-import { IconCalendarPlus, IconFolderPlus } from "@tabler/icons";
+import { IconCalendarPlus, IconFolderPlus } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import FolderForm from "@components/Modal/FolderForm";
@@ -30,7 +30,7 @@ const AddTimetable = () => {
         onClick={() => setOpenImportModal(true)}
         data-cy="add-timetable"
       >
-        <IconCalendarPlus stroke={1.75} className="h-5 w-5" />
+        <IconCalendarPlus strokeWidth={1.75} className="h-5 w-5" />
         Timetable
       </Button>
       <TimetableForm
@@ -61,7 +61,7 @@ const AddFolder = () => {
         onClick={() => setOpenFolderModal(true)}
         data-cy="add-folder"
       >
-        <IconFolderPlus stroke={1.75} className="h-5 w-5" />
+        <IconFolderPlus strokeWidth={1.75} className="h-5 w-5" />
       </Button>
       <FolderForm
         onAdd={onAddFolder}

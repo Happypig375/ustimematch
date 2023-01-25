@@ -1,6 +1,6 @@
 import type { PopoverContentProps, StepType } from "@reactour/tour";
 import { TourProvider, useTour } from "@reactour/tour";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import clsx from "clsx";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
@@ -70,7 +70,7 @@ const ContentComponent = ({
               onClick={() => setCurrentStep((prev) => prev - 1)}
               data-cy="tour-prev"
             >
-              <IconArrowLeft stroke={1.75} className="h-5 w-5" />
+              <IconArrowLeft strokeWidth={1.75} className="h-5 w-5" />
             </Button>
           )}
 
@@ -88,7 +88,7 @@ const ContentComponent = ({
             {isLastStep ? (
               "Start!"
             ) : (
-              <IconArrowRight stroke={1.75} className="h-5 w-5" />
+              <IconArrowRight strokeWidth={1.75} className="h-5 w-5" />
             )}
           </Button>
         </div>

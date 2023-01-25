@@ -1,4 +1,4 @@
-import { IconX } from "@tabler/icons";
+import { IconX } from "@tabler/icons-react";
 import { useTheme } from "next-themes";
 import toast, { ToastBar, Toaster } from "react-hot-toast";
 import Button from "./ui/Button";

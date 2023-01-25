@@ -1,5 +1,5 @@
 import * as Popover from "@radix-ui/react-popover";
-import { IconInfoCircle } from "@tabler/icons";
+import { IconInfoCircle } from "@tabler/icons-react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import type { HTMLAttributes } from "react";
@@ -23,7 +23,7 @@ const Tips = ({ children, image, className, triggerClassName }: Props) => {
           plain
           className={clsx("!h-5 !w-5 rounded-full", triggerClassName)}
         >
-          <IconInfoCircle stroke={1.75} className="h-4 w-4" />
+          <IconInfoCircle strokeWidth={1.75} className="h-4 w-4" />
         </Button>
       </Popover.Trigger>
 

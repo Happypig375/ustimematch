@@ -1,5 +1,5 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { IconCheckbox, IconSquare, IconSquareOff } from "@tabler/icons";
+import { IconCheckbox, IconSquare, IconSquareOff } from "@tabler/icons-react";
 import clsx from "clsx";
 import ColorChip from "@components/Explorer/ColorChip";
 import type { Timetable } from "../../types/timetable";
@@ -63,13 +63,13 @@ const SelectItem = ({
       >
         <Checkbox.Indicator>
           {checked === "indeterminate" ? (
-            <IconSquareOff stroke={1.75} className="h-5 w-5" />
+            <IconSquareOff strokeWidth={1.75} className="h-5 w-5" />
           ) : (
-            checked && <IconCheckbox stroke={1.75} className="h-5 w-5" />
+            checked && <IconCheckbox strokeWidth={1.75} className="h-5 w-5" />
           )}
         </Checkbox.Indicator>
 
-        {!checked && <IconSquare stroke={1.75} className="h-5 w-5" />}
+        {!checked && <IconSquare strokeWidth={1.75} className="h-5 w-5" />}
       </Checkbox.Root>
     </label>
   );

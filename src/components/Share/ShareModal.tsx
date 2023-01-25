@@ -1,4 +1,4 @@
-import { IconShare } from "@tabler/icons";
+import { IconShare } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import Button from "@components/ui/Button";
 import { Modal, ModalContent, ModalTrigger } from "@components/ui/Modal";
@@ -35,7 +35,7 @@ const Share = () => {
     >
       <ModalTrigger asChild>
         <Button icon title="Share" onClick={() => setOpenShareModal(true)}>
-          <IconShare stroke={1.75} className="h-5 w-5" />
+          <IconShare strokeWidth={1.75} className="h-5 w-5" />
         </Button>
       </ModalTrigger>
 

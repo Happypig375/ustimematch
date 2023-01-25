@@ -4,7 +4,7 @@ import {
   IconClockOff,
   IconColumns,
   IconColumnsOff,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import Refresh from "@components/Refresh";
 import ThemeToggle from "@components/ThemeToggle";
@@ -29,7 +29,7 @@ const Controls = () => {
           animate={showExplorer ? "close" : "open"}
           variants={chevronVariants}
         >
-          <IconChevronRight stroke={1.75} className="h-5 w-5" />
+          <IconChevronRight strokeWidth={1.75} className="h-5 w-5" />
         </motion.div>
       </Button>
 
@@ -39,17 +39,17 @@ const Controls = () => {
       >
         <Button icon title="Toggle Timematch" onClick={toggleShowTimematch}>
           {showTimematch ? (
-            <IconClock stroke={1.75} className="h-5 w-5" />
+            <IconClock strokeWidth={1.75} className="h-5 w-5" />
           ) : (
-            <IconClockOff stroke={1.75} className="h-5 w-5" />
+            <IconClockOff strokeWidth={1.75} className="h-5 w-5" />
           )}
         </Button>
 
         <Button icon title="Toggle Weekend" onClick={toggleShowWeekend}>
           {showWeekend ? (
-            <IconColumns stroke={1.75} className="h-5 w-5" />
+            <IconColumns strokeWidth={1.75} className="h-5 w-5" />
           ) : (
-            <IconColumnsOff stroke={1.75} className="h-5 w-5" />
+            <IconColumnsOff strokeWidth={1.75} className="h-5 w-5" />
           )}
         </Button>
 

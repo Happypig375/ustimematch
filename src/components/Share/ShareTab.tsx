@@ -1,4 +1,4 @@
-import { IconArrowBack, IconCheck, IconCopy, IconX } from "@tabler/icons";
+import { IconArrowBack, IconCheck, IconCopy, IconX } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { QRCodeCanvas } from "qrcode.react";
 import type { Dispatch, SetStateAction } from "react";
@@ -84,11 +84,11 @@ const ShareTab = forwardRef<HTMLDivElement, Props>(
               <Button icon title="Copy share link" onClick={copyURL}>
                 {copied ? (
                   <IconCheck
-                    stroke={1.75}
+                    strokeWidth={1.75}
                     className="h-5 w-5 text-emerald-500"
                   />
                 ) : (
-                  <IconCopy stroke={1.75} className="h-5 w-5" />
+                  <IconCopy strokeWidth={1.75} className="h-5 w-5" />
                 )}
               </Button>
             </div>
@@ -101,13 +101,13 @@ const ShareTab = forwardRef<HTMLDivElement, Props>(
             onClick={() => setTabsValue("select")}
             disabled={isLoading}
           >
-            <IconArrowBack stroke={1.75} className="h-5 w-5" />
+            <IconArrowBack strokeWidth={1.75} className="h-5 w-5" />
             Back
           </Button>
 
           <ModalClose asChild>
             <Button fullWidth disabled={isLoading}>
-              <IconX stroke={1.75} className="h-5 w-5" />
+              <IconX strokeWidth={1.75} className="h-5 w-5" />
               Close
             </Button>
           </ModalClose>

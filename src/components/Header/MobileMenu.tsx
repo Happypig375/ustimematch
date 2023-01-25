@@ -5,7 +5,7 @@ import {
   IconInfoCircle,
   IconQuestionCircle,
   IconUserCircle,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { signIn, useSession } from "next-auth/react";
@@ -23,7 +23,7 @@ const MobileMenu = () => {
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger asChild>
         <Button icon className="sm:hidden" aria-label="Open navigation menu">
-          <IconDots stroke={1.75} className="h-5 w-5" />
+          <IconDots strokeWidth={1.75} className="h-5 w-5" />
         </Button>
       </DropdownMenu.Trigger>
 
@@ -56,7 +56,10 @@ const MobileMenu = () => {
                         inMenu
                         onClick={() => signIn(undefined, { callbackUrl: "/" })}
                         icon={
-                          <IconUserCircle stroke={1.75} className="h-4 w-4" />
+                          <IconUserCircle
+                            strokeWidth={1.75}
+                            className="h-4 w-4"
+                          />
                         }
                       >
                         Sign In
@@ -67,7 +70,10 @@ const MobileMenu = () => {
                         inMenu
                         href="/account"
                         icon={
-                          <IconUserCircle stroke={1.75} className="h-4 w-4" />
+                          <IconUserCircle
+                            strokeWidth={1.75}
+                            className="h-4 w-4"
+                          />
                         }
                       >
                         Account
@@ -80,7 +86,9 @@ const MobileMenu = () => {
                   <NavLink
                     inMenu
                     href="/about"
-                    icon={<IconInfoCircle stroke={1.75} className="h-4 w-4" />}
+                    icon={
+                      <IconInfoCircle strokeWidth={1.75} className="h-4 w-4" />
+                    }
                   >
                     About
                   </NavLink>
@@ -91,7 +99,10 @@ const MobileMenu = () => {
                     inMenu
                     href="/tutorial"
                     icon={
-                      <IconQuestionCircle stroke={1.75} className="h-4 w-4" />
+                      <IconQuestionCircle
+                        strokeWidth={1.75}
+                        className="h-4 w-4"
+                      />
                     }
                   >
                     Tutorial
@@ -104,7 +115,10 @@ const MobileMenu = () => {
                     external
                     href="https://admlu65.ust.hk"
                     icon={
-                      <IconCalendarTime stroke={1.75} className="h-4 w-4" />
+                      <IconCalendarTime
+                        strokeWidth={1.75}
+                        className="h-4 w-4"
+                      />
                     }
                   >
                     Timetable Planner

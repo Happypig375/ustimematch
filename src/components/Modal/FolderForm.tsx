@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IconPencil, IconPlus, IconX } from "@tabler/icons";
+import { IconPencil, IconPlus, IconX } from "@tabler/icons-react";
 import { useEffect, useMemo } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -109,7 +109,7 @@ const FolderForm = ({
 
             <ModalClose asChild>
               <Button fullWidth type="button">
-                <IconX stroke={1.75} className="h-5 w-5" />
+                <IconX strokeWidth={1.75} className="h-5 w-5" />
                 Cancel
               </Button>
             </ModalClose>
@@ -117,12 +117,12 @@ const FolderForm = ({
             <Button fullWidth type="submit">
               {folder ? (
                 <>
-                  <IconPencil stroke={1.75} className="h-5 w-5" />
+                  <IconPencil strokeWidth={1.75} className="h-5 w-5" />
                   Edit
                 </>
               ) : (
                 <>
-                  <IconPlus stroke={1.75} className="h-5 w-5" />
+                  <IconPlus strokeWidth={1.75} className="h-5 w-5" />
                   Add
                 </>
               )}

@@ -1,4 +1,4 @@
-import { IconCheck, IconRefresh, IconX } from "@tabler/icons";
+import { IconCheck, IconRefresh, IconX } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import ColorChip from "@components/Explorer/ColorChip";
 import Button from "@components/ui/Button";
@@ -87,7 +87,7 @@ const TimetableStatus = ({
           </span>
 
           <IconCheck
-            stroke={1.75}
+            strokeWidth={1.75}
             className="h-5 w-5 flex-shrink-0 text-emerald-500"
           />
         </>
@@ -98,7 +98,10 @@ const TimetableStatus = ({
           <span className="whitespace-nowrap rounded-sm bg-red-500/50 px-2 py-[2px] text-xs">
             Failed
           </span>
-          <IconX stroke={1.75} className="h-5 w-5 flex-shrink-0 text-red-500" />
+          <IconX
+            strokeWidth={1.75}
+            className="h-5 w-5 flex-shrink-0 text-red-500"
+          />
         </>
       )}
     </div>
@@ -116,7 +119,7 @@ const RefreshModal = () => {
     <Modal open={openRefreshModal} onOpenChange={setOpenRefreshModal}>
       <ModalTrigger asChild>
         <Button icon title="Refresh" onClick={() => setOpenRefreshModal(true)}>
-          <IconRefresh stroke={1.75} className="h-5 w-5" />
+          <IconRefresh strokeWidth={1.75} className="h-5 w-5" />
         </Button>
       </ModalTrigger>
 
@@ -141,7 +144,7 @@ const RefreshModal = () => {
         <ModalControl>
           <ModalClose asChild>
             <Button fullWidth>
-              <IconX stroke={1.75} className="h-5 w-5" />
+              <IconX strokeWidth={1.75} className="h-5 w-5" />
               Close
             </Button>
           </ModalClose>

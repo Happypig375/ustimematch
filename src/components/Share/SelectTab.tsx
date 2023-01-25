@@ -1,4 +1,4 @@
-import { IconArrowForward, IconListCheck, IconX } from "@tabler/icons";
+import { IconArrowForward, IconListCheck, IconX } from "@tabler/icons-react";
 import type { Dispatch, SetStateAction } from "react";
 import { forwardRef } from "react";
 import { useMemo } from "react";
@@ -170,12 +170,12 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
             disabled={empty}
             title="Check/Uncheck All"
           >
-            <IconListCheck stroke={1.75} className="h-5 w-5" />
+            <IconListCheck strokeWidth={1.75} className="h-5 w-5" />
           </Button>
 
           <ModalClose asChild>
             <Button fullWidth>
-              <IconX stroke={1.75} className="h-5 w-5" />
+              <IconX strokeWidth={1.75} className="h-5 w-5" />
               Close
             </Button>
           </ModalClose>
@@ -185,7 +185,7 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
             onClick={onContinueClick}
             disabled={checkedIds.length === 0}
           >
-            <IconArrowForward stroke={1.75} className="h-5 w-5" />
+            <IconArrowForward strokeWidth={1.75} className="h-5 w-5" />
             Continue
           </Button>
         </ModalControl>

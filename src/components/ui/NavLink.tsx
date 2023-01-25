@@ -1,4 +1,4 @@
-import { IconExternalLink } from "@tabler/icons";
+import { IconExternalLink } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
@@ -35,7 +35,9 @@ const NavLink = React.forwardRef<HTMLAnchorElement, Props>(
       {icon}
       <div className={clsx("flex items-center", external && "gap-1")}>
         {children}
-        {external && <IconExternalLink stroke={1.75} className="h-4 w-4" />}
+        {external && (
+          <IconExternalLink strokeWidth={1.75} className="h-4 w-4" />
+        )}
       </div>
     </Link>
   ),

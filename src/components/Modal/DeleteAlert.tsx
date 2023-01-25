@@ -1,4 +1,4 @@
-import { IconTrash } from "@tabler/icons";
+import { IconTrash } from "@tabler/icons-react";
 import type { HTMLAttributes } from "react";
 import { useState } from "react";
 import {
@@ -33,7 +33,7 @@ const DeleteAlert = ({ hidden, disabled, onDelete, children }: Props) => {
             data-cy="delete-alert-trigger"
             disabled={disabled}
           >
-            <IconTrash stroke={1.75} className="h-5 w-5" />
+            <IconTrash strokeWidth={1.75} className="h-5 w-5" />
           </Button>
         </AlertTrigger>
       )}

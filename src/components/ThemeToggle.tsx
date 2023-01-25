@@ -1,4 +1,4 @@
-import { IconMoonStars, IconSunHigh } from "@tabler/icons";
+import { IconMoonStars, IconSunHigh } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import Button from "@components/ui/Button";
@@ -25,7 +25,7 @@ const ThemeToggle = () => {
             animate="enter"
             variants={themeVariants}
           >
-            <IconSunHigh stroke={1.75} className="h-5 w-5" />
+            <IconSunHigh strokeWidth={1.75} className="h-5 w-5" />
           </motion.div>
         )}
         {theme === "dark" && (
@@ -36,7 +36,7 @@ const ThemeToggle = () => {
             animate="enter"
             variants={themeVariants}
           >
-            <IconMoonStars stroke={1.75} className="h-5 w-5" />
+            <IconMoonStars strokeWidth={1.75} className="h-5 w-5" />
           </motion.div>
         )}
       </AnimatePresence>

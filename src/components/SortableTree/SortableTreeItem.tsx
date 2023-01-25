@@ -7,7 +7,7 @@ import {
   IconEye,
   IconEyeOff,
   IconGripVertical,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import type { CSSProperties } from "react";
@@ -114,7 +114,7 @@ const SortableTreeItem = ({
                 variants={chevronHalfVariants}
                 animate={treeItem.collapsed ? "close" : "open"}
               >
-                <IconChevronDown stroke={1.75} className="h-5 w-5" />
+                <IconChevronDown strokeWidth={1.75} className="h-5 w-5" />
               </motion.div>
             </Button>
 
@@ -165,9 +165,9 @@ const SortableTreeItem = ({
               {(treeItem.type === "TIMETABLE" &&
                 treeItem.timetable.config.visible) ||
               (treeItem.type === "FOLDER" && getFolderVisible(treeItem)) ? (
-                <IconEye stroke={1.75} className="h-5 w-5" />
+                <IconEye strokeWidth={1.75} className="h-5 w-5" />
               ) : (
-                <IconEyeOff stroke={1.75} className="h-5 w-5" />
+                <IconEyeOff strokeWidth={1.75} className="h-5 w-5" />
               )}
             </Button>
           )}
@@ -181,7 +181,7 @@ const SortableTreeItem = ({
           className="cursor-grab touch-none"
           onKeyDown={(e) => e.stopPropagation()}
         >
-          <IconGripVertical stroke={1.75} className="h-5 w-5" />
+          <IconGripVertical strokeWidth={1.75} className="h-5 w-5" />
         </Button>
       </div>
     </li>
