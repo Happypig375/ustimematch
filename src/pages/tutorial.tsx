@@ -2,12 +2,14 @@ import {
   IconCalendarTime,
   IconFolderPlus,
   IconGripVertical,
+  IconPlus,
   IconRefresh,
   IconShare,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import clsx from "clsx";
 import { type NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "@components/Header";
 import Button from "@components/ui/Button";
@@ -44,32 +46,39 @@ const Tutorial: NextPage = () => {
               Navigate to{" "}
               <strong>
                 <IconCalendarTime className="relative -top-[2px] inline-block h-4 w-4" />
-                &#8202;Timetable Planner
+                &nbsp;
+                <Link href="https://admlu65.ust.hk/" target="_blank">
+                  Timetable Planner
+                </Link>
               </strong>
-              . (via the link at top-right hand corner)
+              .
+              <p className="!mb-0 flex text-xs before:mr-1 before:text-red-500 before:content-['*'] sm:text-sm">
+                Make sure to request for desktop site if you&apos;re on mobile.
+              </p>
             </li>
             <li>
-              Click <strong>Export</strong> for your desired timetable.
+              Click <strong>Export</strong> on your desired timetable.
             </li>
             <li>
-              Click <strong>Copy iCalendar File URL</strong> and copy the URL.
+              Click <strong>Copy iCalendar File URL</strong> and copy the link.
+              <p className="!mb-0 flex break-all text-xs before:mr-1 before:text-red-500 before:content-['*'] sm:text-sm">
+                <span>
+                  e.g.{" "}
+                  <code className="font-normal">
+                    https://admlu65.ust.hk/planner/export/_.ics
+                  </code>
+                </span>
+              </p>
             </li>
             <li>
-              Go back to USTimematch and click{" "}
-              <strong>Add Personal Timetable</strong>.
+              Come back and click{" "}
+              <strong>
+                <IconPlus className="relative -top-[2px] inline-block h-4 w-4" />
+                &nbsp;Personal Timetable
+              </strong>
+              .
             </li>
-            <li>Fill in the links and the rest of the information.</li>
-          </ul>
-          <ul className="marker:text-red-500 marker:content-['*']">
-            <li>
-              If you visit Timetable Planner on mobile devices, please make sure
-              to request for desktop site.
-            </li>
-            <li className="break-all">
-              URL format: https://admlu65.ust.hk/planner/export/
-              {/* <span className="blur-lg">qwertyuiopasdfghjl</span> */}
-              _____.ics
-            </li>
+            <li>Fill in the link and the rest of the information.</li>
           </ul>
 
           <h3 id="sharing">Sharing</h3>
@@ -87,6 +96,7 @@ const Tutorial: NextPage = () => {
               Share the link with your friends or let them scan the QR code.
             </li>
           </ul>
+
           <h3 id="folders">Folders</h3>
           <ul>
             <li>
@@ -99,19 +109,20 @@ const Tutorial: NextPage = () => {
             <li>
               <strong>
                 <IconGripVertical className="relative -top-[2px] inline-block h-4 w-4" />
-                Drag
+                &nbsp;Drag
               </strong>{" "}
               around timetables/folders to your desired order.
             </li>
             <li>Drag to the left/right for moving into/out of folders.</li>
           </ul>
+
           <h3 id="refresh">Refresh</h3>
           <ul>
             <li>
               Clicking{" "}
               <strong>
                 <IconRefresh className="relative -top-[2px] inline-block h-4 w-4" />
-                &#8202;Refresh
+                &nbsp;Refresh
               </strong>{" "}
               will update the timetables from Timetable Planner.
             </li>
