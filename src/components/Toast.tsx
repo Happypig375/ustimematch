@@ -1,21 +1,19 @@
 import { IconX } from "@tabler/icons-react";
-import { useTheme } from "next-themes";
 import toast, { ToastBar, Toaster } from "react-hot-toast";
 import Button from "./ui/Button";
 
 const Toast = () => {
-  const { theme } = useTheme();
   return (
     // BUG: doesn't have prop for e.stopPropagation, clicking on toast will click through
     <Toaster
       position="top-right"
       toastOptions={{
         error: {
-          className: "border-red-500 border-l-[6px]",
+          className: "border-red-500 border-l-4",
           duration: 10000,
         },
         success: {
-          className: "border-emerald-500 border-l-[6px]",
+          className: "border-emerald-500 border-l-4",
           duration: 5000,
         },
         blank: {
@@ -27,10 +25,9 @@ const Toast = () => {
         <ToastBar
           toast={t}
           style={{
-            backgroundColor:
-              theme === "light" ? "rgb(var(--bg-100))" : "rgb(var(--bg-200))",
             color: "rgb(var(--fg-200))",
             boxShadow: "var(--shadow-elevation)",
+            backgroundColor: "rgb(var(--bg-200))",
           }}
         >
           {({ icon: _, message }) => (
