@@ -88,7 +88,7 @@ const SortableTreeItem = ({
         onKeyDown={(e) => e.key === "Enter" && onClick?.()}
         className={clsx(
           "focus-visible-ring flex h-full cursor-pointer select-none items-center gap-2 rounded-md px-2 text-fg-100",
-          "hover:bg-bg-300/50 hover:text-fg-200",
+          "hover:bg-bg-300/50 hover:text-fg-200 active:[&:not(:focus-within)]:bg-bg-300",
           clone && "pointer-events-none bg-bg-200 shadow-elevation",
           isDragging && "border border-border-200 opacity-50",
           !isDragging && illegal && "opacity-25",

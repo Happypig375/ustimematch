@@ -29,8 +29,9 @@ const About: NextPage = () => {
           </ul>
           <h3 id="enquiry">Enquiry</h3>
           <p>
-            Please fill out this <Link href="">form</Link> for bug reports,
-            feature requests, etc.
+            Please contact us by{" "}
+            <Link href="mailto:support@ustimematch.com">email</Link> for bug
+            reports, feature requests, etc.
           </p>
           <h3 id="credits">Credits</h3>
           <p>USTimematch is inspired by USThing and Timetable Planner.</p>

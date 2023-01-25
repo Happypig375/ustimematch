@@ -1,6 +1,8 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import clsx from "clsx";
 import { motion, type PanInfo, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
+import Head from "next/head";
 import {
   type DetailedHTMLProps,
   forwardRef,
@@ -25,7 +27,10 @@ interface ModalContentProps extends DialogPrimitive.DialogContentProps {
 
 export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
   ({ children, open, onOpenChange, ...props }, ref) => {
+    const { theme } = useTheme();
     const matchDesktop = useMediaQuery("(min-width: 640px)");
+
+    const focusRef = useRef<HTMLDivElement>(null);
 
     const onDragEnd = (
       _: MouseEvent | TouchEvent | PointerEvent,
@@ -38,78 +43,85 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
         onOpenChange(false);
     };
 
-    const focusRef = useRef<HTMLDivElement>(null);
-
     return (
-      <AnimatePresence>
-        {open && (
-          <DialogPrimitive.Portal forceMount>
-            <MotionDialogOverlay
-              forceMount
-              exit="close"
-              animate="open"
-              initial="close"
-              variants={
-                matchDesktop ? modalOverlayVariants : drawerOverlayVariants
-              }
-              className="fixed inset-0 z-50 grid place-items-end bg-bg-200/40 sm:place-items-center sm:py-4"
-            >
-              <MotionDialogContent
-                asChild
-                ref={ref}
-                {...props}
-                onOpenAutoFocus={(e) => {
-                  // Prevents weird bugs with input focusing
-                  e.preventDefault();
-                  // Instead focus on modal for trapping focus
-                  focusRef.current?.focus();
-                }}
+      <>
+        {/* Safari safe aera color */}
+        {/* http://origin.filosophy.org/code/online-tool-to-lighten-color-without-alpha-channel/ */}
+        <Head>
+          {theme === "light" && <meta name="theme-color" content="#f9f9f9" />}
+          {theme === "dark" && <meta name="theme-color" content="#151515" />}
+        </Head>
+
+        <AnimatePresence>
+          {open && (
+            <DialogPrimitive.Portal forceMount>
+              <MotionDialogOverlay
                 forceMount
                 exit="close"
                 animate="open"
                 initial="close"
-                // Constrains drag to negative y axis only
-                dragSnapToOrigin
-                dragMomentum={false}
-                dragElastic={{ top: 0 }}
-                dragConstraints={{ top: 0 }}
-                // @ts-expect-error: wrong type
-                onDragEnd={onDragEnd}
-                drag={matchDesktop ? undefined : "y"}
-                variants={matchDesktop ? modalVariants : drawerVariants}
-                dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
+                variants={
+                  matchDesktop ? modalOverlayVariants : drawerOverlayVariants
+                }
+                className="fixed inset-0 z-50 grid place-items-end bg-bg-200/40 sm:place-items-center sm:py-4"
               >
-                {matchDesktop ? (
-                  <div
-                    ref={focusRef}
-                    className="flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-200 p-6 shadow-elevation focus-visible:outline-none"
-                  >
-                    {children}
-                  </div>
-                ) : (
-                  <div
-                    ref={focusRef}
-                    className="w-[100vw] rounded-t-xl bg-bg-200 shadow-elevation focus-visible:outline-none"
-                  >
-                    {/* Drag handler */}
-                    <div className="my-4">
-                      <div className="mx-auto h-[6px] w-14 rounded-full bg-fg-100/10" />
-                    </div>
-
+                <MotionDialogContent
+                  asChild
+                  ref={ref}
+                  {...props}
+                  onOpenAutoFocus={(e) => {
+                    // Prevents weird bugs with input focusing
+                    e.preventDefault();
+                    // Instead focus on modal for trapping focus
+                    focusRef.current?.focus();
+                  }}
+                  forceMount
+                  exit="close"
+                  animate="open"
+                  initial="close"
+                  // Constrains drag to negative y axis only
+                  dragSnapToOrigin
+                  dragMomentum={false}
+                  dragElastic={{ top: 0 }}
+                  dragConstraints={{ top: 0 }}
+                  // @ts-expect-error: wrong type
+                  onDragEnd={onDragEnd}
+                  drag={matchDesktop ? undefined : "y"}
+                  variants={matchDesktop ? modalVariants : drawerVariants}
+                  dragTransition={{ bounceStiffness: 800, bounceDamping: 60 }}
+                >
+                  {matchDesktop ? (
                     <div
-                      className="focus-visible-ring flex max-h-[80vh] flex-col gap-4 overflow-y-auto px-6 pb-6"
-                      // Prevent drag unless on drag handler
-                      onPointerDownCapture={(e) => e.stopPropagation()}
+                      ref={focusRef}
+                      className="flex max-h-[80vh] w-[clamp(475px,50%,525px)] flex-col gap-4 overflow-y-auto rounded-xl bg-bg-200 p-6 shadow-elevation focus-visible:outline-none"
                     >
                       {children}
                     </div>
-                  </div>
-                )}
-              </MotionDialogContent>
-            </MotionDialogOverlay>
-          </DialogPrimitive.Portal>
-        )}
-      </AnimatePresence>
+                  ) : (
+                    <div
+                      ref={focusRef}
+                      className="w-[100vw] rounded-t-xl bg-bg-200 shadow-elevation focus-visible:outline-none"
+                    >
+                      {/* Drag handler */}
+                      <div className="my-4">
+                        <div className="mx-auto h-[6px] w-14 rounded-full bg-fg-100/10" />
+                      </div>
+
+                      <div
+                        className="focus-visible-ring flex max-h-[80vh] flex-col gap-4 overflow-y-auto px-6 pb-6"
+                        // Prevent drag unless on drag handler
+                        onPointerDownCapture={(e) => e.stopPropagation()}
+                      >
+                        {children}
+                      </div>
+                    </div>
+                  )}
+                </MotionDialogContent>
+              </MotionDialogOverlay>
+            </DialogPrimitive.Portal>
+          )}
+        </AnimatePresence>
+      </>
     );
   },
 );
