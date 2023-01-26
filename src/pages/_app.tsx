@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { type AppType } from "next/app";
 import Head from "next/head";
+import NextNProgress from "nextjs-progressbar";
 import { useEffect } from "react";
 import Toast from "@components/Toast";
 import { actions, store } from "@store/index";
@@ -65,6 +66,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
         `}</style>
 
         <Toast />
+
+        <NextNProgress
+          height={2}
+          startPosition={0.2}
+          color="rgb(var(--fg-200))"
+          options={{ showSpinner: false, speed: 200 }}
+        />
 
         <Analytics
           beforeSend={(event) => {
