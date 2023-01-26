@@ -76,7 +76,7 @@ specifiers:
   typescript: ^4.9.4
   use-resize-observer: ^9.1.0
   zod: ^3.20.2
-  zustand: ^4.3.2
+  zustand: 4.2.0
 
 dependencies:
   '@dnd-kit/core': 6.0.7_biqbaboplfbrettd7655fr4n2y
@@ -105,7 +105,7 @@ dependencies:
   '@trpc/next': 10.9.0_foflabvvxsdbuujlqclbknlgre
   '@trpc/react-query': 10.9.0_qw4miir7nnxijwjta54q3esyeq
   '@trpc/server': 10.9.0
-  '@udecode/zustood': 1.1.3_hqdyanr3piwottenlzj57ho23y
+  '@udecode/zustood': 1.1.3_ic3lrfv7akluwaiw4xdk34pc6a
   '@vercel/analytics': 0.1.8_react@18.2.0
   clsx: 1.2.1
   framer-motion: 8.4.7_biqbaboplfbrettd7655fr4n2y
@@ -126,7 +126,7 @@ dependencies:
   superjson: 1.9.1
   use-resize-observer: 9.1.0_biqbaboplfbrettd7655fr4n2y
   zod: 3.20.2
-  zustand: 4.3.2_immer@9.0.18+react@18.2.0
+  zustand: 4.2.0_immer@9.0.18+react@18.2.0
 
 devDependencies:
   '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.4
@@ -1739,14 +1739,14 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@udecode/zustood/1.1.3_hqdyanr3piwottenlzj57ho23y:
+  /@udecode/zustood/1.1.3_ic3lrfv7akluwaiw4xdk34pc6a:
     resolution: {integrity: sha512-f3mxHDaOF+q2XvDh/mMvLhCNs0LfCLhIBl8jGmvZT/i3WWq7YujzGXgnbK8mxIkun9irfe6wlPhg9sTIB9Gnug==}
     peerDependencies:
       zustand: '>=3.5.10'
     dependencies:
       immer: 9.0.18
       react-tracked: 1.7.11_biqbaboplfbrettd7655fr4n2y
-      zustand: 4.3.2_immer@9.0.18+react@18.2.0
+      zustand: 4.2.0_immer@9.0.18+react@18.2.0
     transitivePeerDependencies:
       - react
       - react-dom
@@ -5183,8 +5183,8 @@ packages:
     resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
     dev: false
 
-  /zustand/4.3.2_immer@9.0.18+react@18.2.0:
-    resolution: {integrity: sha512-rd4haDmlwMTVWVqwvgy00ny8rtti/klRoZjFbL/MAcDnmD5qSw/RZc+Vddstdv90M5Lv6RPgWvm1Hivyn0QgJw==}
+  /zustand/4.2.0_immer@9.0.18+react@18.2.0:
+    resolution: {integrity: sha512-eNwaDoD2FYVnMgtNxiMUhTJO780wonZUzJrPQTLYI0erSIMZF8cniWFW22kGQUECd8rdHRJ/ZJL2XO54c9Ttuw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       immer: '>=9.0'
