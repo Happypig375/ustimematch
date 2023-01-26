@@ -42,10 +42,19 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <Head>
           <title>USTimematch</title>
           <link rel="icon" type="image/png" href="/favicon.png" />
+
           <meta
             name="description"
-            content="HKUST Timetable utilities, share and store timetables, search for common time slots, and more to come!"
+            content="Timetable manager for HKUST students."
           />
+          <meta property="og:title" content="USTimematch" />
+          <meta
+            property="og:description"
+            content="Timetable manager for HKUST students."
+          />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://www.ustimematch.com" />
+          <meta property="og:image" content="" />
         </Head>
 
         {/* https://github.com/vercel/next.js/discussions/42023 */}
