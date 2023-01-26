@@ -62,7 +62,7 @@ function html({ url }: { url: string }) {
   return `
     Thanks for using USTimematch!<br/><br/>
     Please click the below link to sign in to your account:<br/><br/>
-    <span style="word-break: break-all">${url}</span><br/><br/>
+    <a style="word-break: break-all" href="${url}">${url}</a><br/><br/>
     <span style="color: #ef4444">*</span> The link will expire in 24 hours.<br/>
     <span style="color: #ef4444">*</span> If you didn't request for this email, please ignore it.
   `;
