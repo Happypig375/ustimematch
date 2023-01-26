@@ -57,7 +57,18 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
         <Toast />
 
-        <Analytics />
+        <Analytics
+          beforeSend={(event) => {
+            // Remove all query params
+            const url = new URL(event.url);
+            for (const [key] of url.searchParams.entries())
+              url.searchParams.set(key, "REDACTED");
+            return {
+              ...event,
+              url: url.toString(),
+            };
+          }}
+        />
 
         <Component {...pageProps} />
       </ThemeProvider>
