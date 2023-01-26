@@ -1,5 +1,5 @@
 import * as Separator from "@radix-ui/react-separator";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { type HTMLAttributes } from "react";
 import NavLink from "@components/ui/NavLink";
@@ -27,9 +27,7 @@ const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {
           {/* Navigation links */}
           <div className="hidden items-center gap-8 sm:flex">
             {status === "unauthenticated" && (
-              <NavLink onClick={() => signIn(undefined, { callbackUrl: "/" })}>
-                Sign In
-              </NavLink>
+              <NavLink href="/auth/signin">Sign In</NavLink>
             )}
             {status === "authenticated" && (
               <NavLink href="/account">Account</NavLink>

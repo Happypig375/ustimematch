@@ -29,7 +29,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       ref={ref}
       {...props}
       className={clsx(
-        "flex h-10 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all",
+        "flex h-10 select-none items-center justify-center whitespace-nowrap rounded-md transition-all",
         "enabled:hover:border-border-200 enabled:hover:text-fg-200",
         "enabled:active:bg-bg-300 enabled:active:text-fg-200",
         "disabled:cursor-not-allowed disabled:opacity-50",
@@ -43,7 +43,17 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
         className,
       )}
     >
-      {loading ? <Spinner /> : children}
+      {/* Preserve layout when loading */}
+      <div
+        className={clsx(
+          "flex items-center justify-center gap-2",
+          loading && "invisible",
+        )}
+      >
+        {children}
+      </div>
+
+      {loading && <Spinner className="absolute" />}
     </button>
   ),
 );

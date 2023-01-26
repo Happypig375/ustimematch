@@ -1,58 +1,112 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
-import type { InferGetServerSidePropsType } from "next";
 import type { CtxOrReq } from "next-auth/client/_utils";
-import { getCsrfToken } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { z } from "zod";
 import Header from "@components/Header";
 import Button from "@components/ui/Button";
 import Input from "@components/ui/Input";
 
-export async function getServerSideProps(context: CtxOrReq) {
-  const csrfToken = await getCsrfToken(context);
-  return {
-    props: { csrfToken },
-  };
-}
+export const getServerSideProps = async (context: CtxOrReq) => {
+  const session = await getSession(context);
+  const user = session?.user;
 
-const SignIn = ({
-  csrfToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  if (user)
+    return {
+      redirect: {
+        destination: "/account",
+        permanent: false,
+      },
+    };
+
+  return {
+    props: {},
+  };
+};
+
+const ZSignInForm = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Please enter an email address" })
+    .email({ message: "Invalid email address" }),
+});
+
+type SignInForm = z.infer<typeof ZSignInForm>;
+
+const SignIn = () => {
   const router = useRouter();
-  const { error } = router.query;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+    reset,
+  } = useForm<SignInForm>({
+    defaultValues: {
+      email: "",
+    },
+    resolver: zodResolver(ZSignInForm),
+  });
+
+  const onSubmit: SubmitHandler<SignInForm> = async ({ email }) => {
+    const data = await signIn("email", {
+      email,
+      redirect: false,
+      callbackUrl: "/",
+    });
+    data?.error && toast.error("Sign in failed, please try again later.");
+    data?.url && router.push(data.url);
+  };
+
+  useEffect(() => {
+    reset({
+      email: "",
+    });
+  }, [reset, isSubmitSuccessful]);
 
   return (
     <Header>
       <div className="relative grid w-full place-items-center p-6">
-        <article
+        <div
           className={clsx(
-            "prose prose-sm mx-auto",
+            "prose prose-sm",
             "sm:prose-base",
             "dark:prose-invert",
           )}
         >
           <h2>Sign in to USTimematch</h2>
           <form
-            method="post"
-            action="/api/auth/signin/email"
+            onSubmit={handleSubmit(onSubmit)}
             className="flex w-[80vw] flex-col gap-4 sm:w-96"
+            data-cy="sign-in-form"
           >
-            <input type="hidden" name="csrfToken" value={csrfToken} />
             <Input
-              inputMode="email"
               id="email"
-              labelId="email"
               label="Email"
-              name="email"
-              error={
-                typeof error === "string" ? "Failed to sign in" : undefined
-              }
+              labelId="email"
+              inputMode="email"
+              {...register("email")}
+              disabled={isSubmitting}
+              error={errors.email?.message}
               tips="A sign in link will be sent to you via email."
+              data-cy="sign-in-form-email-input"
             />
-            <Button type="submit" fullWidth className="text-base">
+            <Button
+              fullWidth
+              type="submit"
+              className="text-base"
+              loading={isSubmitting}
+              disabled={isSubmitting}
+            >
               Sign in
             </Button>
           </form>
-        </article>
+        </div>
       </div>
     </Header>
   );

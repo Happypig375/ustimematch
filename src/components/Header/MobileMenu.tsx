@@ -8,7 +8,7 @@ import {
 } from "@tabler/icons-react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import React from "react";
 import Button from "@components/ui/Button";
@@ -54,7 +54,7 @@ const MobileMenu = () => {
                     {status === "unauthenticated" && (
                       <NavLink
                         inMenu
-                        onClick={() => signIn(undefined, { callbackUrl: "/" })}
+                        href="/auth/signin"
                         icon={
                           <IconUserCircle
                             strokeWidth={1.75}

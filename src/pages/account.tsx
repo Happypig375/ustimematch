@@ -2,6 +2,8 @@ import clsx from "clsx";
 import type { InferGetServerSidePropsType } from "next";
 import type { CtxOrReq } from "next-auth/client/_utils";
 import { getSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import Header from "@components/Header";
 import Button from "@components/ui/Button";
 
@@ -27,12 +29,24 @@ export const getServerSideProps = async (context: CtxOrReq) => {
 const Account = ({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter();
+  const [signingOut, setSigningOut] = useState(false);
+
+  const onSignOut = async () => {
+    setSigningOut(true);
+    const { url } = await signOut({
+      callbackUrl: "/auth/signout",
+      redirect: false,
+    });
+    router.push(url);
+  };
+
   return (
     <Header>
       <div className="grid w-full place-items-center p-6">
-        <article
+        <div
           className={clsx(
-            "prose prose-sm mx-auto",
+            "prose prose-sm",
             "sm:prose-base",
             "dark:prose-invert",
             "prose-hr:border-border-100",
@@ -40,28 +54,15 @@ const Account = ({
         >
           <h3>Signed in as</h3>
           <p>{user.email}</p>
-          {/* <h3>Shared links</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Link</th>
-                <th>Expires At</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  https://www.ustimematch.com/?share=hkgJm8E-zyhQ4Dv4KdoRx
-                </td>
-                <td>1 Jan 2022, 09:00 am</td>
-              </tr>
-            </tbody>
-          </table> */}
+
           <hr />
+
           <div className="flex flex-wrap gap-4 self-center text-base">
             <Button
               fullWidth
-              onClick={() => signOut({ callbackUrl: "/auth/signout" })}
+              onClick={onSignOut}
+              loading={signingOut}
+              disabled={signingOut}
             >
               Sign Out
             </Button>
@@ -72,7 +73,7 @@ const Account = ({
               Delete Account
             </Button>
           </div>
-        </article>
+        </div>
       </div>
     </Header>
   );
