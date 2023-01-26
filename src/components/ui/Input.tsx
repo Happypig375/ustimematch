@@ -23,26 +23,29 @@ const Input = forwardRef<HTMLInputElement, Props>(
   ({ label, labelId, disabled, error, className, tips, ...props }, ref) => {
     return (
       <div className={clsx("flex flex-col gap-1", className)}>
-        <div className="flex justify-between">
-          {label && labelId && (
-            <Label.Root
-              htmlFor={labelId}
-              className="flex items-center justify-between text-sm font-medium"
-            >
-              {label}
-            </Label.Root>
-          )}
+        {/* Only render label row if any of the below props exists */}
+        {(label || labelId || error || tips) && (
+          <div className="flex justify-between">
+            {label && labelId && (
+              <Label.Root
+                htmlFor={labelId}
+                className="flex items-center justify-between text-sm font-medium"
+              >
+                {label}
+              </Label.Root>
+            )}
 
-          <div className="flex items-center gap-[6px]">
-            <span
-              className="text-xs font-normal text-red-600"
-              data-cy={`input-error-${labelId}`}
-            >
-              {error}
-            </span>
-            {tips && <Tips>{tips}</Tips>}
+            <div className="flex items-center gap-[6px]">
+              <span
+                className="text-xs font-normal text-red-600"
+                data-cy={`input-error-${labelId}`}
+              >
+                {error}
+              </span>
+              {tips && <Tips>{tips}</Tips>}
+            </div>
           </div>
-        </div>
+        )}
 
         <input
           id={labelId}
