@@ -36,8 +36,9 @@ const Tutorial: NextPage = () => {
             <Tips image>
               <Image
                 src={importImage}
-                alt="Timetable Planner export screenshot"
+                placeholder="blur"
                 className="rounded-md"
+                alt="Timetable Planner export screenshot"
               />
             </Tips>
           </h3>
