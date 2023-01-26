@@ -23,7 +23,7 @@ describe("tour", () => {
     cy.dataCy("tour-next").click();
     cy.dataCy("tour-next").click();
 
-    cy.dataCy("tour-next").should("contain.text", "Start!");
+    cy.dataCy("tour-next").should("have.text", "Start!");
   });
 
   it("returns to empty store after navigation", () => {

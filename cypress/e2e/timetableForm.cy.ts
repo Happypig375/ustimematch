@@ -10,16 +10,13 @@ describe("timetable form validity", () => {
   it("throws error on empty name", () => {
     cy.timetableForm();
 
-    cy.dataCy("input-error-name").should("contain.text", "Please enter a name");
+    cy.dataCy("input-error-name").should("have.text", "Please enter a name");
   });
 
   it("throws error on long name", () => {
     cy.timetableForm("12345678901234567890123456789012345678901");
 
-    cy.dataCy("input-error-name").should(
-      "contain.text",
-      "The name is too long",
-    );
+    cy.dataCy("input-error-name").should("have.text", "The name is too long");
   });
 
   it("trims name", () => {
@@ -35,7 +32,7 @@ describe("timetable form validity", () => {
   it("throws error on empty planner url", () => {
     cy.timetableForm();
     cy.dataCy("input-error-planner-url").should(
-      "contain.text",
+      "have.text",
       "Invalid planner URL",
     );
   });
@@ -44,14 +41,14 @@ describe("timetable form validity", () => {
     cy.timetableForm(undefined, "https://random.url");
 
     cy.dataCy("input-error-planner-url").should(
-      "contain.text",
+      "have.text",
       "Invalid planner URL",
     );
 
     cy.timetableForm(undefined, "invalid url");
 
     cy.dataCy("input-error-planner-url").should(
-      "contain.text",
+      "have.text",
       "Invalid planner URL",
     );
   });

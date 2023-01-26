@@ -8,16 +8,13 @@ describe("folder form validity", () => {
   it("shows error on empty name", () => {
     cy.folderForm();
 
-    cy.dataCy("input-error-name").should("contain.text", "Please enter a name");
+    cy.dataCy("input-error-name").should("have.text", "Please enter a name");
   });
 
   it("shows error on long name", () => {
     cy.folderForm("12345678901234567890123456789012345678901");
 
-    cy.dataCy("input-error-name").should(
-      "contain.text",
-      "The name is too long",
-    );
+    cy.dataCy("input-error-name").should("have.text", "The name is too long");
   });
 
   it("can trim name", () => {
