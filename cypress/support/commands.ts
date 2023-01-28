@@ -27,14 +27,14 @@ function actions(store: string, key: string, ...args: unknown[]) {
 }
 
 function folderForm(name?: string) {
-  name && cy.dataCy("folder-form-name-input").focus().type(name);
+  name && cy.dataCy("input-name").focus().type(name);
   cy.dataCy("folder-form").submit();
 }
 
 function timetableForm(name?: string, plannerURL?: string) {
-  name && cy.dataCy("timetable-form-name-input").focus().type(name);
+  name && cy.dataCy("input-name").focus().type(name);
   plannerURL &&
-    cy.dataCy("timetable-form-planner-url-input").focus().type(plannerURL);
+    cy.dataCy("input-timetable-planner-url").focus().type(plannerURL);
   cy.dataCy("timetable-form").submit();
 }
 

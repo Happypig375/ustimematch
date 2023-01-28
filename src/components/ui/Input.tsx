@@ -14,45 +14,42 @@ interface Props
     HTMLInputElement
   > {
   label?: string;
-  labelId?: string;
   error?: string;
   tips?: ReactNode;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ label, labelId, disabled, error, className, tips, ...props }, ref) => {
+  ({ id, label, error, className, tips, ...props }, ref) => {
     return (
-      <div className={clsx("flex flex-col gap-1", className)}>
+      <div className={clsx("flex flex-col gap-[2px]", className)}>
         {/* Only render label row if any of the below props exists */}
-        {(label || labelId || error || tips) && (
+        {(label || error || tips) && (
           <div className="flex justify-between">
-            {label && labelId && (
-              <Label.Root
-                htmlFor={labelId}
-                className="flex items-center justify-between text-sm font-medium"
-              >
+            {label && (
+              <Label.Root htmlFor={id} className="text-sm font-medium">
                 {label}
               </Label.Root>
             )}
 
-            <div className="flex items-center gap-[6px]">
+            <div className="flex items-center gap-[2px]">
               <span
-                className="text-xs font-normal text-red-600"
-                data-cy={`input-error-${labelId}`}
+                className="text-xs text-red-500"
+                data-cy={`input-error-${id}`}
               >
                 {error}
               </span>
+
               {tips && <Tips>{tips}</Tips>}
             </div>
           </div>
         )}
 
         <input
-          id={labelId}
+          id={id}
           ref={ref}
-          disabled={disabled}
+          data-cy={`input-${id}`}
           className={clsx(
-            "h-10 overflow-auto rounded-md px-2 transition-all",
+            "h-10 overflow-auto rounded-md px-2 transition-focusable",
             "border border-border-100 bg-bg-200",
             "hover:border-border-200",
             "disabled:cursor-not-allowed disabled:opacity-50",

@@ -68,13 +68,11 @@ const SignIn = () => {
             <Input
               id="email"
               label="Email"
-              labelId="email"
               inputMode="email"
               {...register("email")}
               disabled={isLoading}
               error={errors.email?.message}
               tips="A sign in link will be sent to you via email."
-              data-cy="sign-in-form-email-input"
             />
             <Button
               fullWidth

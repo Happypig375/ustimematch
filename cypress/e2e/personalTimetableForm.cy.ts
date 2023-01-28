@@ -5,11 +5,7 @@ describe("personal timetable form actions", () => {
     cy.visit("/");
     cy.dataCy("tour-skip").click();
     cy.dataCy("add-personal-timetable").click();
-    cy.dataCy("timetable-form-name-input").focus().type(timetable.name);
-    cy.dataCy("timetable-form-planner-url-input")
-      .focus()
-      .type(timetable.plannerURL);
-    cy.dataCy("timetable-form").submit();
+    cy.timetableForm(timetable.name, timetable.plannerURL);
   });
 
   it("can add", () => {
@@ -23,12 +19,11 @@ describe("personal timetable form actions", () => {
 
   it("can edit", () => {
     cy.dataCy("edit-personal-timetable").click();
-    cy.dataCy("timetable-form-name-input").focus().clear().type("Edited");
-    cy.dataCy("timetable-form").submit();
+    cy.timetableForm(" edited");
 
     cy.store("timetable", "personalTimetable")
       .its("name")
-      .should("eq", "Edited");
+      .should("eq", "test edited");
   });
 
   it("can delete", () => {

@@ -145,22 +145,20 @@ const TimetableForm = ({
         >
           <div className="flex flex-col gap-2">
             <Input
-              inputMode="text"
+              id="name"
               label="Name"
-              labelId="name"
+              inputMode="text"
               disabled={isFetching}
               error={errors.name?.message}
               {...register("name")}
-              data-cy="timetable-form-name-input"
             />
             <Input
+              id="timetable-planner-url"
               inputMode="url"
-              labelId="planner-url"
               label="Timetable Planner URL"
               disabled={isFetching}
               error={errors.plannerURL?.message}
               {...register("plannerURL")}
-              data-cy="timetable-form-planner-url-input"
               tips={
                 <>
                   Please refer to the{" "}

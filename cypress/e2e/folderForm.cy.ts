@@ -32,8 +32,7 @@ describe("folder form actions", () => {
     cy.visit("/");
     cy.dataCy("tour-skip").click();
     cy.dataCy("add-folder").click();
-    cy.dataCy("folder-form-name-input").focus().type("test");
-    cy.dataCy("folder-form").submit();
+    cy.folderForm("test");
   });
 
   it("can add", () => {

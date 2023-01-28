@@ -86,12 +86,11 @@ const FolderForm = ({
         >
           <div className="flex flex-col gap-2">
             <Input
+              id="name"
               label="Name"
-              labelId="name"
               inputMode="text"
               error={errors.name?.message}
               {...register("name")}
-              data-cy="folder-form-name-input"
             />
           </div>
 

@@ -31,7 +31,7 @@ describe("timetable form validity", () => {
 
   it("throws error on empty planner url", () => {
     cy.timetableForm();
-    cy.dataCy("input-error-planner-url").should(
+    cy.dataCy("input-error-timetable-planner-url").should(
       "have.text",
       "Invalid planner URL",
     );
@@ -40,14 +40,14 @@ describe("timetable form validity", () => {
   it("throws error on invalid planner url", () => {
     cy.timetableForm(undefined, "https://random.url");
 
-    cy.dataCy("input-error-planner-url").should(
+    cy.dataCy("input-error-timetable-planner-url").should(
       "have.text",
       "Invalid planner URL",
     );
 
     cy.timetableForm(undefined, "invalid url");
 
-    cy.dataCy("input-error-planner-url").should(
+    cy.dataCy("input-error-timetable-planner-url").should(
       "have.text",
       "Invalid planner URL",
     );

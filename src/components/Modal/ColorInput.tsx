@@ -17,23 +17,30 @@ const ColorPreview = ({ color, className }: ColorPreviewProps) => {
         backgroundColor: color + "d8",
       }}
       className={clsx(
-        "flex flex-col gap-2 rounded-md p-2 leading-none shadow-outline",
+        "flex h-[10vh] flex-col gap-1 rounded-md p-2 leading-none shadow-outline",
         className,
       )}
     >
       <div
-        style={{ color: textColor(color) }}
-        className="flex flex-wrap justify-between gap-x-2 gap-y-1 text-[clamp(0.8rem,1.8vw,0.9rem)] font-medium"
+        style={{ color: textColor(color) + "ee" }}
+        className="flex flex-wrap justify-between gap-x-1 gap-y-0 text-[clamp(0.725rem,1.4vw,0.875rem)] font-medium"
       >
         <div>Preview</div>
-        <div>L0</div>
+        <div>L1</div>
       </div>
 
       <div
         style={{ color: textColor(color) + "cc" }}
-        className="text-[clamp(0.7rem,1.7vw,0.8rem)]"
+        className="text-[clamp(0.65rem,1.2vw,0.7rem)]"
       >
-        12:00 am - 11:59 pm
+        9:00 am - 10:30 am
+      </div>
+
+      <div
+        style={{ color: textColor(color) + "aa" }}
+        className="text-[clamp(0.65rem,1.2vw,0.7rem)]"
+      >
+        Lecture Theater A (401)
       </div>
     </div>
   );
@@ -62,13 +69,15 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
 
   return (
     // The styles of color input should be in parity with normal input
-    <div className="flex flex-col gap-1">
-      <Label.Root htmlFor="color" className="text-sm font-medium">
-        Color
-      </Label.Root>
+    <div className="flex flex-col gap-[2px]">
+      <div className="flex">
+        <Label.Root htmlFor="color" className="text-sm font-medium">
+          Color
+        </Label.Root>
+      </div>
 
-      <div className="flex h-36 gap-[6px]">
-        <div className="flex w-2/5 flex-col gap-[6px]">
+      <div className="flex gap-[6px]">
+        <div className="flex w-[40%] flex-col gap-[6px]">
           <HexColorInput
             prefixed
             id="color"
@@ -76,16 +85,16 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
             onChange={onChange}
             disabled={disabled}
             className={clsx(
-              "flex-shrink-0",
-              "h-10 rounded-md px-2 transition-all",
-              "border border-border-100 bg-bg-200 hover:border-border-200",
+              "h-10 overflow-auto rounded-md px-2 transition-focusable",
+              "border border-border-100 bg-bg-200",
+              "hover:border-border-200",
               "disabled:cursor-not-allowed disabled:opacity-50",
             )}
           />
 
           <ColorPreview
             color={field.value}
-            className={clsx("h-full", disabled && "opacity-50")}
+            className={clsx(disabled && "opacity-50")}
           />
         </div>
 
@@ -93,7 +102,7 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
           color={field.value}
           onChange={onChange}
           className={clsx(
-            "!h-full flex-grow",
+            "!h-auto flex-grow",
             disabled && "pointer-events-none opacity-50",
           )}
         />
