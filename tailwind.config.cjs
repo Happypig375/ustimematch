@@ -35,6 +35,11 @@ module.exports = {
         // Shadow for light mode, highlight for dark mode
         elevation: "var(--shadow-elevation)",
       },
+      transitionProperty: {
+        // For buttons, inputs, anchors
+        focusable:
+          "box-shadow, color, background-color, border-color, text-decoration-color, fill, stroke",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

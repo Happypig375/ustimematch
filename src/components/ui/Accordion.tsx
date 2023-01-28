@@ -26,7 +26,7 @@ export const AccordionTrigger = forwardRef<
       ref={ref}
       {...props}
       className={clsx(
-        "flex h-10 w-full items-center justify-between rounded-md p-4 transition-all",
+        "flex h-10 w-full items-center justify-between rounded-md p-4 transition-focusable",
         "border border-border-100 bg-bg-200 text-fg-100",
         "hover:border-border-200 hover:text-fg-200",
         "active:bg-bg-300 active:text-fg-200",
