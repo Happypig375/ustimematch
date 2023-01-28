@@ -22,7 +22,7 @@ model SharedTimetables {
   // An array of timetable
   timetables Json[]
   // Can either be shared by user or anonymously
-  owner      User?    @relation(fields: [ownerId], references: [id])
+  owner      User?    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId    String?
 }
 
@@ -58,6 +58,7 @@ model User {
   name             String?
   email            String?            @unique
   emailVerified    DateTime?
+  image            String?
   accounts         Account[]
   sessions         Session[]
   sharedTimetables SharedTimetables[]
