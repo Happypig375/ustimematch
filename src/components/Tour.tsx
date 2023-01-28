@@ -1,3 +1,4 @@
+import * as FocusScope from "@radix-ui/react-focus-scope";
 import type { PopoverContentProps, StepType } from "@reactour/tour";
 import { TourProvider, useTour } from "@reactour/tour";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
@@ -7,6 +8,7 @@ import { useTheme } from "next-themes";
 import Head from "next/head";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { useRef } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { actions, useTrackedStore } from "@store/index";
@@ -24,6 +26,12 @@ const ContentComponent = ({
 }: PopoverContentProps) => {
   const { theme } = useTheme();
 
+  const focusRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    focusRef.current?.focus();
+  }, [currentStep]);
+
   const step = steps[currentStep];
   if (!step || typeof step.content === "function") return null;
 
@@ -38,61 +46,69 @@ const ContentComponent = ({
         {theme === "dark" && <meta name="theme-color" content="#0c0c0c" />}
       </Head>
 
-      <div
-        className="flex max-w-xs flex-col rounded-md bg-bg-200 p-2 shadow-elevation sm:max-w-sm"
-        data-cy="tour-modal"
+      <FocusScope.Root
+        loop
+        trapped
+        onMountAutoFocus={(e) => e.preventDefault()}
       >
         <div
-          className={clsx(
-            "px-4 py-2",
-            "prose prose-sm",
-            "sm:prose-base",
-            "dark:prose-invert",
-          )}
+          tabIndex={-1}
+          ref={focusRef}
+          className="flex max-w-xs flex-col rounded-md bg-bg-200 p-2 shadow-elevation focus-visible:outline-none sm:max-w-sm"
+          data-cy="tour-modal"
         >
-          {step.content}
-        </div>
-        <div className="flex gap-2">
-          <Button
-            plain
-            className="mr-auto"
-            onClick={() =>
-              onClickClose?.({ currentStep, setCurrentStep, setIsOpen })
-            }
-            data-cy="tour-skip"
-          >
-            Skip
-          </Button>
-
-          {currentStep !== 0 && (
-            <Button
-              icon
-              onClick={() => setCurrentStep((prev) => prev - 1)}
-              data-cy="tour-prev"
-            >
-              <IconArrowLeft strokeWidth={1.75} className="h-5 w-5" />
-            </Button>
-          )}
-
-          <Button
-            data-cy="tour-next"
-            icon={!isLastStep}
-            onClick={() => {
-              if (isLastStep) {
-                onClickClose?.({ currentStep, setCurrentStep, setIsOpen });
-              } else {
-                setCurrentStep((prev) => prev + 1);
-              }
-            }}
-          >
-            {isLastStep ? (
-              "Start!"
-            ) : (
-              <IconArrowRight strokeWidth={1.75} className="h-5 w-5" />
+          <div
+            className={clsx(
+              "px-4 py-2",
+              "prose prose-sm",
+              "sm:prose-base",
+              "dark:prose-invert",
             )}
-          </Button>
+          >
+            {step.content}
+          </div>
+          <div className="flex gap-2">
+            <Button
+              plain
+              className="mr-auto"
+              onClick={() =>
+                onClickClose?.({ currentStep, setCurrentStep, setIsOpen })
+              }
+              data-cy="tour-skip"
+            >
+              Skip
+            </Button>
+
+            {currentStep !== 0 && (
+              <Button
+                icon
+                onClick={() => setCurrentStep((prev) => prev - 1)}
+                data-cy="tour-prev"
+              >
+                <IconArrowLeft strokeWidth={1.75} className="h-5 w-5" />
+              </Button>
+            )}
+
+            <Button
+              data-cy="tour-next"
+              icon={!isLastStep}
+              onClick={() => {
+                if (isLastStep) {
+                  onClickClose?.({ currentStep, setCurrentStep, setIsOpen });
+                } else {
+                  setCurrentStep((prev) => prev + 1);
+                }
+              }}
+            >
+              {isLastStep ? (
+                "Start!"
+              ) : (
+                <IconArrowRight strokeWidth={1.75} className="h-5 w-5" />
+              )}
+            </Button>
+          </div>
         </div>
-      </div>
+      </FocusScope.Root>
     </>
   );
 };
