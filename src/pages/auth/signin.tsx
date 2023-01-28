@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
-import type { CtxOrReq } from "next-auth/client/_utils";
-import { getSession, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -11,23 +10,6 @@ import { z } from "zod";
 import Header from "@components/Header";
 import Button from "@components/ui/Button";
 import Input from "@components/ui/Input";
-
-export const getServerSideProps = async (context: CtxOrReq) => {
-  const session = await getSession(context);
-  const user = session?.user;
-
-  if (user)
-    return {
-      redirect: {
-        destination: "/account",
-        permanent: false,
-      },
-    };
-
-  return {
-    props: {},
-  };
-};
 
 const ZSignInForm = z.object({
   email: z
@@ -41,33 +23,31 @@ type SignInForm = z.infer<typeof ZSignInForm>;
 const SignIn = () => {
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors },
     reset,
   } = useForm<SignInForm>({
-    defaultValues: {
-      email: "",
-    },
+    defaultValues: { email: "" },
     resolver: zodResolver(ZSignInForm),
   });
 
   const onSubmit: SubmitHandler<SignInForm> = async ({ email }) => {
+    setIsLoading(true);
     const data = await signIn("email", {
       email,
       redirect: false,
       callbackUrl: "/",
     });
     data?.error && toast.error("Sign in failed, please try again later.");
-    data?.url && router.push(data.url);
-  };
+    if (data?.url) return router.push(data.url);
 
-  useEffect(() => {
-    reset({
-      email: "",
-    });
-  }, [reset, isSubmitSuccessful]);
+    setIsLoading(false);
+    reset({ email: "" });
+  };
 
   return (
     <Header>
@@ -91,7 +71,7 @@ const SignIn = () => {
               labelId="email"
               inputMode="email"
               {...register("email")}
-              disabled={isSubmitting}
+              disabled={isLoading}
               error={errors.email?.message}
               tips="A sign in link will be sent to you via email."
               data-cy="sign-in-form-email-input"
@@ -100,8 +80,8 @@ const SignIn = () => {
               fullWidth
               type="submit"
               className="text-base"
-              loading={isSubmitting}
-              disabled={isSubmitting}
+              loading={isLoading}
+              disabled={isLoading}
             >
               Sign in
             </Button>
