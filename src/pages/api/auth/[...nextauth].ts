@@ -20,7 +20,6 @@ async function rateLimited(identifier: string, expires: Date) {
       ],
     },
   });
-  console.log("request within last minute: ", identifier, count);
 
   return count > 1;
 }
