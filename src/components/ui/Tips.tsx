@@ -21,6 +21,7 @@ const Tips = ({ children, image, className, triggerClassName }: Props) => {
         <Button
           icon
           plain
+          title={`${openTips ? "Close" : "Open"} Tips`}
           className={clsx("!h-5 !w-5 rounded-full", triggerClassName)}
         >
           <IconInfoCircle strokeWidth={1.75} className="h-4 w-4" />

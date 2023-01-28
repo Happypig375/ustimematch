@@ -70,6 +70,7 @@ const ContentComponent = ({
           <div className="flex gap-2">
             <Button
               plain
+              title="Skip Tour"
               className="mr-auto"
               onClick={() =>
                 onClickClose?.({ currentStep, setCurrentStep, setIsOpen })
@@ -82,6 +83,7 @@ const ContentComponent = ({
             {currentStep !== 0 && (
               <Button
                 icon
+                title="Previous Step"
                 onClick={() => setCurrentStep((prev) => prev - 1)}
                 data-cy="tour-prev"
               >
@@ -90,6 +92,7 @@ const ContentComponent = ({
             )}
 
             <Button
+              title="Next Step"
               data-cy="tour-next"
               icon={!isLastStep}
               onClick={() => {

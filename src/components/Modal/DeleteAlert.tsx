@@ -1,4 +1,4 @@
-import { IconTrash } from "@tabler/icons-react";
+import { IconTrash, IconX } from "@tabler/icons-react";
 import type { HTMLAttributes } from "react";
 import { useState } from "react";
 import {
@@ -28,6 +28,7 @@ const DeleteAlert = ({ hidden, disabled, onDelete, children }: Props) => {
           <Button
             icon
             error
+            title="Delete"
             type="button"
             onClick={() => setOpenAlert(true)}
             data-cy="delete-alert-trigger"
@@ -45,7 +46,9 @@ const DeleteAlert = ({ hidden, disabled, onDelete, children }: Props) => {
 
         <div className="flex gap-2">
           <AlertCancel asChild>
-            <Button fullWidth>Cancel</Button>
+            <Button fullWidth>
+              <IconX strokeWidth={1.75} className="h-5 w-5" /> Cancel
+            </Button>
           </AlertCancel>
 
           <AlertAction asChild>
@@ -58,6 +61,7 @@ const DeleteAlert = ({ hidden, disabled, onDelete, children }: Props) => {
               }}
               data-cy="delete-alert-delete"
             >
+              <IconTrash strokeWidth={1.75} className="h-5 w-5" />
               Delete
             </Button>
           </AlertAction>

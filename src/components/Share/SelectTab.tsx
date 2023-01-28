@@ -88,8 +88,10 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
     const timetableChecked = (timetableId: string): boolean =>
       checkedIds.includes(timetableId);
 
+    const checkedAll = checkedIds.length === combinedTimetables.length;
+
     const toggleCheckAll = () => {
-      if (checkedIds.length === combinedTimetables.length) setCheckedIds([]);
+      if (checkedAll) setCheckedIds([]);
       else setCheckedIds(combinedTimetables.map((t) => t.config.id));
     };
 
@@ -166,9 +168,9 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
         <ModalControl>
           <Button
             icon
-            onClick={toggleCheckAll}
             disabled={empty}
-            title="Check/Uncheck All"
+            onClick={toggleCheckAll}
+            title={checkedAll ? "Unselect All" : "Select All"}
           >
             <IconListCheck strokeWidth={1.75} className="h-5 w-5" />
           </Button>

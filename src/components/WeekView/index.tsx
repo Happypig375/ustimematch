@@ -23,7 +23,11 @@ const Controls = () => {
 
   return (
     <div className="flex items-center justify-between gap-4 border-b border-border-100 pl-2">
-      <Button icon title="Toggle Explorer" onClick={toggleShowExplorer}>
+      <Button
+        icon
+        onClick={toggleShowExplorer}
+        title={`${showExplorer ? "Close" : "Open"} Explorer`}
+      >
         <motion.div
           initial={false}
           animate={showExplorer ? "close" : "open"}
@@ -37,7 +41,11 @@ const Controls = () => {
         className="flex gap-4 overflow-auto p-2"
         data-tour="weekview-controls"
       >
-        <Button icon title="Toggle Timematch" onClick={toggleShowTimematch}>
+        <Button
+          icon
+          onClick={toggleShowTimematch}
+          title={`${showTimematch ? "Show" : "Hide"} Timematch`}
+        >
           {showTimematch ? (
             <IconClock strokeWidth={1.75} className="h-5 w-5" />
           ) : (
@@ -45,7 +53,11 @@ const Controls = () => {
           )}
         </Button>
 
-        <Button icon title="Toggle Weekend" onClick={toggleShowWeekend}>
+        <Button
+          icon
+          onClick={toggleShowWeekend}
+          title={`${showWeekend ? "Hide" : "Show"} Weekend`}
+        >
           {showWeekend ? (
             <IconColumns strokeWidth={1.75} className="h-5 w-5" />
           ) : (

@@ -34,7 +34,12 @@ const Toast = () => {
             <>
               {message}
               {t.type !== "loading" && (
-                <Button onClick={() => toast.dismiss(t.id)} icon plain>
+                <Button
+                  icon
+                  plain
+                  title="Dismiss Toast"
+                  onClick={() => toast.dismiss(t.id)}
+                >
                   <IconX strokeWidth={1.75} className="h-5 w-5" />
                 </Button>
               )}

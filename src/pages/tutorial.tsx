@@ -144,7 +144,7 @@ const Tutorial: NextPage = () => {
             data-cy="tour-launch"
             className="text-base"
           >
-            Launch tutorial again
+            Launch Interactive Tutorial
           </Button>
         </article>
       </div>

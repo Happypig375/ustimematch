@@ -51,8 +51,10 @@ const ReceiveModal = () => {
 
   const checked = (id: string) => checkedIds.includes(id);
 
+  const checkedAll = checkedIds.length === sharedTimetables.length;
+
   const toggleCheckAll = () => {
-    if (checkedIds.length === sharedTimetables.length) setCheckedIds([]);
+    if (checkedAll) setCheckedIds([]);
     else setCheckedIds(sharedTimetables.map((t) => t.config.id));
   };
 
@@ -119,7 +121,12 @@ const ReceiveModal = () => {
         )}
 
         <ModalControl>
-          <Button icon onClick={toggleCheckAll} disabled={!isSuccess}>
+          <Button
+            title={checkedAll ? "Unselect All" : "Select All"}
+            icon
+            onClick={toggleCheckAll}
+            disabled={!isSuccess}
+          >
             <IconListCheck strokeWidth={1.75} className="h-5 w-5" />
           </Button>
 

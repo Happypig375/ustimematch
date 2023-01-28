@@ -34,7 +34,11 @@ const Share = () => {
       onOpenChange={isLoading ? undefined : setOpenShareModal}
     >
       <ModalTrigger asChild>
-        <Button icon title="Share" onClick={() => setOpenShareModal(true)}>
+        <Button
+          icon
+          title="Share Timetables"
+          onClick={() => setOpenShareModal(true)}
+        >
           <IconShare strokeWidth={1.75} className="h-5 w-5" />
         </Button>
       </ModalTrigger>

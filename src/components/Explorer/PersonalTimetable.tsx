@@ -49,7 +49,9 @@ const PersonalTimetable = () => {
           <div className="flex gap-2 py-2 pr-2">
             <Button
               icon
-              title="Toggle personal timetable visibility"
+              title={`${
+                personalTimetable.config.visible ? "Hide" : "Show"
+              } Personal Timetable`}
               onClick={() =>
                 personalTimetable &&
                 setPersonalTimetable({
@@ -70,7 +72,7 @@ const PersonalTimetable = () => {
 
             <Button
               icon
-              title="Edit personal timetable"
+              title="Edit Personal Timetable"
               onClick={() => setOpen(true)}
               data-cy="edit-personal-timetable"
             >
@@ -82,7 +84,7 @@ const PersonalTimetable = () => {
         <div className="p-2">
           <Button
             fullWidth
-            title="Add personal timetable"
+            title="Add Personal Timetable"
             onClick={() => setOpen(true)}
             data-cy="add-personal-timetable"
           >

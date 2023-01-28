@@ -32,7 +32,7 @@ export const TabsTrigger = forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     {...props}
-    className={clsx("text-lg font-medium leading-none", className)}
+    className={clsx("text-lg font-medium", className)}
   >
     {children}
   </TabsPrimitive.Trigger>

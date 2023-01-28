@@ -16,19 +16,24 @@ import NavLink from "@components/ui/NavLink";
 import { menuVariants } from "@components/ui/variants";
 
 const MobileMenu = () => {
-  const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const { status } = useSession();
 
   return (
-    <DropdownMenu.Root open={open} onOpenChange={setOpen}>
+    <DropdownMenu.Root open={openMenu} onOpenChange={setOpenMenu}>
       <DropdownMenu.Trigger asChild>
-        <Button icon className="sm:hidden" aria-label="Open navigation menu">
+        <Button
+          title={`${openMenu ? "Close" : "Open"} Navigation Menu`}
+          icon
+          className="sm:hidden"
+          aria-label="Open navigation menu"
+        >
           <IconDots strokeWidth={1.75} className="h-5 w-5" />
         </Button>
       </DropdownMenu.Trigger>
 
       <AnimatePresence>
-        {open && (
+        {openMenu && (
           <DropdownMenu.Portal forceMount>
             <DropdownMenu.Content
               asChild

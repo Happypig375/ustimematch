@@ -118,7 +118,11 @@ const RefreshModal = () => {
   return (
     <Modal open={openRefreshModal} onOpenChange={setOpenRefreshModal}>
       <ModalTrigger asChild>
-        <Button icon title="Refresh" onClick={() => setOpenRefreshModal(true)}>
+        <Button
+          icon
+          title="Refresh Timetables"
+          onClick={() => setOpenRefreshModal(true)}
+        >
           <IconRefresh strokeWidth={1.75} className="h-5 w-5" />
         </Button>
       </ModalTrigger>

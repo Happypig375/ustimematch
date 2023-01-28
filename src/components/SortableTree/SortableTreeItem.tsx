@@ -68,6 +68,21 @@ const SortableTreeItem = ({
     transition: "opacity 200ms ease, " + transition,
   };
 
+  const isFolder = treeItem.type === "FOLDER";
+  const isTimetable = treeItem.type === "TIMETABLE";
+
+  const name = isFolder
+    ? treeItem.name
+    : isTimetable
+    ? treeItem.timetable.name
+    : "";
+
+  const visible =
+    (isFolder && getFolderVisible(treeItem)) ||
+    (isTimetable && treeItem.timetable.config.visible);
+
+  const timetableCount = isFolder ? getTimetableCount(treeItem) : -1;
+
   return (
     <li
       ref={setDroppableNodeRef}
@@ -95,19 +110,20 @@ const SortableTreeItem = ({
         )}
         data-cy="sortable-tree-item"
       >
-        {/* Folder item collapse and name */}
-        {treeItem.type === "FOLDER" && (
+        {/* Folder item collapse button and name */}
+        {isFolder && (
           <>
             <Button
               icon
               plain
               // Align with color chip
               className="ml-[6px]"
+              onKeyDown={(e) => e.stopPropagation()}
               onClick={(e) => {
                 e.stopPropagation();
                 onCollapse && onCollapse();
               }}
-              onKeyDown={(e) => e.stopPropagation()}
+              title={`${treeItem.collapsed ? "Expand" : "Collapse"} ${name}`}
             >
               <motion.div
                 initial={false}
@@ -118,59 +134,54 @@ const SortableTreeItem = ({
               </motion.div>
             </Button>
 
-            <span title={treeItem.name} className="flex-grow truncate">
-              {treeItem.name}
+            <span title={name} className="flex-grow truncate">
+              {name}
             </span>
           </>
         )}
 
         {/* Timetable item color chip and name */}
-        {treeItem.type === "TIMETABLE" && (
+        {isTimetable && (
           <>
             <ColorChip
               // Align with folder collapse button
               className="ml-2"
               color={treeItem.timetable.config.color}
             />
-            <span
-              title={treeItem.timetable.name}
-              className="flex-grow truncate"
-            >
-              {treeItem.timetable.name}
+            <span title={name} className="flex-grow truncate">
+              {name}
             </span>
           </>
         )}
 
         {/* Children count badge on clone while dragging */}
-        {clone && treeItem.type === "FOLDER" && (
+        {clone && isFolder && (
           <span className="absolute -top-2 -left-2 flex h-5 w-5 items-center justify-center rounded-full bg-blue-800 text-xs font-medium text-white">
-            {getTimetableCount(treeItem)}
+            {timetableCount}
           </span>
         )}
 
         {/* Toggle visibility button */}
-        {!clone &&
-          (treeItem.type === "FOLDER"
-            ? getTimetableCount(treeItem) > 0
-            : true) && (
-            <Button
-              icon
-              plain
-              onClick={(e) => {
-                e.stopPropagation();
-                onEyeClick && onEyeClick();
-              }}
-              onKeyDown={(e) => e.stopPropagation()}
-            >
-              {(treeItem.type === "TIMETABLE" &&
-                treeItem.timetable.config.visible) ||
-              (treeItem.type === "FOLDER" && getFolderVisible(treeItem)) ? (
-                <IconEye strokeWidth={1.75} className="h-5 w-5" />
-              ) : (
-                <IconEyeOff strokeWidth={1.75} className="h-5 w-5" />
-              )}
-            </Button>
-          )}
+        {!clone && (isTimetable || timetableCount > 0) && (
+          <Button
+            icon
+            plain
+            onKeyDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              onEyeClick && onEyeClick();
+            }}
+            title={`${visible ? "Hide" : "Show"}${
+              isFolder ? " All Timetables of " : " "
+            }${name}`}
+          >
+            {visible ? (
+              <IconEye strokeWidth={1.75} className="h-5 w-5" />
+            ) : (
+              <IconEyeOff strokeWidth={1.75} className="h-5 w-5" />
+            )}
+          </Button>
+        )}
 
         {/* Drag handle */}
         <Button
@@ -180,6 +191,7 @@ const SortableTreeItem = ({
           {...attributes}
           className="cursor-grab touch-none"
           onKeyDown={(e) => e.stopPropagation()}
+          title={`Drag${isFolder ? " Folder " : " "}${name}`}
         >
           <IconGripVertical strokeWidth={1.75} className="h-5 w-5" />
         </Button>

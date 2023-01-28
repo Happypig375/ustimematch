@@ -103,7 +103,7 @@ const FolderForm = ({
               }}
             >
               You are deleteing the folder named <b>{folder?.name}</b> and{" "}
-              <b>all its contents</b>, this action cannot be undone.
+              <b>all of its contents</b>, this action cannot be undone.
             </DeleteAlert>
 
             <ModalClose asChild>
