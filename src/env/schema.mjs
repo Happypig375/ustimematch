@@ -21,6 +21,7 @@ export const serverSchema = z.object({
   ),
   EMAIL_SERVER: z.string().url(),
   EMAIL_FROM: z.string().email(),
+  ACTION_KEY: z.string().min(1),
 });
 
 /**

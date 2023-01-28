@@ -1,4 +1,4 @@
-name: Delete expired shared timetables
+name: Purge expired database records
 on:
   schedule:
     - cron: "0 0 * * *"
@@ -6,8 +6,8 @@ jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Send request to Nextjs API route
+      - name: Send purge request
         run: |
           curl --request POST \
-          --url '${{ secrets.URL }}/api/purgeExpired' \
+          --url '${{ secrets.URL }}/api/purge-expired' \
           --header 'Authorization: Bearer ${{ secrets.ACTION_KEY }}'

@@ -1,11 +1,13 @@
 import { TRPCError } from "@trpc/server";
 import { getHTTPStatusCodeFromError } from "@trpc/server/http";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { env } from "../../env/server.mjs";
 import { prisma } from "../../server/db/client";
 
 type ResponseData = {
   data?: {
-    count: number;
+    sharedTimetablesCount: number;
+    verificationTokenCount: number;
   };
   error?: {
     message: string;
@@ -16,21 +18,33 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
-  const { APP_KEY } = process.env;
+  console.log(req.headers.authorization);
+  const { ACTION_KEY: LOCAL_ACTION_KEY } = env;
   const ACTION_KEY = req.headers.authorization?.split(" ")[1];
 
-  if (!APP_KEY || !ACTION_KEY || APP_KEY !== ACTION_KEY)
+  if (ACTION_KEY !== LOCAL_ACTION_KEY)
     return res.status(401).json({ error: { message: "Unauthorized" } });
 
   try {
-    const { count } = await prisma.sharedTimetables.deleteMany({
-      where: {
-        expiresAt: {
-          lt: new Date(),
+    const { count: sharedTimetablesCount } =
+      await prisma.sharedTimetables.deleteMany({
+        where: {
+          expiresAt: {
+            lt: new Date(),
+          },
         },
-      },
-    });
-    res.status(200).json({ data: { count } });
+      });
+    const { count: verificationTokenCount } =
+      await prisma.verificationToken.deleteMany({
+        where: {
+          expires: {
+            lt: new Date(),
+          },
+        },
+      });
+    res
+      .status(200)
+      .json({ data: { sharedTimetablesCount, verificationTokenCount } });
   } catch (cause) {
     if (cause instanceof TRPCError) {
       const httpStatusCode = getHTTPStatusCodeFromError(cause);
@@ -38,7 +52,7 @@ export default async function handler(
       return;
     }
     res.status(500).json({
-      error: { message: "Error while deleteing expired shared timetables" },
+      error: { message: "Error while purging expired records" },
     });
   }
 }
