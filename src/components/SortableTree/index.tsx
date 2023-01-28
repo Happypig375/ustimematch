@@ -33,8 +33,8 @@ import React, {
 } from "react";
 import { createPortal } from "react-dom";
 import { toast } from "react-hot-toast";
-import FolderForm from "@components/Modal/FolderForm";
-import TimetableForm from "@components/Modal/TimetableForm";
+import FolderForm from "@components/Form/FolderForm";
+import TimetableForm from "@components/Form/TimetableForm";
 import { actions, useStore } from "@store/index";
 import {
   buildTree,

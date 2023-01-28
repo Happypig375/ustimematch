@@ -5,7 +5,7 @@ import {
   IconUserPlus,
 } from "@tabler/icons-react";
 import { useCallback, useState } from "react";
-import TimetableForm from "@components/Modal/TimetableForm";
+import TimetableForm from "@components/Form/TimetableForm";
 import Button from "@components/ui/Button";
 import { actions, useTrackedStore } from "@store/index";
 import { type Timetable } from "../../types/timetable";

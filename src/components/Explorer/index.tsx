@@ -1,8 +1,8 @@
 import { IconCalendarPlus, IconFolderPlus } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
-import FolderForm from "@components/Modal/FolderForm";
-import TimetableForm from "@components/Modal/TimetableForm";
+import FolderForm from "@components/Form/FolderForm";
+import TimetableForm from "@components/Form/TimetableForm";
 import Share from "@components/Share/ShareModal";
 import SortableTree from "@components/SortableTree";
 import Button from "@components/ui/Button";
