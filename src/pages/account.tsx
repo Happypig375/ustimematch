@@ -1,20 +1,27 @@
 import clsx from "clsx";
-import type { InferGetServerSidePropsType } from "next";
-import type { CtxOrReq } from "next-auth/client/_utils";
-import { getSession, signOut } from "next-auth/react";
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from "next";
+import { unstable_getServerSession } from "next-auth";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Header from "@components/Header";
 import Button from "@components/ui/Button";
+import { authOptions } from "./api/auth/[...nextauth]";
 
-export const getServerSideProps = async (context: CtxOrReq) => {
-  const session = await getSession(context);
+export const getServerSideProps = async ({
+  req,
+  res,
+}: GetServerSidePropsContext) => {
+  const session = await unstable_getServerSession(req, res, authOptions);
   const user = session?.user;
 
   if (!user)
     return {
       redirect: {
-        destination: "/api/auth/signin",
+        destination: "/auth/signin",
         permanent: false,
       },
     };
@@ -46,7 +53,7 @@ const Account = ({
       <div className="grid w-full place-items-center p-6">
         <div
           className={clsx(
-            "prose prose-sm",
+            "prose prose-sm w-full max-w-md",
             "sm:prose-base",
             "dark:prose-invert",
             "prose-hr:border-border-100",
@@ -66,12 +73,8 @@ const Account = ({
             >
               Sign Out
             </Button>
-            <Button fullWidth disabled>
-              Export Data
-            </Button>
-            <Button fullWidth error disabled>
-              Delete Account
-            </Button>
+
+            {/* <Button fullWidth>Export Data</Button> */}
           </div>
         </div>
       </div>
