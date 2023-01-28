@@ -18,11 +18,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
-  console.log(req.headers.authorization);
-  const { ACTION_KEY: LOCAL_ACTION_KEY } = env;
   const ACTION_KEY = req.headers.authorization?.split(" ")[1];
-
-  if (ACTION_KEY !== LOCAL_ACTION_KEY)
+  if (ACTION_KEY !== env.ACTION_KEY)
     return res.status(401).json({ error: { message: "Unauthorized" } });
 
   try {
