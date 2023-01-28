@@ -49,38 +49,39 @@ const MobileMenu = () => {
                   "dark:border-none dark:p-[0.5px]",
                 )}
               >
-                <DropdownMenu.Item asChild>
-                  <>
-                    {status === "unauthenticated" && (
-                      <NavLink
-                        inMenu
-                        href="/auth/signin"
-                        icon={
-                          <IconUserCircle
-                            strokeWidth={1.75}
-                            className="h-4 w-4"
-                          />
-                        }
-                      >
-                        Sign In
-                      </NavLink>
-                    )}
-                    {status === "authenticated" && (
-                      <NavLink
-                        inMenu
-                        href="/account"
-                        icon={
-                          <IconUserCircle
-                            strokeWidth={1.75}
-                            className="h-4 w-4"
-                          />
-                        }
-                      >
-                        Account
-                      </NavLink>
-                    )}
-                  </>
-                </DropdownMenu.Item>
+                {status === "unauthenticated" && (
+                  <DropdownMenu.Item asChild>
+                    <NavLink
+                      inMenu
+                      href="/auth/signin"
+                      icon={
+                        <IconUserCircle
+                          strokeWidth={1.75}
+                          className="h-4 w-4"
+                        />
+                      }
+                    >
+                      Sign In
+                    </NavLink>
+                  </DropdownMenu.Item>
+                )}
+
+                {status === "authenticated" && (
+                  <DropdownMenu.Item asChild>
+                    <NavLink
+                      inMenu
+                      href="/account"
+                      icon={
+                        <IconUserCircle
+                          strokeWidth={1.75}
+                          className="h-4 w-4"
+                        />
+                      }
+                    >
+                      Account
+                    </NavLink>
+                  </DropdownMenu.Item>
+                )}
 
                 <DropdownMenu.Item asChild>
                   <NavLink
