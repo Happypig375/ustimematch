@@ -1,5 +1,6 @@
 import { AccordionItem } from "@radix-ui/react-accordion";
 import { IconRoute, IconX } from "@tabler/icons-react";
+import Link from "next/link";
 import { useState } from "react";
 import Accordion, {
   AccordionContent,
@@ -72,17 +73,17 @@ const DetailsModal = () => {
           </Accordion>
 
           <div className="flex gap-2">
-            {/* TODO: anchor tag? */}
             {detailsTimetable.university === "HKUST" && detailsLesson.venue && (
-              <Button
-                fullWidth
-                onClick={() =>
-                  window.open(getPathAdvisorUrl(detailsLesson.venue), "_blank")
-                }
+              <Link
+                target="_blank"
+                className="w-full"
+                href={getPathAdvisorUrl(detailsLesson.venue)}
               >
-                <IconRoute strokeWidth={1.75} className="h-5 w-5" />
-                Path Advisor
-              </Button>
+                <Button fullWidth>
+                  <IconRoute strokeWidth={1.75} className="h-5 w-5" />
+                  Path Advisor
+                </Button>
+              </Link>
             )}
 
             <ModalClose asChild>
