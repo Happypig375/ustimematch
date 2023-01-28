@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { useRef } from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -128,6 +129,7 @@ const Controller = () => {
 };
 
 const Tour = () => {
+  const router = useRouter();
   const session = useSession();
   // Keep a copy of timetable store (for restoring authenticated store)
   const [prevTimetableStore] = useState(timetableStore.get.state());
@@ -147,6 +149,18 @@ const Tour = () => {
     if (session.status === "authenticated")
       timetableStore.set.state(() => prevTimetableStore);
   }, [prevTimetableStore, session.status]);
+
+  useEffect(() => {
+    const handleUnload = () => uiStore.set.showTour(false);
+
+    router.events.on("routeChangeStart", handleUnload);
+    window.addEventListener("beforeunload", handleUnload);
+
+    return () => {
+      router.events.off("routeChangeStart", handleUnload);
+      window.removeEventListener("beforeunload", handleUnload);
+    };
+  }, [router.events]);
 
   const steps: StepType[] = [
     {
@@ -202,13 +216,6 @@ const Tour = () => {
       ),
     },
   ];
-
-  const handleUnload = () => uiStore.set.showTour(false);
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", handleUnload);
-    return () => window.removeEventListener("beforeunload", handleUnload);
-  }, []);
 
   return (
     <TourProvider
