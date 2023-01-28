@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { textColor } from "@utils/color";
 import { parseUSTName } from "@utils/parseName";
-import { parseTime } from "@utils/time";
+import { time12 } from "@utils/time";
 import { type Lesson } from "../../types/timetable";
 import GridPeriod, { HoverContext } from "./Period";
 
@@ -64,7 +64,7 @@ const CalendarEvent = ({
                 style={{ color: textColor(color) + "cc" }}
                 className="text-[clamp(0.6rem,1.2vw,0.7rem)]"
               >
-                {`${parseTime(begin)} - ${parseTime(end)}`}
+                {`${time12(begin)} - ${time12(end)}`}
               </div>
               <div
                 style={{ color: textColor(color) + "aa" }}

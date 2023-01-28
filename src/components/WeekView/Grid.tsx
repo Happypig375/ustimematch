@@ -1,4 +1,5 @@
 import { useTrackedStore } from "@store/index";
+import { WEEKVIEW_ROWS } from "@store/ui";
 import Border from "./Border";
 import DetailsModal from "./DetailsModal";
 import Legend from "./Legend";
@@ -7,7 +8,6 @@ import Timematch from "./Timematch";
 import Timetable from "./Timetable";
 
 const Grid = () => {
-  const rows = useTrackedStore().ui.weekViewRows();
   const cols = useTrackedStore().ui.weekViewCols();
 
   const showTimematch = useTrackedStore().ui.showTimematch();
@@ -17,7 +17,7 @@ const Grid = () => {
       data-tour="weekview"
       className="focus-visible-ring grid h-full overflow-y-auto"
       style={{
-        gridTemplateRows: `auto repeat(${rows}, minmax(12px,1fr))`,
+        gridTemplateRows: `auto repeat(${WEEKVIEW_ROWS}, minmax(12px,1fr))`,
         gridTemplateColumns: `auto repeat(${cols}, minmax(0,1fr))`,
       }}
     >

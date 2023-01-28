@@ -18,7 +18,7 @@ import {
 import { actions, useTrackedStore } from "@store/index";
 import { parseUSTName } from "@utils/parseName";
 import { getPathAdvisorUrl } from "@utils/pathAdvisor";
-import { parseTime } from "@utils/time";
+import { time12 } from "@utils/time";
 
 const DetailsModal = () => {
   const openDetails = useTrackedStore().weekView.openDetails();
@@ -47,8 +47,8 @@ const DetailsModal = () => {
 
         <div className="flex flex-col gap-2 leading-none">
           <div>
-            {`${parseTime(detailsLesson.begin)}
-             - ${parseTime(detailsLesson.end)}`}
+            {`${time12(detailsLesson.begin)}
+             - ${time12(detailsLesson.end)}`}
           </div>
 
           {detailsLesson.venue && <div>{detailsLesson.venue}</div>}

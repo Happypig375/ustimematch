@@ -1,25 +1,15 @@
 import clsx from "clsx";
 import debounce from "lodash.debounce";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import useResizeObserver from "use-resize-observer";
 import { actions, useTrackedStore } from "@store/index";
+import { MINUTE_PER_ROW, DISPLAYED_HOURS } from "@store/ui";
+import { WEEKVIEW_ROWS } from "@store/ui";
+import { rowToTime12 } from "@utils/time";
 
 const Legend = () => {
-  const rows = useTrackedStore().ui.weekViewRows();
-  const minutePerRow = useTrackedStore().ui.minutePerRow();
   const weekdays = useTrackedStore().ui.weekdays();
-  const displayedHours = useTrackedStore().ui.displayedHours();
   const setMinuteHeight = actions.weekView.setMinuteHeight;
-
-  // Convert row index to time in 12-hour format (e.g. 12 am, 12 pm, 9 am)
-  const getTime = useCallback(
-    (i: number) => {
-      const h = displayedHours[(i - 1) / 2];
-      if (h === undefined) return "";
-      return `${h % 12 || 12} ${h < 12 ? "am" : "pm"}`;
-    },
-    [displayedHours],
-  );
 
   // Resize oberver for calculating height of a minute based on height of second row (first row is weekdays)
   const setMinuteHeightDebounce = useMemo(
@@ -30,7 +20,7 @@ const Legend = () => {
   const { ref: timeRef } = useResizeObserver<HTMLDivElement>({
     round: (n) => n,
     onResize: ({ width: _, height }) => {
-      height && setMinuteHeightDebounce(height / minutePerRow);
+      height && setMinuteHeightDebounce(height / MINUTE_PER_ROW);
     },
   });
 
@@ -53,16 +43,16 @@ const Legend = () => {
       ))}
 
       {Array.from(
-        { length: rows },
+        { length: WEEKVIEW_ROWS },
         (_, i) =>
-          i % 2 === 1 && (
+          i % 2 === 0 && (
             <div
               key={i}
-              ref={i === 1 ? timeRef : undefined}
-              style={{ gridRowStart: i + 1, gridColumnStart: 1 }}
+              ref={i === 0 ? timeRef : undefined}
+              style={{ gridRowStart: i + 2, gridColumnStart: 1 }}
             >
               <div className="-translate-y-1/2 select-none pr-[6px] pl-[6px] text-right text-xs tracking-tight text-fg-100">
-                {getTime(i)}
+                {rowToTime12(DISPLAYED_HOURS, i)}
               </div>
             </div>
           ),

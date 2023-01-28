@@ -1,6 +1,6 @@
 import { useTheme } from "next-themes";
 import { useTrackedStore } from "@store/index";
-import { parseTime } from "@utils/time";
+import { time12 } from "@utils/time";
 import Period from "./Period";
 
 const Timetable = () => {
@@ -26,7 +26,7 @@ const Timetable = () => {
                     color: (theme === "light" ? "#306935" : "#aaccaa") + "ee",
                   }}
                 >
-                  {`${parseTime(period.begin)} - ${parseTime(period.end)}`}
+                  {`${time12(period.begin)} - ${time12(period.end)}`}
                 </div>
               </div>
             </Period>

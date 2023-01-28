@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const ZTime24 = z.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/);
+
 const ZLesson = z.object({
   // Course title and section (e.g. COMP 1021 L01)
   name: z.string().max(40),
@@ -8,8 +10,8 @@ const ZLesson = z.object({
   description: z.string().max(160),
   // Time in 24-hour format (HH:mm)
   // https://digitalfortress.tech/tips/top-15-commonly-used-regex/
-  begin: z.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
-  end: z.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
+  begin: ZTime24,
+  end: ZTime24,
 });
 
 // From monday to sunday (0 to 6)

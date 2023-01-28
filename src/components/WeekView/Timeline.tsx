@@ -1,11 +1,11 @@
 import { useTrackedStore } from "@store/index";
+import { DISPLAYED_HOURS } from "@store/ui";
 import useDate from "@hooks/useDate";
 
 const Timeline = () => {
   const { date } = useDate();
 
   const showWeekend = useTrackedStore().ui.showWeekend();
-  const displayedHours = useTrackedStore().ui.displayedHours();
   const minuteHeight = useTrackedStore().weekView.minuteHeight();
 
   const weekday = (date.getDay() + 6) % 7;
@@ -14,11 +14,11 @@ const Timeline = () => {
   const gridColumnStart = weekday + 2;
 
   const minSinceBegin =
-    (date.getHours() - (displayedHours[0] as number)) * 60 + date.getMinutes();
+    (date.getHours() - (DISPLAYED_HOURS[0] as number)) * 60 + date.getMinutes();
 
   const overflow =
-    (displayedHours[0] as number) > date.getHours() ||
-    (displayedHours[displayedHours.length - 1] as number) < date.getHours() ||
+    (DISPLAYED_HOURS[0] as number) > date.getHours() ||
+    (DISPLAYED_HOURS[DISPLAYED_HOURS.length - 1] as number) < date.getHours() ||
     (!showWeekend && weekday > 4);
 
   // check minuteHeight for preventing initial flash

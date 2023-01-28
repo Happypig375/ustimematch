@@ -1,15 +1,15 @@
 import clsx from "clsx";
 import { useTrackedStore } from "@store/index";
+import { WEEKVIEW_ROWS } from "@store/ui";
 
 const Border = () => {
-  const rows = useTrackedStore().ui.weekViewRows();
   const cols = useTrackedStore().ui.weekViewCols();
 
   // Pixel perfect and relatively fast (no. of divs = rows + cols)
   return (
     <>
       {/* Horizontal lines */}
-      {Array.from({ length: rows }, (_, i) => (
+      {Array.from({ length: WEEKVIEW_ROWS }, (_, i) => (
         <div
           key={i}
           style={{

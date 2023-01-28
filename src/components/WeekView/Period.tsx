@@ -2,6 +2,7 @@ import { motion, type Transition } from "framer-motion";
 import debounce from "lodash.debounce";
 import { createContext, useEffect, useMemo, useState } from "react";
 import { useTrackedStore } from "@store/index";
+import { DISPLAYED_HOURS, MINUTE_PER_ROW } from "@store/ui";
 import useMediaQuery from "@hooks/useMediaQuery";
 import { hour, min } from "@utils/time";
 
@@ -46,57 +47,55 @@ const Period = ({
   onClick,
 }: Props) => {
   const showWeekend = useTrackedStore().ui.showWeekend();
-  const displayedHours = useTrackedStore().ui.displayedHours();
-  const minutePerRow = useTrackedStore().ui.minutePerRow();
   const minuteHeight = useTrackedStore().weekView.minuteHeight();
 
   // Check if period exceeds displayed hours or if it is on weekend but weekend is hidden
   const periodOverflow = useMemo(
     () =>
       (!showWeekend && weekday > 4) ||
-      hour(tmpEnd) < (displayedHours[0] as number) ||
-      hour(tmpBegin) > (displayedHours[displayedHours.length - 1] as number),
-    [showWeekend, weekday, displayedHours, tmpBegin, tmpEnd],
+      hour(tmpEnd) < (DISPLAYED_HOURS[0] as number) ||
+      hour(tmpBegin) > (DISPLAYED_HOURS[DISPLAYED_HOURS.length - 1] as number),
+    [showWeekend, weekday, tmpBegin, tmpEnd],
   );
 
   // Constrain period by displayed hours if it is partially visible, otherwise begin and end will be tmpBegin and tmpEnd
   const begin = useMemo(
     () =>
-      hour(tmpBegin) < (displayedHours[0] as number)
-        ? `${displayedHours[0]}:00`
+      hour(tmpBegin) < (DISPLAYED_HOURS[0] as number)
+        ? `${DISPLAYED_HOURS[0]}:00`
         : tmpBegin,
-    [displayedHours, tmpBegin],
+    [tmpBegin],
   );
   const end = useMemo(
     () =>
-      hour(tmpEnd) > (displayedHours[displayedHours.length - 1] as number)
-        ? `${(displayedHours[displayedHours.length - 1] as number) + 1}:00`
+      hour(tmpEnd) > (DISPLAYED_HOURS[DISPLAYED_HOURS.length - 1] as number)
+        ? `${(DISPLAYED_HOURS[DISPLAYED_HOURS.length - 1] as number) + 1}:00`
         : tmpEnd,
-    [displayedHours, tmpEnd],
+    [tmpEnd],
   );
 
   // Calculate grid position
   const gridRowStart = useMemo(
     () =>
-      hour(begin) >= (displayedHours[0] as number)
-        ? ((hour(begin) - (displayedHours[0] as number)) * 60 +
-            (Math.floor(min(begin) / minutePerRow) ? minutePerRow : 0)) /
-            minutePerRow +
+      hour(begin) >= (DISPLAYED_HOURS[0] as number)
+        ? ((hour(begin) - (DISPLAYED_HOURS[0] as number)) * 60 +
+            (Math.floor(min(begin) / MINUTE_PER_ROW) ? MINUTE_PER_ROW : 0)) /
+            MINUTE_PER_ROW +
           2
         : 2,
-    [begin, displayedHours, minutePerRow],
+    [begin],
   );
   const gridRowEnd = useMemo(
     () =>
-      hour(end) <= (displayedHours[displayedHours.length - 1] as number)
-        ? ((hour(end) - (displayedHours[0] as number)) * 60 +
-            (Math.ceil(min(end) / minutePerRow)
-              ? Math.ceil(min(end) / minutePerRow) * minutePerRow
+      hour(end) <= (DISPLAYED_HOURS[DISPLAYED_HOURS.length - 1] as number)
+        ? ((hour(end) - (DISPLAYED_HOURS[0] as number)) * 60 +
+            (Math.ceil(min(end) / MINUTE_PER_ROW)
+              ? Math.ceil(min(end) / MINUTE_PER_ROW) * MINUTE_PER_ROW
               : 0)) /
-            minutePerRow +
+            MINUTE_PER_ROW +
           2
-        : displayedHours.length * 2 + 2,
-    [displayedHours, end, minutePerRow],
+        : DISPLAYED_HOURS.length * 2 + 2,
+    [end],
   );
 
   // Length of period in minutes
@@ -107,8 +106,9 @@ const Period = ({
 
   // Calculate grid offset (how many mins from the beginning of hour)
   const minPrefix = useMemo(
-    () => (min(begin) >= minutePerRow ? min(begin) - minutePerRow : min(begin)),
-    [begin, minutePerRow],
+    () =>
+      min(begin) >= MINUTE_PER_ROW ? min(begin) - MINUTE_PER_ROW : min(begin),
+    [begin],
   );
 
   // Hover state used for transition
@@ -135,12 +135,12 @@ const Period = ({
 
   // Controls vertical hover offset, and constrain it by grid border (right and bottom)
   const isBottom = useMemo(
-    () => end > `${displayedHours[displayedHours.length - 1]}:30`,
-    [displayedHours, end],
+    () => end > `${DISPLAYED_HOURS[DISPLAYED_HOURS.length - 1]}:30`,
+    [end],
   );
   const yOffset = useMemo(
-    () => minutePerRow * minuteHeight * (matchDesktop ? 0.8 : 0.9),
-    [matchDesktop, minutePerRow, minuteHeight],
+    () => MINUTE_PER_ROW * minuteHeight * (matchDesktop ? 0.8 : 0.9),
+    [matchDesktop, minuteHeight],
   );
   const height = useMemo(
     () =>
