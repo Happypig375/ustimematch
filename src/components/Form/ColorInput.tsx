@@ -17,7 +17,7 @@ const ColorPreview = ({ color, className }: ColorPreviewProps) => {
         backgroundColor: color + "d8",
       }}
       className={clsx(
-        "flex h-[10vh] flex-col gap-1 rounded-md p-2 leading-none shadow-outline",
+        "flex h-[10vh] flex-col gap-1 overflow-hidden rounded-md p-2 leading-none shadow-outline",
         className,
       )}
     >
