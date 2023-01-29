@@ -2,7 +2,7 @@ import { IBM_Plex_Sans } from "@next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider, useTheme } from "next-themes";
 import { type AppType } from "next/app";
 import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
@@ -18,7 +18,19 @@ const IBMPlexSans = IBM_Plex_Sans({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
 });
 
-const MyApp: AppType<{ session: Session | null }> = ({
+const ThemeColorHandler = () => {
+  const { theme } = useTheme();
+
+  return (
+    <Head>
+      {/* --bg-100 */}
+      {theme === "light" && <meta name="theme-color" content="#fafafa" />}
+      {theme === "dark" && <meta name="theme-color" content="#141414" />}
+    </Head>
+  );
+};
+
+const App: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
@@ -48,6 +60,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
             name="description"
             content="Timetable manager for HKUST students."
           />
+
+          {/* Open graph */}
           <meta property="og:title" content="USTimematch" />
           <meta
             property="og:description"
@@ -66,6 +80,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
         `}</style>
 
         <Toast />
+
+        <ThemeColorHandler />
 
         <NextNProgress
           height={2}
@@ -93,4 +109,4 @@ const MyApp: AppType<{ session: Session | null }> = ({
   );
 };
 
-export default trpc.withTRPC(MyApp);
+export default trpc.withTRPC(App);

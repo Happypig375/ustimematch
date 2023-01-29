@@ -40,7 +40,7 @@ const ContentComponent = ({
 
   return (
     <>
-      {/* Safari safe aera color */}
+      {/* Mix --bg-100 with #000000 with 40% opacity */}
       {/* http://origin.filosophy.org/code/online-tool-to-lighten-color-without-alpha-channel/ */}
       <Head>
         {theme === "light" && <meta name="theme-color" content="#969696" />}

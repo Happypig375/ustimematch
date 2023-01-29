@@ -45,13 +45,6 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
 
     return (
       <>
-        {/* Safari safe aera color */}
-        {/* http://origin.filosophy.org/code/online-tool-to-lighten-color-without-alpha-channel/ */}
-        <Head>
-          {theme === "light" && <meta name="theme-color" content="#f9f9f9" />}
-          {theme === "dark" && <meta name="theme-color" content="#151515" />}
-        </Head>
-
         <AnimatePresence>
           {open && (
             <DialogPrimitive.Portal forceMount>
@@ -65,6 +58,17 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 }
                 className="fixed inset-0 z-50 grid place-items-end bg-bg-200/40 sm:place-items-center sm:py-4"
               >
+                {/* Mix --bg-100 with --bg-200 with 40% opacity */}
+                {/* http://origin.filosophy.org/code/online-tool-to-lighten-color-without-alpha-channel/ */}
+                <Head>
+                  {theme === "light" && (
+                    <meta name="theme-color" content="#f9f9f9" />
+                  )}
+                  {theme === "dark" && (
+                    <meta name="theme-color" content="#151515" />
+                  )}
+                </Head>
+
                 <MotionDialogContent
                   asChild
                   ref={ref}
