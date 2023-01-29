@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
@@ -48,30 +49,44 @@ const SignInForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex w-[80vw] flex-col gap-4 sm:w-96"
-      data-cy="sign-in-form"
-    >
-      <Input
-        id="email"
-        label="Email"
-        inputMode="email"
-        {...register("email")}
-        disabled={isLoading}
-        error={errors.email?.message}
-        tips="A sign in link will be sent to you via email."
-      />
-      <Button
-        fullWidth
-        type="submit"
-        className="text-base"
-        loading={isLoading}
-        disabled={isLoading}
+    <>
+      {/* A workaround for input zoom on safari, only applying to this page. */}
+      {/* https://stackoverflow.com/questions/4389932/how-do-you-disable-viewport-zooming-on-mobile-safari */}
+      <Head>
+        {typeof navigator !== "undefined" &&
+          /iPad|iPhone|iPod/.test(navigator.userAgent) && (
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, maximum-scale=1"
+            />
+          )}
+      </Head>
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex w-[80vw] flex-col gap-4 sm:w-96"
+        data-cy="sign-in-form"
       >
-        Sign in
-      </Button>
-    </form>
+        <Input
+          id="email"
+          label="Email"
+          inputMode="email"
+          {...register("email")}
+          disabled={isLoading}
+          error={errors.email?.message}
+          tips="A sign in link will be sent to you via email."
+        />
+        <Button
+          fullWidth
+          type="submit"
+          className="text-base"
+          loading={isLoading}
+          disabled={isLoading}
+        >
+          Sign in
+        </Button>
+      </form>
+    </>
   );
 };
 

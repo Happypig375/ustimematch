@@ -5,7 +5,7 @@ import Header from "@components/Header";
 const SignIn = () => {
   return (
     <Header>
-      <div className="relative grid w-full place-items-center p-6">
+      <div className="grid w-full place-items-center p-6">
         <div
           className={clsx(
             "prose prose-sm",
