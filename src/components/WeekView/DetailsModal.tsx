@@ -1,5 +1,6 @@
 import { AccordionItem } from "@radix-ui/react-accordion";
 import { IconRoute, IconX } from "@tabler/icons-react";
+import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
 import Accordion, {
@@ -29,6 +30,10 @@ const DetailsModal = () => {
   const [value, setValue] = useState("");
 
   if (!detailsTimetable || !detailsLesson) return null;
+
+  const showPathAdvisor = !!(
+    detailsTimetable.university === "HKUST" && detailsLesson.venue
+  );
 
   return (
     <Modal open={openDetails} onOpenChange={setOpenDetails}>
@@ -72,11 +77,13 @@ const DetailsModal = () => {
             </AccordionItem>
           </Accordion>
 
+          {/* Calcualte flex-basis with gap to make their width equal, otherwise Link will be squashed. */}
+          {/* TODO: maybe a better way to handle this? */}
           <div className="flex gap-2">
-            {detailsTimetable.university === "HKUST" && detailsLesson.venue && (
+            {showPathAdvisor && (
               <Link
                 target="_blank"
-                className="w-full"
+                className="basis-[calc(50%-4px)]"
                 href={getPathAdvisorUrl(detailsLesson.venue)}
               >
                 <Button fullWidth>
@@ -87,7 +94,10 @@ const DetailsModal = () => {
             )}
 
             <ModalClose asChild>
-              <Button fullWidth>
+              <Button
+                fullWidth={!showPathAdvisor}
+                className={clsx(showPathAdvisor && "basis-[calc(50%-4px)]")}
+              >
                 <IconX strokeWidth={1.75} className="h-5 w-5" />
                 Close
               </Button>
