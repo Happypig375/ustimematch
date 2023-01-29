@@ -25,6 +25,8 @@ const TimetableStatus = ({
   const editTimetable = actions.timetable.editTimetable;
   const setPersonalTimetable = actions.timetable.setPersonalTimetable;
 
+  // BUG: If there are duplicated plannerURLs, isFetching will be false after the first TimetabelStatus component.
+  // Weirdly this bug only exists in production build
   const { data, refetch, isFetching, isSuccess, isError, dataUpdatedAt } =
     trpc.ical.getUSTLessons.useQuery(
       {

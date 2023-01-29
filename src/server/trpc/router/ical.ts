@@ -39,14 +39,16 @@ export const icalRouter = router({
           venue: event.location,
           description: event.description,
           // Ensuring date is in HH:mm format
-          begin:
-            event.startDate.hour.toString().padStart(2, "0") +
-            ":" +
-            event.startDate.minute.toString().padStart(2, "0"),
-          end:
-            event.endDate.hour.toString().padStart(2, "0") +
-            ":" +
-            event.endDate.minute.toString().padStart(2, "0"),
+          begin: event.startDate.toJSDate().toLocaleTimeString(undefined, {
+            hour12: false,
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+          end: event.endDate.toJSDate().toLocaleTimeString(undefined, {
+            hour12: false,
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
         });
       }
 
