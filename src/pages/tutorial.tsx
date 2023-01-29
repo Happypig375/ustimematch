@@ -15,7 +15,7 @@ import Header from "@components/Header";
 import Button from "@components/ui/Button";
 import Tips from "@components/ui/Tips";
 import { uiStore } from "@store/ui";
-import importImage from "../../public/import.png";
+import exportFromPlanner from "../../public/export-from-planner.png";
 
 const Tutorial: NextPage = () => {
   const router = useRouter();
@@ -33,14 +33,6 @@ const Tutorial: NextPage = () => {
         >
           <h3 id="importing" className="flex items-center gap-2">
             Importing
-            <Tips image>
-              <Image
-                src={importImage}
-                placeholder="blur"
-                className="rounded-md"
-                alt="Timetable Planner export screenshot"
-              />
-            </Tips>
           </h3>
           <ul>
             <li>
@@ -59,6 +51,17 @@ const Tutorial: NextPage = () => {
             </li>
             <li>
               Click <strong>Export</strong> on your desired timetable.
+              <Tips
+                image
+                triggerClassName="!m-0 !ml-1 inline-flex align-text-bottom"
+              >
+                <Image
+                  src={exportFromPlanner}
+                  placeholder="blur"
+                  className="rounded-md"
+                  alt="How to export as iCalendar File URL from Timetable Planner"
+                />
+              </Tips>
             </li>
             <li>
               Click <strong>Copy iCalendar File URL</strong> and copy the link.
