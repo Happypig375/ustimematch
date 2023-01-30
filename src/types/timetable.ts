@@ -5,9 +5,9 @@ const ZTime24 = z.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/);
 const ZLesson = z.object({
   // Course title and section (e.g. COMP 1021 L01)
   name: z.string().max(40),
-  venue: z.string().max(40),
+  venue: z.string().max(256),
   // Additional information (e.g. course title, instructors)
-  description: z.string().max(160),
+  description: z.string().max(512),
   // Time in 24-hour format (HH:mm)
   // https://digitalfortress.tech/tips/top-15-commonly-used-regex/
   begin: ZTime24,
