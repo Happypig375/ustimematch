@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useTrackedStore } from "@store/index";
 import { DISPLAYED_HOURS } from "@store/ui";
 import useDate from "@hooks/useDate";
@@ -24,20 +25,20 @@ const Timeline = () => {
   // check minuteHeight for preventing initial flash
   return !overflow && minuteHeight ? (
     <div
-      className="pointer-events-none relative -ml-[3px] overflow-y-hidden sm:-ml-[4px]"
+      className="pointer-events-none relative -ml-[4px] overflow-y-hidden"
       style={{
         gridColumnStart,
-        gridRow: "2/-1",
+        gridRow: "2 / -1",
       }}
     >
       <div
         style={{ top: minSinceBegin * minuteHeight }}
-        className="absolute -mt-[1.25px] h-[2.5px] w-full rounded-full bg-brand sm:-mt-[1.5px] sm:h-[3px]"
-      />
-
-      <div
-        style={{ top: minSinceBegin * minuteHeight }}
-        className="absolute -mt-[3px] h-[6px] w-[6px] rounded-full bg-brand sm:-mt-[4px] sm:h-[8px] sm:w-[8px]"
+        className={clsx(
+          // Line
+          "relative h-[2px] w-full -translate-y-1/2 rounded-full bg-brand dark:bg-[#fc2b2d]",
+          // Dot, vertical align: (8 - 2) / 2 = 3
+          "before:absolute before:h-[8px] before:w-[8px] before:-translate-y-[3px] before:rounded-full before:border-[0.8px] before:border-bg-200 before:bg-brand before:dark:bg-[#fc2b2d]",
+        )}
       />
     </div>
   ) : null;
