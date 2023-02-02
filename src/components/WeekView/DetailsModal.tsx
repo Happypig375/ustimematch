@@ -83,10 +83,10 @@ const DetailsModal = () => {
             {showPathAdvisor && (
               <Link
                 target="_blank"
-                className="basis-[calc(50%-4px)]"
+                className="basis-[calc(50%-4px)] rounded-md"
                 href={getPathAdvisorUrl(detailsLesson.venue)}
               >
-                <Button fullWidth>
+                <Button fullWidth tabIndex={-1}>
                   <IconRoute strokeWidth={1.75} className="h-5 w-5" />
                   Path Advisor
                 </Button>
