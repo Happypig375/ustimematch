@@ -35,9 +35,9 @@ const Timeline = () => {
         style={{ top: minSinceBegin * minuteHeight }}
         className={clsx(
           // Line
-          "relative h-[2px] w-full -translate-y-1/2 rounded-full bg-brand dark:bg-[#fc2b2d]",
+          "relative h-[2px] w-full -translate-y-1/2 rounded-full bg-brand dark:bg-[#cc3232]",
           // Dot, vertical align: (8 - 2) / 2 = 3
-          "before:absolute before:h-[8px] before:w-[8px] before:-translate-y-[3px] before:rounded-full before:border-[0.8px] before:border-bg-200 before:bg-brand before:dark:bg-[#fc2b2d]",
+          "before:absolute before:h-[8px] before:w-[8px] before:-translate-y-[3px] before:rounded-full before:border-[0.8px] before:border-bg-200 before:bg-brand before:dark:bg-[#cc3232]",
         )}
       />
     </div>
