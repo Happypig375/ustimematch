@@ -1,6 +1,6 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import clsx from "clsx";
-import { motion, type PanInfo, AnimatePresence } from "framer-motion";
+import { m, type PanInfo, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import {
@@ -14,11 +14,11 @@ import {
   modalVariants,
   drawerOverlayVariants,
   modalOverlayVariants,
-} from "@components/ui/variants";
+} from "@components/ui/motion/variants";
 import useMediaQuery from "@hooks/useMediaQuery";
 
-const MotionDialogContent = motion(DialogPrimitive.Content);
-const MotionDialogOverlay = motion(DialogPrimitive.Overlay);
+const MotionDialogContent = m(DialogPrimitive.Content);
+const MotionDialogOverlay = m(DialogPrimitive.Overlay);
 
 interface ModalContentProps extends DialogPrimitive.DialogContentProps {
   open: boolean;

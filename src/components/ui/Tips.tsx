@@ -1,11 +1,11 @@
 import * as Popover from "@radix-ui/react-popover";
 import { IconInfoCircle } from "@tabler/icons-react";
 import clsx from "clsx";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import type { HTMLAttributes } from "react";
 import { useState } from "react";
 import Button from "./Button";
-import { tipsVariants } from "./variants";
+import { tipsVariants } from "./motion/variants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   triggerClassName?: string;
@@ -38,7 +38,7 @@ const Tips = ({ children, image, className, triggerClassName }: Props) => {
               sideOffset={6}
               collisionPadding={6}
             >
-              <motion.div
+              <m.div
                 exit="close"
                 animate="open"
                 initial="close"
@@ -52,7 +52,7 @@ const Tips = ({ children, image, className, triggerClassName }: Props) => {
                 )}
               >
                 {children}
-              </motion.div>
+              </m.div>
             </Popover.Content>
           </Popover.Portal>
         )}

@@ -1,12 +1,12 @@
 import { IconCalendarPlus, IconFolderPlus } from "@tabler/icons-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useState } from "react";
 import FolderForm from "@components/Form/FolderForm";
 import TimetableForm from "@components/Form/TimetableForm";
 import Share from "@components/Share/ShareModal";
 import SortableTree from "@components/SortableTree";
 import Button from "@components/ui/Button";
-import { explorerVariants } from "@components/ui/variants";
+import { explorerVariants } from "@components/ui/motion/variants";
 import { actions, useTrackedStore } from "@store/index";
 import { type Timetable } from "../../types/timetable";
 import PersonalTimetable from "./PersonalTimetable";
@@ -78,7 +78,7 @@ const Explorer = () => {
   return (
     <AnimatePresence initial={false}>
       {showExplorer && (
-        <motion.div
+        <m.div
           exit="close"
           animate="open"
           initial="close"
@@ -97,7 +97,7 @@ const Explorer = () => {
           <SortableTree />
 
           <PersonalTimetable />
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

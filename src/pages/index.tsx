@@ -1,3 +1,4 @@
+import { LazyMotion } from "framer-motion";
 import { type NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -20,21 +21,28 @@ const Home: NextPage = () => {
   const [hydrated, setHydrated] = useState(false);
 
   return (
-    <Header>
-      <PersistHandler hydrated={hydrated} setHydrated={setHydrated} />
+    <LazyMotion
+      strict
+      features={async () =>
+        (await import("@components/ui/motion/features")).default
+      }
+    >
+      <Header>
+        <PersistHandler hydrated={hydrated} setHydrated={setHydrated} />
 
-      <ReceiveModal />
+        <ReceiveModal />
 
-      {hydrated ? (
-        <>
-          <Tour />
-          <Explorer />
-          <WeekView />
-        </>
-      ) : (
-        <Skeleton />
-      )}
-    </Header>
+        {hydrated ? (
+          <>
+            <Tour />
+            <Explorer />
+            <WeekView />
+          </>
+        ) : (
+          <Skeleton />
+        )}
+      </Header>
+    </LazyMotion>
   );
 };
 

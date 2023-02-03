@@ -7,13 +7,13 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import React from "react";
 import Button from "@components/ui/Button";
 import NavLink from "@components/ui/NavLink";
-import { menuVariants } from "@components/ui/variants";
+import { menuVariants } from "@components/ui/motion/variants";
 
 const MobileMenu = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -43,7 +43,7 @@ const MobileMenu = () => {
               // Prevents focusing on the trigger when closing
               onCloseAutoFocus={(e) => e.preventDefault()}
             >
-              <motion.div
+              <m.div
                 exit="close"
                 animate="open"
                 initial="close"
@@ -130,7 +130,7 @@ const MobileMenu = () => {
                     Timetable Planner
                   </NavLink>
                 </DropdownMenu.Item>
-              </motion.div>
+              </m.div>
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
         )}

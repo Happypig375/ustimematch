@@ -1,4 +1,4 @@
-import { motion, type Transition } from "framer-motion";
+import { m, type Transition } from "framer-motion";
 import debounce from "lodash.debounce";
 import { createContext, useEffect, useMemo, useState } from "react";
 import { useTrackedStore } from "@store/index";
@@ -213,7 +213,7 @@ const Period = ({
 
   // Check minuteHeight to prevent initial height animation (default is 0 as defined in weekView store)
   return minuteHeight && !periodOverflow ? (
-    <motion.div
+    <m.div
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && onClick?.()}
       onClick={() => {
@@ -275,7 +275,7 @@ const Period = ({
         {/* {hover.toString()} <br /> */}
         {/* {prevHover?.toString()} */}
       </HoverContext.Provider>
-    </motion.div>
+    </m.div>
   ) : null;
 };
 

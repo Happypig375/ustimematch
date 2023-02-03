@@ -9,10 +9,10 @@ import {
   IconGripVertical,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { CSSProperties } from "react";
 import Button from "@components/ui/Button";
-import { chevronHalfVariants } from "@components/ui/variants";
+import { chevronHalfVariants } from "@components/ui/motion/variants";
 import { getFolderVisible, getTimetableCount } from "@utils/sortableTree";
 import type { TreeItem } from "../../types/tree";
 import ColorChip from "../Explorer/ColorChip";
@@ -125,13 +125,13 @@ const SortableTreeItem = ({
               }}
               title={`${treeItem.collapsed ? "Expand" : "Collapse"} ${name}`}
             >
-              <motion.div
+              <m.div
                 initial={false}
                 variants={chevronHalfVariants}
                 animate={treeItem.collapsed ? "close" : "open"}
               >
                 <IconChevronDown strokeWidth={1.75} className="h-5 w-5" />
-              </motion.div>
+              </m.div>
             </Button>
 
             <span title={name} className="flex-grow truncate">

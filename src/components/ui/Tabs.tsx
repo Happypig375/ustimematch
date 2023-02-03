@@ -1,9 +1,9 @@
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import clsx from "clsx";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { forwardRef } from "react";
-import type { TabsCustom } from "./variants";
-import { tabsVariants } from "./variants";
+import type { TabsCustom } from "./motion/variants";
+import { tabsVariants } from "./motion/variants";
 
 interface TabsContentProps extends TabsPrimitive.TabsContentProps {
   custom: TabsCustom;
@@ -12,14 +12,14 @@ interface TabsContentProps extends TabsPrimitive.TabsContentProps {
 export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
   ({ children, value, custom, ...props }, ref) => (
     <TabsPrimitive.Content asChild ref={ref} value={value} {...props}>
-      <motion.div
+      <m.div
         initial={false}
         animate="enter"
         custom={custom}
         variants={tabsVariants}
       >
         {children}
-      </motion.div>
+      </m.div>
     </TabsPrimitive.Content>
   ),
 );

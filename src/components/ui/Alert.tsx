@@ -1,10 +1,13 @@
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { forwardRef, useRef } from "react";
-import { modalVariants, modalOverlayVariants } from "@components/ui/variants";
+import {
+  modalVariants,
+  modalOverlayVariants,
+} from "@components/ui/motion/variants";
 
-const MotionAlertOverlay = motion(AlertDialogPrimitive.Overlay);
-const MotionAlertContent = motion(AlertDialogPrimitive.Content);
+const MotionAlertOverlay = m(AlertDialogPrimitive.Overlay);
+const MotionAlertContent = m(AlertDialogPrimitive.Content);
 
 interface AlertContentProps extends AlertDialogPrimitive.DialogContentProps {
   open: boolean;

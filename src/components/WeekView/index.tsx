@@ -5,11 +5,11 @@ import {
   IconColumns,
   IconColumnsOff,
 } from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Refresh from "@components/Refresh";
 import ThemeToggle from "@components/ThemeToggle";
 import Button from "@components/ui/Button";
-import { chevronVariants } from "@components/ui/variants";
+import { chevronVariants } from "@components/ui/motion/variants";
 import { actions, useTrackedStore } from "@store/index";
 import Grid from "./Grid";
 
@@ -28,13 +28,13 @@ const Controls = () => {
         onClick={toggleShowExplorer}
         title={`${showExplorer ? "Close" : "Open"} Explorer`}
       >
-        <motion.div
+        <m.div
           initial={false}
           animate={showExplorer ? "close" : "open"}
           variants={chevronVariants}
         >
           <IconChevronRight strokeWidth={1.75} className="h-5 w-5" />
-        </motion.div>
+        </m.div>
       </Button>
 
       <div

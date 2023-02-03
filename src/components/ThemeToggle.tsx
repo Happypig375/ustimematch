@@ -1,8 +1,8 @@
 import { IconMoonStars, IconSunHigh } from "@tabler/icons-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useTheme } from "next-themes";
 import Button from "@components/ui/Button";
-import { themeVariants } from "@components/ui/variants";
+import { themeVariants } from "@components/ui/motion/variants";
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
@@ -18,7 +18,7 @@ const ThemeToggle = () => {
     >
       <AnimatePresence initial={false} mode="popLayout">
         {theme === "light" && (
-          <motion.div
+          <m.div
             key="light"
             exit="exit"
             initial="exit"
@@ -26,10 +26,10 @@ const ThemeToggle = () => {
             variants={themeVariants}
           >
             <IconSunHigh strokeWidth={1.75} className="h-5 w-5" />
-          </motion.div>
+          </m.div>
         )}
         {theme === "dark" && (
-          <motion.div
+          <m.div
             key="dark"
             exit="exit"
             initial="exit"
@@ -37,7 +37,7 @@ const ThemeToggle = () => {
             variants={themeVariants}
           >
             <IconMoonStars strokeWidth={1.75} className="h-5 w-5" />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </Button>

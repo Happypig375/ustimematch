@@ -1,9 +1,9 @@
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { IconChevronDown } from "@tabler/icons-react";
 import clsx from "clsx";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { forwardRef } from "react";
-import { accordionVariants, chevronVariants } from "./variants";
+import { accordionVariants, chevronVariants } from "./motion/variants";
 
 export const Accordion = AccordionPrimitive.Root;
 
@@ -35,13 +35,13 @@ export const AccordionTrigger = forwardRef<
     >
       {children}
 
-      <motion.div
+      <m.div
         initial={false}
         animate={value ? "close" : "open"}
         variants={chevronVariants}
       >
         <IconChevronDown strokeWidth={1.75} className="h-5 w-5" />
-      </motion.div>
+      </m.div>
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
@@ -59,7 +59,7 @@ export const AccordionContent = forwardRef<
   <AnimatePresence initial={false}>
     {value && (
       <AccordionPrimitive.Content ref={ref} {...props} forceMount>
-        <motion.div
+        <m.div
           exit="close"
           animate="open"
           initial="close"
@@ -67,7 +67,7 @@ export const AccordionContent = forwardRef<
           className={clsx("overflow-hidden px-4", className)}
         >
           {children}
-        </motion.div>
+        </m.div>
       </AccordionPrimitive.Content>
     )}
   </AnimatePresence>

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { textColor } from "@utils/color";
 import { parseUSTName } from "@utils/parseName";
 import { time12 } from "@utils/time";
@@ -39,7 +39,7 @@ const CalendarEvent = ({
                 className="flex flex-wrap justify-between gap-x-1 gap-y-0 text-[clamp(0.675rem,1.4vw,0.875rem)] font-medium"
               >
                 <div>{parseUSTName(name).lessonName}</div>
-                <motion.div
+                <m.div
                   initial={false}
                   animate={matchDesktop ? "hover" : hover ? "hover" : "idle"}
                   variants={{
@@ -56,7 +56,7 @@ const CalendarEvent = ({
                   }}
                 >
                   {parseUSTName(name).section}
-                </motion.div>
+                </m.div>
               </div>
 
               {/* TODO: settings for toggling visible previews */}
