@@ -19,5 +19,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
+  },
 };
 export default withBundleAnalyzer(config);

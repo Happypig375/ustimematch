@@ -1,7 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const defaultTheme = require("tailwindcss/defaultTheme");
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
@@ -39,6 +40,21 @@ module.exports = {
         // For buttons, inputs, anchors
         focusable:
           "box-shadow, color, background-color, border-color, text-decoration-color, fill, stroke",
+      },
+      // Skeleton shimmer effect
+      backgroundImage: {
+        shimmer:
+          "linear-gradient(to right, transparent 0%, rgb(var(--fg-100) / 0.05) 50%, transparent 100%)",
+      },
+      keyframes: {
+        shimmer: {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
       },
     },
   },

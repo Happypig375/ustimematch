@@ -31,20 +31,21 @@ export const persistRouter = router({
       });
     }),
   getPersist: protectedProcedure.query(async ({ ctx }) => {
-    const user = await ctx.prisma.user.findUniqueOrThrow({
+    const { timetableStore } = await ctx.prisma.user.findUniqueOrThrow({
       where: { id: ctx.session.user.id },
     });
 
-    // Initial query will be null
-    if (!user.timetableStore) return defaultTimetableStore;
+    // timetableStore will be null when user haven't called setPersist
+    if (!timetableStore) return { timetableStore: defaultTimetableStore };
 
-    const result = ZTimetableStore.safeParse(user.timetableStore);
+    const result = ZTimetableStore.safeParse(timetableStore);
+
     if (!result.success)
       throw new TRPCError({
         code: "BAD_REQUEST",
         message: "Data does not match schema.",
       });
 
-    return result.data;
+    return { timetableStore: result.data };
   }),
 });
