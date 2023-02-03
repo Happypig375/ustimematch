@@ -1,3 +1,4 @@
+import * as Separator from "@radix-ui/react-separator";
 import { IconArrowForward, IconListCheck, IconX } from "@tabler/icons-react";
 import type { Dispatch, SetStateAction } from "react";
 import { forwardRef } from "react";
@@ -128,18 +129,28 @@ const SelectTab = forwardRef<HTMLDivElement, Props>(
           <div className="flex max-h-96 flex-col gap-1 overflow-y-auto">
             {/* Personal timetable */}
             {personalTimetable && (
-              <SelectItem
-                id={personalTimetable.config.id}
-                timetable={personalTimetable}
-                checked={timetableChecked(personalTimetable.config.id)}
-                onCheckedChange={(checked) =>
-                  setCheckedIds((prev) =>
-                    checked
-                      ? [...prev, personalTimetable.config.id]
-                      : prev.filter((id) => id !== personalTimetable.config.id),
-                  )
-                }
-              />
+              <>
+                <SelectItem
+                  id={personalTimetable.config.id}
+                  timetable={personalTimetable}
+                  checked={timetableChecked(personalTimetable.config.id)}
+                  onCheckedChange={(checked) =>
+                    setCheckedIds((prev) =>
+                      checked
+                        ? [...prev, personalTimetable.config.id]
+                        : prev.filter(
+                            (id) => id !== personalTimetable.config.id,
+                          ),
+                    )
+                  }
+                />
+
+                <Separator.Root
+                  decorative
+                  orientation="horizontal"
+                  className="h-[1px] w-full bg-border-100"
+                />
+              </>
             )}
 
             {/* Timetables tree */}
