@@ -87,7 +87,7 @@ export const ColorInput = ({ disabled, ...props }: ColorInputProps) => {
             className={clsx(
               "h-10 overflow-auto rounded-md px-2 transition-focusable",
               "border border-border-100 bg-bg-200",
-              "hover:border-border-200",
+              "hover:border-border-200 active:border-border-200",
               "disabled:cursor-not-allowed disabled:opacity-50",
             )}
           />

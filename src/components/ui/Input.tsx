@@ -51,7 +51,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           className={clsx(
             "h-10 overflow-auto rounded-md px-2 transition-focusable",
             "border border-border-100 bg-bg-200",
-            "hover:border-border-200",
+            "hover:border-border-200 active:border-border-200",
             "disabled:cursor-not-allowed disabled:opacity-50",
             error &&
               "focus:ring-red-200/80 focus:ring-offset-red-400 dark:focus:ring-red-400/20 dark:focus:ring-offset-red-600",

@@ -3,7 +3,8 @@ import { IconRoute, IconX } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
-import Accordion, {
+import {
+  AccordionRoot,
   AccordionContent,
   AccordionTrigger,
 } from "@components/ui/Accordion";
@@ -60,22 +61,24 @@ const DetailsModal = () => {
         </div>
 
         <ModalControl className="flex-col">
-          <Accordion
+          <AccordionRoot
             collapsible
             type="single"
             value={value}
             onValueChange={setValue}
           >
             <AccordionItem value="description">
-              <AccordionTrigger value={value}>Description</AccordionTrigger>
+              <AccordionTrigger open={value === "description"}>
+                Description
+              </AccordionTrigger>
               <AccordionContent
-                value={value}
+                open={value === "description"}
                 className="whitespace-pre-wrap leading-relaxed"
               >
                 <p className="pt-1">{detailsLesson.description}</p>
               </AccordionContent>
             </AccordionItem>
-          </Accordion>
+          </AccordionRoot>
 
           {/* Calcualte flex-basis with gap to make their width equal, otherwise Link will be squashed. */}
           {/* TODO: maybe a better way to handle this? */}

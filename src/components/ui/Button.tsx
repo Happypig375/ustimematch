@@ -31,7 +31,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       className={clsx(
         "relative flex h-10 select-none items-center justify-center whitespace-nowrap rounded-md transition-focusable",
         "enabled:hover:border-border-200 enabled:hover:text-fg-200",
-        "enabled:active:bg-bg-300 enabled:active:text-fg-200",
+        "enabled:active:border-border-200 enabled:active:bg-bg-300 enabled:active:text-fg-200",
         "disabled:cursor-not-allowed disabled:opacity-50",
         icon ? "w-10 flex-shrink-0" : "px-4",
         plain

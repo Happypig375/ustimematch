@@ -2,63 +2,60 @@ import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { IconChevronDown } from "@tabler/icons-react";
 import clsx from "clsx";
 import { AnimatePresence, m } from "framer-motion";
+import type { ComponentPropsWithoutRef, ElementRef } from "react";
 import { forwardRef } from "react";
 import { accordionVariants, chevronVariants } from "./motion/variants";
 
-export const Accordion = AccordionPrimitive.Root;
+export const AccordionRoot = AccordionPrimitive.Root;
+export const AccordionItem = AccordionPrimitive.Item;
 
-export const AccordionItem = forwardRef<
-  HTMLDivElement,
-  AccordionPrimitive.AccordionItemProps
->(({ children, ...props }, ref) => (
-  <AccordionPrimitive.Item ref={ref} {...props}>
-    {children}
-  </AccordionPrimitive.Item>
-));
-AccordionItem.displayName = "AccordionItem";
+interface AccordionTriggerProps
+  extends ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> {
+  open: boolean;
+}
 
 export const AccordionTrigger = forwardRef<
-  HTMLButtonElement,
-  AccordionPrimitive.AccordionTriggerProps
->(({ children, className, value, ...props }, ref) => (
-  <AccordionPrimitive.Header>
-    <AccordionPrimitive.Trigger
-      ref={ref}
-      {...props}
-      className={clsx(
-        "flex h-10 w-full items-center justify-between rounded-md p-4 transition-focusable",
-        "border border-border-100 bg-bg-200 text-fg-100",
-        "hover:border-border-200 hover:text-fg-200",
-        "active:bg-bg-300 active:text-fg-200",
-        className,
-      )}
-    >
-      {children}
+  ElementRef<typeof AccordionPrimitive.Trigger>,
+  AccordionTriggerProps
+>(({ children, className, open, ...props }, ref) => (
+  <AccordionPrimitive.Trigger
+    ref={ref}
+    className={clsx(
+      "flex h-10 w-full items-center justify-between rounded-md p-4 transition-focusable",
+      "border border-border-100 bg-bg-200 text-fg-100",
+      "hover:border-border-200 hover:text-fg-200",
+      "active:border-border-200 active:bg-bg-300 active:text-fg-200",
+      open && "text-fg-200",
+      className,
+    )}
+    {...props}
+  >
+    {children}
 
-      <m.div
-        initial={false}
-        animate={value ? "close" : "open"}
-        variants={chevronVariants}
-      >
-        <IconChevronDown strokeWidth={1.75} className="h-5 w-5" />
-      </m.div>
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
+    <m.div
+      initial={false}
+      variants={chevronVariants}
+      animate={open ? "close" : "open"}
+    >
+      <IconChevronDown strokeWidth={1.75} className="h-5 w-5" />
+    </m.div>
+  </AccordionPrimitive.Trigger>
 ));
+
 AccordionTrigger.displayName = "AccordionTrigger";
 
 interface AccordionContentProps
   extends AccordionPrimitive.AccordionContentProps {
-  value: string;
+  open: boolean;
 }
 
 export const AccordionContent = forwardRef<
-  HTMLDivElement,
+  React.ElementRef<typeof AccordionPrimitive.Content>,
   AccordionContentProps
->(({ children, className, value, ...props }, ref) => (
+>(({ children, className, open, ...props }, ref) => (
   <AnimatePresence initial={false}>
-    {value && (
-      <AccordionPrimitive.Content ref={ref} {...props} forceMount>
+    {open && (
+      <AccordionPrimitive.Content ref={ref} asChild forceMount {...props}>
         <m.div
           exit="close"
           animate="open"
@@ -72,6 +69,5 @@ export const AccordionContent = forwardRef<
     )}
   </AnimatePresence>
 ));
-AccordionContent.displayName = "AccordionContent";
 
-export default Accordion;
+AccordionContent.displayName = "AccordionContent";
