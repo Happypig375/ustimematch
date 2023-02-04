@@ -45,7 +45,7 @@ const Tutorial: NextPage = () => {
                 </Link>
               </strong>
               .
-              <p className="!mb-0 flex text-xs before:mr-1 before:text-red-500 before:content-['*'] sm:text-sm">
+              <p className="!my-0 flex before:mr-1 before:text-red-500 before:content-['*']">
                 Make sure to request for desktop site if you&apos;re on mobile.
               </p>
             </li>
@@ -65,7 +65,7 @@ const Tutorial: NextPage = () => {
             </li>
             <li>
               Click <strong>Copy iCalendar File URL</strong> and copy the link.
-              <p className="!mb-0 flex break-all text-xs before:mr-1 before:text-red-500 before:content-['*'] sm:text-sm">
+              <p className="!my-0 flex break-all before:mr-1 before:text-red-500 before:content-['*']">
                 <span>
                   e.g.{" "}
                   <code className="font-normal">
