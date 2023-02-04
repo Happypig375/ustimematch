@@ -2,7 +2,7 @@ name: Purge expired database records
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 19 * * *"
 jobs:
   cron:
     runs-on: ubuntu-latest
