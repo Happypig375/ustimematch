@@ -79,6 +79,17 @@ const Skeleton = () => {
           <Legend />
           <Border />
           <Timeline />
+
+          {/* Skeleton */}
+          <div
+            style={{
+              gridArea: "2 / 2 / -1 / -1",
+            }}
+            className={clsx(
+              "relative overflow-hidden bg-bg-300 opacity-80",
+              "before:absolute before:inset-0 before:-translate-x-1/2 before:animate-[shimmer_2s_infinite] before:bg-shimmer",
+            )}
+          />
         </div>
       </div>
     </div>
