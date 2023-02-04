@@ -1,5 +1,6 @@
 import { IBM_Plex_Sans } from "@next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { LazyMotion } from "framer-motion";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider, useTheme } from "next-themes";
@@ -52,58 +53,65 @@ const App: AppType<{ session: Session | null }> = ({
         disableTransitionOnChange
         attribute="class"
       >
-        <Head>
-          <title>USTimematch</title>
-          <link rel="icon" type="image/png" href="/favicon.png" />
-
-          <meta
-            name="description"
-            content="Timetable manager for HKUST students."
-          />
-
-          {/* Open graph */}
-          <meta property="og:title" content="USTimematch" />
-          <meta
-            property="og:description"
-            content="Timetable manager for HKUST students."
-          />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://www.ustimematch.com" />
-          <meta property="og:image" content="" />
-        </Head>
-
-        {/* https://github.com/vercel/next.js/discussions/42023 */}
-        <style jsx global>{`
-          :root {
-            --font-ibm-plex-sans: ${IBMPlexSans.style.fontFamily};
+        <LazyMotion
+          strict
+          features={async () =>
+            (await import("@components/ui/motion/features")).default
           }
-        `}</style>
+        >
+          <Head>
+            <title>USTimematch</title>
+            <link rel="icon" type="image/png" href="/favicon.png" />
 
-        <Toast />
+            <meta
+              name="description"
+              content="Timetable manager for HKUST students."
+            />
 
-        <ThemeColorHandler />
+            {/* Open graph */}
+            <meta property="og:title" content="USTimematch" />
+            <meta
+              property="og:description"
+              content="Timetable manager for HKUST students."
+            />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://www.ustimematch.com" />
+            <meta property="og:image" content="" />
+          </Head>
 
-        <NextNProgress
-          height={2}
-          startPosition={0.2}
-          color="rgb(var(--fg-200))"
-          options={{ showSpinner: false, speed: 200 }}
-        />
+          {/* https://github.com/vercel/next.js/discussions/42023 */}
+          <style jsx global>{`
+            :root {
+              --font-ibm-plex-sans: ${IBMPlexSans.style.fontFamily};
+            }
+          `}</style>
 
-        <Analytics
-          beforeSend={(event) => {
-            // Remove all query params
-            const url = new URL(event.url);
-            for (const [key] of url.searchParams.entries())
-              url.searchParams.set(key, "REDACTED");
-            return {
-              ...event,
-              url: url.toString(),
-            };
-          }}
-        />
+          <Toast />
 
-        <Component {...pageProps} />
+          <ThemeColorHandler />
+
+          <NextNProgress
+            height={2}
+            startPosition={0.2}
+            color="rgb(var(--fg-200))"
+            options={{ showSpinner: false, speed: 200 }}
+          />
+
+          <Analytics
+            beforeSend={(event) => {
+              // Remove all query params
+              const url = new URL(event.url);
+              for (const [key] of url.searchParams.entries())
+                url.searchParams.set(key, "REDACTED");
+              return {
+                ...event,
+                url: url.toString(),
+              };
+            }}
+          />
+
+          <Component {...pageProps} />
+        </LazyMotion>
       </ThemeProvider>
     </SessionProvider>
   );
