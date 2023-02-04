@@ -125,10 +125,17 @@ const PersistHandler = ({
   }, [flush]);
 
   useEffect(() => {
+    // Handle changeing route within app
     router.events.on("routeChangeStart", flush);
+    // Handle refreshing
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#usage_notes
+    window.addEventListener("beforeunload", flush);
+    // Handle everything else
+    // https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event#usage_notes
     window.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
       router.events.off("routeChangeStart", flush);
+      window.removeEventListener("beforeunload", flush);
       window.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [router.events, flush, handleVisibilityChange]);
