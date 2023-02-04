@@ -80,7 +80,7 @@ const PersistHandler = ({
     () =>
       debounce(
         (timetableStore: TimetableStore) => mutate({ timetableStore }),
-        2000,
+        10000,
       ),
     [mutate],
   );
