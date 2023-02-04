@@ -16,6 +16,7 @@ import Button from "@components/ui/Button";
 import Tips from "@components/ui/Tips";
 import { uiStore } from "@store/ui";
 import exportFromPlanner from "../../public/export-from-planner.png";
+import safariRequestDesktopSite from "../../public/safari-request-desktop-site.png";
 
 const Tutorial: NextPage = () => {
   const router = useRouter();
@@ -45,8 +46,24 @@ const Tutorial: NextPage = () => {
                 </Link>
               </strong>
               .
-              <p className="!my-0 flex before:mr-1 before:text-red-500 before:content-['*']">
-                Make sure to request for desktop site if you&apos;re on mobile.
+              <p className="!my-0 before:mr-1 before:text-red-500 before:content-['*']">
+                Make sure to <strong>request for desktop site</strong> if
+                you&apos;re on mobile.
+                <Tips
+                  image
+                  triggerClassName="!m-0 !ml-1 inline-flex align-text-bottom"
+                >
+                  <Image
+                    src={safariRequestDesktopSite}
+                    placeholder="blur"
+                    className="h-[60vh] w-auto rounded-md"
+                    alt="How to request for desktop site in Safari"
+                  />
+                </Tips>
+              </p>
+              <p className="!my-0 before:mr-1 before:text-red-500 before:content-['*']">
+                Please use <strong>Safari</strong> if you&apos;re on iOS
+                devices.
               </p>
             </li>
             <li>
@@ -58,7 +75,7 @@ const Tutorial: NextPage = () => {
                 <Image
                   src={exportFromPlanner}
                   placeholder="blur"
-                  className="rounded-md"
+                  className="h-auto w-[80vw] max-w-md rounded-md"
                   alt="How to export as iCalendar File URL from Timetable Planner"
                 />
               </Tips>

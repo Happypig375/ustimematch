@@ -21,10 +21,10 @@ const About: NextPage = () => {
           <ul>
             <li>Keep track of you and your friends&apos; timetables.</li>
             <li>Easily toggle between whose timetable to view.</li>
-            <li>Search for common free time slots.</li>
+            <li>Search for free common time slots.</li>
             <li>Share timetables within a few clicks.</li>
             <li>Refresh on demand in case of lessons swapping.</li>
-            <li>Folders for organizing different groups.</li>
+            <li>Folders for organization.</li>
             <li>And more to come...</li>
           </ul>
           <h3 id="enquiry">Enquiry</h3>
