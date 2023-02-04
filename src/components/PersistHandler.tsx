@@ -80,7 +80,7 @@ const PersistHandler = ({
     () =>
       debounce(
         (timetableStore: TimetableStore) => mutate({ timetableStore }),
-        10000,
+        4000,
       ),
     [mutate],
   );
@@ -112,7 +112,7 @@ const PersistHandler = ({
   // Flush debounce before switching route or unloading
   // BUG: If the user reload the page faster than the database record get updated, the state will be the old one.
   // But this can be solved by reloading again, not a big problem.
-  const handleUnload = useCallback(() => {
+  const flush = useCallback(() => {
     if (!authed) return;
     if (!elector.hasLeader || elector.isLeader) mutateDebounce.flush();
     if (elector.hasLeader && !elector.isLeader)
@@ -120,14 +120,18 @@ const PersistHandler = ({
     elector.die();
   }, [authed, elector, mutateDebounce, channel]);
 
+  const handleVisibilityChange = useCallback(() => {
+    if (document.visibilityState === "hidden") flush();
+  }, [flush]);
+
   useEffect(() => {
-    router.events.on("routeChangeStart", handleUnload);
-    window.addEventListener("beforeunload", handleUnload);
+    router.events.on("routeChangeStart", flush);
+    window.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
-      router.events.off("routeChangeStart", handleUnload);
-      window.removeEventListener("beforeunload", handleUnload);
+      router.events.off("routeChangeStart", flush);
+      window.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [handleUnload, router.events]);
+  }, [router.events, flush, handleVisibilityChange]);
 
   // Broadcast channel for syncing timetableStore
   useEffect(() => {
