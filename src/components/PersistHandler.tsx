@@ -110,6 +110,8 @@ const PersistHandler = ({
   ]);
 
   // Flush debounce before switching route or unloading
+  // BUG: If the user reload the page faster than the database record get updated, the state will be the old one.
+  // But this can be solved by reloading again, not a big problem.
   const handleUnload = useCallback(() => {
     if (!authed) return;
     if (!elector.hasLeader || elector.isLeader) mutateDebounce.flush();
