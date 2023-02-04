@@ -1,135 +1,321 @@
 {
   "personalTimetable": {
+    "name": "Terry",
+    "university": "HKUST",
+    "plannerURL": "demo-timetable-1",
+    "config": {
+      "id": "demo-timetable-1",
+      "color": "#b5d7f1",
+      "visible": true
+    },
     "lessons": [
       [],
       [
         {
-          "name": "MATH 1014 (L01)",
-          "venue": "Lecture Theater D (216)",
-          "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
-          "begin": "12:00",
-          "end": "13:20"
+          "name": "SOSC 1850 (L2)",
+          "venue": "Rm 2465, Lift 25-26 (122)",
+          "description": "SOSC 1850 - Understanding Society\nSection: L2\nInstructor: KU, Shuk Mei Agnes",
+          "begin": "10:30",
+          "end": "11:50"
         },
         {
-          "name": "CHEM 1008 (L1)",
-          "venue": "Lecture Theater C (211)",
-          "description": "CHEM 1008 - Introductory Chemistry\nSection: L1\nInstructor: TSANG, Ming Wai Emily",
+          "name": "CORE 1403S (T51)",
+          "venue": "Rm 2130C, Lift 19 (28)",
+          "description": "CORE 1403S - Academic English for University Studies\nSection: T51",
           "begin": "13:30",
           "end": "14:50"
         },
         {
-          "name": "MATH 1014 (T01C)",
-          "venue": "G009B, CYT Bldg (70)",
-          "description": "MATH 1014 - Calculus II\nSection: T01C\nInstructor: IP, Ivan Chi Ho",
-          "begin": "18:00",
-          "end": "18:50"
+          "name": "ISOM 2700 (L2)",
+          "venue": "Rm 2464, Lift 25-26 (122)",
+          "description": "ISOM 2700 - Operations Management\nSection: L2\nInstructor: SHEN, Yiwen",
+          "begin": "16:30",
+          "end": "17:50"
         }
       ],
       [
         {
-          "name": "CORE 1403A (T13)",
-          "venue": "Rm 2128A, Lift 19 (28)",
-          "description": "CORE 1403A - Academic English for University Studies\nSection: T13",
+          "name": "MARK 2120 (L5)",
+          "venue": "Rm 1005, LSK Bldg (70)",
+          "description": "MARK 2120 - Marketing Management\nSection: L5\nInstructor: DALTON, Amy Nicole",
           "begin": "13:30",
           "end": "14:50"
-        }
-      ],
-      [
-        {
-          "name": "MATH 1014 (L01)",
-          "venue": "Lecture Theater D (216)",
-          "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
-          "begin": "12:00",
-          "end": "13:20"
         },
         {
-          "name": "CHEM 1008 (L1)",
-          "venue": "Lecture Theater C (211)",
-          "description": "CHEM 1008 - Introductory Chemistry\nSection: L1\nInstructor: TSANG, Ming Wai Emily",
-          "begin": "13:30",
-          "end": "14:50"
+          "name": "ISOM 2500 (L5)",
+          "venue": "Rm 4619, Lift 31-32 (126)",
+          "description": "ISOM 2500 - Business Statistics\nSection: L5\nInstructor: XIA, Lucy",
+          "begin": "15:00",
+          "end": "16:20"
         }
       ],
       [
         {
-          "name": "CORE 1403A (T13)",
-          "venue": "Rm 2128A, Lift 19 (28)",
-          "description": "CORE 1403A - Academic English for University Studies\nSection: T13",
+          "name": "CORE 1905C (T05)",
+          "venue": "",
+          "description": "CORE 1905C - Behavioral Foundations of University Education: Habits, Mindsets, and Wellness\nSection: T05",
+          "begin": "09:00",
+          "end": "10:20"
+        },
+        {
+          "name": "SOSC 1850 (L2)",
+          "venue": "Rm 2465, Lift 25-26 (122)",
+          "description": "SOSC 1850 - Understanding Society\nSection: L2\nInstructor: KU, Shuk Mei Agnes",
+          "begin": "10:30",
+          "end": "11:50"
+        },
+        {
+          "name": "CORE 1403S (T51)",
+          "venue": "Rm 2130C, Lift 19 (28)",
+          "description": "CORE 1403S - Academic English for University Studies\nSection: T51",
           "begin": "13:30",
           "end": "14:50"
+        },
+        {
+          "name": "ISOM 2700 (L2)",
+          "venue": "Rm 2464, Lift 25-26 (122)",
+          "description": "ISOM 2700 - Operations Management\nSection: L2\nInstructor: SHEN, Yiwen",
+          "begin": "16:30",
+          "end": "17:50"
+        }
+      ],
+      [
+        {
+          "name": "MARK 2120 (L5)",
+          "venue": "Rm 1005, LSK Bldg (70)",
+          "description": "MARK 2120 - Marketing Management\nSection: L5\nInstructor: DALTON, Amy Nicole",
+          "begin": "13:30",
+          "end": "14:50"
+        },
+        {
+          "name": "ISOM 2500 (L5)",
+          "venue": "Rm 4619, Lift 31-32 (126)",
+          "description": "ISOM 2500 - Business Statistics\nSection: L5\nInstructor: XIA, Lucy",
+          "begin": "15:00",
+          "end": "16:20"
         }
       ],
       [],
       []
-    ],
-    "plannerURL": "demo-timetable-0",
-    "university": "HKUST",
-    "name": "Terry",
-    "config": {
-      "id": "demo-timetable-0",
-      "color": "#b98bb9",
-      "visible": true
-    }
+    ]
   },
   "timetablesTree": [
     {
-      "name": "CORE 1402",
-      "id": "demo-folder-1",
       "type": "FOLDER",
       "collapsed": false,
+      "name": "Lunchmates",
+      "id": "demo-folder-1",
       "children": [
         {
+          "type": "TIMETABLE",
+          "id": "demo-timetable-2",
           "timetable": {
+            "name": "Harry",
+            "university": "HKUST",
+            "plannerURL": "demo-timetable-2",
+            "config": {
+              "id": "demo-timetable-2",
+              "color": "#c2f6e0",
+              "visible": true
+            },
             "lessons": [
               [
                 {
-                  "name": "BIBU 4830 (L1)",
-                  "venue": "Rm 4504, Lift 25-26 (54)",
-                  "description": "BIBU 4830 - Biotechnology Management\nSection: L1\nInstructor: LEE, Hong Seng Daniel",
+                  "name": "IEDA 2010 (L1)",
+                  "venue": "Rm 2465, Lift 25-26 (122)",
+                  "description": "IEDA 2010 - Introduction of Industrial Engineering and Decision Analytics\nSection: L1\nInstructor: QIU, Xuan",
                   "begin": "12:00",
                   "end": "14:50"
                 },
                 {
-                  "name": "CORE 1402 (T01)",
-                  "venue": "Rm 2132A, Lift 19 (28)",
-                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
-                  "begin": "15:00",
-                  "end": "16:20"
+                  "name": "CENG 1500 (T1)",
+                  "venue": "Lecture Theater D (216)",
+                  "description": "CENG 1500 - A First Course on Materials Science and Applications\nSection: T1\nInstructor: SHAO, Minhua",
+                  "begin": "18:00",
+                  "end": "18:50"
                 }
               ],
               [
                 {
-                  "name": "ACCT 2200 (L03)",
-                  "venue": "G009A, CYT Bldg (80)",
-                  "description": "ACCT 2200 - Principles of Accounting II\nSection: L03\nInstructor: WANG, Emily",
+                  "name": "CENG 1500 (L1)",
+                  "venue": "Lecture Theater D (216)",
+                  "description": "CENG 1500 - A First Course on Materials Science and Applications\nSection: L1\nInstructor: SHAO, Minhua",
+                  "begin": "10:30",
+                  "end": "11:50"
+                },
+                {
+                  "name": "BIEN 1010 (L1)",
+                  "venue": "Lecture Theater C (211)",
+                  "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+                  "begin": "12:00",
+                  "end": "13:20"
+                },
+                {
+                  "name": "MATH 1014 (L02)",
+                  "venue": "Lecture Theater E (143)",
+                  "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+                  "begin": "13:30",
+                  "end": "14:50"
+                },
+                {
+                  "name": "CORE 1403A (T11)",
+                  "venue": "Rm 2128A, Lift 19 (28)",
+                  "description": "CORE 1403A - Academic English for University Studies\nSection: T11",
                   "begin": "16:30",
                   "end": "17:50"
+                },
+                {
+                  "name": "MATH 1014 (T02C)",
+                  "venue": "Rm 1034, LSK Bldg (80)",
+                  "description": "MATH 1014 - Calculus II\nSection: T02C\nInstructor: LAM, Tsz Kin",
+                  "begin": "18:00",
+                  "end": "18:50"
                 }
               ],
               [],
               [
                 {
-                  "name": "ACCT 2200 (L03)",
-                  "venue": "G009A, CYT Bldg (80)",
-                  "description": "ACCT 2200 - Principles of Accounting II\nSection: L03\nInstructor: WANG, Emily",
+                  "name": "CENG 1500 (L1)",
+                  "venue": "Lecture Theater D (216)",
+                  "description": "CENG 1500 - A First Course on Materials Science and Applications\nSection: L1\nInstructor: SHAO, Minhua",
+                  "begin": "10:30",
+                  "end": "11:50"
+                },
+                {
+                  "name": "BIEN 1010 (L1)",
+                  "venue": "Lecture Theater C (211)",
+                  "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+                  "begin": "12:00",
+                  "end": "13:20"
+                },
+                {
+                  "name": "MATH 1014 (L02)",
+                  "venue": "Lecture Theater E (143)",
+                  "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+                  "begin": "13:30",
+                  "end": "14:50"
+                },
+                {
+                  "name": "CORE 1403A (T11)",
+                  "venue": "Rm 2128A, Lift 19 (28)",
+                  "description": "CORE 1403A - Academic English for University Studies\nSection: T11",
                   "begin": "16:30",
                   "end": "17:50"
                 },
                 {
-                  "name": "HUMA 1155 (T1)",
-                  "venue": "Rm 2463, Lift 25-26 (42)",
-                  "description": "HUMA 1155 - Video Art\nSection: T1\nInstructor: CHU, Shun",
-                  "begin": "20:00",
-                  "end": "20:50"
+                  "name": "IEDA 2010 (T2)",
+                  "venue": "Rm 1034, LSK Bldg (80)",
+                  "description": "IEDA 2010 - Introduction of Industrial Engineering and Decision Analytics\nSection: T2\nInstructor: QIU, Xuan",
+                  "begin": "18:00",
+                  "end": "18:50"
                 }
               ],
               [
                 {
-                  "name": "CORE 1402 (T01)",
-                  "venue": "Rm 2132A, Lift 19 (28)",
-                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "name": "CORE 1905B (T34)",
+                  "venue": "",
+                  "description": "CORE 1905B - Behavioral Foundations of University Education: Habits, Mindsets, and Wellness\nSection: T34",
+                  "begin": "12:00",
+                  "end": "13:20"
+                }
+              ],
+              [],
+              []
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "FOLDER",
+      "collapsed": false,
+      "name": "MARK 2120",
+      "id": "demo-folder-2",
+      "children": [
+        {
+          "id": "demo-timetable-3",
+          "type": "TIMETABLE",
+          "timetable": {
+            "name": "Cherry",
+
+            "university": "HKUST",
+            "plannerURL": "demo-timetable-3",
+            "config": {
+              "id": "demo-timetable-3",
+              "color": "#ffc6c6",
+              "visible": true
+            },
+            "lessons": [
+              [
+                {
+                  "name": "CORE 1403A (T15)",
+                  "venue": "Rm 2132B, Lift 19 (28)",
+                  "description": "CORE 1403A - Academic English for University Studies\nSection: T15",
+                  "begin": "09:00",
+                  "end": "10:20"
+                },
+                {
+                  "name": "ISOM 2500 (L6)",
+                  "venue": "Rm 2306, Lift 17-18 (111)",
+                  "description": "ISOM 2500 - Business Statistics\nSection: L6\nInstructor: JAMES, Lancelot Fitzgerald",
+                  "begin": "12:00",
+                  "end": "13:20"
+                },
+                {
+                  "name": "MGMT 2110 (L7)",
+                  "venue": "Rm 1034, LSK Bldg (80)",
+                  "description": "MGMT 2110 - Organizational Behavior\nSection: L7\nInstructor: WONG, Ellick Kin Fai",
+                  "begin": "15:00",
+                  "end": "16:20"
+                }
+              ],
+              [],
+              [
+                {
+                  "name": "CORE 1403A (T15)",
+                  "venue": "Rm 2132B, Lift 19 (28)",
+                  "description": "CORE 1403A - Academic English for University Studies\nSection: T15",
+                  "begin": "09:00",
+                  "end": "10:20"
+                },
+                {
+                  "name": "ISOM 2500 (L6)",
+                  "venue": "Rm 2306, Lift 17-18 (111)",
+                  "description": "ISOM 2500 - Business Statistics\nSection: L6\nInstructor: JAMES, Lancelot Fitzgerald",
+                  "begin": "12:00",
+                  "end": "13:20"
+                },
+                {
+                  "name": "MARK 2120 (L5)",
+                  "venue": "Rm 1005, LSK Bldg (70)",
+                  "description": "MARK 2120 - Marketing Management\nSection: L5\nInstructor: DALTON, Amy Nicole",
+                  "begin": "13:30",
+                  "end": "14:50"
+                }
+              ],
+              [
+                {
+                  "name": "CORE 1905C (T05)",
+                  "venue": "",
+                  "description": "CORE 1905C - Behavioral Foundations of University Education: Habits, Mindsets, and Wellness\nSection: T05",
+                  "begin": "09:00",
+                  "end": "10:20"
+                }
+              ],
+              [
+                {
+                  "name": "MGMT 2110 (L7)",
+                  "venue": "Rm 1034, LSK Bldg (80)",
+                  "description": "MGMT 2110 - Organizational Behavior\nSection: L7\nInstructor: WONG, Ellick Kin Fai",
                   "begin": "10:30",
                   "end": "11:50"
+                },
+                {
+                  "name": "MARK 2120 (L5)",
+                  "venue": "Rm 1005, LSK Bldg (70)",
+                  "description": "MARK 2120 - Marketing Management\nSection: L5\nInstructor: DALTON, Amy Nicole",
+                  "begin": "13:30",
+                  "end": "14:50"
                 },
                 {
                   "name": "HUMA 1155 (L2)",
@@ -137,205 +323,124 @@
                   "description": "HUMA 1155 - Video Art\nSection: L2\nInstructor: CHU, Shun",
                   "begin": "18:00",
                   "end": "19:50"
+                },
+                {
+                  "name": "HUMA 1155 (T2)",
+                  "venue": "Rm 2463, Lift 25-26 (42)",
+                  "description": "HUMA 1155 - Video Art\nSection: T2\nInstructor: CHU, Shun",
+                  "begin": "20:00",
+                  "end": "20:50"
                 }
               ],
               [],
               []
-            ],
-            "plannerURL": "demo-timetable-1",
-            "university": "HKUST",
-            "name": "Mary",
-            "config": {
-              "id": "demo-timetable-1",
-              "color": "#8fc095",
-              "visible": true
-            }
-          },
-          "id": "demo-timetable-1",
-          "type": "TIMETABLE"
+            ]
+          }
         },
         {
+          "id": "demo-timetable-4",
+          "type": "TIMETABLE",
           "timetable": {
+            "name": "Berry",
+            "university": "HKUST",
+            "plannerURL": "demo-timetable-4",
+            "config": {
+              "id": "demo-timetable-4",
+              "color": "#ffecbf",
+              "visible": true
+            },
             "lessons": [
               [
                 {
-                  "name": "COMP 1021 (L2)",
-                  "venue": "Rm 2407, Lift 17-18 (126)",
-                  "description": "COMP 1021 - Introduction to Computer Science\nSection: L2\nInstructor: ROSSITER, David",
-                  "begin": "13:30",
-                  "end": "14:20"
-                },
-                {
-                  "name": "CORE 1402 (T01)",
-                  "venue": "Rm 2132A, Lift 19 (28)",
-                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
-                  "begin": "15:00",
-                  "end": "16:20"
-                }
-              ],
-              [
-                {
-                  "name": "BIEN 1010 (L1)",
-                  "venue": "Lecture Theater C (211)",
-                  "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
-                  "begin": "12:00",
-                  "end": "13:20"
-                }
-              ],
-              [
-                {
-                  "name": "COMP 1021 (LA1)",
-                  "venue": "",
-                  "description": "COMP 1021 - Introduction to Computer Science\nSection: LA1\nInstructors: ROSSITER, David, LAM, Gibson, LI, Xin",
-                  "begin": "15:00",
-                  "end": "16:50"
-                }
-              ],
-              [
-                {
-                  "name": "BIEN 1010 (L1)",
-                  "venue": "Lecture Theater C (211)",
-                  "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
-                  "begin": "12:00",
-                  "end": "13:20"
-                }
-              ],
-              [
-                {
-                  "name": "COMP 1021 (L2)",
-                  "venue": "Rm 2407, Lift 17-18 (126)",
-                  "description": "COMP 1021 - Introduction to Computer Science\nSection: L2\nInstructor: ROSSITER, David",
+                  "name": "CORE 1403S (T18)",
+                  "venue": "Rm 2127C, Lift 19 (28)",
+                  "description": "CORE 1403S - Academic English for University Studies\nSection: T18",
                   "begin": "09:00",
-                  "end": "09:50"
+                  "end": "10:20"
                 },
                 {
-                  "name": "CORE 1402 (T01)",
-                  "venue": "Rm 2132A, Lift 19 (28)",
-                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
-                  "begin": "10:30",
-                  "end": "11:50"
-                }
-              ],
-              [],
-              []
-            ],
-            "plannerURL": "demo-timetable-2",
-            "university": "HKUST",
-            "name": "John",
-            "config": {
-              "id": "demo-timetable-2",
-              "color": "#94bec5",
-              "visible": true
-            }
-          },
-          "id": "demo-timetable-2",
-          "type": "TIMETABLE"
-        }
-      ]
-    },
-    {
-      "name": "MATH 1014",
-      "id": "demo-folder-2",
-      "type": "FOLDER",
-      "collapsed": false,
-      "children": [
-        {
-          "timetable": {
-            "lessons": [
-              [
-                {
-                  "name": "OCES 1010 (L1)",
-                  "venue": "Lecture Theater A (401)",
-                  "description": "OCES 1010 - Principles and Applications of Environmental Science\nSection: L1\nInstructors: WU, Longjun, ZHANG, Qiong, HE, Ding, LI, Jiying",
-                  "begin": "10:30",
-                  "end": "11:50"
-                },
-                {
-                  "name": "CHEM 1020 (L2)",
-                  "venue": "Lecture Theater D (216)",
-                  "description": "CHEM 1020 - General Chemistry I\nSection: L2\nInstructors: HUANG, Jinqing, LU, Haipeng",
+                  "name": "ISOM 2500 (L6)",
+                  "venue": "Rm 2306, Lift 17-18 (111)",
+                  "description": "ISOM 2500 - Business Statistics\nSection: L6\nInstructor: JAMES, Lancelot Fitzgerald",
                   "begin": "12:00",
                   "end": "13:20"
-                },
+                }
+              ],
+              [
                 {
-                  "name": "PHYS 1112 (L1)",
-                  "venue": "Lecture Theater G (132)",
-                  "description": "PHYS 1112 - General Physics I with Calculus\nSection: L1\nInstructor: XU, Qin",
+                  "name": "ISOM 2700 (L1)",
+                  "venue": "Rm 2464, Lift 25-26 (122)",
+                  "description": "ISOM 2700 - Operations Management\nSection: L1\nInstructor: SHEN, Yiwen",
                   "begin": "15:00",
                   "end": "16:20"
                 }
               ],
               [
                 {
-                  "name": "MATH 1014 (L01)",
-                  "venue": "Lecture Theater D (216)",
-                  "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+                  "name": "CORE 1403S (T18)",
+                  "venue": "Rm 2127C, Lift 19 (28)",
+                  "description": "CORE 1403S - Academic English for University Studies\nSection: T18",
+                  "begin": "09:00",
+                  "end": "10:20"
+                },
+                {
+                  "name": "ISOM 2500 (L6)",
+                  "venue": "Rm 2306, Lift 17-18 (111)",
+                  "description": "ISOM 2500 - Business Statistics\nSection: L6\nInstructor: JAMES, Lancelot Fitzgerald",
                   "begin": "12:00",
                   "end": "13:20"
                 },
                 {
-                  "name": "MATH 1014 (T01C)",
-                  "venue": "G009B, CYT Bldg (70)",
-                  "description": "MATH 1014 - Calculus II\nSection: T01C\nInstructor: IP, Ivan Chi Ho",
-                  "begin": "18:00",
-                  "end": "18:50"
+                  "name": "MARK 2120 (L5)",
+                  "venue": "Rm 1005, LSK Bldg (70)",
+                  "description": "MARK 2120 - Marketing Management\nSection: L5\nInstructor: DALTON, Amy Nicole",
+                  "begin": "13:30",
+                  "end": "14:50"
+                },
+                {
+                  "name": "HUMA 2050 (L1)",
+                  "venue": "Lecture Theater K (106)",
+                  "description": "HUMA 2050 - Classical Chinese\nSection: L1\nInstructor: LI, Dechao",
+                  "begin": "16:30",
+                  "end": "17:50"
                 }
               ],
               [
                 {
-                  "name": "OCES 1010 (L1)",
-                  "venue": "Lecture Theater A (401)",
-                  "description": "OCES 1010 - Principles and Applications of Environmental Science\nSection: L1\nInstructors: WU, Longjun, ZHANG, Qiong, HE, Ding, LI, Jiying",
-                  "begin": "10:30",
-                  "end": "11:50"
+                  "name": "CORE 1905C (T05)",
+                  "venue": "",
+                  "description": "CORE 1905C - Behavioral Foundations of University Education: Habits, Mindsets, and Wellness\nSection: T05",
+                  "begin": "09:00",
+                  "end": "10:20"
                 },
                 {
-                  "name": "CHEM 1020 (L2)",
-                  "venue": "Lecture Theater D (216)",
-                  "description": "CHEM 1020 - General Chemistry I\nSection: L2\nInstructors: HUANG, Jinqing, LU, Haipeng",
-                  "begin": "12:00",
-                  "end": "13:20"
-                }
-              ],
-              [
-                {
-                  "name": "MATH 1014 (L01)",
-                  "venue": "Lecture Theater D (216)",
-                  "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
-                  "begin": "12:00",
-                  "end": "13:20"
-                },
-                {
-                  "name": "PHYS 1112 (T08)",
-                  "venue": "Rm 5620, Lift 31-32 (70)",
-                  "description": "PHYS 1112 - General Physics I with Calculus\nSection: T08",
+                  "name": "ISOM 2700 (L1)",
+                  "venue": "Rm 2464, Lift 25-26 (122)",
+                  "description": "ISOM 2700 - Operations Management\nSection: L1\nInstructor: SHEN, Yiwen",
                   "begin": "15:00",
-                  "end": "15:50"
+                  "end": "16:20"
                 }
               ],
               [
                 {
-                  "name": "PHYS 1112 (L1)",
-                  "venue": "Lecture Theater G (132)",
-                  "description": "PHYS 1112 - General Physics I with Calculus\nSection: L1\nInstructor: XU, Qin",
-                  "begin": "10:30",
-                  "end": "11:50"
+                  "name": "MARK 2120 (L5)",
+                  "venue": "Rm 1005, LSK Bldg (70)",
+                  "description": "MARK 2120 - Marketing Management\nSection: L5\nInstructor: DALTON, Amy Nicole",
+                  "begin": "13:30",
+                  "end": "14:50"
+                },
+                {
+                  "name": "HUMA 2050 (L1)",
+                  "venue": "Lecture Theater K (106)",
+                  "description": "HUMA 2050 - Classical Chinese\nSection: L1\nInstructor: LI, Dechao",
+                  "begin": "16:30",
+                  "end": "17:50"
                 }
               ],
               [],
               []
-            ],
-            "plannerURL": "demo-timetable-3",
-            "university": "HKUST",
-            "name": "George",
-            "config": {
-              "id": "demo-timetable-3",
-              "color": "#ccc39c",
-              "visible": true
-            }
-          },
-          "id": "demo-timetable-3",
-          "type": "TIMETABLE"
+            ]
+          }
         }
       ]
     }
