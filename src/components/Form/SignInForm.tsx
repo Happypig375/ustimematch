@@ -64,7 +64,7 @@ const SignInForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[80vw] flex-col gap-4 sm:w-96"
+        className="flex flex-col gap-4"
         data-cy="sign-in-form"
       >
         <Input

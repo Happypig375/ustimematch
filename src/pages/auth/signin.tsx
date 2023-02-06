@@ -5,16 +5,22 @@ import Header from "@components/Header";
 const SignIn = () => {
   return (
     <Header>
-      <div className="grid w-full place-items-center p-6">
+      <div className="grid w-full place-items-center overflow-auto p-6">
         <div
           className={clsx(
-            "prose prose-sm",
-            "sm:prose-base",
+            "prose prose-sm w-[80vw]",
+            "sm:w-96 sm:prose-base",
             "dark:prose-invert",
           )}
         >
-          <h2>Sign in to USTimematch</h2>
+          <h2 className="!mb-8">Sign in to USTimematch</h2>
+
           <SignInForm />
+
+          <p className="!mt-8 text-sm">
+            Tips: To migrate locally saved timetables, visit the{" "}
+            <strong>Account</strong> page after signing in.
+          </p>
         </div>
       </div>
     </Header>
