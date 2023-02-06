@@ -10,25 +10,32 @@ export const shareRouter = router({
     .input(z.object({ slug: z.string() }))
     .output(z.object({ timetables: ZTimetable.array().min(1) }))
     .query(async ({ ctx, input }) => {
-      const result = await ctx.prisma.sharedTimetables.findUnique({
-        where: { slug: input.slug },
-      });
-
-      if (!result || new Date() > result.expiresAt)
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message:
-            "The requested timetables do not exist or have already expired.",
+      const { expiresAt, timetables } =
+        await ctx.prisma.sharedTimetables.findUniqueOrThrow({
+          where: { slug: input.slug },
         });
 
-      const { timetables } = result as unknown as { timetables: Timetable[] };
+      if (new Date() > expiresAt)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "The requested timetables have expired.",
+        });
+
+      const mappedTimetables = (timetables as Timetable[]).map((timetable) => ({
+        ...timetable,
+        // Add back client-side only id and visible
+        config: { ...timetable.config, id: nanoid(), visible: true },
+      }));
+
+      const result = ZTimetable.array().safeParse(mappedTimetables);
+      if (!result.success)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "The requested timetables do not match schema.",
+        });
 
       return {
-        timetables: timetables.map((timetable) => ({
-          ...timetable,
-          // Add back client-side only id and visible
-          config: { ...timetable.config, id: nanoid(), visible: true },
-        })),
+        timetables: result.data,
       };
     }),
   guestShare: publicProcedure
