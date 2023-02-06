@@ -398,7 +398,17 @@ export function filterByTimetableIds(
       item.type === "TIMETABLE" &&
       timetableIds.includes(item.timetable.config.id)
     )
-      return [...acc, { ...item, id: nanoid() }];
+      return [
+        ...acc,
+        {
+          ...item,
+          id: nanoid(),
+          timetable: {
+            ...item.timetable,
+            config: { ...item.timetable.config, id: nanoid() },
+          },
+        },
+      ];
 
     return acc;
   }, []);

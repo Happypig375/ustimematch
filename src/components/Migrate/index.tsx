@@ -95,20 +95,34 @@ const Migrate = () => {
       checkedIds,
     );
 
+    let newPersonalTimetable = personalTimetable;
+
     if (
       localTimetableStore.personalTimetable &&
       checkedIds.includes(localTimetableStore.personalTimetable.config.id)
     ) {
-      newTimetablesTree.unshift({
-        type: "TIMETABLE",
-        id: nanoid(),
-        timetable: localTimetableStore.personalTimetable,
-      });
+      const newLocalPersonalTimetable = {
+        ...localTimetableStore.personalTimetable,
+        config: {
+          ...localTimetableStore.personalTimetable.config,
+          id: nanoid(),
+        },
+      };
+
+      // If personal timetable already exist in account, push it to tree
+      if (personalTimetable)
+        newTimetablesTree.unshift({
+          type: "TIMETABLE",
+          id: nanoid(),
+          timetable: newLocalPersonalTimetable,
+        });
+      // Otherwise just add it to personal timetable
+      else newPersonalTimetable = newLocalPersonalTimetable;
     }
 
     mutate({
       timetableStore: {
-        personalTimetable,
+        personalTimetable: newPersonalTimetable,
         timetablesTree: [...timetablesTree, ...newTimetablesTree],
       },
     });
@@ -136,10 +150,10 @@ const Migrate = () => {
               {checkedIds.length} / {localCombinedTimetables.length} Selected
             </span>
             <Tips>
-              <p>
-                Selected items will be appended to your account&apos;s explorer.
-              </p>
-              <p>Note that existing timetables will NOT be overwritten.</p>
+              Selected items will be appended to your account&apos;s explorer.
+              It&apos;s the same for personal timetable, unless you haven&apos;t
+              added one. In that case it&apos;ll be directly added to the
+              personal timetable section.
             </Tips>
           </div>
         </div>
