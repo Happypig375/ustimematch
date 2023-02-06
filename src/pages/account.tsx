@@ -1,3 +1,4 @@
+import { IconLogout } from "@tabler/icons-react";
 import clsx from "clsx";
 import type {
   GetServerSidePropsContext,
@@ -8,6 +9,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Header from "@components/Header";
+import Migrate from "@components/Migrate";
 import Button from "@components/ui/Button";
 import { authOptions } from "./api/auth/[...nextauth]";
 
@@ -65,16 +67,17 @@ const Account = ({
           <hr />
 
           <div className="flex flex-wrap gap-4 self-center text-base">
+            <Migrate />
+
             <Button
               fullWidth
               onClick={onSignOut}
               loading={signingOut}
               disabled={signingOut}
             >
+              <IconLogout strokeWidth={1.75} className="h-5 w-5" />
               Sign Out
             </Button>
-
-            {/* <Button fullWidth>Export Data</Button> */}
           </div>
         </div>
       </div>

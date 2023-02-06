@@ -13,7 +13,7 @@ import Spinner from "@components/ui/Spinner";
 import { actions, useTrackedStore } from "@store/index";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
-import SelectItem from "./SelectItem";
+import SelectItem from "../Select/SelectItem";
 
 const ReceiveModal = () => {
   const router = useRouter();
