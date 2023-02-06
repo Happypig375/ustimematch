@@ -78,6 +78,7 @@ async function sendVerificationRequest({
   const result = await transport.sendMail({
     to: identifier,
     from: provider.from,
+    sender: provider.from?.split(" ")[1]?.replace(/[<>]/g, ""),
     subject: "Sign in to USTimematch",
     text: text({ url }),
     html: html({ url }),
