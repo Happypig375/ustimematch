@@ -45,7 +45,7 @@ const Tips = ({ children, image, className, triggerClassName }: Props) => {
                 variants={tipsVariants}
                 className={clsx(
                   "z-50 origin-[var(--radix-popover-content-transform-origin)] rounded-md bg-bg-200 text-sm shadow-elevation focus-visible:outline-none",
-                  image ? "rounded-lg p-1" : "w-52 px-4 py-2",
+                  image ? "rounded-lg p-1" : "w-64 px-4 py-2",
                   className,
                 )}
               >
