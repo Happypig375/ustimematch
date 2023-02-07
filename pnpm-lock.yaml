@@ -52,7 +52,7 @@ specifiers:
   autoprefixer: ^10.4.13
   broadcast-channel: ^4.20.2
   clsx: ^1.2.1
-  cypress: ^12.3.0
+  cypress: ^12.5.1
   eslint: ^8.32.0
   eslint-config-next: 13.0.2
   eslint-plugin-unused-imports: ^2.0.0
@@ -151,7 +151,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.48.2_caon6io6stgpr7lz2rtbhekxqy
   '@typescript-eslint/parser': 5.48.2_7uibuqfxkfaozanbtbziikiqje
   autoprefixer: 10.4.13_postcss@8.4.21
-  cypress: 12.3.0
+  cypress: 12.5.1
   eslint: 8.32.0
   eslint-config-next: 13.0.2_7uibuqfxkfaozanbtbziikiqje
   eslint-plugin-unused-imports: 2.0.0_virssgr5omih4ylyae2gddvmxu
@@ -2900,8 +2900,8 @@ packages:
   /csstype/3.1.1:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
 
-  /cypress/12.3.0:
-    resolution: {integrity: sha512-ZQNebibi6NBt51TRxRMYKeFvIiQZ01t50HSy7z/JMgRVqBUey3cdjog5MYEbzG6Ktti5ckDt1tfcC47lmFwXkw==}
+  /cypress/12.5.1:
+    resolution: {integrity: sha512-ZmCmJ3lsyeOpBfh410m5+AO2CO1AxAzFBt7k6/uVbNcrNZje1vdiwYTpj2ksPKg9mjr9lR6V8tmlDNMvr4H/YQ==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true

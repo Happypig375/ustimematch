@@ -38,6 +38,7 @@ const Share = () => {
           icon
           title="Share Timetables"
           onClick={() => setOpenShareModal(true)}
+          data-cy="share-open"
         >
           <IconShare strokeWidth={1.75} className="h-5 w-5" />
         </Button>

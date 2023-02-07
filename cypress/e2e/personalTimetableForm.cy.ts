@@ -23,7 +23,7 @@ describe("personal timetable form actions", () => {
 
     cy.store("timetable", "personalTimetable")
       .its("name")
-      .should("eq", "test edited");
+      .should("eq", timetable.name + " edited");
   });
 
   it("can delete", () => {

@@ -50,7 +50,10 @@ const SelectTab = ({ checkedIds, setCheckedIds, onContinue }: Props) => {
       </div>
 
       {empty ? (
-        <span className="grid h-16 place-items-center text-sm">
+        <span
+          className="grid h-16 place-items-center text-sm"
+          data-cy="share-empty"
+        >
           No timetables have been added.
         </span>
       ) : (
@@ -72,7 +75,7 @@ const SelectTab = ({ checkedIds, setCheckedIds, onContinue }: Props) => {
         </Button>
 
         <ModalClose asChild>
-          <Button fullWidth>
+          <Button fullWidth data-cy="share-close">
             <IconX strokeWidth={1.75} className="h-5 w-5" />
             Close
           </Button>
@@ -82,6 +85,7 @@ const SelectTab = ({ checkedIds, setCheckedIds, onContinue }: Props) => {
           fullWidth
           onClick={onContinueClick}
           disabled={checkedIds.length === 0}
+          data-cy="share-continue"
         >
           <IconArrowForward strokeWidth={1.75} className="h-5 w-5" />
           Continue

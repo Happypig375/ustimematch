@@ -27,6 +27,7 @@ const SelectItem = ({
   duplicateWarning,
   checked,
   onCheckedChange,
+  ...props
 }: SelectItemProps) => {
   const name = folderItem ? folderItem.name : timetable ? timetable.name : "";
 
@@ -43,6 +44,7 @@ const SelectItem = ({
           : "hover:bg-bg-300/50 active:bg-bg-300",
         disabled && "pointer-events-none opacity-50",
       )}
+      {...props}
     >
       <div className="flex flex-grow items-center gap-2 overflow-hidden">
         {timetable && <ColorChip color={timetable.config.color} />}

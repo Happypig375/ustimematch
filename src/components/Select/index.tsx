@@ -90,29 +90,28 @@ const Selector = ({
       <div className="flex max-h-80 flex-col gap-1 overflow-y-auto">
         {/* Personal timetable */}
         {personalTimetable && (
-          <>
-            <SelectItem
-              disabled={disabled}
-              duplicateWarning={
-                showDuplication &&
-                combinedTimetables.some(
-                  ({ name }) => name === personalTimetable.name,
-                )
-              }
-              id={personalTimetable.config.id}
-              timetable={personalTimetable}
-              checked={timetableChecked(personalTimetable.config.id)}
-              onCheckedChange={(checked) =>
-                onCheckedIdsChange(
-                  checked
-                    ? [...checkedIds, personalTimetable.config.id]
-                    : checkedIds.filter(
-                        (id) => id !== personalTimetable.config.id,
-                      ),
-                )
-              }
-            />
-          </>
+          <SelectItem
+            disabled={disabled}
+            duplicateWarning={
+              showDuplication &&
+              combinedTimetables.some(
+                ({ name }) => name === personalTimetable.name,
+              )
+            }
+            id={personalTimetable.config.id}
+            timetable={personalTimetable}
+            checked={timetableChecked(personalTimetable.config.id)}
+            onCheckedChange={(checked) =>
+              onCheckedIdsChange(
+                checked
+                  ? [...checkedIds, personalTimetable.config.id]
+                  : checkedIds.filter(
+                      (id) => id !== personalTimetable.config.id,
+                    ),
+              )
+            }
+            data-cy="share-select-item-0"
+          />
         )}
 
         {personalTimetable && flattenedTree.length > 0 && (
@@ -124,7 +123,7 @@ const Selector = ({
         )}
 
         {/* Timetables tree */}
-        {flattenedTree.map(({ depth, treeItem }) => (
+        {flattenedTree.map(({ depth, treeItem }, i) => (
           <SelectItem
             disabled={disabled}
             duplicateWarning={
@@ -147,6 +146,7 @@ const Selector = ({
                 : timetableChecked(treeItem.timetable.config.id)
             }
             onCheckedChange={(chekced) => onCheckedChange(treeItem.id, chekced)}
+            data-cy={`share-select-item-${i + (personalTimetable ? 1 : 0)}`}
           />
         ))}
       </div>
