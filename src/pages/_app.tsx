@@ -24,9 +24,20 @@ const ThemeColorHandler = () => {
 
   return (
     <Head>
-      {/* --bg-100 */}
-      {theme === "light" && <meta name="theme-color" content="#fafafa" />}
-      {theme === "dark" && <meta name="theme-color" content="#141414" />}
+      {theme === "light" && (
+        <>
+          {/* --bg-100 */}
+          <meta name="theme-color" content="#fafafa" />
+          <link rel="icon" href="favicon-light.png" />
+        </>
+      )}
+      {theme === "dark" && (
+        <>
+          {/* --bg-100 */}
+          <meta name="theme-color" content="#141414" />
+          <link rel="icon" href="favicon-dark.png" />
+        </>
+      )}
     </Head>
   );
 };
@@ -61,14 +72,12 @@ const App: AppType<{ session: Session | null }> = ({
         >
           <Head>
             <title>USTimematch</title>
-            <link rel="icon" type="image/png" href="/favicon.png" />
 
             <meta
               name="description"
               content="Timetable manager for HKUST students."
             />
 
-            {/* Open graph */}
             <meta property="og:title" content="USTimematch" />
             <meta
               property="og:description"
