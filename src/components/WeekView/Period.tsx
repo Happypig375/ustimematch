@@ -6,6 +6,13 @@ import { DISPLAYED_HOURS, MINUTE_PER_ROW } from "@store/ui";
 import useMediaQuery from "@hooks/useMediaQuery";
 import { hour, min } from "@utils/time";
 
+const hoverTransition: Transition = {
+  type: "spring",
+  duration: 0.3,
+  bounce: 0,
+  delay: 0.3,
+};
+
 interface IHoverContext {
   hover: boolean;
   matchTouch: boolean;
@@ -117,16 +124,16 @@ const Period = ({
   const onHoverEnd = () => setHover(false);
 
   // Previous hover state for determining if user is hovering
-  const [prevHover, setPrevHover] = useState(hover);
-  const debounceSetPrevHover = useMemo(
+  const [debouncedHover, setDebouncedHover] = useState(hover);
+  const debouncedSetDebouncedHover = useMemo(
     // This delay is how long before it is considered hovering
     // Here uses 300ms to match hover transition delay
-    () => debounce((v: boolean) => setPrevHover(v), 300),
+    () => debounce((v: boolean) => setDebouncedHover(v), 300),
     [],
   );
   useEffect(() => {
-    debounceSetPrevHover(hover);
-  }, [hover, debounceSetPrevHover]);
+    debouncedSetDebouncedHover(hover);
+  }, [hover, debouncedSetDebouncedHover]);
 
   // Matching touch screen devices
   const matchTouch = useMediaQuery("(pointer: coarse)");
@@ -188,28 +195,16 @@ const Period = ({
     [hover, isRight, xOffset],
   );
 
-  const hoverTransition = useMemo(
-    () => ({
-      type: "spring",
-      duration: 0.3,
-      bounce: 0,
-      delay: 0.3,
-    }),
-    [],
-  );
-
-  const idleTransition = useMemo(
-    () => ({
-      type: "spring",
-      duration: 0.3,
-      bounce: 0,
-      // Delay hover exit for better viewing on mobile devices.
-      // prevHover is used to restrict delay to only when hovering. (prevent unnecessary delay)
-      // Cannot use hover beucase it is always false when animation is in idle state.
-      delay: matchTouch && prevHover ? 1.5 : 0,
-    }),
-    [matchTouch, prevHover],
-  );
+  const idleTransition: Transition = {
+    type: "spring",
+    // Only apply transition when hovering
+    duration: debouncedHover ? 0.3 : 0,
+    bounce: 0,
+    // Delay hover exit for better viewing on mobile devices.
+    // prevHover is used to restrict delay to only when hovering. (prevent unnecessary delay)
+    // Cannot use hover beucase it is always false when animation is in idle state.
+    delay: matchTouch && debouncedHover ? 1.5 : 0,
+  };
 
   // Check minuteHeight to prevent initial height animation (default is 0 as defined in weekView store)
   return minuteHeight && !periodOverflow ? (
@@ -220,10 +215,10 @@ const Period = ({
         // BUG: Touch devices will trigger onClick onHoverEnd (iOS's tolerance is longer, Android's shorter)
         // What we want is only trigger onClick when user is not hovering, otherwise continue with the hover transition.
         // prevHover here determines whether user is hovering
-        onClick && !prevHover && onClick();
+        !debouncedHover && onClick?.();
 
         // The above doesn't apply to desktop devices
-        onClick && !matchTouch && onClick();
+        !matchTouch && onClick?.();
 
         // To prevent hover persist when details modal is shown
         onHoverEnd();
@@ -271,9 +266,6 @@ const Period = ({
         }}
       >
         {children}
-        {/* {indent?.indentLevel} {indent?.totalLevels} */}
-        {/* {hover.toString()} <br /> */}
-        {/* {prevHover?.toString()} */}
       </HoverContext.Provider>
     </m.div>
   ) : null;
