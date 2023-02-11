@@ -24,20 +24,9 @@ const ThemeColorHandler = () => {
 
   return (
     <Head>
-      {theme === "light" && (
-        <>
-          {/* --bg-100 */}
-          <meta name="theme-color" content="#fafafa" />
-          <link rel="icon" href="favicon-light.png" />
-        </>
-      )}
-      {theme === "dark" && (
-        <>
-          {/* --bg-100 */}
-          <meta name="theme-color" content="#141414" />
-          <link rel="icon" href="favicon-dark.png" />
-        </>
-      )}
+      {/* --bg-100 */}
+      {theme === "light" && <meta name="theme-color" content="#fafafa" />}
+      {theme === "dark" && <meta name="theme-color" content="#141414" />}
     </Head>
   );
 };
@@ -72,6 +61,8 @@ const App: AppType<{ session: Session | null }> = ({
         >
           <Head>
             <title>USTimematch</title>
+
+            <link rel="icon" href="favicon.png" />
 
             <meta
               name="description"
