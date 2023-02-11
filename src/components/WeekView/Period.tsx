@@ -198,7 +198,7 @@ const Period = ({
   const idleTransition: Transition = {
     type: "spring",
     // Only apply transition when hovering
-    duration: debouncedHover ? 0.3 : 0,
+    duration: 0.3,
     bounce: 0,
     // Delay hover exit for better viewing on mobile devices.
     // prevHover is used to restrict delay to only when hovering. (prevent unnecessary delay)
