@@ -45,9 +45,9 @@ const Skeleton = () => {
           {/* Sortable tree */}
           <div className="h-full overflow-y-auto p-2">
             <SkeletonItem className="mb-2" />
-            <SkeletonItem className="mb-2 opacity-80" />
-            <SkeletonItem className="mb-2 opacity-60" />
-            <SkeletonItem className="mb-2 opacity-40" />
+            <SkeletonItem className="mb-2" />
+            <SkeletonItem className="mb-2" />
+            <SkeletonItem className="mb-2" />
           </div>
 
           {/* Personal timetable */}
