@@ -1,6 +1,4 @@
 import clsx from "clsx";
-import debounce from "lodash.debounce";
-import { useMemo } from "react";
 import useResizeObserver from "use-resize-observer";
 import { actions, useTrackedStore } from "@store/index";
 import { MINUTE_PER_ROW, DISPLAYED_HOURS } from "@store/ui";
@@ -12,15 +10,10 @@ const Legend = () => {
   const setMinuteHeight = actions.weekView.setMinuteHeight;
 
   // Resize oberver for calculating height of a minute based on height of second row (first row is weekdays)
-  const setMinuteHeightDebounce = useMemo(
-    () => debounce((height: number) => setMinuteHeight(height), 200),
-    [setMinuteHeight],
-  );
-
   const { ref: timeRef } = useResizeObserver<HTMLDivElement>({
     round: (n) => n,
     onResize: ({ width: _, height }) => {
-      height && setMinuteHeightDebounce(height / MINUTE_PER_ROW);
+      height && setMinuteHeight(height / MINUTE_PER_ROW);
     },
   });
 
