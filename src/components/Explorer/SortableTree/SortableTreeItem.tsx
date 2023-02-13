@@ -117,7 +117,7 @@ const SortableTreeItem = ({
               icon
               plain
               // Align with color chip
-              className="ml-[6px]"
+              className="ml-1"
               onKeyDown={(e) => e.stopPropagation()}
               onClick={(e) => {
                 e.stopPropagation();
