@@ -20,7 +20,13 @@ export const serverSchema = z.object({
     process.env.VERCEL ? z.string() : z.string().url(),
   ),
   EMAIL_SERVER: z.string().url(),
-  EMAIL_FROM: z.string().email(),
+  EMAIL_FROM: z
+    .string()
+    .refine(
+      (arg) =>
+        z.string().email().safeParse(arg.split(" ")[1]?.replace(/[<>]/g, ""))
+          .success,
+    ),
   ACTION_KEY: z.string().min(1),
 });
 
@@ -41,5 +47,4 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
-  NEXT_PUBLIC_VERSION: process.env.NEXT_PUBLIC_VERSION,
 };

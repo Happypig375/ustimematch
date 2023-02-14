@@ -2,6 +2,7 @@
 // https://github.com/clauderic/dnd-kit/tree/master/stories/3%20-%20Examples/Tree
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+import { nanoid } from "nanoid";
 import type { Timetable } from "../../types/timetable";
 import type {
   FlattenedItem,
@@ -325,16 +326,21 @@ export function toggleFolderVisibility(
 }
 
 /**
- * Used to determine whether to show toggle visibility button or not
+ * Used to determine whether to show toggle visibility button or not,
+ * also used in determining whether to show a folder in select component.
  *
  * @returns number of timetables of a given folder
  */
-export function getTimetableCount(folderItem: FolderItem): number {
+export function getTimetableCount(
+  folderItem: FolderItem,
+  filter: (timetable: Timetable) => boolean = () => true,
+): number {
   let timetableCount = 0;
-
   for (const child of folderItem.children) {
-    if (child.type === "TIMETABLE") timetableCount += 1;
-    if (child.type === "FOLDER") timetableCount += getTimetableCount(child);
+    if (child.type === "TIMETABLE" && filter(child.timetable))
+      timetableCount += 1;
+    if (child.type === "FOLDER")
+      timetableCount += getTimetableCount(child, filter);
   }
 
   return timetableCount;
@@ -359,4 +365,78 @@ export function findTimetableByIdDeep(
   }
 
   return undefined;
+}
+
+/**
+ * Used for local storage migration.
+ * @param ids The timetable id that should be included.
+ * @returns A timetable tree with only the given ids, excluding empty folders.
+ *
+ * Note that new id will be generated for both tree and timetable, this is to prevent key duplication.
+ */
+export function filterByTimetableIds(
+  items: TreeItems,
+  timetableIds: string[],
+): TreeItems {
+  return items.reduce<TreeItem[]>((acc, item) => {
+    if (
+      item.type === "FOLDER" &&
+      getTimetableCount(item, ({ config: { id } }) =>
+        timetableIds.includes(id),
+      ) > 0
+    )
+      return [
+        ...acc,
+        {
+          ...item,
+          id: nanoid(),
+          children: filterByTimetableIds(item.children, timetableIds),
+        },
+      ];
+
+    if (
+      item.type === "TIMETABLE" &&
+      timetableIds.includes(item.timetable.config.id)
+    )
+      return [
+        ...acc,
+        {
+          ...item,
+          id: nanoid(),
+          timetable: {
+            ...item.timetable,
+            config: { ...item.timetable.config, id: nanoid() },
+          },
+        },
+      ];
+
+    return acc;
+  }, []);
+}
+
+function flattenNonEmpty(
+  items: TreeItems,
+  parentId: string | null = null,
+  depth = 0,
+): FlattenedItem[] {
+  return items.reduce<FlattenedItem[]>((acc, item, index) => {
+    if (item.type === "FOLDER" && getTimetableCount(item) > 0)
+      return [
+        ...acc,
+        { treeItem: item, parentId, depth, index },
+        ...flattenNonEmpty(item.children, item.id, depth + 1),
+      ];
+
+    if (item.type === "TIMETABLE")
+      return [...acc, { treeItem: item, parentId, depth, index }];
+
+    return acc;
+  }, []);
+}
+
+/**
+ * @returns A flattened tree without empty folders
+ */
+export function flattenTreeNonEmpty(items: TreeItems): FlattenedItem[] {
+  return flattenNonEmpty(items);
 }

@@ -132,7 +132,7 @@ const RefreshModal = () => {
       <ModalContent open={openRefreshModal} onOpenChange={setOpenRefreshModal}>
         <ModalTitle>Refresh</ModalTitle>
 
-        <div className="flex max-h-96 flex-col overflow-y-auto">
+        <div className="flex max-h-80 flex-col overflow-y-auto">
           {personalTimetable && (
             <TimetableStatus personal timetable={personalTimetable} />
           )}

@@ -5,8 +5,8 @@ import { Modal, ModalContent, ModalTrigger } from "@components/ui/Modal";
 import { TabsContent, TabsRoot } from "@components/ui/Tabs";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
-import SelectTab from "./SelectTab";
-import ShareTab from "./ShareTab";
+import SelectTab from "./Tabs/SelectTab";
+import ShareTab from "./Tabs/ShareTab";
 
 const Share = () => {
   const [openShareModal, setOpenShareModal] = useState(false);
@@ -38,6 +38,7 @@ const Share = () => {
           icon
           title="Share Timetables"
           onClick={() => setOpenShareModal(true)}
+          data-cy="share-open"
         >
           <IconShare strokeWidth={1.75} className="h-5 w-5" />
         </Button>

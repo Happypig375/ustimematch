@@ -61,14 +61,14 @@ const App: AppType<{ session: Session | null }> = ({
         >
           <Head>
             <title>USTimematch</title>
-            <link rel="icon" type="image/png" href="/favicon.png" />
+
+            <link rel="icon" href="favicon.png" />
 
             <meta
               name="description"
               content="Timetable manager for HKUST students."
             />
 
-            {/* Open graph */}
             <meta property="og:title" content="USTimematch" />
             <meta
               property="og:description"

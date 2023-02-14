@@ -1,28 +1,77 @@
-# Create T3 App
+# USTimematch
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Timetable manager for HKUST students.
 
-## What's next? How do I make an app with this?
+## Development
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- `pnpm dev` to start the Next.js server
+- Start a postgres instance
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+  ```sh
+  mkdir ~/postgres-data
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+  docker run -d \
+   --name dev-postgres \
+   -e POSTGRES_PASSWORD=password \
+   -v ${HOME}/postgres-data/:/var/lib/postgresql/data \
+   -p 5432:5432 \
+   postgres
+  ```
 
-## Learn More
+- `pnpm prisma db push` to initalize the database
+  - `pnpm prisma migrate dev` for migration
+- setup environment variables
+- To inspect the database you can run `pnpm prisma studio`, or start a pgAdmin instance.
+  ```sh
+  docker run -d \
+    -p 80:80 \
+    -e 'PGADMIN_DEFAULT_EMAIL=dev@dev.com' \
+    -e 'PGADMIN_DEFAULT_PASSWORD=password' \
+    --name pgadmin \
+    dpage/pgadmin4
+  ```
+  > [in-depth tutorial](https://towardsdatascience.com/local-development-set-up-of-postgresql-with-docker-c022632f13ea)
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Deployment
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Backup
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+[https://blog.railway.app/p/automated-postgresql-backups](https://blog.railway.app/p/automated-postgresql-backups)
 
-## How do I deploy this?
+#### Environment variables
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```sh
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_S3_REGION=us-west-2
+AWS_S3_BUCKET=ustimematch-production-backup
+BACKUP_CRON_SCHEDULE=0 19 * * *
+BACKUP_DATABASE_URL=${{ DATABASE_URL }}
+```
+
+#### Commands
+
+`pg_restore -c -d <connection_string> <path_to_backup>`
+
+### Services
+
+- Vercel
+  - Nextjs
+  
+- Railway
+  - Postgres database
+  
+- Mailgun
+  - SMTP mail server
+
+OR
+
+- AWS
+  - SES
+    - Sign in emails
+  - S3
+    - Database backup
+  
+- Cloudflare
+  - Domain management
+  - Rate limiting

@@ -80,6 +80,7 @@ const ShareTab = forwardRef<HTMLDivElement, Props>(
                 value={shareURL}
                 className="flex-grow"
                 onClick={selectURL}
+                data-cy="share-url"
               />
               <Button icon title="Copy Share Link" onClick={copyURL}>
                 {copied ? (

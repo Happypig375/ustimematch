@@ -7,6 +7,7 @@ import type { FolderItem } from "../../types/tree";
 
 interface SelectItemProps {
   id: string;
+  disabled?: boolean;
   folderItem?: FolderItem;
   timetable?: Timetable;
   depth?: number;
@@ -19,12 +20,14 @@ const indentationWidth = 24;
 
 const SelectItem = ({
   id,
+  disabled,
   folderItem,
   timetable,
   depth = 0,
   duplicateWarning,
   checked,
   onCheckedChange,
+  ...props
 }: SelectItemProps) => {
   const name = folderItem ? folderItem.name : timetable ? timetable.name : "";
 
@@ -39,7 +42,9 @@ const SelectItem = ({
         checked && checked !== "indeterminate"
           ? "bg-bg-300 text-fg-200"
           : "hover:bg-bg-300/50 active:bg-bg-300",
+        disabled && "pointer-events-none opacity-50",
       )}
+      {...props}
     >
       <div className="flex flex-grow items-center gap-2 overflow-hidden">
         {timetable && <ColorChip color={timetable.config.color} />}
@@ -50,7 +55,7 @@ const SelectItem = ({
       </div>
 
       {duplicateWarning && (
-        <span className="whitespace-nowrap rounded-sm bg-amber-500/50 px-2 py-[2px] text-xs">
+        <span className="whitespace-nowrap rounded-sm bg-amber-500/50 px-2 py-[2px] text-xs text-fg-200">
           Duplicated
         </span>
       )}
@@ -58,6 +63,7 @@ const SelectItem = ({
       <Checkbox.Root
         checked={checked}
         id={id}
+        disabled={disabled}
         onCheckedChange={onCheckedChange}
         className="pointer-events-none"
       >

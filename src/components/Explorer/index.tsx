@@ -4,12 +4,12 @@ import { useCallback, useState } from "react";
 import FolderForm from "@components/Form/FolderForm";
 import TimetableForm from "@components/Form/TimetableForm";
 import Share from "@components/Share/ShareModal";
-import SortableTree from "@components/SortableTree";
 import Button from "@components/ui/Button";
 import { explorerVariants } from "@components/ui/motion/variants";
 import { actions, useTrackedStore } from "@store/index";
 import { type Timetable } from "../../types/timetable";
 import PersonalTimetable from "./PersonalTimetable";
+import SortableTree from "./SortableTree";
 
 const AddTimetable = () => {
   const [openImportModal, setOpenImportModal] = useState(false);

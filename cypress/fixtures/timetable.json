@@ -1,4 +1,122 @@
 {
-  "name": "test",
-  "plannerURL": "https://admlu65.ust.hk/planner/export/kCMiOFEnYrNqACWEYiu6M8UB3iVHSBfM.ics"
+  "lessons": [
+    [
+      {
+        "name": "CORE 1240 (L1)",
+        "venue": "Lecture Theater A (401)",
+        "description": "CORE 1240 - Electronic and Information Technology\nSection: L1\nInstructor: SHEN, Yajing",
+        "begin": "09:30",
+        "end": "10:20"
+      }
+    ],
+    [
+      {
+        "name": "BIEN 1010 (L1)",
+        "venue": "Lecture Theater C (211)",
+        "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+        "begin": "12:00",
+        "end": "13:20"
+      },
+      {
+        "name": "MATH 1014 (L02)",
+        "venue": "Lecture Theater E (143)",
+        "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+        "begin": "13:30",
+        "end": "14:50"
+      }
+    ],
+    [
+      {
+        "name": "CORE 1240 (L1)",
+        "venue": "Lecture Theater A (401)",
+        "description": "CORE 1240 - Electronic and Information Technology\nSection: L1\nInstructor: SHEN, Yajing",
+        "begin": "09:30",
+        "end": "10:20"
+      },
+      {
+        "name": "CORE 1403A (T16)",
+        "venue": "Rm 2127A, Lift 19 (28)",
+        "description": "CORE 1403A - Academic English for University Studies\nSection: T16",
+        "begin": "15:00",
+        "end": "16:20"
+      },
+      {
+        "name": "CORE 1232 (L1)",
+        "venue": "Lecture Theater E (143)",
+        "description": "CORE 1232 - Exploring and Visualizing Data\nSection: L1\nInstructor: WONG, Raymond Chi Wing",
+        "begin": "16:30",
+        "end": "17:50"
+      },
+      {
+        "name": "MATH 1014 (T02B)",
+        "venue": "Rm 1011, LSK Bldg (80)",
+        "description": "MATH 1014 - Calculus II\nSection: T02B\nInstructor: LAM, Tsz Kin",
+        "begin": "18:00",
+        "end": "18:50"
+      }
+    ],
+    [
+      {
+        "name": "CORE 1232 (T1)",
+        "venue": "",
+        "description": "CORE 1232 - Exploring and Visualizing Data\nSection: T1\nInstructor: WONG, Raymond Chi Wing",
+        "begin": "10:30",
+        "end": "11:20"
+      },
+      {
+        "name": "BIEN 1010 (L1)",
+        "venue": "Lecture Theater C (211)",
+        "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+        "begin": "12:00",
+        "end": "13:20"
+      },
+      {
+        "name": "MATH 1014 (L02)",
+        "venue": "Lecture Theater E (143)",
+        "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+        "begin": "13:30",
+        "end": "14:50"
+      }
+    ],
+    [
+      {
+        "name": "CORE 1905B (T34)",
+        "venue": "",
+        "description": "CORE 1905B - Behavioral Foundations of University Education: Habits, Mindsets, and Wellness\nSection: T34",
+        "begin": "12:00",
+        "end": "13:20"
+      },
+      {
+        "name": "CORE 1240 (T5)",
+        "venue": "Rm 1007, LSK Bldg (80)",
+        "description": "CORE 1240 - Electronic and Information Technology\nSection: T5\nInstructor: SHEN, Yajing",
+        "begin": "13:30",
+        "end": "14:20"
+      },
+      {
+        "name": "CORE 1403A (T16)",
+        "venue": "Rm 2127A, Lift 19 (28)",
+        "description": "CORE 1403A - Academic English for University Studies\nSection: T16",
+        "begin": "15:00",
+        "end": "16:20"
+      },
+      {
+        "name": "CORE 1232 (L1)",
+        "venue": "Lecture Theater E (143)",
+        "description": "CORE 1232 - Exploring and Visualizing Data\nSection: L1\nInstructor: WONG, Raymond Chi Wing",
+        "begin": "16:30",
+        "end": "17:50"
+      }
+    ],
+    [],
+    []
+  ],
+  "plannerURL": "https://admlu65.ust.hk/planner/export/87HFqPHAVysGfsldExKSwtx5o61PsFaQ.ics",
+  "university": "HKUST",
+  "name": "Timetable 1",
+  "config": {
+    "id": "RTvC0CJgrww5dIETBTMns",
+    "color": "#03afeb",
+    "visible": true
+  }
 }

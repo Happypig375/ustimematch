@@ -13,7 +13,7 @@ import Spinner from "@components/ui/Spinner";
 import { actions, useTrackedStore } from "@store/index";
 import { trpc } from "@utils/trpc";
 import type { Timetable } from "../../types/timetable";
-import SelectItem from "./SelectItem";
+import SelectItem from "../Select/SelectItem";
 
 const ReceiveModal = () => {
   const router = useRouter();
@@ -103,7 +103,7 @@ const ReceiveModal = () => {
 
         {isSuccess && (
           <div className="flex max-h-64 flex-col gap-1 overflow-y-auto">
-            {sharedTimetables.map((timetable) => (
+            {sharedTimetables.map((timetable, i) => (
               <SelectItem
                 duplicateWarning={combinedTimetables.some(
                   ({ name }) => name === timetable.name,
@@ -115,6 +115,7 @@ const ReceiveModal = () => {
                 onCheckedChange={(checked) =>
                   onCheckedChange(timetable.config.id, checked)
                 }
+                data-cy={`share-receive-select-item-${i}`}
               />
             ))}
           </div>

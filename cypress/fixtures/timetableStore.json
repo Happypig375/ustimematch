@@ -1,0 +1,751 @@
+{
+  "personalTimetable": {
+    "lessons": [
+      [
+        {
+          "name": "CORE 1240 (L1)",
+          "venue": "Lecture Theater A (401)",
+          "description": "CORE 1240 - Electronic and Information Technology\nSection: L1\nInstructor: SHEN, Yajing",
+          "begin": "09:30",
+          "end": "10:20"
+        }
+      ],
+      [
+        {
+          "name": "BIEN 1010 (L1)",
+          "venue": "Lecture Theater C (211)",
+          "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+          "begin": "12:00",
+          "end": "13:20"
+        },
+        {
+          "name": "MATH 1014 (L02)",
+          "venue": "Lecture Theater E (143)",
+          "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+          "begin": "13:30",
+          "end": "14:50"
+        }
+      ],
+      [
+        {
+          "name": "CORE 1240 (L1)",
+          "venue": "Lecture Theater A (401)",
+          "description": "CORE 1240 - Electronic and Information Technology\nSection: L1\nInstructor: SHEN, Yajing",
+          "begin": "09:30",
+          "end": "10:20"
+        },
+        {
+          "name": "CORE 1403A (T16)",
+          "venue": "Rm 2127A, Lift 19 (28)",
+          "description": "CORE 1403A - Academic English for University Studies\nSection: T16",
+          "begin": "15:00",
+          "end": "16:20"
+        },
+        {
+          "name": "CORE 1232 (L1)",
+          "venue": "Lecture Theater E (143)",
+          "description": "CORE 1232 - Exploring and Visualizing Data\nSection: L1\nInstructor: WONG, Raymond Chi Wing",
+          "begin": "16:30",
+          "end": "17:50"
+        },
+        {
+          "name": "MATH 1014 (T02B)",
+          "venue": "Rm 1011, LSK Bldg (80)",
+          "description": "MATH 1014 - Calculus II\nSection: T02B\nInstructor: LAM, Tsz Kin",
+          "begin": "18:00",
+          "end": "18:50"
+        }
+      ],
+      [
+        {
+          "name": "CORE 1232 (T1)",
+          "venue": "",
+          "description": "CORE 1232 - Exploring and Visualizing Data\nSection: T1\nInstructor: WONG, Raymond Chi Wing",
+          "begin": "10:30",
+          "end": "11:20"
+        },
+        {
+          "name": "BIEN 1010 (L1)",
+          "venue": "Lecture Theater C (211)",
+          "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+          "begin": "12:00",
+          "end": "13:20"
+        },
+        {
+          "name": "MATH 1014 (L02)",
+          "venue": "Lecture Theater E (143)",
+          "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+          "begin": "13:30",
+          "end": "14:50"
+        }
+      ],
+      [
+        {
+          "name": "CORE 1905B (T34)",
+          "venue": "",
+          "description": "CORE 1905B - Behavioral Foundations of University Education: Habits, Mindsets, and Wellness\nSection: T34",
+          "begin": "12:00",
+          "end": "13:20"
+        },
+        {
+          "name": "CORE 1240 (T5)",
+          "venue": "Rm 1007, LSK Bldg (80)",
+          "description": "CORE 1240 - Electronic and Information Technology\nSection: T5\nInstructor: SHEN, Yajing",
+          "begin": "13:30",
+          "end": "14:20"
+        },
+        {
+          "name": "CORE 1403A (T16)",
+          "venue": "Rm 2127A, Lift 19 (28)",
+          "description": "CORE 1403A - Academic English for University Studies\nSection: T16",
+          "begin": "15:00",
+          "end": "16:20"
+        },
+        {
+          "name": "CORE 1232 (L1)",
+          "venue": "Lecture Theater E (143)",
+          "description": "CORE 1232 - Exploring and Visualizing Data\nSection: L1\nInstructor: WONG, Raymond Chi Wing",
+          "begin": "16:30",
+          "end": "17:50"
+        }
+      ],
+      [],
+      []
+    ],
+    "plannerURL": "https://admlu65.ust.hk/planner/export/87HFqPHAVysGfsldExKSwtx5o61PsFaQ.ics",
+    "university": "HKUST",
+    "name": "Timetable 0",
+    "config": {
+      "id": "0",
+      "color": "#03afeb",
+      "visible": true
+    }
+  },
+  "timetablesTree": [
+    {
+      "timetable": {
+        "lessons": [
+          [
+            {
+              "name": "CORE 1240 (L1)",
+              "venue": "Lecture Theater A (401)",
+              "description": "CORE 1240 - Electronic and Information Technology\nSection: L1\nInstructor: SHEN, Yajing",
+              "begin": "09:30",
+              "end": "10:20"
+            }
+          ],
+          [
+            {
+              "name": "BIEN 1010 (L1)",
+              "venue": "Lecture Theater C (211)",
+              "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+              "begin": "12:00",
+              "end": "13:20"
+            },
+            {
+              "name": "MATH 1014 (L02)",
+              "venue": "Lecture Theater E (143)",
+              "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+              "begin": "13:30",
+              "end": "14:50"
+            }
+          ],
+          [
+            {
+              "name": "CORE 1240 (L1)",
+              "venue": "Lecture Theater A (401)",
+              "description": "CORE 1240 - Electronic and Information Technology\nSection: L1\nInstructor: SHEN, Yajing",
+              "begin": "09:30",
+              "end": "10:20"
+            },
+            {
+              "name": "CORE 1403A (T16)",
+              "venue": "Rm 2127A, Lift 19 (28)",
+              "description": "CORE 1403A - Academic English for University Studies\nSection: T16",
+              "begin": "15:00",
+              "end": "16:20"
+            },
+            {
+              "name": "CORE 1232 (L1)",
+              "venue": "Lecture Theater E (143)",
+              "description": "CORE 1232 - Exploring and Visualizing Data\nSection: L1\nInstructor: WONG, Raymond Chi Wing",
+              "begin": "16:30",
+              "end": "17:50"
+            },
+            {
+              "name": "MATH 1014 (T02B)",
+              "venue": "Rm 1011, LSK Bldg (80)",
+              "description": "MATH 1014 - Calculus II\nSection: T02B\nInstructor: LAM, Tsz Kin",
+              "begin": "18:00",
+              "end": "18:50"
+            }
+          ],
+          [
+            {
+              "name": "CORE 1232 (T1)",
+              "venue": "",
+              "description": "CORE 1232 - Exploring and Visualizing Data\nSection: T1\nInstructor: WONG, Raymond Chi Wing",
+              "begin": "10:30",
+              "end": "11:20"
+            },
+            {
+              "name": "BIEN 1010 (L1)",
+              "venue": "Lecture Theater C (211)",
+              "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+              "begin": "12:00",
+              "end": "13:20"
+            },
+            {
+              "name": "MATH 1014 (L02)",
+              "venue": "Lecture Theater E (143)",
+              "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+              "begin": "13:30",
+              "end": "14:50"
+            }
+          ],
+          [
+            {
+              "name": "CORE 1905B (T34)",
+              "venue": "",
+              "description": "CORE 1905B - Behavioral Foundations of University Education: Habits, Mindsets, and Wellness\nSection: T34",
+              "begin": "12:00",
+              "end": "13:20"
+            },
+            {
+              "name": "CORE 1240 (T5)",
+              "venue": "Rm 1007, LSK Bldg (80)",
+              "description": "CORE 1240 - Electronic and Information Technology\nSection: T5\nInstructor: SHEN, Yajing",
+              "begin": "13:30",
+              "end": "14:20"
+            },
+            {
+              "name": "CORE 1403A (T16)",
+              "venue": "Rm 2127A, Lift 19 (28)",
+              "description": "CORE 1403A - Academic English for University Studies\nSection: T16",
+              "begin": "15:00",
+              "end": "16:20"
+            },
+            {
+              "name": "CORE 1232 (L1)",
+              "venue": "Lecture Theater E (143)",
+              "description": "CORE 1232 - Exploring and Visualizing Data\nSection: L1\nInstructor: WONG, Raymond Chi Wing",
+              "begin": "16:30",
+              "end": "17:50"
+            }
+          ],
+          [],
+          []
+        ],
+        "plannerURL": "https://admlu65.ust.hk/planner/export/87HFqPHAVysGfsldExKSwtx5o61PsFaQ.ics",
+        "university": "HKUST",
+        "name": "Timetable 1",
+        "config": {
+          "id": "1",
+          "color": "#40141c",
+          "visible": true
+        }
+      },
+      "id": "1",
+      "type": "TIMETABLE"
+    },
+    {
+      "name": "Folder 1",
+      "id": "2",
+      "type": "FOLDER",
+      "collapsed": false,
+      "children": [
+        {
+          "timetable": {
+            "lessons": [
+              [
+                {
+                  "name": "BIBU 4830 (L1)",
+                  "venue": "Rm 4504, Lift 25-26 (54)",
+                  "description": "BIBU 4830 - Biotechnology Management\nSection: L1\nInstructor: LEE, Hong Seng Daniel",
+                  "begin": "12:00",
+                  "end": "14:50"
+                },
+                {
+                  "name": "CORE 1402 (T01)",
+                  "venue": "Rm 2132A, Lift 19 (28)",
+                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "begin": "15:00",
+                  "end": "16:20"
+                }
+              ],
+              [
+                {
+                  "name": "ACCT 2200 (L03)",
+                  "venue": "G009A, CYT Bldg (80)",
+                  "description": "ACCT 2200 - Principles of Accounting II\nSection: L03\nInstructor: WANG, Emily",
+                  "begin": "16:30",
+                  "end": "17:50"
+                }
+              ],
+              [],
+              [
+                {
+                  "name": "ACCT 2200 (L03)",
+                  "venue": "G009A, CYT Bldg (80)",
+                  "description": "ACCT 2200 - Principles of Accounting II\nSection: L03\nInstructor: WANG, Emily",
+                  "begin": "16:30",
+                  "end": "17:50"
+                },
+                {
+                  "name": "HUMA 1155 (T1)",
+                  "venue": "Rm 2463, Lift 25-26 (42)",
+                  "description": "HUMA 1155 - Video Art\nSection: T1\nInstructor: CHU, Shun",
+                  "begin": "20:00",
+                  "end": "20:50"
+                }
+              ],
+              [
+                {
+                  "name": "CORE 1402 (T01)",
+                  "venue": "Rm 2132A, Lift 19 (28)",
+                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "begin": "10:30",
+                  "end": "11:50"
+                },
+                {
+                  "name": "HUMA 1155 (L2)",
+                  "venue": "Rm 2463, Lift 25-26 (42)",
+                  "description": "HUMA 1155 - Video Art\nSection: L2\nInstructor: CHU, Shun",
+                  "begin": "18:00",
+                  "end": "19:50"
+                }
+              ],
+              [],
+              []
+            ],
+            "plannerURL": "https://admlu65.ust.hk/planner/export/Ui1StuSQsVoncluANO1TtzHKT90S4hwM.ics",
+            "university": "HKUST",
+            "name": "Timetable 2",
+            "config": {
+              "id": "2",
+              "color": "#1083b1",
+              "visible": true
+            }
+          },
+          "id": "3",
+          "type": "TIMETABLE"
+        },
+        {
+          "timetable": {
+            "lessons": [
+              [
+                {
+                  "name": "COMP 1021 (L2)",
+                  "venue": "Rm 2407, Lift 17-18 (126)",
+                  "description": "COMP 1021 - Introduction to Computer Science\nSection: L2\nInstructor: ROSSITER, David",
+                  "begin": "13:30",
+                  "end": "14:20"
+                },
+                {
+                  "name": "CORE 1402 (T01)",
+                  "venue": "Rm 2132A, Lift 19 (28)",
+                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "begin": "15:00",
+                  "end": "16:20"
+                }
+              ],
+              [
+                {
+                  "name": "BIEN 1010 (L1)",
+                  "venue": "Lecture Theater C (211)",
+                  "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+                  "begin": "12:00",
+                  "end": "13:20"
+                }
+              ],
+              [
+                {
+                  "name": "COMP 1021 (LA1)",
+                  "venue": "",
+                  "description": "COMP 1021 - Introduction to Computer Science\nSection: LA1\nInstructors: ROSSITER, David, LAM, Gibson, LI, Xin",
+                  "begin": "15:00",
+                  "end": "16:50"
+                }
+              ],
+              [
+                {
+                  "name": "BIEN 1010 (L1)",
+                  "venue": "Lecture Theater C (211)",
+                  "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+                  "begin": "12:00",
+                  "end": "13:20"
+                }
+              ],
+              [
+                {
+                  "name": "COMP 1021 (L2)",
+                  "venue": "Rm 2407, Lift 17-18 (126)",
+                  "description": "COMP 1021 - Introduction to Computer Science\nSection: L2\nInstructor: ROSSITER, David",
+                  "begin": "09:00",
+                  "end": "09:50"
+                },
+                {
+                  "name": "CORE 1402 (T01)",
+                  "venue": "Rm 2132A, Lift 19 (28)",
+                  "description": "CORE 1402 - English Language for University Studies\nSection: T01",
+                  "begin": "10:30",
+                  "end": "11:50"
+                }
+              ],
+              [],
+              []
+            ],
+            "plannerURL": "https://admlu65.ust.hk/planner/export/BVvsQm8Ei5jyCdy93VB4MEf8Hg44R162.ics",
+            "university": "HKUST",
+            "name": "Timetable 3",
+            "config": {
+              "id": "3",
+              "color": "#93c42d",
+              "visible": true
+            }
+          },
+          "id": "4",
+          "type": "TIMETABLE"
+        }
+      ]
+    },
+    {
+      "name": "Folder 2",
+      "id": "5",
+      "type": "FOLDER",
+      "collapsed": false,
+      "children": [
+        {
+          "name": "Folder 3",
+          "id": "6",
+          "type": "FOLDER",
+          "collapsed": false,
+          "children": [
+            {
+              "timetable": {
+                "lessons": [
+                  [],
+                  [
+                    {
+                      "name": "MATH 1014 (L01)",
+                      "venue": "Lecture Theater D (216)",
+                      "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    },
+                    {
+                      "name": "CHEM 1008 (L1)",
+                      "venue": "Lecture Theater C (211)",
+                      "description": "CHEM 1008 - Introductory Chemistry\nSection: L1\nInstructor: TSANG, Ming Wai Emily",
+                      "begin": "13:30",
+                      "end": "14:50"
+                    },
+                    {
+                      "name": "MATH 1014 (T01C)",
+                      "venue": "G009B, CYT Bldg (70)",
+                      "description": "MATH 1014 - Calculus II\nSection: T01C\nInstructor: IP, Ivan Chi Ho",
+                      "begin": "18:00",
+                      "end": "18:50"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "CORE 1403A (T13)",
+                      "venue": "Rm 2128A, Lift 19 (28)",
+                      "description": "CORE 1403A - Academic English for University Studies\nSection: T13",
+                      "begin": "13:30",
+                      "end": "14:50"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "MATH 1014 (L01)",
+                      "venue": "Lecture Theater D (216)",
+                      "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    },
+                    {
+                      "name": "CHEM 1008 (L1)",
+                      "venue": "Lecture Theater C (211)",
+                      "description": "CHEM 1008 - Introductory Chemistry\nSection: L1\nInstructor: TSANG, Ming Wai Emily",
+                      "begin": "13:30",
+                      "end": "14:50"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "CORE 1403A (T13)",
+                      "venue": "Rm 2128A, Lift 19 (28)",
+                      "description": "CORE 1403A - Academic English for University Studies\nSection: T13",
+                      "begin": "13:30",
+                      "end": "14:50"
+                    }
+                  ],
+                  [],
+                  []
+                ],
+                "plannerURL": "https://admlu65.ust.hk/planner/export/Phfv6E1xP7OLRGB6kCMtdm2bXyvV4nPD.ics",
+                "university": "HKUST",
+                "name": "Timetable 4",
+                "config": {
+                  "id": "4",
+                  "color": "#8e05f3",
+                  "visible": true
+                }
+              },
+              "id": "7",
+              "type": "TIMETABLE"
+            },
+            {
+              "name": "Folder 4",
+              "id": "8",
+              "type": "FOLDER",
+              "collapsed": false,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "Folder 5",
+          "id": "9",
+          "type": "FOLDER",
+          "collapsed": false,
+          "children": [
+            {
+              "timetable": {
+                "lessons": [
+                  [],
+                  [
+                    {
+                      "name": "BIEN 1010 (L1)",
+                      "venue": "Lecture Theater C (211)",
+                      "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    },
+                    {
+                      "name": "MATH 1014 (L02)",
+                      "venue": "Lecture Theater E (143)",
+                      "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+                      "begin": "13:30",
+                      "end": "14:50"
+                    },
+                    {
+                      "name": "CORE 1720 (L1)",
+                      "venue": "Lecture Theater F (133)",
+                      "description": "CORE 1720 - Poverty\nSection: L1\nInstructor: WANG, Jin",
+                      "begin": "15:00",
+                      "end": "16:20"
+                    },
+                    {
+                      "name": "CORE 1403A (T11)",
+                      "venue": "Rm 2128A, Lift 19 (28)",
+                      "description": "CORE 1403A - Academic English for University Studies\nSection: T11",
+                      "begin": "16:30",
+                      "end": "17:50"
+                    },
+                    {
+                      "name": "MATH 1014 (T02C)",
+                      "venue": "Rm 1034, LSK Bldg (80)",
+                      "description": "MATH 1014 - Calculus II\nSection: T02C\nInstructor: LAM, Tsz Kin",
+                      "begin": "18:00",
+                      "end": "18:50"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "CORE 1232 (L1)",
+                      "venue": "Lecture Theater E (143)",
+                      "description": "CORE 1232 - Exploring and Visualizing Data\nSection: L1\nInstructor: WONG, Raymond Chi Wing",
+                      "begin": "16:30",
+                      "end": "17:50"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "CORE 1232 (T1)",
+                      "venue": "",
+                      "description": "CORE 1232 - Exploring and Visualizing Data\nSection: T1\nInstructor: WONG, Raymond Chi Wing",
+                      "begin": "10:30",
+                      "end": "11:20"
+                    },
+                    {
+                      "name": "BIEN 1010 (L1)",
+                      "venue": "Lecture Theater C (211)",
+                      "description": "BIEN 1010 - Introduction to Biomedical Engineering\nSection: L1\nInstructor: WONG, Tsz Wai",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    },
+                    {
+                      "name": "MATH 1014 (L02)",
+                      "venue": "Lecture Theater E (143)",
+                      "description": "MATH 1014 - Calculus II\nSection: L02\nInstructor: LAM, Tsz Kin",
+                      "begin": "13:30",
+                      "end": "14:50"
+                    },
+                    {
+                      "name": "CORE 1720 (L1)",
+                      "venue": "Lecture Theater F (133)",
+                      "description": "CORE 1720 - Poverty\nSection: L1\nInstructor: WANG, Jin",
+                      "begin": "15:00",
+                      "end": "16:20"
+                    },
+                    {
+                      "name": "CORE 1403A (T11)",
+                      "venue": "Rm 2128A, Lift 19 (28)",
+                      "description": "CORE 1403A - Academic English for University Studies\nSection: T11",
+                      "begin": "16:30",
+                      "end": "17:50"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "CORE 1905B (T34)",
+                      "venue": "",
+                      "description": "CORE 1905B - Behavioral Foundations of University Education: Habits, Mindsets, and Wellness\nSection: T34",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    },
+                    {
+                      "name": "CORE 1232 (L1)",
+                      "venue": "Lecture Theater E (143)",
+                      "description": "CORE 1232 - Exploring and Visualizing Data\nSection: L1\nInstructor: WONG, Raymond Chi Wing",
+                      "begin": "16:30",
+                      "end": "17:50"
+                    }
+                  ],
+                  [],
+                  []
+                ],
+                "plannerURL": "https://admlu65.ust.hk/planner/export/YENvm6LGWusjCxIDMqklMnmDepZXy9va.ics",
+                "university": "HKUST",
+                "name": "Timetable 5",
+                "config": {
+                  "id": "5",
+                  "color": "#f39480",
+                  "visible": true
+                }
+              },
+              "id": "10",
+              "type": "TIMETABLE"
+            }
+          ]
+        },
+        {
+          "name": "Folder 6",
+          "id": "11",
+          "type": "FOLDER",
+          "collapsed": false,
+          "children": [
+            {
+              "name": "Folder 7",
+              "id": "12",
+              "type": "FOLDER",
+              "collapsed": false,
+              "children": []
+            },
+            {
+              "timetable": {
+                "lessons": [
+                  [
+                    {
+                      "name": "OCES 1010 (L1)",
+                      "venue": "Lecture Theater A (401)",
+                      "description": "OCES 1010 - Principles and Applications of Environmental Science\nSection: L1\nInstructors: WU, Longjun, ZHANG, Qiong, HE, Ding, LI, Jiying",
+                      "begin": "10:30",
+                      "end": "11:50"
+                    },
+                    {
+                      "name": "CHEM 1020 (L2)",
+                      "venue": "Lecture Theater J (300)",
+                      "description": "CHEM 1020 - General Chemistry I\nSection: L2\nInstructors: HUANG, Jinqing, LU, Haipeng",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    },
+                    {
+                      "name": "PHYS 1112 (L1)",
+                      "venue": "Lecture Theater G (132)",
+                      "description": "PHYS 1112 - General Physics I with Calculus\nSection: L1\nInstructor: XU, Qin",
+                      "begin": "15:00",
+                      "end": "16:20"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "MATH 1014 (L01)",
+                      "venue": "Lecture Theater D (216)",
+                      "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    },
+                    {
+                      "name": "MATH 1014 (T01C)",
+                      "venue": "G009B, CYT Bldg (70)",
+                      "description": "MATH 1014 - Calculus II\nSection: T01C\nInstructor: IP, Ivan Chi Ho",
+                      "begin": "18:00",
+                      "end": "18:50"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "OCES 1010 (L1)",
+                      "venue": "Lecture Theater A (401)",
+                      "description": "OCES 1010 - Principles and Applications of Environmental Science\nSection: L1\nInstructors: WU, Longjun, ZHANG, Qiong, HE, Ding, LI, Jiying",
+                      "begin": "10:30",
+                      "end": "11:50"
+                    },
+                    {
+                      "name": "CHEM 1020 (L2)",
+                      "venue": "Lecture Theater J (300)",
+                      "description": "CHEM 1020 - General Chemistry I\nSection: L2\nInstructors: HUANG, Jinqing, LU, Haipeng",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "MATH 1014 (L01)",
+                      "venue": "Lecture Theater D (216)",
+                      "description": "MATH 1014 - Calculus II\nSection: L01\nInstructor: IP, Ivan Chi Ho",
+                      "begin": "12:00",
+                      "end": "13:20"
+                    },
+                    {
+                      "name": "PHYS 1112 (T08)",
+                      "venue": "Rm 5620, Lift 31-32 (70)",
+                      "description": "PHYS 1112 - General Physics I with Calculus\nSection: T08",
+                      "begin": "15:00",
+                      "end": "15:50"
+                    }
+                  ],
+                  [
+                    {
+                      "name": "PHYS 1112 (L1)",
+                      "venue": "Lecture Theater G (132)",
+                      "description": "PHYS 1112 - General Physics I with Calculus\nSection: L1\nInstructor: XU, Qin",
+                      "begin": "10:30",
+                      "end": "11:50"
+                    }
+                  ],
+                  [],
+                  []
+                ],
+                "plannerURL": "https://admlu65.ust.hk/planner/export/kgEOYxxkRj7rXJ6USXLggUnIRaILn1to.ics",
+                "university": "HKUST",
+                "name": "Timetable 6",
+                "config": {
+                  "id": "6",
+                  "color": "#596bf5",
+                  "visible": true
+                }
+              },
+              "id": "13",
+              "type": "TIMETABLE"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
