@@ -53,6 +53,8 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
                 exit="close"
                 animate="open"
                 initial="close"
+                // BUG: animating opacity causes the modal to be transparnt, but opacity is already 1.
+                // Should be a framer motion bug.
                 variants={
                   matchDesktop ? modalOverlayVariants : drawerOverlayVariants
                 }

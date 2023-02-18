@@ -37,7 +37,8 @@
 
     --shadow-outline: inset 0 0 0 1px hsla(0, 0%, 100%, 0.05);
 
-    --shadow-elevation: inset 0 0.5px hsla(0, 0%, 100%, 0.1),
+    --shadow-elevation: 0 0 10px hsla(0, 0%, 0%, 0.1),
+      10px 10px 20px hsla(0, 0%, 0%, 0.1), inset 0 0.5px hsla(0, 0%, 100%, 0.1),
       inset 0 0 0 0.5px hsla(0, 0%, 100%, 0.1);
 
     --scroll-bar: 50 50 50;

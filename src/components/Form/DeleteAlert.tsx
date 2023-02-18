@@ -47,7 +47,8 @@ const DeleteAlert = ({ hidden, disabled, onDelete, children }: Props) => {
         <div className="flex gap-2">
           <AlertCancel asChild>
             <Button fullWidth>
-              <IconX strokeWidth={1.75} className="h-5 w-5" /> Cancel
+              <IconX strokeWidth={1.75} className="h-5 w-5" />
+              Cancel
             </Button>
           </AlertCancel>
 

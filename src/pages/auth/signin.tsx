@@ -18,8 +18,8 @@ const SignIn = () => {
           <SignInForm />
 
           <p className="!mt-8 text-sm">
-            Tips: To migrate locally saved timetables, visit the{" "}
-            <strong>Account</strong> page after signing in.
+            Tips: To migrate locally saved timetables, visit the Account page
+            after signing in.
           </p>
         </div>
       </div>
