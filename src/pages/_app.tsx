@@ -37,12 +37,11 @@ const App: AppType<{ session: Session | null }> = ({
 }) => {
   // Used for cypress testing zustand store
   useEffect(() => {
-    // @ts-expect-error window type
-    if (typeof window !== undefined && window.Cypress) {
-      // @ts-expect-error window type
-      window.store = store;
-      // @ts-expect-error window type
-      window.actions = actions;
+    if (window.Cypress) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      window.store = store as any;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      window.actions = actions as any;
     }
   }, []);
 
