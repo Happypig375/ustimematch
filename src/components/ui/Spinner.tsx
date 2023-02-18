@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import type { HTMLAttributes } from "react";
 
+// https://github.com/n3r4zzurr0/svg-spinners/blob/main/svg-css/180-ring-with-bg.svg
 const Spinner = ({ className }: HTMLAttributes<HTMLOrSVGElement>) => {
   return (
     <svg

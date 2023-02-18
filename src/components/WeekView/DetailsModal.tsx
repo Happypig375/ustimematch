@@ -38,12 +38,7 @@ const DetailsModal = () => {
 
   return (
     <Modal open={openDetails} onOpenChange={setOpenDetails}>
-      <ModalContent
-        open={openDetails}
-        onOpenChange={setOpenDetails}
-        // Prevents focusing on button
-        onOpenAutoFocus={(e) => e.preventDefault()}
-      >
+      <ModalContent open={openDetails} onOpenChange={setOpenDetails}>
         <ModalTitle className="flex justify-between">
           <div>{parseUSTName(detailsLesson.name).lessonName}</div>
           <div>{parseUSTName(detailsLesson.name).section}</div>
