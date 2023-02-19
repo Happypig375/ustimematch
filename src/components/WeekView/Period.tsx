@@ -1,6 +1,7 @@
 import { m, type Transition } from "framer-motion";
 import debounce from "lodash.debounce";
 import { createContext, useEffect, useMemo, useState } from "react";
+import { MEDIUM_IN_MS } from "@components/ui/motion/variants";
 import { useTrackedStore } from "@store/index";
 import { DISPLAYED_HOURS, MINUTE_PER_ROW } from "@store/ui";
 import useMediaQuery from "@hooks/useMediaQuery";
@@ -128,7 +129,7 @@ const Period = ({
   const debouncedSetDebouncedHover = useMemo(
     // This delay is how long before it is considered hovering
     // Here uses 300ms to match hover transition delay
-    () => debounce((v: boolean) => setDebouncedHover(v), 300),
+    () => debounce((v: boolean) => setDebouncedHover(v), MEDIUM_IN_MS),
     [],
   );
   useEffect(() => {

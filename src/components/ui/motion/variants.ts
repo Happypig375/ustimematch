@@ -1,21 +1,29 @@
 import type { Transition, Variants } from "framer-motion";
 
+export const LONG_IN_MS = 400;
+export const MEDIUM_IN_MS = 300;
+export const SHORT_IN_MS = 200;
+
+export const LONG_IN_SEC = 0.4;
+export const MEDIUM_IN_SEC = 0.3;
+export const SHORT_IN_SEC = 0.2;
+
 export const long: Transition = {
   type: "spring",
   bounce: 0,
-  duration: 0.4,
+  duration: LONG_IN_SEC,
 };
 
 export const medium: Transition = {
   type: "spring",
   bounce: 0,
-  duration: 0.3,
+  duration: MEDIUM_IN_SEC,
 };
 
 export const short: Transition = {
   type: "spring",
   bounce: 0,
-  duration: 0.2,
+  duration: SHORT_IN_SEC,
 };
 
 // Toggle theme button

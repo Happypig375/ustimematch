@@ -1,26 +1,50 @@
 import clsx from "clsx";
 import type { HTMLAttributes } from "react";
 
-// https://github.com/n3r4zzurr0/svg-spinners/blob/main/svg-css/180-ring-with-bg.svg
+// https://github.com/n3r4zzurr0/svg-spinners/blob/main/svg-smil/ring-resize.svg
 const Spinner = ({ className }: HTMLAttributes<HTMLOrSVGElement>) => {
   return (
     <svg
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={clsx("h-5 w-5 fill-fg-100", className)}
+      className={clsx("h-5 w-5 stroke-fg-100", className)}
     >
-      <style>{"@keyframes spinner{to{transform:rotate(360deg)}}"}</style>
-      <path
-        d="M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1Zm0 19a8 8 0 1 1 8-8 8 8 0 0 1-8 8Z"
-        opacity={0.2}
-      />
-      <path
-        d="M12 4a8 8 0 0 1 7.89 6.7 1.53 1.53 0 0 0 1.49 1.3 1.5 1.5 0 0 0 1.48-1.75 11 11 0 0 0-21.72 0A1.5 1.5 0 0 0 2.62 12a1.53 1.53 0 0 0 1.49-1.3A8 8 0 0 1 12 4Z"
-        style={{
-          transformOrigin: "center",
-          animation: "spinner 1s infinite linear",
-        }}
-      />
+      <g>
+        <circle
+          cx="12"
+          cy="12"
+          r="9.5"
+          fill="none"
+          stroke-width="3"
+          stroke-linecap="round"
+        >
+          <animate
+            attributeName="stroke-dasharray"
+            dur="1.5s"
+            calcMode="spline"
+            values="0 150;42 150;42 150;42 150"
+            keyTimes="0;0.475;0.95;1"
+            keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="stroke-dashoffset"
+            dur="1.5s"
+            calcMode="spline"
+            values="0;-16;-59;-59"
+            keyTimes="0;0.475;0.95;1"
+            keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          dur="2s"
+          values="0 12 12;360 12 12"
+          repeatCount="indefinite"
+        />
+      </g>
     </svg>
   );
 };
