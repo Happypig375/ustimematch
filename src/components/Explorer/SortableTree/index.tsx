@@ -402,37 +402,39 @@ const SortableTree = () => {
             items={sortedIds}
             strategy={verticalListSortingStrategy}
           >
-            {flattenedItems.map(({ depth, treeItem }) => {
-              return (
-                <SortableTreeItem
-                  id={treeItem.id}
-                  key={treeItem.id}
-                  treeItem={treeItem}
-                  indentationWidth={indentationWidth}
-                  illegal={
-                    activeItem && treeItem.type === "FOLDER"
-                      ? depth + getDepth(activeItem.treeItem) + 1 > maxDepth
-                      : undefined
-                  }
-                  depth={
-                    treeItem.id === activeId && projected
-                      ? projected.depth
-                      : depth
-                  }
-                  onCollapse={
-                    treeItem.type === "FOLDER"
-                      ? () => toggleFolderCollapse(treeItem.id)
-                      : undefined
-                  }
-                  onClick={
-                    treeItem.type === "FOLDER"
-                      ? () => onFolderClick(treeItem)
-                      : () => onTimetableClick(treeItem)
-                  }
-                  onEyeClick={() => toggleVisibility(treeItem.id)}
-                />
-              );
-            })}
+            <ul>
+              {flattenedItems.map(({ depth, treeItem }) => {
+                return (
+                  <SortableTreeItem
+                    id={treeItem.id}
+                    key={treeItem.id}
+                    treeItem={treeItem}
+                    indentationWidth={indentationWidth}
+                    illegal={
+                      activeItem && treeItem.type === "FOLDER"
+                        ? depth + getDepth(activeItem.treeItem) + 1 > maxDepth
+                        : undefined
+                    }
+                    depth={
+                      treeItem.id === activeId && projected
+                        ? projected.depth
+                        : depth
+                    }
+                    onCollapse={
+                      treeItem.type === "FOLDER"
+                        ? () => toggleFolderCollapse(treeItem.id)
+                        : undefined
+                    }
+                    onClick={
+                      treeItem.type === "FOLDER"
+                        ? () => onFolderClick(treeItem)
+                        : () => onTimetableClick(treeItem)
+                    }
+                    onEyeClick={() => toggleVisibility(treeItem.id)}
+                  />
+                );
+              })}
+            </ul>
 
             {createPortal(
               <DragOverlay
