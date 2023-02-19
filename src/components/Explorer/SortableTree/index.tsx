@@ -35,6 +35,7 @@ import { createPortal } from "react-dom";
 import { toast } from "react-hot-toast";
 import FolderForm from "@components/Form/FolderForm";
 import TimetableForm from "@components/Form/TimetableForm";
+import { SHORT_IN_MS } from "@components/ui/motion/variants";
 import { actions, useStore } from "@store/index";
 import {
   buildTree,
@@ -71,7 +72,7 @@ const adjustTranslate: Modifier = ({ transform, draggingNodeRect }) => {
 };
 
 const dropAnimationConfig: DropAnimation = {
-  duration: 200,
+  duration: SHORT_IN_MS,
   easing: "ease",
   keyframes({ transform }) {
     return [
@@ -84,7 +85,7 @@ const dropAnimationConfig: DropAnimation = {
   },
   sideEffects({ active }) {
     active.node.animate([{ opacity: 0 }, { opacity: 1 }], {
-      duration: 200,
+      duration: SHORT_IN_MS,
       easing: "ease",
     });
   },
