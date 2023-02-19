@@ -100,7 +100,10 @@ const SortableTreeItem = ({
         onClick={onClick}
         ref={setDraggableNodeRef}
         tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && onClick?.()}
+        onKeyDown={(e) =>
+          // Prevents child from triggering click
+          e.target === e.currentTarget && e.key === "Enter" && onClick?.()
+        }
         className={clsx(
           "focus-visible-ring flex h-full cursor-pointer select-none items-center gap-2 rounded-md px-2 text-fg-100",
           "hover:bg-bg-300/50 hover:text-fg-200 active:[&:not(:focus-within)]:bg-bg-300",
@@ -118,10 +121,9 @@ const SortableTreeItem = ({
               plain
               // Align with color chip
               className="ml-1"
-              onKeyDown={(e) => e.stopPropagation()}
               onClick={(e) => {
                 e.stopPropagation();
-                onCollapse && onCollapse();
+                onCollapse?.();
               }}
               title={`${treeItem.collapsed ? "Expand" : "Collapse"} ${name}`}
             >
@@ -166,10 +168,9 @@ const SortableTreeItem = ({
           <Button
             icon
             plain
-            onKeyDown={(e) => e.stopPropagation()}
             onClick={(e) => {
               e.stopPropagation();
-              onEyeClick && onEyeClick();
+              onEyeClick?.();
             }}
             title={`${visible ? "Hide" : "Show"}${
               isFolder ? " All Timetables of " : " "
@@ -187,11 +188,10 @@ const SortableTreeItem = ({
         <Button
           icon
           plain
+          className="cursor-grab touch-none"
+          title={`Drag${isFolder ? " Folder " : " "}${name}`}
           {...listeners}
           {...attributes}
-          className="cursor-grab touch-none"
-          onKeyDown={(e) => e.stopPropagation()}
-          title={`Drag${isFolder ? " Folder " : " "}${name}`}
         >
           <IconGripVertical strokeWidth={1.75} className="h-5 w-5" />
         </Button>
