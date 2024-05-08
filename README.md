@@ -1,77 +1,53 @@
-# USTimematch
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="images/poster.png" alt="Poster">
+  </a>
+</div>
 
-Timetable manager for HKUST students.
+## About
 
-## Development
+USTimematch is a cross-platform web application built for HKUST students' time scheduling needs. It introduced a tree-based system to manage and import all you and your friends' timetable from an external calendar. With the timematch view, one could easily distinguish common time slots between friends or groupmates.
 
-- `pnpm dev` to start the Next.js server
-- Start a postgres instance
+## Getting Started
 
-  ```sh
-  mkdir ~/postgres-data
+To run the project locally, please follow these steps
 
-  docker run -d \
-   --name dev-postgres \
-   -e POSTGRES_PASSWORD=password \
-   -v ${HOME}/postgres-data/:/var/lib/postgresql/data \
-   -p 5432:5432 \
-   postgres
-  ```
+### Prerequisites
 
-- `pnpm prisma db push` to initalize the database
-  - `pnpm prisma migrate dev` for migration
-- setup environment variables
-- To inspect the database you can run `pnpm prisma studio`, or start a pgAdmin instance.
-  ```sh
-  docker run -d \
-    -p 80:80 \
-    -e 'PGADMIN_DEFAULT_EMAIL=dev@dev.com' \
-    -e 'PGADMIN_DEFAULT_PASSWORD=password' \
-    --name pgadmin \
-    dpage/pgadmin4
-  ```
-  > [in-depth tutorial](https://towardsdatascience.com/local-development-set-up-of-postgresql-with-docker-c022632f13ea)
+Follow the instructions on <https://pnpm.io/installation> to install the package manager
 
-## Deployment
+### Development
 
-### Backup
-
-[https://blog.railway.app/p/automated-postgresql-backups](https://blog.railway.app/p/automated-postgresql-backups)
-
-#### Environment variables
+1. Initialize a PostgreSQL instance
 
 ```sh
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_S3_REGION=us-west-2
-AWS_S3_BUCKET=ustimematch-production-backup
-BACKUP_CRON_SCHEDULE=0 19 * * *
-BACKUP_DATABASE_URL=${{ DATABASE_URL }}
+mkdir ~/postgres-data
+
+docker run -d \
+ --name dev-postgres \
+ -e POSTGRES_PASSWORD=password \
+ -v ${HOME}/postgres-data/:/var/lib/postgresql/data \
+ -p 5432:5432 \
+ postgres
 ```
 
-#### Commands
+2. For inspection, you can use pgAdmin
 
-`pg_restore -c -d <connection_string> <path_to_backup>`
+```sh
+docker run -d \
+  -p 80:80 \
+  -e 'PGADMIN_DEFAULT_EMAIL=dev@dev.com' \
+  -e 'PGADMIN_DEFAULT_PASSWORD=password' \
+  --name pgadmin \
+  dpage/pgadmin4
+```
 
-### Services
+3. To initialize the database, run `pnpm dlx prisma db push`
+4. To migrate to a newer schema, run `pnpm dlx prisma migrate dev`
 
-- Vercel
-  - Nextjs
-  
-- Railway
-  - Postgres database
-  
-- Mailgun
-  - SMTP mail server
+> You can also setup a docker compose file to run all these services alongside with the Next.js frontend
 
-OR
+### Environment Variables
 
-- AWS
-  - SES
-    - Sign in emails
-  - S3
-    - Database backup
-  
-- Cloudflare
-  - Domain management
-  - Rate limiting
+A sample file has been provided [here](.env.example), certain part of the application might not work if things are omitted
