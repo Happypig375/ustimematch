@@ -5,6 +5,7 @@ import {
   IconInfoCircle,
   IconQuestionCircle,
   IconUserCircle,
+  IconBrandGithub,
 } from "@tabler/icons-react";
 import clsx from "clsx";
 import { AnimatePresence, m } from "framer-motion";
@@ -128,6 +129,22 @@ const MobileMenu = () => {
                     }
                   >
                     Timetable Planner
+                  </NavLink>
+                </DropdownMenu.Item>
+
+                <DropdownMenu.Item asChild>
+                  <NavLink
+                    inMenu
+                    external
+                    href="https://github.com/alanleungcn/ustimematch"
+                    icon={
+                      <IconBrandGithub
+                        strokeWidth={1.75}
+                        className="h-4 w-4"
+                      />
+                    }
+                  >
+                    Source Code
                   </NavLink>
                 </DropdownMenu.Item>
               </m.div>

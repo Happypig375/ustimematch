@@ -38,6 +38,9 @@ const Header = ({ children }: HTMLAttributes<HTMLDivElement>) => {
             <NavLink href="https://admlu65.ust.hk" external>
               Timetable Planner
             </NavLink>
+            <NavLink href="https://github.com/alanleungcn/ustimematch" external>
+              Source Code
+            </NavLink>
           </div>
 
           {/* Mobile navigation menu */}
